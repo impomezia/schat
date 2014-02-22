@@ -1,0 +1,61 @@
+2.0.7
+-----
+ * #98 Fixed a bug when deleting a space after nick.
+ + #99 Added support for displaying local time of the user.
+ * #100 Fixed, chat icon is not displayed in Xfce.
+ * Fixed a bug when anonymous registration.
+ * Fixed a regression server does not correctly display count of online users.
+ * Displaying offline users were enabled by default.
+ * Fixed, the ampersand symbol not correctly displayed in tabs header.
+
+2.0.6
+-----
+ + Added support for displaying offline users in user list.
+ * Fixed redundant requests for information about the channels.
+ * Fixed critical errors in internal implementation of server feeds.
+ * Fixed a regression in popup windows are no longer displayed emoticons.
+
+2.0.5
+-----
+ + Added a dialog to create a new channel.
+ + Added support for the possibility of inviting in private channels, without the rights of the owner or moderator.
+ + Added display private and pinned channels in the channel list.
+ + Added feed "channel".
+ * Improved user interface for channel options dialog.
+ * Fixed channel list is not updated when renaming a channel or change access mode.
+ * Fixed in some cases, pinned channels can not correctly sorted in the channel list.
+ * Fixed in Windows 8 a popup windows does not fully respond to mouse clicks.
+
+2.0.4
+-----
+ + Added configuration option "History/AutoLoad".
+ + Added support for private channels and channels with read-only access.
+ + Added support for invitations to the channels.
+ * Extended list of permissions that can be set via the user interface.
+ * Fixed a bug you can send a message to the channel, but do not be in it.
+
+2.0.3
+-----
+ + Fixed a bug on generating a unique identifier of a computer.
+ + Added initial support for moderators of channels.
+ + Added support for displaying the date the user disconnects and information about the last connection.
+ * Fixed, in some cases, the client could hang when changing the server.
+ * Fixed, menu "Permissions" is also displayed in private talks.
+ * Improved speed to displaying user profile by using the cached data.
+ + Added support for disabling autoscroll.
+
+2.0.2
+-----
+ * Restored compatibility with Debian GNU/Linux 6.0.
+ * Fixed, checkbox "Logging messages" was not checked by default.
+
+2.0.1
+-----
+ * Improved interactivity for OAuth authorization.
+ * In Windows OpenSSL library has been updated to 1.0.1e and libpng to 1.5.14.
+ + Added support for package "geoip-database-contrib" for GeoIP databases in Ubuntu.
+ * Reduced network delays.
+ + Added command "/ping".
+ + Chat client now supports command line key "-base".
+ + Added support for specifying PREFIX and LIBDIR for Linux when calling qmake.
+ * Fixed, spell checking does not work if the path to the dictionary contains Russian characters.

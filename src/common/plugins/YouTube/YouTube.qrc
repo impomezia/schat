@@ -1,0 +1,10 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="css/YouTube/YouTube.css">res/css/YouTube.min.css</file>
+  <file alias="images/YouTube/icon.png">res/images/YouTube_icon.png</file>
+  <file alias="images/YouTube/YouTube.png">res/images/YouTube.png</file>
+  <file alias="js/YouTube/YouTube.js">res/js/YouTube.min.js</file>
+  <file alias="translations/youtube_ru.qm">res/translations/youtube_ru.qm</file>
+  <file alias="translations/youtube_uk.qm">res/translations/youtube_uk.qm</file>
+</qresource>
+</RCC>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include Variables.wxi?>
+  <Product Id="*" Name="$(var.ProductName)" Codepage="$(var.ProductCodepage)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="$(var.Manufacturer)" UpgradeCode="$(var.UpgradeCode)">
+    <Package Id="*" Compressed="yes" Description="$(var.ProductName) $(var.ProductVersion) installer" InstallerVersion="200" InstallScope="perMachine" ShortNames="no" Manufacturer="$(var.Manufacturer)" />
+    <Upgrade Id="$(var.UpgradeCode)" />
+    <Media Id="1" Cabinet="schat2.cab" EmbedCab="yes" CompressionLevel="high" />
+    <!-- Property -->
+    <Property Id="ApplicationFolderName" Value="$(var.ProductName)" />
+    <!--<Property Id="DISABLEADVTSHORTCUTS" Value="1" />-->
+    <Property Id="REINSTALLMODE" Value="amus" />
+    <!-- Directories -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="CV_Author" Name="IMPOMEZIA">
+          <Directory Id="INSTALLLOCATION" Name="$(var.ProductName)" />
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder" />
+      <Directory Id="DesktopFolder" Name="Desktop"/>
+    </Directory>
+    <!-- Include Features -->
+    <FeatureRef Id="Product" />
+    <FeatureRef Id="Qt" />
+    <FeatureRef Id="Plugins" />
+    <!-- License and bitmaps -->
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="license.rtf" />
+    <WixVariable Id="WixUIBannerBmp" Value="bannrbmp.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="dlgbmp.bmp" />
+    <!-- UI REF -->
+    <UIRef Id="WixUI_FeatureTree" />
+    <!-- Sequences -->
+    <!-- If a newer version of product is installed, show an error message. -->
+    <MajorUpgrade Schedule="afterInstallFinalize" AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A later version of [ProductName] is already installed. If you need to install this MSI, first remove program from Add/Remove Programs in Control Panel." />
+    <!-- Information about program -->
+    <SetProperty Id="ARPINSTALLLOCATION" Value="[INSTALLLOCATION]" After="CostFinalize" />
+    <Property Id="ARPHELPLINK">http://wiki.schat.me/</Property>
+    <Property Id="ARPURLINFOABOUT">https://schat.me/</Property>
+    <Property Id="ARPURLUPDATEINFO">https://schat.me/download</Property>
+    <Property Id="ARPCONTACT">support@impomezia.com</Property>
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    <Icon Id="icon.ico" SourceFile="..\schat2\schat2.exe" />
+  </Product>
+</Wix>

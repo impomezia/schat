@@ -1,0 +1,14 @@
+#PopupWindow {
+  border:1px solid #e6740d;
+}
+#PopupWindow QLabel {
+  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ea9958, stop: 1.0 #e78b3b);
+  border-bottom:1px solid transparent;
+  border-top:1px solid transparent;
+}
+#IconLabel {
+  border-left:1px solid transparent;
+}
+#DateLabel {
+  border-right:1px solid transparent;
+}

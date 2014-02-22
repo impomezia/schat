@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include Variables.wxi?>
+  <Fragment>
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Component Id="libeay32.dll" Guid="{2CA95C73-2F04-4BDC-AAAD-0C352E8B23F1}">
+        <File Id="libeay32.dll" KeyPath="yes" Source="..\schat2\libeay32.dll" />
+      </Component>
+      <Component Id="libpng15.dll" Guid="{8A7A6989-A407-4705-8262-DD03A7148883}">
+        <File Id="libpng15.dll" KeyPath="yes" Source="..\schat2\libpng15.dll" />
+      </Component>
+      <Component Id="license.txt" Guid="{10F15664-0B79-4FA0-8084-39FDAE124B66}">
+        <File Id="license.txt" KeyPath="yes" Source="..\license.txt" />
+      </Component>
+      <Component Id="msvcp100.dll" Guid="{B3089CFA-4DD2-4775-A09F-96C92C1E816B}">
+        <File Id="msvcp100.dll" KeyPath="yes" Source="..\schat2\msvcp100.dll" />
+      </Component>
+      <Component Id="msvcr100.dll" Guid="{0E735939-406F-4FF5-8ACD-75B3403D6C11}">
+        <File Id="msvcr100.dll" KeyPath="yes" Source="..\schat2\msvcr100.dll" />
+      </Component>
+      <Component Id="QtCore4.dll" Guid="{D1C4CE2F-19FA-40AB-A6DC-B64110ABE689}">
+        <File Id="QtCore4.dll" KeyPath="yes" Source="..\schat2\QtCore4.dll" />
+      </Component>
+      <Component Id="QtGui4.dll" Guid="{7158D877-FAA4-4591-812A-29AFD703341F}">
+        <File Id="QtGui4.dll" KeyPath="yes" Source="..\schat2\QtGui4.dll" />
+      </Component>
+      <Component Id="QtNetwork4.dll" Guid="{444ABDE1-3638-4CBF-A3F5-3737F32310B8}">
+        <File Id="QtNetwork4.dll" KeyPath="yes" Source="..\schat2\QtNetwork4.dll" />
+      </Component>
+      <Component Id="QtSql4.dll" Guid="{425B438B-9B70-46BF-9B13-EA1266B870F8}">
+        <File Id="QtSql4.dll" KeyPath="yes" Source="..\schat2\QtSql4.dll" />
+      </Component>
+      <Component Id="QtWebKit4.dll" Guid="{23D48E24-03CF-46D4-97B0-1320C4AEFF80}">
+        <File Id="QtWebKit4.dll" KeyPath="yes" Source="..\schat2\QtWebKit4.dll" />
+      </Component>
+      <Component Id="schat_client.dll" Guid="{13DAD7CA-1BA6-4F41-B508-809138E14E11}">
+        <File Id="schat_client.dll" KeyPath="yes" Source="..\schat2\schat-client.dll" />
+      </Component>
+      <Component Id="schat.dll" Guid="{F7298522-A3A6-43DD-BB29-C92AD7B0D296}">
+        <File Id="schat.dll" KeyPath="yes" Source="..\schat2\schat.dll" />
+      </Component>
+      <Component Id="schat2.exe" Guid="{63FA5C3D-DE13-4F94-A255-30BBBC872463}">
+        <File Id="schat2.exe" KeyPath="yes" Source="..\schat2\schat2.exe">
+          <Shortcut Id="StartMenuShortcut" Name="$(var.ProductName)" Description="$(var.ApplicationDescription)" Directory="StartMenuFolder" WorkingDirectory="INSTALLLOCATION" Advertise="yes" Icon="icon.ico"/>
+          <Shortcut Id="DesktopShortcut" Name="$(var.ProductName)" Description="$(var.ApplicationDescription)" Directory="DesktopFolder" WorkingDirectory="INSTALLLOCATION" Advertise="yes" Icon="icon.ico"/>
+        </File>
+      </Component>
+      <Component Id="ssleay32.dll" Guid="{A3AD1CBB-8304-4173-8965-B48F2FB59398}">
+        <File Id="ssleay32.dll" KeyPath="yes" Source="..\schat2\ssleay32.dll" />
+      </Component>
+      <Component Id="zlib.dll" Guid="{4C49D73F-870C-4A5F-B1D4-D40A8447C927}">
+        <File Id="zlib.dll" KeyPath="yes" Source="..\schat2\zlib.dll" />
+      </Component>
+      <Component Id="qt.conf" Guid="{6FEEAB69-A89A-456B-99A3-C84C4A159518}">
+        <File Id="qt.conf" KeyPath="yes" Source="..\schat2\qt.conf" />
+      </Component>
+      <Directory Id="doc" Name="doc">
+        <Component Id="ChangeLog.Cache.html" Guid="{30B1CEC8-D05E-4B6A-AA58-89F68F188EED}">
+          <File Id="ChangeLog.Cache.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Cache.html" />
+        </Component>
+        <Component Id="ChangeLog.Emoticons.html" Guid="{C0AA087D-5DCA-4400-A97D-B07DFD717BBD}">
+          <File Id="ChangeLog.Emoticons.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Emoticons.html" />
+        </Component>
+        <Component Id="ChangeLog.History.html" Guid="{869D206E-DEB7-477C-9D05-91A70538DA6B}">
+          <File Id="ChangeLog.History.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.History.html" />
+        </Component>
+        <Component Id="ChangeLog.html" Guid="{DDC5EFFF-9F5B-4FBE-900B-17E427001A98}">
+          <File Id="ChangeLog.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.html" />
+        </Component>
+        <Component Id="ChangeLog.Idle.html" Guid="{4B386843-CFEF-4971-833E-583848A98301}">
+          <File Id="ChangeLog.Idle.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Idle.html" />
+        </Component>
+        <Component Id="ChangeLog.Profile.html" Guid="{0E7B13C3-B611-4810-A116-E20B3E0F6BC4}">
+          <File Id="ChangeLog.Profile.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Profile.html" />
+        </Component>
+        <Component Id="ChangeLog.Popup.html" Guid="{C252E92D-C976-41DF-87C4-FC6B2D99500E}">
+          <File Id="ChangeLog.Popup.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Popup.html" />
+        </Component>
+        <Component Id="ChangeLog.Proxy.html" Guid="{39BFD195-48B8-47FE-B712-6C78BC2FA64F}">
+          <File Id="ChangeLog.Proxy.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Proxy.html" />
+        </Component>
+        <Component Id="ChangeLog.Console.html" Guid="{A6FC2CA2-E8B4-44F5-9110-E41BB6C92284}">
+          <File Id="ChangeLog.Console.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Console.html" />
+        </Component>
+        <Component Id="ChangeLog.Channels.html" Guid="{8FBF8272-9BDA-460c-B689-CF556E664E2F}">
+          <File Id="ChangeLog.Channels.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Channels.html" />
+        </Component>
+        <Component Id="ChangeLog.RawFeeds.html" Guid="{DA7A5152-3984-4286-A1FE-67C0DDE385E9}">
+          <File Id="ChangeLog.RawFeeds.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.RawFeeds.html" />
+        </Component>
+        <Component Id="ChangeLog.SendFile.html" Guid="{D850FDE9-F3AD-4EAB-A395-CE063EC94774}">
+          <File Id="ChangeLog.SendFile.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.SendFile.html" />
+        </Component>
+        <Component Id="ChangeLog.SpellChecker.html" Guid="{199C0521-0A94-4B4B-BC62-67007A675BFC}">
+          <File Id="ChangeLog.SpellChecker.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.SpellChecker.html" />
+        </Component>
+        <Component Id="ChangeLog.YouTube.html" Guid="{70B9B07A-08D0-4B18-BA3D-B069CF5C8BB4}">
+          <File Id="ChangeLog.YouTube.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.YouTube.html" />
+        </Component>
+        <Component Id="ChangeLog.Update.html" Guid="{E7273AE4-BABE-49ba-949E-6BE4EA240084}">
+          <File Id="ChangeLog.Update.html" KeyPath="yes" Source="..\schat2\doc\ChangeLog.Update.html" />
+        </Component>
+      </Directory>
+      <Directory Id="extensions" Name="extensions">
+        <Directory Id="emoticons" Name="emoticons">
+          <Component Id="kolobok.schat" Guid="{D3958531-B9FD-41BF-BECF-6D355B813368}">
+            <File Id="kolobok.schat" KeyPath="yes" Source="..\schat2\extensions\emoticons\kolobok.schat" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="plugins" Name="plugins">
+        <Component Id="Cache.dll" Guid="{2DD79003-4436-4DA6-82F6-14F5C269E648}">
+          <File Id="Cache.dll" KeyPath="yes" Source="..\schat2\plugins\Cache.dll" />
+        </Component>
+        <Component Id="Emoticons.dll" Guid="{D97A40FC-AAD6-444E-9997-67A2EF05BED5}">
+          <File Id="Emoticons.dll" KeyPath="yes" Source="..\schat2\plugins\Emoticons.dll" />
+        </Component>
+        <Component Id="History.dll" Guid="{B3B5A9E9-620C-43FF-ACDE-9B9A7FF8BF3E}">
+          <File Id="History.dll" KeyPath="yes" Source="..\schat2\plugins\History.dll" />
+        </Component>
+        <Component Id="Idle.dll" Guid="{C905DEF6-1619-4471-B24B-656EC5559203}">
+          <File Id="Idle.dll" KeyPath="yes" Source="..\schat2\plugins\Idle.dll" />
+        </Component>
+        <Component Id="Profile.dll" Guid="{98D0CFB1-E6E8-4E69-8D32-A1A8F047AD0E}">
+          <File Id="Profile.dll" KeyPath="yes" Source="..\schat2\plugins\Profile.dll" />
+        </Component>
+        <Component Id="Popup.dll" Guid="{3EF3DD8B-ED11-495B-A6E3-BC1D243DDCC6}">
+          <File Id="Popup.dll" KeyPath="yes" Source="..\schat2\plugins\Popup.dll" />
+        </Component>
+        <Component Id="Proxy.dll" Guid="{76BCBEC3-C6B0-4877-A7C4-F141E9F33AF1}">
+          <File Id="Proxy.dll" KeyPath="yes" Source="..\schat2\plugins\Proxy.dll" />
+        </Component>
+        <Component Id="Console.dll" Guid="{31A6BF43-2764-4D29-8F46-3324821F73D9}">
+          <File Id="Console.dll" KeyPath="yes" Source="..\schat2\plugins\Console.dll" />
+        </Component>
+        <Component Id="Channels.dll" Guid="{D649410B-F311-485e-A15B-DC4B6EBE576C}">
+          <File Id="Channels.dll" KeyPath="yes" Source="..\schat2\plugins\Channels.dll" />
+        </Component>
+        <Component Id="RawFeeds.dll" Guid="{031C61D4-E1C8-46F5-80A6-E6D0646B61D4}">
+          <File Id="RawFeeds.dll" KeyPath="yes" Source="..\schat2\plugins\RawFeeds.dll" />
+        </Component>
+        <Component Id="SendFile.dll" Guid="{C0C2E6D0-F8E4-4BA1-A331-DB85B755E3B5}">
+          <File Id="SendFile.dll" KeyPath="yes" Source="..\schat2\plugins\SendFile.dll" />
+        </Component>
+        <Component Id="SpellChecker.dll" Guid="{A662A8E6-1F7A-492E-BA72-1CB1B8B251C6}">
+          <File Id="SpellChecker.dll" KeyPath="yes" Source="..\schat2\plugins\SpellChecker.dll" />
+        </Component>
+        <Component Id="YouTube.dll" Guid="{47FECF2B-D064-496C-983F-111D0D3B63E6}">
+          <File Id="YouTube.dll" KeyPath="yes" Source="..\schat2\plugins\YouTube.dll" />
+        </Component>
+        <Component Id="Update.dll" Guid="{E2D41CB3-647E-4263-B22E-9FE91FC57965}">
+          <File Id="Update.dll" KeyPath="yes" Source="..\schat2\plugins\Update.dll" />
+        </Component>
+        <Directory Id="qt" Name="qt">
+          <Directory Id="imageformats" Name="imageformats">
+            <Component Id="qgif4.dll" Guid="{3C9E9E4A-3EFB-4100-AA8C-9252CF75532A}">
+              <File Id="qgif4.dll" KeyPath="yes" Source="..\schat2\plugins\qt\imageformats\qgif4.dll" />
+            </Component>
+            <Component Id="qico4.dll" Guid="{D0DB38AE-AE7E-4F98-BEA2-ED3CBD535483}">
+              <File Id="qico4.dll" KeyPath="yes" Source="..\schat2\plugins\qt\imageformats\qico4.dll" />
+            </Component>
+            <Component Id="qjpeg4.dll" Guid="{A3EBB9D3-1093-4E20-A3BD-1663EB7495D0}">
+              <File Id="qjpeg4.dll" KeyPath="yes" Source="..\schat2\plugins\qt\imageformats\qjpeg4.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="sqldrivers" Name="sqldrivers">
+            <Component Id="qsqlite4.dll" Guid="{A29313E0-2FC9-49E4-A305-CA8624464160}">
+              <File Id="qsqlite4.dll" KeyPath="yes" Source="..\schat2\plugins\qt\sqldrivers\qsqlite4.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="bearer" Name="bearer">
+            <Component Id="qgenericbearer4.dll" Guid="{DCE901C7-6E8A-4053-B0BA-614EBE482802}">
+              <File Id="qgenericbearer4.dll" KeyPath="yes" Source="..\schat2\plugins\qt\bearer\qgenericbearer4.dll" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="translations" Name="translations">
+        <Component Id="qt_ru.qm" Guid="{BF51A5C9-4972-46C8-9BF1-51EB7C931B1E}">
+          <File Id="qt_ru.qm" KeyPath="yes" Source="..\schat2\translations\qt_ru.qm" />
+        </Component>
+        <Component Id="qt_uk.qm" Guid="{3C173990-B14D-4AD4-83C6-49D2DB55A8B5}">
+          <File Id="qt_uk.qm" KeyPath="yes" Source="..\schat2\translations\qt_uk.qm" />
+        </Component>
+        <Component Id="en.png" Guid="{D8EA9E77-85C2-40E5-B08D-673713BAC9A2}">
+          <File Id="en.png" KeyPath="yes" Source="..\schat2\translations\en.png" />
+        </Component>
+        <Component Id="ru.png" Guid="{20A8E14F-83FD-4466-938A-B730F49D14B9}">
+          <File Id="ru.png" KeyPath="yes" Source="..\schat2\translations\ru.png" />
+        </Component>
+        <Component Id="uk.png" Guid="{1B69DA22-CF6F-4710-8DE5-A2806012D468}">
+          <File Id="uk.png" KeyPath="yes" Source="..\schat2\translations\uk.png" />
+        </Component>
+        <Component Id="schat2_en.qm" Guid="{1E2442A5-2EF1-4D44-8375-8639C702BD2A}">
+          <File Id="schat2_en.qm" KeyPath="yes" Source="..\schat2\translations\schat2_en.qm" />
+        </Component>
+        <Component Id="schat2_ru.qm" Guid="{9EFB66AF-0397-4C36-8A4E-CCD4C12C9B68}">
+          <File Id="schat2_ru.qm" KeyPath="yes" Source="..\schat2\translations\schat2_ru.qm" />
+        </Component>
+        <Component Id="schat2_uk.qm" Guid="{25D7B74F-791D-4031-828F-0C25CF263A58}">
+          <File Id="schat2_uk.qm" KeyPath="yes" Source="..\schat2\translations\schat2_uk.qm" />
+        </Component>
+      </Directory>
+      <Directory Id="spelling" Name="spelling">
+        <Component Id="en_US.aff" Guid="{90FBD4DE-1E61-48C0-AC5E-44174F057C09}">
+          <File Id="en_US.aff" KeyPath="yes" Source="..\schat2\spelling\en_US.aff" />
+        </Component>
+        <Component Id="ru_RU.aff" Guid="{160422D3-BD38-45CA-B691-7C25C02A26C2}">
+          <File Id="ru_RU.aff" KeyPath="yes" Source="..\schat2\spelling\ru_RU.aff" />
+        </Component>
+        <Component Id="en_US.dic" Guid="{72DAC6F9-24BE-4628-A57F-E80F9A942849}">
+          <File Id="en_US.dic" KeyPath="yes" Source="..\schat2\spelling\en_US.dic" />
+        </Component>
+        <Component Id="ru_RU.dic" Guid="{F73A6B7E-3207-4C2C-AD71-EDBF98188879}">
+          <File Id="ru_RU.dic" KeyPath="yes" Source="..\schat2\spelling\ru_RU.dic" />
+        </Component>
+      </Directory>
+      <Directory Id="sounds" Name="sounds">
+        <Component Id="Received.wav" Guid="{498600CC-7A98-4ED3-9510-1233820FFF9D}">
+          <File Id="Received.wav" KeyPath="yes" Source="..\schat2\sounds\Received.wav" />
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Core">
+      <ComponentRef Id="libeay32.dll" />
+      <ComponentRef Id="libpng15.dll" />
+      <ComponentRef Id="license.txt" />
+      <ComponentRef Id="msvcp100.dll" />
+      <ComponentRef Id="msvcr100.dll" />
+      <ComponentRef Id="schat_client.dll" />
+      <ComponentRef Id="schat.dll" />
+      <ComponentRef Id="schat2.exe" />
+      <ComponentRef Id="ssleay32.dll" />
+      <ComponentRef Id="zlib.dll" />
+      <ComponentRef Id="ChangeLog.html" />
+      <ComponentRef Id="en.png" />
+      <ComponentRef Id="ru.png" />
+      <ComponentRef Id="uk.png" />
+      <ComponentRef Id="schat2_en.qm" />
+      <ComponentRef Id="schat2_ru.qm" />
+      <ComponentRef Id="schat2_uk.qm" />
+      <ComponentRef Id="Received.wav" />
+    </ComponentGroup>
+    <ComponentGroup Id="Qt">
+      <ComponentRef Id="qt_ru.qm" />
+      <ComponentRef Id="qt_uk.qm" />
+      <ComponentRef Id="QtCore4.dll" />
+      <ComponentRef Id="QtGui4.dll" />
+      <ComponentRef Id="QtNetwork4.dll" />
+      <ComponentRef Id="QtSql4.dll" />
+      <ComponentRef Id="QtWebKit4.dll" />
+      <ComponentRef Id="qgif4.dll" />
+      <ComponentRef Id="qico4.dll" />
+      <ComponentRef Id="qjpeg4.dll" />
+      <ComponentRef Id="qsqlite4.dll" />
+      <ComponentRef Id="qgenericbearer4.dll" />
+      <ComponentRef Id="qt.conf" />
+    </ComponentGroup>
+    <ComponentGroup Id="Cache">
+      <ComponentRef Id="Cache.dll" />
+      <ComponentRef Id="ChangeLog.Cache.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="Emoticons">
+      <ComponentRef Id="Emoticons.dll" />
+      <ComponentRef Id="kolobok.schat" />
+      <ComponentRef Id="ChangeLog.Emoticons.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="History">
+      <ComponentRef Id="History.dll" />
+      <ComponentRef Id="ChangeLog.History.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="Idle">
+      <ComponentRef Id="Idle.dll" />
+      <ComponentRef Id="ChangeLog.Idle.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="Profile">
+      <ComponentRef Id="Profile.dll" />
+      <ComponentRef Id="ChangeLog.Profile.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="Popup">
+      <ComponentRef Id="Popup.dll" />
+      <ComponentRef Id="ChangeLog.Popup.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="Proxy">
+      <ComponentRef Id="Proxy.dll" />
+      <ComponentRef Id="ChangeLog.Proxy.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="RawFeeds">
+      <ComponentRef Id="RawFeeds.dll" />
+      <ComponentRef Id="ChangeLog.RawFeeds.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="SendFile">
+      <ComponentRef Id="SendFile.dll" />
+      <ComponentRef Id="ChangeLog.SendFile.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="SpellChecker">
+      <ComponentRef Id="SpellChecker.dll" />
+      <ComponentRef Id="ChangeLog.SpellChecker.html" />
+      <ComponentRef Id="en_US.aff" />
+      <ComponentRef Id="ru_RU.aff" />
+      <ComponentRef Id="en_US.dic" />
+      <ComponentRef Id="ru_RU.dic" />
+    </ComponentGroup>
+    <ComponentGroup Id="Console">
+      <ComponentRef Id="Console.dll" />
+      <ComponentRef Id="ChangeLog.Console.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="Channels">
+      <ComponentRef Id="Channels.dll" />
+      <ComponentRef Id="ChangeLog.Channels.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="YouTube">
+      <ComponentRef Id="YouTube.dll" />
+      <ComponentRef Id="ChangeLog.YouTube.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="Update">
+      <ComponentRef Id="Update.dll" />
+      <ComponentRef Id="ChangeLog.Update.html" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>

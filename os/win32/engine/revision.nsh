@@ -1,0 +1,1 @@
+!define SCHAT_REVISION 0 

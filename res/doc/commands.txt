@@ -1,0 +1,26 @@
+/about
+/away
+/clear
+/color
+/dnd
+/exit
+/female
+/ffc
+/gender
+/help
+/hide
+/id
+/ignore
+/join
+/male
+/me
+/nick
+/offline
+/online
+/open *
+/part *
+/quit
+/say
+/set
+/topic
+/unignore

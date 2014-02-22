@@ -1,0 +1,7 @@
+usr/bin/schat2
+usr/lib*/libschat.so.*
+usr/lib*/libschat-client.so.*
+usr/lib*/schat2
+usr/share/applications
+usr/share/icons/hicolor
+usr/share/schat2

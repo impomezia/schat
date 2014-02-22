@@ -1,0 +1,7 @@
+FindProcDLL.dll
+  http://nsis.sourceforge.net/FindProcDLL_plug-in
+  FindProcDLL ©2003 by iceman_k (Sunil Kamath), based upon the FIND_PROC_BY_NAME function written by Ravi Kochhar (http://www.physiology.wisc.edu/ravi/
+
+KillProcDLL.dll
+  http://nsis.sourceforge.net/KillProcDLL_plug-in
+  KillProcDLL ©2003 by DITMan, based upon the KILL_PROC_BY_NAME function programmed by Ravi, reach him at: http://www.physiology.wisc.edu/ravi/

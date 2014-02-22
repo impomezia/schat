@@ -1,0 +1,96 @@
+h3 {
+  margin-bottom: 8px;
+}
+
+#content {
+  margin: 12px;
+}
+
+.icon-channel {
+  background-image: url(qrc:/images/channel.png);
+}
+
+.icon-secure {
+  background-image: url(qrc:/images/secure.png);
+}
+
+.icon-pin {
+  background-image: url(qrc:/images/pin.png);
+}
+
+.icon-add {
+  background-image: url(qrc:/images/add-gray.png);
+  opacity: 0.8;
+}
+
+#join-form {
+  -webkit-box-flex: 1;
+}
+
+.channel-item {
+  margin-bottom: 8px;
+}
+
+.channel-item-header {
+  display: -webkit-box;
+}
+
+.channel-item-header .nick, .channel-item-header .badge {
+  display: block;
+}
+
+.channel-item-header .nick {
+  font-size: 14px;
+  line-height: 16px;
+  margin-right: 5px;
+}
+
+.channel-item-title {
+  padding-left: 8px;
+  color: #555;
+}
+
+.badge {
+  padding: 0 5px;
+  line-height: 16px;
+  color: #fff;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #b4b4b4;
+  border-radius: 8px;
+}
+
+#join-name {
+  border-radius: 4px 0 0 4px;
+  margin: 0;
+}
+
+#join {
+  margin-left: 0;
+  border-radius: 0 4px 4px 0;
+  border-left: 0;
+}
+
+#channel-create .btn-group {
+  margin-bottom: 6px;
+}
+
+#channel-create .alert {
+  padding: 3px 6px;
+  margin-bottom: 0;
+  display: none;
+}
+
+#create-name {
+  margin-right: 0;
+  border-radius: 4px 0 0 4px;
+}
+
+#create-submit {
+  margin-right: 0;
+}
+
+#channel-create .btn-group > .btn {
+  float: inherit;
+}

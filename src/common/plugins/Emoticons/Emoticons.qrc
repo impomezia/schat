@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="images/Emoticons/edit.png">res/images/edit-emoticons.png</file>
+  <file alias="images/Emoticons/icon.png">res/images/human-o2/login-photo.png</file>
+  <file alias="images/Emoticons/icon-small.png">res/images/fugue/dummy-happy.png</file>
+  <file alias="translations/emoticons_ru.qm">res/translations/emoticons_ru.qm</file>
+  <file alias="translations/emoticons_uk.qm">res/translations/emoticons_uk.qm</file>
+</qresource>
+</RCC>

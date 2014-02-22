@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="images/SpellChecker/icon.png">res/images/oxygen/tools-check-spelling.png</file>
+  <file alias="images/SpellChecker/icon-small.png">res/images/fugue/spell-check.png</file>
+  <file alias="translations/spellchecker_ru.qm">res/translations/spellchecker_ru.qm</file>
+  <file alias="translations/spellchecker_uk.qm">res/translations/spellchecker_uk.qm</file>
+</qresource>
+</RCC>

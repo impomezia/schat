@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="css/Popup/flashed.css">res/css/flashed.css</file>
+  <file alias="css/Popup/text.css">res/css/text.css</file>
+  <file alias="css/Popup/window.css">res/css/window.css</file>
+  <file alias="translations/popup_ru.qm">res/translations/popup_ru.qm</file>
+  <file alias="translations/popup_uk.qm">res/translations/popup_uk.qm</file>
+</qresource>
+</RCC>

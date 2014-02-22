@@ -1,0 +1,34 @@
+--- 4.8.5.old/src/corelib/tools/qsimd.cpp	2013-06-07 12:16:52.000000000 +0700
++++ 4.8.5.new/src/corelib/tools/qsimd.cpp	2013-07-06 07:56:39.963484300 +0700
+@@ -202,13 +202,13 @@
+         pushfd
+         pop eax
+         mov ebx, eax
+-        xor eax, 00200000h
++        XOR eax, 00200000h
+         push eax
+         popfd
+         pushfd
+         pop eax
+         mov edx, 0
+-        xor eax, ebx
++        XOR eax, ebx
+         jz skip
+ 
+         mov eax, 1
+@@ -230,13 +230,13 @@
+         pushfd
+         pop eax
+         mov ebx, eax
+-        xor eax, 00200000h
++        XOR eax, 00200000h
+         push eax
+         popfd
+         pushfd
+         pop eax
+         mov edx, 0
+-        xor eax, ebx
++        XOR eax, ebx
+         jz skip2
+ 
+         mov eax, 80000000h

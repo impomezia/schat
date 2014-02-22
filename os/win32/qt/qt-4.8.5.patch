@@ -1,0 +1,74 @@
+diff -ur 4.8.5.old/mkspecs/common/gcc-base.conf 4.8.5.new/mkspecs/common/gcc-base.conf
+--- 4.8.5.old/mkspecs/common/gcc-base.conf	2013-06-07 12:17:00.000000000 +0700
++++ 4.8.5.new/mkspecs/common/gcc-base.conf	2013-07-05 12:52:57.413147691 +0700
+@@ -35,7 +35,7 @@
+ QMAKE_CFLAGS_DEPS           += -M
+ QMAKE_CFLAGS_WARN_ON        += -Wall -W
+ QMAKE_CFLAGS_WARN_OFF       += -w
+-QMAKE_CFLAGS_RELEASE        += -O2
++QMAKE_CFLAGS_RELEASE        += -Os
+ QMAKE_CFLAGS_DEBUG          += -g
+ QMAKE_CFLAGS_SHLIB          += -fPIC
+ QMAKE_CFLAGS_STATIC_LIB     += -fPIC
+diff -ur 4.8.5.old/mkspecs/win32-msvc2010/qmake.conf 4.8.5.new/mkspecs/win32-msvc2010/qmake.conf
+--- 4.8.5.old/mkspecs/win32-msvc2010/qmake.conf	2013-06-07 12:17:00.000000000 +0700
++++ 4.8.5.new/mkspecs/win32-msvc2010/qmake.conf	2013-07-05 12:52:57.421147691 +0700
+@@ -19,7 +19,7 @@
+ QMAKE_CFLAGS            = -nologo -Zm200 -Zc:wchar_t-
+ QMAKE_CFLAGS_WARN_ON    = -W3
+ QMAKE_CFLAGS_WARN_OFF   = -W0
+-QMAKE_CFLAGS_RELEASE    = -O2 -MD
++QMAKE_CFLAGS_RELEASE    = -O1 -Os -MD
+ QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO += -O2 -MD -Zi
+ QMAKE_CFLAGS_DEBUG      = -Zi -MDd
+ QMAKE_CFLAGS_YACC       =
+diff -ur 4.8.5.old/src/3rdparty/harfbuzz/src/harfbuzz-thai.c 4.8.5.new/src/3rdparty/harfbuzz/src/harfbuzz-thai.c
+--- 4.8.5.old/src/3rdparty/harfbuzz/src/harfbuzz-thai.c	2013-06-07 12:16:58.000000000 +0700
++++ 4.8.5.new/src/3rdparty/harfbuzz/src/harfbuzz-thai.c	2013-07-05 12:52:57.429147690 +0700
+@@ -53,17 +53,7 @@
+ static th_render_cell_mac_def th_render_cell_mac = 0;
+ 
+ static int init_libthai() {
+-    if (!th_brk || !th_next_cell || !th_render_cell_tis || !th_render_cell_win || !th_render_cell_mac) {
+-        th_brk = (th_brk_def) HB_Library_Resolve("thai", (int)LIBTHAI_MAJOR, "th_brk");
+-        th_next_cell = (th_next_cell_def)HB_Library_Resolve("thai", LIBTHAI_MAJOR, "th_next_cell");
+-        th_render_cell_tis = (th_render_cell_tis_def) HB_Library_Resolve("thai", (int)LIBTHAI_MAJOR, "th_render_cell_tis");
+-        th_render_cell_win = (th_render_cell_win_def) HB_Library_Resolve("thai", (int)LIBTHAI_MAJOR, "th_render_cell_win");
+-        th_render_cell_mac = (th_render_cell_mac_def) HB_Library_Resolve("thai", (int)LIBTHAI_MAJOR, "th_render_cell_mac");
+-    }
+-    if (th_brk && th_next_cell && th_render_cell_tis && th_render_cell_win && th_render_cell_mac)
+-        return 1;
+-    else
+-        return 0;
++    return 0;
+ }
+ 
+ static void to_tis620(const HB_UChar16 *string, hb_uint32 len, const char *cstr)
+diff -ur 4.8.5.old/src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro 4.8.5.new/src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro
+--- 4.8.5.old/src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro	2013-06-07 12:16:58.000000000 +0700
++++ 4.8.5.new/src/3rdparty/webkit/Source/WebKit/qt/QtWebKit.pro	2013-07-05 12:55:48.046225668 +0700
+@@ -252,9 +252,9 @@
+         } else: equals(DARWIN_MAJOR_VERSION, "10") | contains(QMAKE_MAC_SDK, ".*MacOSX10.6.sdk") {
+             LIBS += $$SOURCE_DIR/../WebKitLibraries/libWebKitSystemInterfaceSnowLeopard.a
+         } else: equals(DARWIN_MAJOR_VERSION, "11") | contains(QMAKE_MAC_SDK, ".*MacOSX10.7.sdk") {
+-            LIBS += $$SOURCE_DIR/../WebKitLibraries/libWebKitSystemInterfaceLion.a
++            LIBS += $$SOURCE_DIR/../WebKitLibraries/libWebKitSystemInterfaceSnowLeopard.a
+         } else: equals(DARWIN_MAJOR_VERSION, "12") | contains(QMAKE_MAC_SDK, ".*MacOSX10.8.sdk") {
+-            LIBS += $$SOURCE_DIR/../WebKitLibraries/libWebKitSystemInterfaceMountainLion.a
++            LIBS += $$SOURCE_DIR/../WebKitLibraries/libWebKitSystemInterfaceSnowLeopard.a
+         }
+     }
+ }
+Only in 4.8.5.new/src/3rdparty/webkit/Source/WebKit/qt: QtWebKit.pro.orig
+diff -ur 4.8.5.old/src/3rdparty/webkit/Source/WebKit.pri 4.8.5.new/src/3rdparty/webkit/Source/WebKit.pri
+--- 4.8.5.old/src/3rdparty/webkit/Source/WebKit.pri	2013-06-07 12:16:58.000000000 +0700
++++ 4.8.5.new/src/3rdparty/webkit/Source/WebKit.pri	2013-07-05 12:52:57.429147690 +0700
+@@ -154,7 +154,7 @@
+     CONFIG += use_qt_mobile_theme
+     maemo6: CONFIG += include_webinspector
+ } else {
+-    CONFIG += include_webinspector
++    CONFIG -= include_webinspector
+ }
+ 
+ *sh4* {

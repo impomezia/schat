@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>Simple Chat 2 — История версий</title>
+  <meta name="qrichtext" content="1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style type="text/css">
+     body { color:#333; background-color:#fff; }
+     p { margin-top:0; }
+     h3 { margin-bottom:0; }
+     h3 i { font-weight:normal; font-size:small; color:#999; }
+     em { font-family:"Courier New", Courier, monospace; color:#090; font-weight:bold; font-style:normal; }
+     b.pl { font-weight:normal; color:#999; }
+     small { color:#69F;}
+     a { text-decoration:none; color:#1a4d82; }
+  </style>
+</head>
+<body>
+<h3>1.9.8<i> 09.11.2011</i></h3>
+<p>
+<em>+</em> <small>09.11.2011</small> <a href="http://code.google.com/p/schat/issues/detail?id=61">#61</a> Реализована авторизация и регистрация через графический интерфейс.<br />
+<em>+</em> <small>06.11.2011</small> Добавлена возможность редактирования адреса текущей сети.<br />
+<em>+</em> <small>01.11.2011</small> Добавлено отображение успешной авторизации в статус баре.<br />
+<em>+</em> <small>31.10.2011</small> Реализована авторизация по имени и паролю.<br />
+<em>*</em> <small>28.10.2011</small> <a href="http://code.google.com/p/schat/issues/detail?id=71">#71</a> Исправлено, вкладка приветствия закрывалась при отмене подключения.<br />
+<em>+</em> <small>24.10.2011</small> Добавлена конфигурационная опция сервера <b>LogLevel</b>.<br />
+<em>*</em> <small>24.10.2011</small> Изменены пакеты запроса и ответа авторизации, потеряна совместимость протокола с версией <b>1.9.7</b> и ниже.<br />
+<em>+</em> <small>20.10.2011</small> Добавлена команда <b>/login</b>.<br />
+<em>*</em> <small>18.10.2011</small> Для текстового представления идентификаторов теперь используется Base32 кодирование.<br />
+<em>+</em> <small>17.10.2011</small> В таблицу <b>users</b> базы данных сервера добавлен столбец <b>account</b>.<br />
+<em>+</em> <small>16.10.2011</small> Добавлена команда <b>/reg</b>.<br />
+<em>+</em> <small>14.10.2011</small> В базу данных сервера добавлена таблица <b>accounts</b>.<br />
+<em>+</em> <small>12.10.2011</small> Добавлена страница настройки сети.<br />
+<em>+</em> <small>11.10.2011</small> Добавлено автоматическое преобразование ссылок в тексте.
+</p>
+
+<h3>1.9.7<i> 06.10.2011</i></h3>
+<p>
+<em>*</em> <small>06.10.2011</small> <a href="http://code.google.com/p/schat/issues/detail?id=68">#68</a> Исправлено, некорректное отображение времени отключения от сервера.<br />
+<em>+</em> <small>06.10.2011</small> <a href="http://code.google.com/p/schat/issues/detail?id=64">#64</a> Улучшена обработка изменения ника пользователя.<br />
+<em>*</em> <small>05.10.2011</small> <a href="http://code.google.com/p/schat/issues/detail?id=67">#67</a> Исправлена ошибка с полосой прокрутки.<br />
+<em>*</em> <small>05.10.2011</small> <a href="http://code.google.com/p/schat/issues/detail?id=66">#66</a> Исправлена ошибка при копировании текста.<br />
+<em>*</em> <small>05.10.2011</small> <a href="http://code.google.com/p/schat/issues/detail?id=62">#62</a> С помощью команды <b>/topic</b> невозможно было установить пустую тему канала.
+</p>
+
+<h3>1.9.6<i> 03.10.2011</i></h3>
+<p>
+<em>+</em> <small>02.10.2011</small> Релизована возможность редактировать тему канала.<br />
+<em>+</em> <small>27.09.2011</small> Новое контекстное меню поля отправки сообщения.<br />
+<em>+</em> <small>26.09.2011</small> Реализовано отображение темы канала.<br />
+<em>+</em> <small>25.09.2011</small> В базу данных сервера добавлена таблица <b>channels</b>.<br />
+<em>+</em> <small>23.09.2011</small> Добавлены высокоэффективные <a href="http://impomezia.com/node/164">текстовые фильтры</a>.<br />
+<em>+</em> <small>18.09.2011</small> Добавлена команда <b>/topic</b>.<br />
+<em>*</em> <small>18.09.2011</small> Исправлено, размер окна можно было изменить только в высоту или ширину.
+</p>
+
+<h3>1.9.5<i> 17.09.2011</i></h3>
+<p>
+<em>+</em> <small>17.09.2011</small> Добавлены опции сервера <b>Certificate</b> и <b>PrivateKey</b>.<br />
+<em>*</em> <small>17.09.2011</small> Улучшена поддержка Ubuntu Linux.<br />
+<em>*</em> <small>16.09.2011</small> Вторичные серверы теперь получают авторизационные данные пользователей для возможности осуществления Cookie авторизации при отсутствии связи с корневым сервером.<br />
+<em>*</em> <small>16.09.2011</small> Изменена схема базы данных сервера, в таблице <b>users</b> столбец <b>group</b> переименован в <b>groups</b>.<br />
+<em>*</em> <small>16.09.2011</small> Исправлены ошибки при синхронизации Cookie авторизации между серверами.<br />
+<em>+</em> <small>15.09.2011</small> Добавлена поддержка <a href="http://impomezia.com/node/162">SRV записей</a>.
+</p>
+
+<h3>1.9.4<i> 13.09.2011</i></h3>
+<p>
+<em>+</em> <small>13.09.2011</small> Добавлена <a href="http://impomezia.com/node/161">Cookie авторизация</a>.<br />
+<em>*</em> <small>12.09.2011</small> Запрещена анонимная авторизация на вторичном сервере, у которого отсутствует соединение с корневым сервером.<br />
+<em>+</em> <small>11.09.2011</small> Добавлена конфигурационная опция <b>CookieAuth</b>.<br />
+<em>*</em> <small>10.09.2011</small> Расширена схема базы данных сервера, в таблице <b>users</b> добавлен столбец <b>cookie</b> и столбец <b>ip</b> переименована в <b>host</b>.
+</p>
+
+<h3>1.9.3<i> 08.09.2011</i></h3>
+<p>
+<em>+</em> <small>08.09.2011</small> <a href="http://code.google.com/p/schat/issues/detail?id=60">#60</a> Реализована поддержка оффлайн сообщений.<br />
+<em>+</em> <small>01.09.2011</small> Добавлен плагин <a href="http://simple.impomezia.com/Plugin/MessageLog">Message Log</a>.
+</p>
+
+</body>
+</html>

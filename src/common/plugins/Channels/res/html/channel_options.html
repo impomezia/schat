@@ -1,0 +1,29 @@
+<form id="channel-options">
+  <div id="visibility-row" class="row">
+    <label for="visibility" data-tr="channels_visibility" class="options-label">Visibility in the channel list</label>
+    <select id="visibility" class="options-select btn">
+      <option value="0"  data-tr="channels_default">Default</option>
+      <option value="1"  data-tr="channels_always_visible">Always visible</option>
+      <option value="-1" data-tr="channels_hidden">Hidden</option>
+    </select><button id="pin-button" type="button" class="btn btn-icon-pin" title="Pin to channel list"></button>
+    <i id="visibility-spinner" class="icon-spinner hide"></i>
+    <div id="visibility-error" class="alert alert-error hide">Error</div>
+  </div>
+  <div id="permissions-row" class="row">
+    <label for="permissions" data-tr="channels_default_acl" class="options-label">Default permissions</label>
+    <select id="permissions" class="options-select btn">
+      <option value="502" data-tr="channels_readwrite">Read write</option>
+      <option value="484" data-tr="channels_readonly">Read only</option>
+      <option value="448" data-tr="channels_forbidden">No access</option>
+    </select><button id="sudo-button" type="button" class="btn btn-icon-sudo active"></button>
+    <i id="acl-spinner" class="icon-spinner hide"></i>
+    <div id="acl-error" class="alert alert-error hide"></div>
+  </div>
+  <hr>
+  <div id="logging-row" class="row">
+    <input id="logging" type="checkbox">
+    <label for="logging" data-tr="channels_logging">Logging messages</label>
+    <i id="logging-spinner" class="icon-spinner hide"></i>
+    <div id="logging-error" class="alert alert-error hide"></div>
+  </div>
+</form>

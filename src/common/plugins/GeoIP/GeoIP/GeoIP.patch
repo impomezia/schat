@@ -1,0 +1,202 @@
+Index: src/common/plugins/GeoIP/GeoIP/GeoIP.c
+===================================================================
+--- src/common/plugins/GeoIP/GeoIP/GeoIP.c	(revision 2494)
++++ src/common/plugins/GeoIP/GeoIP/GeoIP.c	(working copy)
+@@ -44,6 +44,28 @@
+ #include <stdint.h>     /* For uint32_t */
+ #endif
+ 
++#if defined(_WIN32)
++#include <io.h>
++#include <stdio.h>
++
++#if defined(_MSC_VER)
++typedef long ssize_t;
++#endif
++
++ssize_t
++pread(int fd, void *buf, size_t count, off_t offset)
++{
++    ssize_t retval ;
++    off_t saved_pos = lseek (fd, 0, SEEK_CUR);
++
++    lseek (fd, offset, SEEK_SET);
++    retval = read (fd, buf, count);
++    lseek (fd, saved_pos, SEEK_SET);
++
++    return retval;
++}
++#endif
++
+ #ifndef        INADDR_NONE
+ #define        INADDR_NONE     -1
+ #endif
+@@ -245,7 +267,7 @@
+         memset(&hints, 0, sizeof(struct addrinfo)); 
+         hints.ai_family = af; 
+  
+-        if (getaddrinfo(src, NULL, &hints, &res) != 0) 
++        if (getaddrinfo(src, NULL, &hints, &res) != 0)
+         { 
+                 fprintf(stderr, "Couldn't resolve host %s\n", src); 
+                 return -1; 
+@@ -611,7 +633,7 @@
+                   call it more than once a second */ 
+                 GetSystemTimeAsFileTime(&ft); 
+                 t = FILETIME_TO_USEC(ft) / 1000 / 1000; 
+-                if (t == gi->last_mtime_check){ 
++                if (t == (ULONGLONG) gi->last_mtime_check){
+                         return 0; 
+                 } 
+                 gi->last_mtime_check = t; 
+@@ -1579,7 +1601,7 @@
+ /* GeoIP Organization, ISP and AS Number Edition private method */
+ static
+ char *_get_name (GeoIP* gi, unsigned long ipnum) {
+-	int seek_org;
++  unsigned int seek_org;
+ 	char buf[MAX_ORG_RECORD_LENGTH];
+ 	char * org_buf, * buf_pointer;
+ 	int record_pointer;
+@@ -1600,7 +1622,7 @@
+ 	}
+ 
+ 	seek_org = _GeoIP_seek_record(gi, ipnum);
+-	if (seek_org == gi->databaseSegments[0])		
++	if (seek_org == gi->databaseSegments[0])
+ 		return NULL;
+ 
+ 	record_pointer = seek_org + (2 * gi->record_length - 1) * gi->databaseSegments[0];
+@@ -1628,7 +1650,7 @@
+ }
+ 
+ char *_get_name_v6 (GeoIP* gi, geoipv6_t ipnum) {
+-  int seek_org;
++  unsigned int seek_org;
+   char buf[MAX_ORG_RECORD_LENGTH];
+   char * org_buf, * buf_pointer;
+   int record_pointer;
+@@ -1710,7 +1732,7 @@
+ 	unsigned long right_seek;
+ 	unsigned long mask;
+ 	int orig_netmask;
+-	int target_value;
++	unsigned int target_value;
+ 	char **ret;
+ 	
+ 	if (addr == NULL) {
+@@ -1933,7 +1955,7 @@
+ 
+ const char * GeoIP_lib_version(void)
+ {
+-       return PACKAGE_VERSION;
++       return "1.4.8";
+ }
+ 
+ int GeoIP_cleanup(void)
+Index: src/common/plugins/GeoIP/GeoIP/GeoIP.h
+===================================================================
+--- src/common/plugins/GeoIP/GeoIP/GeoIP.h	(revision 2494)
++++ src/common/plugins/GeoIP/GeoIP/GeoIP.h	(working copy)
+@@ -31,12 +31,12 @@
+ #include <netinet/in.h>
+ #include <arpa/inet.h>
+ #else /* !defined(_WIN32) */ 
+-#include <winsock2.h> 
+-#include <ws2tcpip.h> 
+-#include <wspiapi.h>
+-#include <windows.h> 
+-#define snprintf _snprintf 
+-#define FILETIME_TO_USEC(ft) (((unsigned __int64) ft.dwHighDateTime << 32 | ft.dwLowDateTime) / 10) 
++# define _WIN32_WINNT 0x0501
++# include <winsock2.h>
++# include <ws2tcpip.h>
++# include <windows.h>
++# define snprintf _snprintf
++# define FILETIME_TO_USEC(ft) (((unsigned __int64) ft.dwHighDateTime << 32 | ft.dwLowDateTime) / 10)
+ #endif /* !defined(_WIN32) */ 
+  
+ #include<stdio.h>
+Index: src/common/plugins/GeoIP/GeoIP/GeoIPCity.c
+===================================================================
+--- src/common/plugins/GeoIP/GeoIP/GeoIPCity.c	(revision 2494)
++++ src/common/plugins/GeoIP/GeoIP/GeoIPCity.c	(working copy)
+@@ -19,9 +19,9 @@
+  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+  */
+ 
+-#include <GeoIP.h>
+-#include <GeoIP_internal.h>
+-#include <GeoIPCity.h>
++#include "GeoIP.h"
++#include "GeoIP_internal.h"
++#include "GeoIPCity.h"
+ #if !defined(_WIN32)
+ #include <unistd.h>
+ #include <netdb.h>
+@@ -35,11 +35,16 @@
+ #include <stdint.h>	/* For uint32_t */
+ #endif
+ 
+-static
+-const int       FULL_RECORD_LENGTH = 50;
+ 
++#if defined(_WIN32) && defined(_MSC_VER)
++#define FULL_RECORD_LENGTH 50
++#define CITYCONFIDENCE_FIXED_RECORD 4
++#define CITYCONFIDENCEDIST_FIXED_RECORD 6
++#else
++static const int FULL_RECORD_LENGTH = 50;
+ static const int CITYCONFIDENCE_FIXED_RECORD = 4;
+ static const int CITYCONFIDENCEDIST_FIXED_RECORD = 6;
++#endif
+ 
+ 
+ static
+@@ -70,6 +75,7 @@
+      ? CITYCONFIDENCE_FIXED_RECORD
+      : CITYCONFIDENCEDIST_FIXED_RECORD);
+ 
++    int t;
+     //allocate max rec size, even for CITYCONFIDENCE_FIXED_RECORD
+       //+4 is the max_record_length
+ 	unsigned char   tmp_fixed_record[CITYCONFIDENCEDIST_FIXED_RECORD + 4];
+@@ -97,7 +103,7 @@
+ 	gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION
+ 	? ((tmp_fixed_record[4] + (tmp_fixed_record[5] << 8)) & 0x3ff) : 0x3ff;
+ 
+-      int             t = fixed_rec_size - gi->record_length;
++  t = fixed_rec_size - gi->record_length;
+       
+     record_pointer = dseg + tmp_fixed_record[t] +
+ 	(tmp_fixed_record[t + 1] << 8) + (tmp_fixed_record[t + 2] << 16) ;
+@@ -118,6 +124,7 @@
+ 
+     }
+     else {
++      int t;
+       record_buf = gi->cache + (long) record_pointer;
+ 
+       record->country_conf = record_buf[0];
+@@ -129,7 +136,7 @@
+ 	gi->databaseType == GEOIP_CITYCONFIDENCEDIST_EDITION
+ 	? ((record_buf[4] + (record_buf[5] << 8)) & 0x3ff) : 0x3ff;
+ 
+-      int             t = fixed_rec_size - gi->record_length;
++      t = fixed_rec_size - gi->record_length;
+ 
+         record_pointer = dseg + record_buf[t] +
+ 	(record_buf[t + 1] << 8) + (record_buf[t + 2] << 16) ;
+Index: src/common/plugins/GeoIP/GeoIP/GeoIPCity.h
+===================================================================
+--- src/common/plugins/GeoIP/GeoIP/GeoIPCity.h	(revision 2494)
++++ src/common/plugins/GeoIP/GeoIP/GeoIPCity.h	(working copy)
+@@ -21,7 +21,7 @@
+ #ifndef GEOIPCITY_H
+ #define GEOIPCITY_H
+ 
+-#include <GeoIP.h>
++#include "GeoIP.h"
+ 
+ #ifdef __cplusplus
+ extern "C" {

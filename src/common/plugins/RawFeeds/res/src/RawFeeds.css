@@ -1,0 +1,88 @@
+.raw-feeds-title {
+  margin: 0 0 5px 0;
+  color: #000;
+}
+.raw-feeds-title-icon {
+  background: url("qrc:/images/RawFeeds/feeds.png") no-repeat left center;
+  background-position: -12px center;
+  padding-left: 16px;
+}
+
+.feed-info {
+  padding-left: 16px;
+}
+
+.feed-info .date-time-block {
+  color: inherit;
+  font-size: inherit;
+}
+
+.feed-name {
+  font-weight: bold;
+}
+.raw-feeds-bad-status
+{
+  color:#da251d;
+}
+
+.icon-feed, .icon-feed-cached {
+  width: 12px;
+  height: 12px;
+  background-image: url("qrc:/images/RawFeeds/feeds.png");
+}
+
+.icon-feed-cached {
+  background-position: -12px 0;
+}
+
+.KelpJSONView
+{
+  width:100%;
+  overflow:auto;
+  font-family:monospace;
+  max-height:666px;
+  background-color:#f5f5f5;
+}
+.KelpJSONView ol
+{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.KelpJSONView ol li
+{
+  white-space:nowrap;
+}
+.KelpJSONView ol li:hover
+{
+  white-space:nowrap;
+  background-color:#dbdde5;
+}
+.jsonhighlight
+{
+  background-color:#eee;
+}
+.jsonname
+{
+  color:#555;
+}
+.jsonstring
+{
+  color:#268BD2;
+}
+.jsonnull
+{
+  color:#d63Bd2;
+}
+.jsonnumber
+{
+  color:#964B32;
+}
+.jsonboolean
+{
+  color:#b64B72;
+}
+.jsontag
+{
+  color:#999;
+}

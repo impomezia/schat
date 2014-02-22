@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Simple Chat 2
+GenericName=Chat application
+Comment=IMPOMEZIA Simple Chat Client
+Exec=schat2
+Icon=schat2
+Terminal=false
+Categories=Network;Chat;InstantMessaging;Qt;

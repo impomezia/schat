@@ -1,0 +1,19 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="css/Console/bootstrap.css">../Channels/res/css/bootstrap.min.css</file>
+  <file alias="css/Console/bootstrap-override.css">../Channels/res/css/bootstrap-override.min.css</file>
+  <file alias="css/Console/console.css">res/css/console.min.css</file>
+  <file alias="html/Console/home.html">res/html/home.html</file>
+  <file alias="html/Console/index.html">res/html/index.html</file>
+  <file alias="html/Console/login.html">res/html/login.html</file>
+  <file alias="html/Console/password.html">res/html/password.html</file>
+  <file alias="images/Console/terminal.png">res/images/fugue/terminal.png</file>
+  <file alias="js/Console/console.js">res/js/console.min.js</file>
+  <file alias="js/Console/console-home.js">res/js/console-home.min.js</file>
+  <file alias="js/Console/console-login.js">res/js/console-login.min.js</file>
+  <file alias="js/Console/console-password.js">res/js/console-password.min.js</file>
+  <file alias="translations/console_en.qm">res/translations/console_en.qm</file>
+  <file alias="translations/console_ru.qm">res/translations/console_ru.qm</file>
+  <file alias="translations/console_uk.qm">res/translations/console_uk.qm</file>
+</qresource>
+</RCC>

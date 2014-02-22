@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Channels</title>
+    <link rel="stylesheet" href="qrc:/css/Channels/bootstrap.css">
+    <link rel="stylesheet" href="qrc:/css/Channels/bootstrap-override.css">
+    <link rel="stylesheet" href="qrc:/css/ChatView.css">
+    <link rel="stylesheet" href="qrc:/css/Channels/ListView.css">
+    <script src="qrc:/js/jquery.js"></script>
+    <script src="qrc:/js/bootstrap-modal.js"></script>
+    <script src="qrc:/js/ChatView.js"></script>
+    <script src="qrc:/js/Channels/ListView.js"></script>
+  </head>
+
+  <body>
+    <div id="loading"><div id="loading-body"><i class="icon-spinner"></i> <span id="loading-text" data-tr="loading">Loading...</span></div></div>
+
+    <div id="page">
+      <div class="navbar navbar-static-top">
+        <div class="navbar-inner">
+          <a class="brand" href="#" id="server-name"></a>
+          <div class="divider-vertical"></div>
+          <form id="join-form">
+            <div id="join-group" class="control-group">
+              <input id="join-name" type="search" class="span3" maxlength="20" placeholder="Channel name"><button id="join" type="submit" class="btn" data-tr="channels_join">Join</button>
+            </div>
+          </form>
+          <button id="create" class="btn btn-small modal-toggle" data-handler="create"><i class="icon-add"></i><span data-tr="channels_create">Create</span></button>
+        </div>
+      </div>
+
+      <div id="content">
+        <div id="channels">
+          <div id="channels-list">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-wrapper">
+      <div id="modal-center">
+        <div class="modal" id="modal">
+          <div id="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3></h3>
+          </div>
+          <div id="modal-body">
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

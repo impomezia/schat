@@ -1,0 +1,12 @@
+[Unit]
+Description=Simple Chat Web Authentication Daemon
+After=schatd2.service
+
+[Service]
+Type=forking
+User=schatd2
+Group=schatd2
+ExecStart=/usr/sbin/schat-authd -D 
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,106 @@
+/* $Id: PluginsView.css 3283 2012-11-22 04:07:54Z IMPOMEZIA $
+ * IMPOMEZIA Simple Chat
+ * Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+a {
+  text-decoration:none;
+}
+
+a:link, a:visited {
+  color:#2988d2;
+}
+
+a:active, a:hover {
+  color:#1e6396;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color:#fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius:3px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius:3px;
+}
+
+.plugin-wrapper {
+  padding: 5px 0;
+  opacity: .5;
+}
+
+.plugin-enabled {
+  opacity: 1;
+}
+
+.plugin-wrapper:hover {
+  background-color: #f7f8f9;
+  opacity: 1;
+}
+
+.plugin {
+  background-repeat: no-repeat;
+  display: -webkit-box;
+  min-height: 32px;
+}
+
+.plugin-details {
+  -webkit-box-flex: 1;
+  padding-left: 40px;
+}
+
+.plugin-title {
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.plugin-description {
+  color: #979CA0;
+}
+
+.plugin-description, .restart-controls {
+  padding-top: 5px;
+}
+
+.restart-text {
+  padding-right: 10px;
+}
+
+.enabled-text, .enable-text, .restart-controls {
+  display: none;
+}
+
+.plugin-wrapper:not(:hover) .plugin-controls:not(:focus) {
+  opacity: 0;
+}
+
+.plugin-controls {
+  -webkit-transition: opacity 200ms;
+}
+
+[data-tr=will_be_enabled] {
+  color: #468847;
+}
+
+.settings {
+  padding-left: 18px;
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include Variables.wxi?>
+  <Fragment>
+    <Feature Id="Product" Title="Core Components" Description="Core Components" Level="1" AllowAdvertise="no" Absent="disallow" ConfigurableDirectory="INSTALLLOCATION">
+      <ComponentGroupRef Id="Core" />
+      <ComponentRef Id="StartMenuFolder" />
+    </Feature>
+    <Feature Id="Qt" Title="Qt Components" Description="Qt Components" Level="1" AllowAdvertise="no" Absent="disallow" ConfigurableDirectory="INSTALLLOCATION">
+      <ComponentGroupRef Id="Qt" />
+    </Feature>
+    <Feature Id="Plugins" Title="Main Plugins" Description="Main Plugins" Level="1" AllowAdvertise="no" ConfigurableDirectory="INSTALLLOCATION">
+      <Feature Id="Cache" Title="Cache" Description="Improves performance and reduces network traffic" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Cache" />
+      </Feature>
+      <Feature Id="Emoticons" Title="Emoticons" Description="Adds support for graphical emoticons" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Emoticons" />
+      </Feature>
+      <Feature Id="History" Title="History" Description="Adds support for access to the message history" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="History" />
+      </Feature>
+      <Feature Id="Idle" Title="Idle" Description="Detect idle time to automatically set Away status" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Idle" />
+      </Feature>
+      <Feature Id="Profile" Title="Profile" Description="Adds support for additional profile fields" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Profile" />
+      </Feature>
+      <Feature Id="Popup" Title="Popup" Description="Adds support for popup notifications" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Popup" />
+      </Feature>
+      <Feature Id="Proxy" Title="Proxy" Description="Adds support for connections via HTTP and SOCKS5 proxy" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Proxy" />
+      </Feature>
+      <Feature Id="Console" Title="Console" Description="Server Management console" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Console" />
+      </Feature>
+      <Feature Id="Channels" Title="Channels" Description="Advanced channels support" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Channels" />
+      </Feature>
+      <Feature Id="RawFeeds" Title="Raw Feeds" Description="Debug plugin to access the raw data feeds" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="RawFeeds" />
+      </Feature>
+      <Feature Id="SendFile" Title="Send File" Description="Adds support for file transfer between users" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="SendFile" />
+      </Feature>
+      <Feature Id="SpellChecker" Title="Spell Checker" Description="Automatic spell checking" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="SpellChecker" />
+      </Feature>
+      <Feature Id="YouTube" Title="YouTube" Description="Adds support for embedding YouTube videos in messages" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="YouTube" />
+      </Feature>
+      <Feature Id="Update" Title="Update" Description="Automatically downloads and installs updates" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Update" />
+      </Feature>
+    </Feature>
+  </Fragment>
+</Wix>

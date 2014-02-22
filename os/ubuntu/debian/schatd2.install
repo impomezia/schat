@@ -1,0 +1,6 @@
+usr/lib*/libschat-rest.so.*
+usr/lib*/libschat-tufao.so.*
+usr/lib*/libschatd.so.*
+usr/lib*/schatd2
+usr/sbin
+usr/share/schatd2

@@ -1,0 +1,57 @@
+/* $Id: History.rc 3841 2013-10-27 00:22:25Z IMPOMEZIA $
+ * IMPOMEZIA Simple Chat
+ * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+# if defined(UNDER_CE)
+#  include <winbase.h>
+# else
+#  include <winver.h>
+# endif
+
+#include "../../version.h"
+
+VS_VERSION_INFO VERSIONINFO
+  FILEVERSION 0,5,1,0
+  PRODUCTVERSION SCHAT_VERSION_RC
+  FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+  FILEFLAGS VS_FF_DEBUG
+#else
+  FILEFLAGS 0x0L
+#endif
+  FILEOS VOS__WINDOWS32
+  FILETYPE VFT_DLL
+  FILESUBTYPE 0x0L
+  BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+      BLOCK "040904B0"
+      BEGIN
+        VALUE "CompanyName",      SCHAT_ORGANIZATION
+        VALUE "FileDescription",  "Adds support for access to the message history"
+        VALUE "FileVersion",      "0.5.1"
+        VALUE "LegalCopyright",   SCHAT_COPYRIGHT
+        VALUE "OriginalFilename", "History.dll"
+        VALUE "ProductName",      SCHAT_NAME
+        VALUE "ProductVersion",   SCHAT_VERSION
+      END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+      VALUE "Translation", 0x0, 1200
+    END
+  END

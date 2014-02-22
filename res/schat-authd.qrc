@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file>www/error.html</file>
+  <file>www/index.html</file>
+  <file>www/result.html</file>
+</qresource>
+</RCC>

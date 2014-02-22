@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define ProductName="Simple Chat 2"?>
+  <!--<?define ProductVersion="2.0.8"?>-->
+  <?define ProductCodepage="UTF-8"?>
+  <?define UpgradeCode="d8b07eea-7fa8-48a5-b96b-1cb99fc3539b"?>
+  <?define ApplicationDescription="Simple Chat is a simple and powerful cross-platform client-server chat for local networks and the Internet."?>
+  <?define Manufacturer="Alexander Sedov"?>
+</Include>

@@ -1,0 +1,3 @@
+﻿QtWin - Copyright © 2009 Nokia Corporation <http://labs.qt.nokia.com/2009/09/15/using-blur-behind-on-windows/>
+QProgressIndicator - Copyright © 2009-2010 Morgan Leborgne, LGPL, <http://qt-apps.org/content/show.php/QProgressIndicator?content=115762>
+Fugue Icons - Copyright © Yusuke Kamiyamane, Creative Commons Attribution 3.0, <http://p.yusukekamiyamane.com/>

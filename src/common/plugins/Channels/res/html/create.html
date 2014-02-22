@@ -1,0 +1,15 @@
+<form id="channel-create">
+  <div class="row btn-group control-group" id="create-name-row">
+    <label data-tr="channels_name_label" class="control-label">Name:</label>
+    <input id="create-name" type="text" maxlength="64"><button id="create-submit" type="submit" class="btn" data-tr="channels_create">Create</button><button id="create-cancel" type="button" class="btn" data-tr="channels_cancel" data-dismiss="modal">Cancel</button>
+  </div>
+  <div class="row control-group">
+    <label data-tr="channels_access_label" class="control-label">Access:</label>
+    <label>
+      <input type="checkbox" name="access" id="access-checkbox">
+      <span data-tr="channels_access_checkbox">This channel is private</span>
+    </label>
+  </div>
+  <div class="alert alert-error"><i id="visibility-error" class="icon-error hide"></i> <span id="create-error">Error</span></div>
+
+</form>

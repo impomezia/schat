@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="translations/proxy_ru.qm">res/translations/proxy_ru.qm</file>
+  <file alias="translations/proxy_uk.qm">res/translations/proxy_uk.qm</file>
+</qresource>
+</RCC>

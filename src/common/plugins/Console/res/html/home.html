@@ -1,0 +1,68 @@
+<div class="navbar navbar-static-top">
+  <div class="navbar-inner">
+    <a class="brand modal-toggle server-name" href="#" id="server-name" data-handler="name"></a>
+    <ul class="nav" id="main-nav">
+      <li class="active"><a id="nav-home" href="#" data-tr="console_home">Home</a></li>
+    </ul>
+    <ul class="nav pull-right">
+      <li><a id="nav-logout" href="#" data-tr="console_logout">Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+<div id="content">
+  <h3 data-tr="console_about_server">About server</h3>
+  <div id="about-server-block">
+    <div class="field-row">
+      <span class="field-row-label" data-tr="console_name">Name:</span>
+      <span class="field-row-value"><a class="modal-toggle server-name" href="#" data-handler="name"></a> <a class="modal-toggle" data-handler="name"><i class="icon-gear cursor-pointer"></i></a></span>
+    </div>
+    <div class="field-row">
+      <span class="field-row-label" data-tr="console_version">Version:</span>
+      <span class="field-row-value" id="server-version"></span>
+    </div>
+    <div class="field-row">
+      <span class="field-row-label" data-tr="encryption">Encryption:</span>
+      <span class="field-row-value" id="server-encryption"></span>
+    </div>
+  </div>
+
+  <h3 data-tr="console_users_online">Users online</h3>
+  <div id="users-online-block">
+    <div class="field-row">
+      <span class="field-row-label" data-tr="console_now">Now:</span>
+      <span class="field-row-value" id="users-online-now">0</span>
+    </div>
+    <div class="field-row">
+      <span class="field-row-label" data-tr="console_peak">Peak:</span>
+      <span class="field-row-value" id="users-online-peak">0</span>
+    </div>
+  </div>
+
+  <h3 data-tr="console_auth">Registration</h3>
+  <div id="auth-block" class="hide">
+    <div class="field-row">
+      <form id="oauth-form">
+        <div id="oauth-group" class="control-group">
+          <div><input id="oauth-auth" type="checkbox" class="auth-checkbox" checked> <label for="oauth-auth" data-tr="console_oauth">OAuth</label></div>
+          <div id="oauth-block"><input id="oauth-server" type="text" class="span3 input-append" maxlength="256" value="https://auth.schat.me"><button id="oauth-ok" type="submit" class="btn btn-prepend" data-tr="console_ok">OK</button></div>
+        </div>
+      </form>
+    </div>
+    <div class="field-row">
+      <span class="field-row-value"><input id="anonymous-auth" type="checkbox" class="auth-checkbox" checked> <label for="anonymous-auth" data-tr="console_anonymous">Anonymous</label></span>
+    </div>
+  </div>
+
+  <h3 data-tr="console_main_channel">Main channel</h3>
+  <div id="main-channel-block" class="hide">
+    <div class="field-row">
+      <form id="channel-form">
+        <div><input type="checkbox" id="use-main-channel"> <label for="use-main-channel" data-tr="console_use_main_channel">Use main channel</label></div>
+        <div><input type="checkbox" id="forced-join"> <label for="forced-join" data-tr="console_forced_join">Forced join to main channel</label></div>
+        <div><input type="checkbox" id="disable-leave"> <label for="disable-leave" data-tr="console_disable_leave">Disable leave from channel</label></div>
+      </form>
+    </div>
+  </div>
+
+</div>

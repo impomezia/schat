@@ -1,0 +1,114 @@
+/* $Id: about.css 3312 2012-12-09 20:42:44Z IMPOMEZIA $
+ * IMPOMEZIA Simple Chat
+ * Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+* {
+  word-wrap:break-word;
+}
+
+body {
+  margin:0;
+  background:#fff url("qrc:/images/icons/96x96/schat2.png") 12px 8px no-repeat;
+}
+
+a {
+  text-decoration:none;
+}
+
+a:link, a:visited {
+  color:#2976d1;
+}
+
+a:active, a:hover {
+  color:#1e6396;
+}
+
+#container {
+  margin: 10px 0 10px 125px;
+}
+
+#header {
+  float: left;
+}
+
+#impomezia {
+  color:#da251d;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 12px;
+  height: 12px;
+}
+
+#brand {
+  font-size: 36px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  line-height: 36px;
+  height: 36px;
+}
+
+#version {
+  float: left;
+  margin-top: 16px;
+  padding-left: 6px;
+}
+
+#version a {
+  color: #000;
+}
+
+#site {
+  text-align: right;
+  font-weight: bold;
+}
+
+#copyright {
+  padding-top: 8px;
+  clear: both;
+}
+
+#license {
+  color: rgba(0,0,0,0.5);
+}
+
+#thanks {
+  margin-top: 24px;
+}
+
+.header {
+  padding-left:14px;
+  margin-top:1em;
+  cursor:pointer;
+}
+
+.toggle-expand {
+  background: url("qrc:/images/toggle-small-expand.png") no-repeat left center transparent;
+}
+
+.toggle {
+  background: url("qrc:/images/toggle-small.png") no-repeat left center transparent;
+}
+
+.toggle-data {
+  display:none;
+  padding-left:11px;
+}
+
+.field-row-label, .field-row-value {
+  display:inline-block;
+}

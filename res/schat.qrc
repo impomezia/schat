@@ -1,0 +1,145 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="css/about.css">html/css/about.min.css</file>
+  <file alias="css/channel.css">html/css/channel.min.css</file>
+  <file alias="css/ChatView.css">html/css/ChatView.min.css</file>
+  <file alias="css/input.css">html/css/input.css</file>
+  <file alias="css/PluginsView.css">html/css/PluginsView.min.css</file>
+  <file alias="css/server.css">html/css/server.min.css</file>
+  <file alias="css/user.css">html/css/user.min.css</file>
+  <file alias="images/add.png">images/diagona/103.png</file>
+  <file alias="images/add-gray.png">images/add.png</file>
+  <file alias="images/add-small.png">images/diagona/10/103.png</file>
+  <file alias="images/arrow-right.png">images/silk/resultset_next.png</file>
+  <file alias="images/away-small.png">images/diagona/10/087.png</file>
+  <file alias="images/balloon.png">images/fugue/balloon.png</file>
+  <file alias="images/bell.png">images/fugue/bell.png</file>
+  <file alias="images/br-next.png">images/wireframe/br_next.png</file>
+  <file alias="images/br-prev.png">images/wireframe/br_prev.png</file>
+  <file alias="images/channel.png">images/hypic/forum_16.png</file>
+  <file alias="images/channel-alert.png">images/diagona/029.png</file>
+  <file alias="images/computer.png">images/fugue/computer.png</file>
+  <file alias="images/dnd-small.png">images/fugue/cross-circle-small.png</file>
+  <file alias="images/edit-clear.png">images/fugue/broom.png</file>
+  <file alias="images/edit-copy.png">images/crystal/editcopy.png</file>
+  <file alias="images/edit-cut.png">images/crystal/editcut.png</file>
+  <file alias="images/edit-paste.png">images/crystal/editpaste.png</file>
+  <file alias="images/edit-select-all.png">images/oxygen/edit-select-all.png</file>
+  <file alias="images/exclamation.png">images/fugue/exclamation.png</file>
+  <file alias="images/exclamation-circle.png">images/fugue/exclamation-circle.png</file>
+  <file alias="images/exclamation-red.png">images/fugue/exclamation-red.png</file>
+  <file alias="images/exclamation-red-frame.png">images/fugue/exclamation-red-frame.png</file>
+  <file alias="images/external-small.png">images/fugue/external-small.png</file>
+  <file alias="images/ffc-small.png">images/diagona/10/036.png</file>
+  <file alias="images/gear.png">images/fugue/gear.png</file>
+  <file alias="images/globe.png">images/diagona/094.png</file>
+  <file alias="images/information.png">images/fugue/information.png</file>
+  <file alias="images/information-balloon.png">images/fugue/information-balloon.png</file>
+  <file alias="images/key.png">images/diagona/065.png</file>
+  <file alias="images/locale.png">images/fugue/locale-alternate.png</file>
+  <file alias="images/main-tab-menu.png">images/fugue/applications-stack.png</file>
+  <file alias="images/message.png">images/diagona/004.png</file>
+  <file alias="images/message-active.png">images/diagona/003.png</file>
+  <file alias="images/message-small.png">images/diagona/10/003.png</file>
+  <file alias="images/network-error.png">images/fugue/network-status-busy.png</file>
+  <file alias="images/offline.png">images/fugue/network-status-offline.png</file>
+  <file alias="images/ok.png">images/diagona/102.png</file>
+  <file alias="images/online.png">images/fugue/network-status.png</file>
+  <file alias="images/password.png">images/fugue/ui-text-field-password.png</file>
+  <file alias="images/pin.png">images/fugue/pin.png</file>
+  <file alias="images/plug.png">images/fugue/plug.png</file>
+  <file alias="images/plug-disconnect.png">images/fugue/plug-disconnect.png</file>
+  <file alias="images/plugin.png">images/hypic/plugin_16.png</file>
+  <file alias="images/plugin32.png">images/hypic/plugin_32.png</file>
+  <file alias="images/profile.png">images/led-icons/vcard.png</file>
+  <file alias="images/prohibition.png">images/fugue/prohibition.png</file>
+  <file alias="images/providers.png">www/img/providers.png</file>
+  <file alias="images/quit.png">images/crystal/exit.png</file>
+  <file alias="images/reload.png">images/fugue/arrow-circle-315.png</file>
+  <file alias="images/remove.png">images/silk/cross.png</file>
+  <file alias="images/secure.png">images/fugue/lock.png</file>
+  <file alias="images/send.png">images/oxygen/go-jump-locationbar.png</file>
+  <file alias="images/settings.png">images/diagona/086.png</file>
+  <file alias="images/sign-in.png">images/essen/sign-in.png</file>
+  <file alias="images/sign-out.png">images/essen/sign-out.png</file>
+  <file alias="images/sign-up.png">images/essen/sign-up.png</file>
+  <file alias="images/slash.png">images/fugue/slash.png</file>
+  <file alias="images/sound.png">images/human_o2/kmixdocked.png</file>
+  <file alias="images/sound_mute.png">images/human_o2/kmixdocked_mute.png</file>
+  <file alias="images/status.png">images/fugue/status.png</file>
+  <file alias="images/status-offline.png">images/fugue/status-offline.png</file>
+  <file alias="images/text-bold.png">images/oxygen/format-text-bold.png</file>
+  <file alias="images/text-italic.png">images/oxygen/format-text-italic.png</file>
+  <file alias="images/text-strikethrough.png">images/oxygen/format-text-strikethrough.png</file>
+  <file alias="images/text-underline.png">images/oxygen/format-text-underline.png</file>
+  <file alias="images/toggle-small.png">images/diagona/10/130.png</file>
+  <file alias="images/toggle-small-expand.png">images/diagona/10/129.png</file>
+  <file alias="images/topic-edit.png">images/diagona/018.png</file>
+  <file alias="images/user.png">images/fugue/user.png</file>
+  <file alias="images/user-black.png">images/fugue/user-black.png</file>
+  <file alias="images/user-black-female.png">images/fugue/user-black-female.png</file>
+  <file alias="images/user-bot.png">images/fugue/user-worker-boss.png</file>
+  <file alias="images/user-female.png">images/fugue/user-female.png</file>
+  <file alias="images/user-ghost.png">images/fugue/ghost.png</file>
+  <file alias="images/user-gray.png">images/fugue/user-gray.png</file>
+  <file alias="images/user-gray-female.png">images/fugue/user-gray-female.png</file>
+  <file alias="images/user-green.png">images/fugue/user-green.png</file>
+  <file alias="images/user-green-female.png">images/fugue/user-green-female.png</file>
+  <file alias="images/user-medical.png">images/fugue/user-medical.png</file>
+  <file alias="images/user-medical-female.png">images/fugue/user-medical-female.png</file>
+  <file alias="images/user-nude.png">images/fugue/user-nude.png</file>
+  <file alias="images/user-nude-female.png">images/fugue/user-nude-female.png</file>
+  <file alias="images/user-red.png">images/fugue/user-red.png</file>
+  <file alias="images/user-red-female.png">images/fugue/user-red-female.png</file>
+  <file alias="images/users.png">images/fugue/users.png</file>
+  <file alias="images/user-thief.png">images/fugue/user-thief-baldie.png</file>
+  <file alias="images/user-thief-female.png">images/fugue/user-thief-female.png</file>
+  <file alias="images/user-unknown.png">images/fugue/user-silhouette-question.png</file>
+  <file alias="images/user-white.png">images/fugue/user-white.png</file>
+  <file alias="images/user-white-female.png">images/fugue/user-white-female.png</file>
+  <file alias="images/user-yellow.png">images/fugue/user-yellow.png</file>
+  <file alias="images/user-yellow-female.png">images/fugue/user-yellow-female.png</file>
+  <file alias="js/about.js">html/js/about.min.js</file>
+  <file alias="js/bootstrap-modal.js">html/js/bootstrap-modal.min.js</file>
+  <file alias="js/bootstrap-tooltip.js">html/js/bootstrap-tooltip.min.js</file>
+  <file alias="js/ChatView.js">html/js/ChatView.min.js</file>
+  <file alias="js/jquery.js">html/js/jquery.min.js</file>
+  <file alias="js/jquery.timeago.en.js">html/js/jquery.timeago.en.min.js</file>
+  <file alias="js/jquery.timeago.js">html/js/jquery.timeago.min.js</file>
+  <file alias="js/jquery.timeago.ru.js">html/js/jquery.timeago.ru.min.js</file>
+  <file alias="js/PluginsView.js">html/js/PluginsView.min.js</file>
+  <file alias="js/server.js">html/js/server.min.js</file>
+  <file alias="js/user.js">html/js/user.min.js</file>
+  <file>html/about.html</file>
+  <file>html/Channel.html</file>
+  <file>html/Plugins.html</file>
+  <file>html/Server.html</file>
+  <file>html/User.html</file>
+  <file>images/close.png</file>
+  <file>images/close-hover.png</file>
+  <file>images/color.png</file>
+  <file>images/color-map.png</file>
+  <file>images/edit.png</file>
+  <file>images/find_next.png</file>
+  <file>images/find_previous.png</file>
+  <file>images/icons/48x48/schat2.png</file>
+  <file>images/icons/96x96/schat2.png</file>
+  <file>images/minus-small.png</file>
+  <file>images/os.png</file>
+  <file>images/play.png</file>
+  <file>images/plus-small.png</file>
+  <file>images/progress.gif</file>
+  <file>images/progress-pink.gif</file>
+  <file>images/schat16.png</file>
+  <file>images/schat16-ny.png</file>
+  <file>images/search.png</file>
+  <file>images/spinner.gif</file>
+  <file>images/spinner.png</file>
+  <file>images/spinner-small.gif</file>
+  <file>images/spinner-yellow.gif</file>
+  <file>images/stop.png</file>
+  <file>images/trash.png</file>
+  <file>translations/en.png</file>
+  <file>translations/unknown.png</file>
+</qresource>
+</RCC>

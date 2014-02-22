@@ -1,0 +1,20 @@
+#PopupWindow {
+  border:1px solid #7581a9;
+}
+#PopupWindow QLabel {
+  padding:2px;
+  border-bottom:1px solid #d5d7d9;
+  border-top:1px solid #fefefe;
+  background-color: #f4f6f7;
+}
+#IconLabel {
+  border-left:1px solid #fefefe;
+}
+#DateLabel {
+  border-right:1px solid #fefefe;
+}
+#PopupWindow QTextBrowser {
+  border:1px solid #fefefe;
+  border-top:1px solid #ffffff;
+  background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f4f6f7, stop:1 #e1e3e5);
+}

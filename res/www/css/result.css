@@ -1,0 +1,55 @@
+#spinner {
+  text-align: center;
+}
+
+.KelpJSONView
+{
+	width:100%;
+	overflow:auto;
+	font-family:monospace;
+	max-height:666px;
+	background-color:#f5f5f5;
+}
+.KelpJSONView ol
+{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+.KelpJSONView ol li
+{
+	white-space:nowrap;
+}
+.KelpJSONView ol li:hover
+{
+	white-space:nowrap;
+	background-color:#dbdde5;
+}
+.jsonhighlight
+{
+	background-color:#eee;
+}
+.jsonname
+{
+	color:#555;
+}
+.jsonstring
+{
+	color:#268BD2;
+}
+.jsonnull
+{
+	color:#d63Bd2;
+}
+.jsonnumber
+{
+	color:#964B32;
+}
+.jsonboolean
+{
+	color:#b64B72;
+}
+.jsontag
+{
+	color:#999;
+}

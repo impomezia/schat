@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="qrc:/css/ChatView.css">
+  <link rel="stylesheet" href="qrc:/css/server.css">
+  <script src="qrc:/js/jquery.js"></script>
+  <script src="qrc:/js/jquery.timeago.js"></script>
+  <script src="qrc:/js/ChatView.js"></script>
+  <script src="qrc:/js/server.js"></script>
+  <script src="qrc:/js/bootstrap-tooltip.js"></script>
+  <script src="qrc:/js/bootstrap-modal.js"></script>
+</head>
+<body id="body" class="no-seconds no-service no-topic-author">
+  <div id="loading"><div id="loading-body"><i class="icon-spinner"></i> <span id="loading-text" data-tr="loading">Loading...</span></div></div>
+  <div id="page-switcher-start" class="page-switcher"></div>
+  <div id="page-switcher-end" class="page-switcher"></div>
+  <div class="tabbable">
+    <div class="tab-content">
+      <div class="tab-pane active" id="messages">
+        <div id="Chat"></div>
+      </div>
+      <div class="tab-pane" id="info">
+        <div id="info-content">
+          <div id="page-header" style="display:-webkit-box;">
+            <div id="server-info">
+              <span id="channel-name"></span> <span id="server-peer"></span>
+              <div id="server-feed">
+                <div class="field-row"><span class="field-row-label" data-tr="server_version">Server version:</span><span id="server-version" class="field-row-value"></span></div>
+                <div class="field-row"><span class="field-row-label" data-tr="encryption">Encryption:</span><span id="server-encryption" class="field-row-value"></span></div>
+              </div>
+            </div>
+            <div id="server-activity">
+              <h3 data-tr="activity">Activity</h3>
+              <div class="field-row"><span class="field-row-label" data-tr="activity_sent">Sent:</span><span id="sent" class="field-row-value">0</span></div>
+              <div class="field-row"><span class="field-row-label" data-tr="activity_receved">Receved:</span><span id="receved" class="field-row-value">0</span></div>
+            </div>
+          </div>
+
+          <div id="hosts-content">
+            <h3><i class="icon-computer"></i> <span data-tr="my_computers">My Computers</span></h3>
+            <p data-tr="my_computers_desc">These are the computers currently linked to your account.</p>
+
+            <div id="fieldset">
+              <table id="account-table" class="table-striped">
+                <tbody>
+                  <tr>
+                    <th colspan="2" data-tr="computer_name">Computer name</th>
+                    <th data-tr="last_activity">Last Activity</th>
+                    <th data-tr="actions">Actions</th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-wrapper">
+    <div id="modal-center">
+      <div class="modal" id="modal">
+        <div id="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3></h3>
+        </div>
+        <div id="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

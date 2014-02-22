@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="qrc:/css/ChatView.css">
+  <link rel="stylesheet" href="qrc:/css/channel.css">
+  <script src="qrc:/js/jquery.js"></script>
+  <script src="qrc:/js/bootstrap-modal.js"></script>
+  <script src="qrc:/js/ChatView.js"></script>
+</head>
+<body id="body" class="no-seconds no-service no-topic-author">
+  <div id="loading"><div id="loading-body"><i class="icon-spinner"></i> <span id="loading-text" data-tr="loading">Loading...</span></div></div>
+  <div id="page-switcher-start" class="page-switcher"></div>
+  <div id="page-switcher-end" class="page-switcher"></div>
+  <div class="tabbable">
+    <div class="tab-content">
+      <div class="tab-pane active" id="messages">
+        <div id="Chat"></div>
+      </div>
+      <div class="tab-pane" id="info">
+        <div id="info-content">
+          <div id="page-header">
+            <div id="channel">
+              <div id="channel-name"></div>
+              <div id="channel-buttons"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-wrapper">
+    <div id="modal-center">
+      <div class="modal" id="modal">
+        <div id="modal-header">
+          <a class="close" data-dismiss="modal">×</a>
+          <h3></h3>
+        </div>
+        <div id="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

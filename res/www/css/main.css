@@ -1,0 +1,70 @@
+[class^="icon-"], [class^="provider-"] {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: text-top;
+  background-repeat: no-repeat;
+}
+
+[class^="provider-"] {
+  background-image: url(../img/providers.png?2);
+  background-position: 0 0;
+}
+
+.provider-google {
+  background-position: -16px 0;
+}
+
+.provider-yandex {
+  background-position: -32px 0;
+}
+
+.provider-facebook {
+  background-position: -48px 0;
+}
+
+.provider-vkontakte {
+  background-position: -64px 0;
+}
+
+.provider-mail_ru {
+  background-position: -80px 0;
+}
+
+.provider-odnoklassniki {
+  background-position: -96px 0;
+}
+
+.provider-live {
+  background-position: -112px 0;
+}
+
+.provider-github {
+  background-position: -128px 0;
+}
+
+.provider-stackoverflow {
+  background-position: -144px 0;
+}
+
+.icon-spinner {
+  background-image: url("../img/spinner.gif");
+}
+
+.provider {
+  padding: 3px;
+  margin: 4px;
+  background-size: 100% 1px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.1) 5%, rgba(0,0,0,0.0) 50%);
+  background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.1) 5%, rgba(0,0,0,0.0) 50%);
+  background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.1) 5%, rgba(0,0,0,0.0) 50%);
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.1) 5%, rgba(0,0,0,0.0) 50%);
+  background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.1) 5%, rgba(0,0,0,0.0) 50%);
+}
+
+.provider a {
+  color: inherit;
+  font-weight: bold;
+}

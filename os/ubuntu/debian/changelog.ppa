@@ -1,0 +1,7 @@
+schat2 (##SCHAT_VERSION##~##DIST##) ##DIST##; urgency=low
+
+  * ##SCHAT_VERSION##.
+
+ -- Alexander Sedov <impomezia@gmail.com>  ##RDATE##
+
+

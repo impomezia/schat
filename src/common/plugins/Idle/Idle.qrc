@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="images/Idle/icon.png">res/images/siena/clock.png</file>
+  <file alias="translations/idle_ru.qm">res/translations/idle_ru.qm</file>
+  <file alias="translations/idle_uk.qm">res/translations/idle_uk.qm</file>
+</qresource>
+</RCC>

@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="server.crt">../misc/tools/server.crt</file>
+  <file alias="server.key">../misc/tools/server.key</file>
+</qresource>
+</RCC>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include Variables.wxi?>
+  <Fragment>
+    <DirectoryRef Id="ProgramMenuFolder">
+      <Directory Id="StartMenuFolder" Name="$(var.ProductName)">
+        <Component Id="StartMenuFolder" Guid="a46490d1-7ce1-4418-9efd-d944086df6ae">
+          <RegistryValue Root="HKMU" Key="Software\IMPOMEZIA\$(var.ProductName)" Type="string" Value="" KeyPath="yes" />
+          <RemoveFolder Id="StartMenuFolder" On="uninstall"/>
+        </Component>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>
