@@ -1,0 +1,13 @@
+/out
+/tmp
+/schat2.pro.user
+
+*.qm
+Makefile
+Makefile.Release
+Makefile.Debug
+object_script.*.Release
+object_script.*.Debug
+Makefile.*.Release
+Makefile.*.Debug
+Makefile.schat*
