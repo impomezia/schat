@@ -15,7 +15,11 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFile>
+#include <QIcon>
+
 #include "ChatWindow.h"
+#include "sglobal.h"
 
 void ChatWindow::setupAppIcon()
 {
