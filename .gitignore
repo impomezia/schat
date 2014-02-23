@@ -14,3 +14,17 @@ Makefile.schat*
 /html
 /os/win32/schat2
 /os/win32/schatd2
+
+*.vcxproj
+*.pdb
+
+*.ipch
+
+*.sln
+
+*.suo
+*.sdf
+
+*.opensdf
+*.vcxproj.user
+*.vcxproj.filters

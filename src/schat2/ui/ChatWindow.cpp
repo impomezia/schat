@@ -42,14 +42,13 @@
 #include "ui/TabWidget.h"
 
 #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
-  #include "qtwin/qtwin.h"
-  #include <qt_windows.h>
-  #define WM_DWMCOMPOSITIONCHANGED 0x031E // Composition changed window message
+# include <qt_windows.h>
+# include "qtwin/qtwin.h"
 #endif
 
 #if defined(SCHAT_OPTION)
-  #undef SCHAT_OPTION
-  #define SCHAT_OPTION(x) m_settings->value(QLatin1String(x))
+# undef SCHAT_OPTION
+# define SCHAT_OPTION(x) m_settings->value(QLatin1String(x))
 #endif
 
 ChatWindow::ChatWindow(QWidget *parent)
@@ -202,7 +201,7 @@ void ChatWindow::showEvent(QShowEvent *event)
 #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
 bool ChatWindow::winEvent(MSG *message, long *result)
 {
-  if (message && message->message == WM_DWMCOMPOSITIONCHANGED) {
+  if (message && (message->message == QtWin::CompositionChange || message->message == QtWin::ColorizationChange)) {
     stylize();
   }
 

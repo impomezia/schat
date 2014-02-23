@@ -29,6 +29,9 @@ class WindowNotifier;
 class QtWin
 {
 public:
+    static const int ColorizationChange = 0x0320;
+    static const int CompositionChange  = 0x031E;
+
     static bool extendFrameIntoClientArea(QWidget *widget, int left = -1, int top = -1, int right = -1, int bottom = -1);
     static bool isCompositionEnabled();
     static QColor realColorizationColor();
