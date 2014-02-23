@@ -17,7 +17,7 @@ makensis server.nsi
 if ERRORLEVEL 1 exit 1
 
 cd wix
-candle -nologo -dProductVersion=%SCHAT_VERSION%.%SCHAT_REVISION% -ext WixUIExtension Files.wxs Product.wxs Features.wxs Shortcuts.wxs
+candle -nologo -dProductVersion=%SCHAT_VERSION% -ext WixUIExtension Files.wxs Product.wxs Features.wxs Shortcuts.wxs
 if ERRORLEVEL 1 exit 1
 
 light -nologo -out ..\out\schat2-%SCHAT_VERSION%.msi -cultures:en-US -ext WixUIExtension Files.wixobj Product.wixobj Features.wixobj Shortcuts.wixobj
