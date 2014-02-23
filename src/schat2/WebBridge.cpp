@@ -1,6 +1,5 @@
-/* $Id: WebBridge.cpp 3754 2013-07-14 19:50:00Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -292,14 +291,17 @@ QVariant WebBridge::encryption() const
   data[LS("protocol")] = io->sslConfiguration().protocol();
 
   const QSslCertificate cert = io->peerCertificate();
-# if QT_VERSION >= 0x050000
   QString cn;
-  QStringList cns = cert.subjectInfo(QSslCertificate::CommonName);
+
+# if QT_VERSION >= 0x050000
+  const QStringList cns = cert.subjectInfo(QSslCertificate::CommonName);
   if (!cns.isEmpty())
     cn = cns.first();
 # else
-  data[LS("CN")] = cert.subjectInfo(QSslCertificate::CommonName);
+  cn = cert.subjectInfo(QSslCertificate::CommonName);
 # endif
+
+  data.insert(LS("CN"), cn);
 
   QSslCipher cipher = io->sessionCipher();
   data[LS("cipher")]       = cipher.name() + LC('/') + cipher.authenticationMethod();
