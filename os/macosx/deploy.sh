@@ -1,7 +1,6 @@
 #!/bin/bash
-# $Id: deploy.sh 3841 2013-10-27 00:22:25Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -16,7 +15,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-VERSION="2.1.2"
+VERSION="2.2.0"
 TARGET="SimpleChat2"
 
 set -e

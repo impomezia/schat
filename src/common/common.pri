@@ -1,6 +1,5 @@
-# $Id: common.pri 3841 2013-10-27 00:22:25Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -30,7 +29,7 @@ INCLUDEPATH += \
     ../common \
     ../3rdparty \
 
-!win32:VERSION = 2.1.2
+!win32:VERSION = 2.2.0
 
 CONFIG(debug, debug|release) { 
   RCC_DIR = ../../tmp/$${TEMPLATE}/$${TARGET}/debug/rcc
