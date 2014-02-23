@@ -75,10 +75,11 @@ TabBar::ButtonPosition TabBar::closeButtonPosition() const
 
 void TabBar::mousePressEvent(QMouseEvent *event)
 {
-# if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
+# if defined(Q_OS_WIN32)
   if (event->button() == Qt::LeftButton && tabAt(event->pos()) == -1) {
     ReleaseCapture();
-    PostMessage(parentWidget()->parentWidget()->parentWidget()->winId(), WM_SYSCOMMAND, SC_MOVE | HTCAPTION, 0);
+    HWND hwnd = reinterpret_cast<HWND>(parentWidget()->parentWidget()->parentWidget()->winId());
+    PostMessage(hwnd, WM_SYSCOMMAND, SC_MOVE | HTCAPTION, 0);
   }
 # endif
 
