@@ -1,6 +1,5 @@
-/* $Id: UpdatePlugin.cpp 3763 2013-08-09 15:05:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -328,10 +327,11 @@ void UpdatePluginImpl::restart()
 }
 
 
+// \bug Автоматическое обновление сломано из-за перехода на git и отказа от глобальной ревизии.
 void UpdatePluginImpl::start()
 {
-  if (SCHAT_REVISION)
-    QFile::remove(Path::cache() + LS("/schat2-") + QApplication::applicationVersion() + LS(".") + QString::number(SCHAT_REVISION) + LS(".exe"));
+  if (SCHAT_VER_PATH)
+    QFile::remove(Path::cache() + LS("/schat2-") + QApplication::applicationVersion() + LS(".") + QString::number(SCHAT_VER_PATH) + LS(".exe"));
 
   connect(BgOperationWidget::i(), SIGNAL(clicked(QString,QMouseEvent*)), SLOT(clicked(QString,QMouseEvent*)));
   connect(ChatClient::i(), SIGNAL(ready()), SLOT(online()));
@@ -400,7 +400,8 @@ void UpdatePluginImpl::readJSON()
 
   m_lastCheck = DateTime::utc();
 
-  if (SCHAT_REVISION >= m_info.revision)
+  // \bug Автоматическое обновление сломано из-за перехода на git и отказа от глобальной ревизии.
+  if (SCHAT_VER_PATH >= m_info.revision)
     return setDone(NoUpdates);
 
   setDone(UpdateAvailable);
@@ -453,7 +454,8 @@ void UpdatePluginImpl::setDone(Status status)
 
 bool UpdatePlugin::check() const
 {
-  if (!SCHAT_REVISION || QString(LS(SCHAT_PLATFORM)).isEmpty())
+  // \bug Автоматическое обновление сломано из-за перехода на git и отказа от глобальной ревизии.
+  if (!SCHAT_VER_PATH || QString(LS(SCHAT_PLATFORM)).isEmpty())
     return false;
 
   if (UpdatePluginImpl::supportDownload() && Path::app() != LS("schat2"))

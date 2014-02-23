@@ -1,6 +1,5 @@
-/* $Id: ChatApp.cpp 3516 2013-02-23 15:37:09Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -125,10 +124,11 @@ void ChatApp::stop()
 }
 
 
+// \bug Автоматическое обновление сломано из-за перехода на git и отказа от глобальной ревизии.
 #if defined(Q_OS_WIN)
 bool ChatApp::selfUpdate()
 {
-  if (!SCHAT_REVISION)
+  if (!SCHAT_VER_PATH)
     return false;
 
   if (QFileInfo(applicationFilePath()).baseName() != LS("schat2"))
@@ -150,7 +150,7 @@ bool ChatApp::selfUpdate()
   if (revision < 1)
     return false;
 
-  if (SCHAT_REVISION >= revision)
+  if (SCHAT_VER_PATH >= revision)
     return false;
 
   QString file = appPath + LS("/.schat2/schat2-") + version + LS(".") + QString::number(revision) + LS(".exe");

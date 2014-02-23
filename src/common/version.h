@@ -1,6 +1,5 @@
-/* $Id: version.h 3841 2013-10-27 00:22:25Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,11 +20,13 @@
 
 #include "revision.h"
 
-#define SCHAT_VERSION      "2.1.2"
-#define SCHAT_VERSION_RC   2,1,2,SCHAT_REVISION
+#define SCHAT_VERSION      "2.2.0"
+#define SCHAT_VERSION_RC   2,2,0,0
+#define SCHAT_VER_PATH     0
+
 #define SCHAT_NAME         "Simple Chat"
 #define SCHAT_ORGANIZATION "Alexander Sedov"
 #define SCHAT_DOMAIN       "schat.me"
-#define SCHAT_COPYRIGHT    "Copyright © 2008-2013 Alexander Sedov"
+#define SCHAT_COPYRIGHT    "Copyright (c) 2008-2014 Alexander Sedov"
 
 #endif /*VERSION_H_*/

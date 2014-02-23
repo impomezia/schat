@@ -1,6 +1,5 @@
-# $Id: prefix.pri 3555 2013-03-04 23:55:58Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -34,4 +33,12 @@ isEmpty(LRELEASE) {
     LRELEASE = $$replace(LRELEASE, \\\\, \\\\)
     LRELEASE = $$replace(LRELEASE, /, \\\\)
   }
+}
+
+isEmpty(GIT_TIMESTAMP) {
+    GIT_TIMESTAMP = $$system($$quote(git log -n 1 --format=format:"%at"))
+    GIT_REVISION  = $$system($$quote(git rev-parse HEAD))
+    
+    DEFINES += GIT_TIMESTAMP=$$GIT_TIMESTAMP
+    DEFINES += GIT_REVISION=\\\"$${GIT_REVISION}\\\"
 }

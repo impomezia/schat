@@ -11,3 +11,4 @@ object_script.*.Debug
 Makefile.*.Release
 Makefile.*.Debug
 Makefile.schat*
+/html

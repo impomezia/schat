@@ -1,6 +1,5 @@
-/* $Id: NodeInit.cpp 3742 2013-07-10 02:22:58Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -74,11 +73,11 @@ void NodeInit::version()
 {
   QTextStream out(stdout);
   out << LS("Simple Chat Daemon, version ") << SCHAT_VERSION;
-  if (SCHAT_REVISION)
-    out << LC('.') << SCHAT_REVISION;
+  if (SCHAT_VER_PATH)
+    out << LC('.') << SCHAT_VER_PATH;
 
   out << endl << endl;
-  out << QString(SCHAT_COPYRIGHT).replace("©", LS("(C)")) << LS(", https://schat.me") << endl;
+  out << SCHAT_COPYRIGHT << LS(", https://schat.me") << endl;
 }
 
 
