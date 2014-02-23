@@ -21,7 +21,10 @@
 #include <QKeyEvent>
 #include <QTimer>
 #include <QVBoxLayout>
-#include <QWinEvent>
+
+#if QT_VERSION >= 0x050200
+# include <QWinEvent>
+#endif
 
 #include "ChatAlerts.h"
 #include "ChatCore.h"
@@ -128,8 +131,10 @@ void ChatWindow::showChat()
 
 bool ChatWindow::event(QEvent *event)
 {
+# if QT_VERSION >= 0x050200
   if (event->type() == QWinEvent::CompositionChange || event->type() == QWinEvent::ColorizationChange)
     stylize();
+# endif
 
   return QMainWindow::event(event);
 }

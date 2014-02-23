@@ -15,8 +15,13 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtWin>
 #include <QVBoxLayout>
+
+#if QT_VERSION >= 0x050200
+# include <QtWin>
+#else
+# include "qtwin/qtwin.h"
+#endif
 
 #include "ChatSettings.h"
 #include "ChatWindow.h"
@@ -35,17 +40,13 @@ void ChatWindow::stylize()
     setAttribute(Qt::WA_NoSystemBackground, false);
     m_mainLay->setMargin(0);
 
-#   if QT_VERSION >= 0x050200
     setStyleSheet(LS("ChatWindow { background: transparent; }"));
-#   endif
   }
   else {
     QtWin::resetExtendedFrame(this);
     setAttribute(Qt::WA_TranslucentBackground, false);
     m_mainLay->setContentsMargins(3, 3, 3, 0);
 
-#   if QT_VERSION >= 0x050200
     setStyleSheet(QString("ChatWindow { background: %1; }").arg(QtWin::realColorizationColor().name()));
-#   endif
   }
 }
