@@ -16,6 +16,7 @@
  */
 
 #include <QVBoxLayout>
+#include <QSysInfo>
 
 #if QT_VERSION >= 0x050200
 # include <QtWin>
@@ -33,11 +34,13 @@ void ChatWindow::setupAppIcon()
 
 
 void ChatWindow::stylize()
-{
+{  
+  if (QSysInfo::windowsVersion() < QSysInfo::WV_VISTA)
+    return;
+
   if (m_settings->value(SETTINGS_WINDOWS_AERO).toBool() && QtWin::isCompositionEnabled()) {
     QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
     setAttribute(Qt::WA_TranslucentBackground, true);
-    setAttribute(Qt::WA_NoSystemBackground, false);
     m_mainLay->setMargin(0);
 
     setStyleSheet(LS("ChatWindow { background: transparent; }"));
@@ -47,6 +50,8 @@ void ChatWindow::stylize()
     setAttribute(Qt::WA_TranslucentBackground, false);
     m_mainLay->setContentsMargins(3, 3, 3, 0);
 
-    setStyleSheet(QString("ChatWindow { background: %1; }").arg(QtWin::realColorizationColor().name()));
+    setStyleSheet(QString("ChatWindow { background: %1; }").arg(centralWidget()->palette().color(QPalette::Window).name()));
   }
+
+  setAttribute(Qt::WA_NoSystemBackground, false);
 }

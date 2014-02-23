@@ -73,8 +73,13 @@ ChatWindow::ChatWindow(QWidget *parent)
   m_mainLay->addWidget(m_send);
   m_mainLay->setStretchFactor(m_tabs, 999);
   m_mainLay->setStretchFactor(m_send, 1);
-  m_mainLay->setMargin(0);
   m_mainLay->setSpacing(0);
+
+# if defined(Q_OS_WIN)
+  m_mainLay->setContentsMargins(3, 3, 3, 0);
+#else
+  m_mainLay->setMargin(0);
+#endif
 
   setCentralWidget(m_central);
   stylize();
