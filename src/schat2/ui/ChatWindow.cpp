@@ -1,6 +1,5 @@
-/* $Id: ChatWindow.cpp 3767 2013-08-13 22:30:40Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
 #include <QKeyEvent>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <QWinEvent>
 
 #include "ChatAlerts.h"
 #include "ChatCore.h"
@@ -53,6 +53,8 @@ ChatWindow::ChatWindow(QWidget *parent)
   : QMainWindow(parent)
   , m_settings(ChatCore::settings())
 {
+  setObjectName(LS("ChatWindow"));
+
   m_desktop = new QDesktopWidget();
   new StatusMenu(this);
 
@@ -71,12 +73,9 @@ ChatWindow::ChatWindow(QWidget *parent)
   m_mainLay->setStretchFactor(m_send, 1);
   m_mainLay->setMargin(0);
   m_mainLay->setSpacing(0);
+
   setCentralWidget(m_central);
-
-  #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
-  setWindowsAero();
-  #endif
-
+  stylize();
   restoreGeometry();
 
   connect(m_send, SIGNAL(send(QString)), ChatCore::i(), SLOT(send(QString)));
@@ -86,7 +85,7 @@ ChatWindow::ChatWindow(QWidget *parent)
 
   setWindowTitle(QApplication::applicationName());
 
-  setAppIcon();
+  setupAppIcon();
 }
 
 
@@ -124,6 +123,15 @@ void ChatWindow::showChat()
 
   if (m_send->isVisible())
     m_send->setInputFocus();
+}
+
+
+bool ChatWindow::event(QEvent *event)
+{
+  if (event->type() == QWinEvent::CompositionChange || event->type() == QWinEvent::ColorizationChange)
+    stylize();
+
+  return QMainWindow::event(event);
 }
 
 
@@ -190,7 +198,7 @@ void ChatWindow::showEvent(QShowEvent *event)
 bool ChatWindow::winEvent(MSG *message, long *result)
 {
   if (message && message->message == WM_DWMCOMPOSITIONCHANGED) {
-    setWindowsAero();
+    stylize();
   }
 
   return QMainWindow::winEvent(message, result);
@@ -308,38 +316,3 @@ void ChatWindow::saveGeometry()
 
   m_settings->setValue(LS("Geometry/") + geometryKey(), data, false, true);
 }
-
-
-void ChatWindow::setAppIcon()
-{
-# if defined(Q_OS_LINUX)
-  QIcon icon;
-  QList<int> sizes;
-  sizes << 16 << 22 << 24 << 32 << 36 << 48 << 64 << 72 << 96 << 128;
-
-  foreach (const int size, sizes) {
-    const QString file = QString(LS("/usr/share/icons/hicolor/%1x%1/apps/schat2.png")).arg(size);
-    if (QFile::exists(file))
-      icon.addFile(file, QSize(size, size));
-  }
-
-  if (icon.availableSizes().isEmpty())
-    setWindowIcon(QIcon(LS(":/images/icons/48x48/schat2.png")));
-  else
-    setWindowIcon(icon);
-# endif
-}
-
-
-#if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
-void ChatWindow::setWindowsAero()
-{
-  if (SCHAT_OPTION("WindowsAero").toBool() && QtWin::isCompositionEnabled()) {
-    QtWin::extendFrameIntoClientArea(this);
-    m_mainLay->setMargin(0);
-  }
-  else {
-    m_mainLay->setContentsMargins(3, 3, 3, 0);
-  }
-}
-#endif
