@@ -1,7 +1,6 @@
 #!/bin/bash
-# $Id: ppa.sh 3689 2013-06-12 22:28:52Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,8 +17,8 @@
 
 set -e
 
-SCHAT_VERSION=$SCHAT_VERSION.$SCHAT_REVISION
-PPA_VERSION=$SCHAT_VERSION-1~ppa0
+SCHAT_VERSION=$SCHAT_VERSION
+PPA_VERSION=$SCHAT_VERSION-1~ppa0~`git rev-parse --short HEAD`
 RDATE=`date -R`
 SCHAT_SOURCE=schat2_$SCHAT_VERSION
 PPA_SOURCE=schat2_$PPA_VERSION
@@ -53,6 +52,7 @@ echo > debian/source/format "3.0 (quilt)"
 rm debian/changelog.in
 rm debian/changelog.ppa
 
+upload "trusty"
 upload "saucy"
 upload "raring"
 upload "quantal"
