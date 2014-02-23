@@ -1,7 +1,6 @@
 #!/bin/bash
-# $Id: tarball.sh 2566 2012-04-24 07:06:58Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,6 +18,6 @@
 cd ..
 rm -fr $SCHAT_SOURCE
 cp -fR build $SCHAT_SOURCE
-find $SCHAT_SOURCE -name .svn -exec rm -rf {} \; > /dev/null 2>&1
+rm -fr $SCHAT_SOURCE/.git
 tar -cjf build/$SCHAT_SOURCE.tar.bz2 $SCHAT_SOURCE 
 rm -fr $SCHAT_SOURCE

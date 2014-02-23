@@ -1,7 +1,6 @@
 #!/bin/bash
-# $Id: obs-upload.sh 3558 2013-03-05 04:01:59Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -19,7 +18,7 @@
 set -e
 
 PROJECT=$1
-VERSION=$2
+VERSION=$2~`git rev-parse --short HEAD`
 SOURCE=schat2-$VERSION
 
 cd ..
@@ -35,7 +34,7 @@ cd ../..
 
 rm -fr $SOURCE
 cp -fr build $SOURCE
-find $SOURCE -name .svn -exec rm -rf {} \; > /dev/null 2>&1 || true
+rm -fr $SOURCE/.git
 tar -cjf $SOURCE.tar.bz2 $SOURCE
 mv $SOURCE.tar.bz2 $PROJECT/schat2
 

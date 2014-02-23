@@ -95,7 +95,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc README COPYING
+%doc README.md LICENSE
 %{_bindir}/*
 %{_libdir}/libschat-client.so.*
 %{_libdir}/libschat.so.*
