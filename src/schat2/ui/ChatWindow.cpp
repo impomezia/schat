@@ -22,7 +22,7 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
-#if QT_VERSION >= 0x050200
+#if defined(Q_OS_WIN32) && QT_VERSION >= 0x050200
 # include <QWinEvent>
 #endif
 
@@ -136,7 +136,7 @@ void ChatWindow::showChat()
 
 bool ChatWindow::event(QEvent *event)
 {
-# if QT_VERSION >= 0x050200
+# if defined(Q_OS_WIN32) && QT_VERSION >= 0x050200
   if (event->type() == QWinEvent::CompositionChange || event->type() == QWinEvent::ColorizationChange)
     stylize();
 # endif
