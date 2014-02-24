@@ -1,6 +1,5 @@
-/* $Id: ChHook.cpp 3441 2013-01-24 22:14:27Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -47,6 +46,12 @@ void ChHook::add(ChatChannel channel)
  */
 void ChHook::load()
 {
+}
+
+
+void ChHook::load(ChatChannel channel)
+{
+  Q_UNUSED(channel);
 }
 
 

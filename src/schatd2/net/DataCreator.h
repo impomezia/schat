@@ -15,31 +15,20 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHHOOK_H_
-#define CHHOOK_H_
-
-#include <QObject>
+#ifndef DATACREATOR_H_
+#define DATACREATOR_H_
 
 #include "ServerChannel.h"
 
-class SCHAT_EXPORT ChHook : public QObject
+class NetRecord;
+
+class DataCreator
 {
-  Q_OBJECT
-
 public:
-  ChHook(QObject *parent = 0);
-  ~ChHook();
-
-  virtual void add(ChatChannel channel);
-  virtual void load();
-  virtual void load(ChatChannel channel);
-  virtual void newChannel(ChatChannel channel, ChatChannel user = ChatChannel());
-  virtual void remove(ChatChannel channel);
-  virtual void rename(ChatChannel channel);
-  virtual void server(ChatChannel channel, bool created);
-  virtual void sync(ChatChannel channel, ChatChannel user = ChatChannel());
-  virtual void userChannel(ChatChannel channel);
-  virtual void userChannel(ChatChannel channel, const AuthRequest &data, const QString &host, bool created, quint64 socket);
+  DataCreator() {}
+  virtual ~DataCreator() {}
+  virtual bool create(ChatChannel channel, const QString &path, NetRecord &record) const = 0;
+  virtual QStringList paths() const = 0;
 };
 
-#endif /* CHHOOK_H_ */
+#endif /* DATACREATOR_H_ */
