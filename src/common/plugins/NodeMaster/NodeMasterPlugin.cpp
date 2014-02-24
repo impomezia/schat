@@ -15,22 +15,25 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NODECHANNELSCH_H_
-#define NODECHANNELSCH_H_
+#include <QtPlugin>
 
-#include "ChHook.h"
+#include "NodeMasterCh.h"
+#include "NodeMasterPlugin.h"
+#include "NodeMasterPlugin_p.h"
 
-class NodeChannelsCh : public ChHook
+NodeMasterImpl::NodeMasterImpl(QObject *parent)
+  : NodePlugin(parent)
 {
-  Q_OBJECT
+  new NodeMasterCh(this);
+}
 
-public:
-  NodeChannelsCh(QObject *parent = 0);
-  void load();
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel());
-  void server(ChatChannel channel, bool created);
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel());
-  void userChannel(ChatChannel channel);
-};
 
-#endif /* NODECHANNELSCH_H_ */
+NodePlugin *NodeMasterPlugin::create()
+{
+  m_plugin = new NodeMasterImpl(this);
+  return m_plugin;
+}
+
+#if QT_VERSION < 0x050000
+  Q_EXPORT_PLUGIN2(NodeMaster, NodeMasterPlugin);
+#endif

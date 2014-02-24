@@ -1,6 +1,5 @@
-/* $Id: NodeChannelsPlugin.cpp 3595 2013-03-24 22:05:32Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
 #include "feeds/FeedStorage.h"
 #include "feeds/NodeInfoFeed.h"
 #include "feeds/NodeListFeed.h"
+#include "feeds/NodeStatsFeed.h"
 #include "feeds/NodeUsersFeed.h"
 #include "NodeChannelIndex.h"
 #include "NodeChannelsCh.h"
@@ -43,6 +43,7 @@ NodeChannelsImpl::NodeChannelsImpl(QObject *parent)
   FeedStorage::add(new NodeInfoFeedCreator());
   FeedStorage::add(new NodeListFeedCreator());
   FeedStorage::add(new NodeUsersFeedCreator());
+  FeedStorage::add(new NodeStatsFeedCreator());
 }
 
 

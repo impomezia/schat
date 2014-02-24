@@ -15,22 +15,22 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NODECHANNELSCH_H_
-#define NODECHANNELSCH_H_
+#ifndef MASTERDATACREATOR_H_
+#define MASTERDATACREATOR_H_
 
-#include "ChHook.h"
+#include "net/DataCreator.h"
 
-class NodeChannelsCh : public ChHook
+class MasterDataCreator : public DataCreator
 {
-  Q_OBJECT
-
 public:
-  NodeChannelsCh(QObject *parent = 0);
-  void load();
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel());
-  void server(ChatChannel channel, bool created);
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel());
-  void userChannel(ChatChannel channel);
+  MasterDataCreator() : DataCreator() {}
+  bool create(ChatChannel channel, const QString &path, NetRecord &record) const;
+  QStringList paths() const;
+
+private:
+  bool server(ChatChannel channel, NetRecord &record) const;
+  bool stats(ChatChannel channel, NetRecord &record) const;
+  bool users(ChatChannel channel, NetRecord &record) const;
 };
 
-#endif /* NODECHANNELSCH_H_ */
+#endif /* MASTERDATACREATOR_H_ */

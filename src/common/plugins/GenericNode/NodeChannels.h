@@ -1,6 +1,5 @@
-/* $Id: NodeChannels.h 3721 2013-07-02 00:44:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -54,7 +53,7 @@ private:
   int update();
 
   bool isForbidden(ChatChannel channel) const;
-  ChannelPacket reply(ChatChannel channel, bool forbidden = false, const QString &command = CHANNELS_CHANNEL_CMD) const;
+  ChannelPacket reply(ChatChannel channel, bool forbidden = false, const QString &command = CHANNELS_CHANNEL_CMD, const QString &xName = QString()) const;
   void dump() const;
   void reply(int status);
 

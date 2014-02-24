@@ -15,22 +15,29 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NODECHANNELSCH_H_
-#define NODECHANNELSCH_H_
+#ifndef NODEMASTERCH_H_
+#define NODEMASTERCH_H_
 
 #include "ChHook.h"
 
-class NodeChannelsCh : public ChHook
+class FeedEvent;
+class Net;
+
+class NodeMasterCh : public ChHook
 {
   Q_OBJECT
 
 public:
-  NodeChannelsCh(QObject *parent = 0);
-  void load();
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel());
-  void server(ChatChannel channel, bool created);
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel());
-  void userChannel(ChatChannel channel);
+  NodeMasterCh(QObject *parent = 0);
+  void load(ChatChannel channel);
+
+private slots:
+  void onNotify(const FeedEvent &event);
+  void onSubscriptionChanged(const QByteArray &id, const QString &path);
+
+private:
+  Net *m_net;
+  QStringList m_paths;
 };
 
-#endif /* NODECHANNELSCH_H_ */
+#endif /* NODEMASTERCH_H_ */

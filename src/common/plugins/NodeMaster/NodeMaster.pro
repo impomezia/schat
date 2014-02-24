@@ -1,5 +1,5 @@
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+# Simple Chat
+# Copyright (с) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -16,27 +16,17 @@
 
 SCHAT_DAEMON_LIB = 1
 QT = core network
-OTHER_FILES += NodeChannels.json
+OTHER_FILES += NodeMaster.json
 
 HEADERS  = \
-   feeds/AutoKick.h \
-   feeds/NodeInfoFeed.h \
-   feeds/NodeListFeed.h \
-   feeds/NodeStatsFeed.h \
-   feeds/NodeUsersFeed.h \
-   NodeChannelIndex.h \
-   NodeChannelsCh.h \
-   NodeChannelsPlugin.h \
-   NodeChannelsPlugin_p.h \
+   MasterDataCreator.h \
+   NodeMasterCh.h \
+   NodeMasterPlugin.h \
+   NodeMasterPlugin_p.h \
 
 SOURCES  = \
-   feeds/AutoKick.cpp \
-   feeds/NodeInfoFeed.cpp \
-   feeds/NodeListFeed.cpp \
-   feeds/NodeStatsFeed.cpp \
-   feeds/NodeUsersFeed.cpp \
-   NodeChannelIndex.cpp \
-   NodeChannelsCh.cpp \
-   NodeChannelsPlugin.cpp \
+   MasterDataCreator.cpp \
+   NodeMasterCh.cpp \
+   NodeMasterPlugin.cpp \
 
 include(../plugins.pri)

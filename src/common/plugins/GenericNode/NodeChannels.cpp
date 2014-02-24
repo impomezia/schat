@@ -1,6 +1,5 @@
-/* $Id: NodeChannels.cpp 3721 2013-07-02 00:44:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -218,12 +217,15 @@ bool NodeChannels::join(const ChatId &channelId, const QString &name)
 
   /// Если идентификатор канала корректный, функция пытается получить его по этому идентификатору.
   const int type = channelId.type();
-  if (type != ChatId::InvalidId)
+  if (type != ChatId::InvalidId && !(type == ChatId::UserId && !name.isEmpty() && ChatId(m_user->id()) == channelId))
     channel = Ch::channel(channelId.toByteArray(), type);
 
   /// Если канал не удалось получить по идентификатору, будет произведена попытка создать обычный канал по имени.
   if (!channel && (type == ChatId::InvalidId || type == ChatId::ChannelId))
     channel = Ch::channel(name, m_user);
+
+  if (!channel && type == ChatId::UserId)
+    channel = Ch::channel(Normalize::toId(type, name), type);
 
   if (!channel) {
     LOG_G1014
@@ -243,7 +245,7 @@ bool NodeChannels::join(const ChatId &channelId, const QString &name)
   if (notify && channel->type() == ChatId::ChannelId)
     dump();
 
-  m_core->send(m_user->sockets(), reply(channel));
+  m_core->send(m_user->sockets(), reply(channel, false, CHANNELS_CHANNEL_CMD, name));
 
   /// В случае необходимости всем пользователям в канале будет разослано уведомление в входе нового пользователя.
   if (notify && channel->channels().all().size() > 1 && channel->type() == ChatId::ChannelId)
@@ -351,7 +353,7 @@ bool NodeChannels::isForbidden(ChatChannel channel) const
 /*!
  * Отправка информации о канале.
  */
-ChannelPacket NodeChannels::reply(ChatChannel channel, bool forbidden, const QString &command) const
+ChannelPacket NodeChannels::reply(ChatChannel channel, bool forbidden, const QString &command, const QString &xName) const
 {
   ChannelPacket packet(new ChannelNotice(channel->id(), m_user->id(), command, DateTime::utc()));
   packet->setDirection(Notice::Server2Client);
@@ -371,8 +373,13 @@ ChannelPacket NodeChannels::reply(ChatChannel channel, bool forbidden, const QSt
   else if (m_user == channel)
     packet->channels = channel->channels().all(SimpleID::ChannelId);
 
-  if (packet->status() == Notice::OK)
-    packet->setData(channel->feeds().f(m_user.data()));
+  if (packet->status() == Notice::OK) {
+    QVariantMap data = channel->feeds().f(m_user.data());
+    if (!xName.isEmpty())
+      data.insert(LS("x-name"), xName);
+
+    packet->setData(data);
+  }
 
   return packet;
 }
