@@ -1,6 +1,5 @@
-/* $Id: ServerChannel.h 3639 2013-04-16 08:30:13Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@
 
 #include "Channel.h"
 #include "Hosts.h"
+#include "net/Subscribers.h"
 
 class ServerChannel;
 class User;
@@ -37,16 +37,18 @@ public:
   ServerChannel(const QByteArray &id, const QString &name);
   ~ServerChannel();
 
-  inline bool permanent() const                { return m_permanent; }
-  inline Channels& channels()                  { return m_channels; }
-  inline Channels& offline()                   { return m_offline; }
-  inline const Channels& channels() const      { return m_channels; }
-  inline const Channels& offline() const       { return m_offline; }
-  inline const QByteArray& normalized() const  { return m_normalized; }
-  inline Hosts* hosts() const                  { return m_hosts; }
-  inline QList<quint64> sockets() const        { if (m_hosts) return m_hosts->sockets(); return QList<quint64>(); }
-  inline User* user() const                    { return m_user; }
-  inline void setPermanent(bool permanent)     { m_permanent = permanent; }
+  inline bool permanent() const                 { return m_permanent; }
+  inline Channels& channels()                   { return m_channels; }
+  inline Channels& offline()                    { return m_offline; }
+  inline const Channels& channels() const       { return m_channels; }
+  inline const Channels& offline() const        { return m_offline; }
+  inline const QByteArray& normalized() const   { return m_normalized; }
+  inline const Subscribers& subscribers() const { return m_subscribers; }
+  inline Hosts* hosts() const                   { return m_hosts; }
+  inline QList<quint64> sockets() const         { if (m_hosts) return m_hosts->sockets(); return QList<quint64>(); }
+  inline Subscribers& subscribers()             { return m_subscribers; }
+  inline User* user() const                     { return m_user; }
+  inline void setPermanent(bool permanent )     { m_permanent = permanent; }
 
   bool addChannel(const QByteArray &id);
   bool removeChannel(const QByteArray &id, bool offline = false);
@@ -61,11 +63,12 @@ public:
 private:
   void normalize();
 
-  bool m_permanent;         ///< \b true если канал не будет удалятся если он не нужен.
-  Channels m_offline;       ///< Список офлайн каналов.
-  Hosts *m_hosts;           ///< Информация о хостах.
-  QByteArray m_normalized;  ///< Нормализованное имя канала.
-  User *m_user;             ///< Профиль пользователя.
+  bool m_permanent;          ///< \b true если канал не будет удалятся если он не нужен.
+  Channels m_offline;        ///< Список офлайн каналов.
+  Hosts *m_hosts;            ///< Информация о хостах.
+  QByteArray m_normalized;   ///< Нормализованное имя канала.
+  Subscribers m_subscribers; ///< Подписчики.
+  User *m_user;              ///< Профиль пользователя.
 };
 
 #endif /* SERVERCHANNEL_H_ */

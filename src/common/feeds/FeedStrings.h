@@ -1,6 +1,5 @@
-/* $Id: FeedStrings.h 3692 2013-06-14 18:14:42Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -35,9 +34,10 @@
 #define FEED_NAME_PLUGINS  QLatin1String("plugins")
 #define FEED_NAME_PROFILE  QLatin1String("profile")
 #define FEED_NAME_SERVER   QLatin1String("server")
+#define FEED_NAME_SETTINGS QLatin1String("settings")
+#define FEED_NAME_STATS    QLatin1String("stats")
 #define FEED_NAME_STORAGE  QLatin1String("storage")
 #define FEED_NAME_USER     QLatin1String("user")
-#define FEED_NAME_SETTINGS QLatin1String("settings")
 #define FEED_NAME_USERS    QLatin1String("users")
 
 #define FEED_WILDCARD_ASTERISK QLatin1String("*")

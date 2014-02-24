@@ -1,6 +1,5 @@
-/* $Id: Ch.cpp 3722 2013-07-02 23:05:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -80,7 +79,7 @@ bool Ch::gc(ChatChannel channel)
     Ch::server()->removeChannel(channel->id());
   }
 
-  if (channel->channels().all().size())
+  if (channel->channels().all().size() || !channel->subscribers().isEmpty())
     return false;
 
   m_self->remove(channel);
@@ -99,8 +98,8 @@ bool Ch::gc(ChatChannel channel)
  */
 bool Ch::isCollision(const QByteArray &id, const QString &name, bool override)
 {
-  int type = SimpleID::typeOf(id);
-  QByteArray normalized = Normalize::toId(type, name);
+  const int type = SimpleID::typeOf(id);
+  const QByteArray normalized = Normalize::toId(type, name);
 
   ChatChannel channel = Ch::channel(normalized, type, false);
   if (channel && channel->id() != id)
@@ -376,8 +375,13 @@ void Ch::cache(ChatChannel channel)
     return;
 
   const QByteArray &id = channel->id();
-  if (channel->type() != SimpleID::ServerId)
+  if (channel->type() != ChatId::ServerId)
     setOnline(channel);
+
+  if (!m_channels.contains(id)) {
+    foreach (ChHook *hook, m_hooks)
+      hook->load(channel);
+  }
 
   m_channels[id] = channel;
   m_channels[channel->normalized()] = channel;

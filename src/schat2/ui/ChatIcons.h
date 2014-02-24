@@ -1,6 +1,5 @@
-/* $Id: ChatIcons.h 3281 2012-11-20 22:50:34Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -83,7 +82,9 @@ public:
     Plugin             = 0x506C, ///< "Pl"
     Bell               = 0x4265, ///< "Be"
     Pin                = 0x5069, ///< "Pi"
-    Prohibition        = 0x5068  ///< "Ph"
+    Prohibition        = 0x5068, ///< "Ph"
+    Clock              = 0x436B, ///< "Ck"
+    Channels           = 0x4348  ///< "CH"
   };
 
   /// Опции получения иконки канала.
@@ -101,6 +102,7 @@ public:
   static void init();
 
 private:
+  static QMap<int, QIcon> m_cache;
   static QMap<int, QString> m_icons;
 };
 

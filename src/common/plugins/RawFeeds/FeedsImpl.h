@@ -1,6 +1,5 @@
-/* $Id: FeedsImpl.h 2190 2012-01-21 10:25:43Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,6 +33,7 @@ public:
   FeedsImpl(RawFeeds *parent);
 
 protected:
+  void onReply(const NetRequest &req, const NetReply &reply);
   void readFeedImpl(const FeedNotice &packet);
 
 private:

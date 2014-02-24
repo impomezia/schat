@@ -1,6 +1,5 @@
-/* $Id: NetworkWidget.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -257,6 +256,7 @@ void NetworkWidget::createActionsButton()
   m_actions->setMenu(m_menu);
   m_actions->setPopupMode(QToolButton::InstantPopup);
   m_actions->setToolTip(tr("Actions"));
+  m_actions->setStyleSheet(LS("QToolButton::menu-indicator {image:none}"));
 
   connect(m_menu, SIGNAL(aboutToShow()), SLOT(showMenu()));
   connect(m_menu, SIGNAL(triggered(QAction*)), SLOT(menuTriggered(QAction*)));

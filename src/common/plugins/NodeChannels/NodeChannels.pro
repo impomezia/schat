@@ -1,6 +1,5 @@
-# $Id: NodeChannels.pro 3595 2013-03-24 22:05:32Z IMPOMEZIA $
 # IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -23,6 +22,7 @@ HEADERS  = \
    feeds/AutoKick.h \
    feeds/NodeInfoFeed.h \
    feeds/NodeListFeed.h \
+   feeds/NodeStatsFeed.h \
    feeds/NodeUsersFeed.h \
    NodeChannelIndex.h \
    NodeChannelsCh.h \
@@ -33,6 +33,7 @@ SOURCES  = \
    feeds/AutoKick.cpp \
    feeds/NodeInfoFeed.cpp \
    feeds/NodeListFeed.cpp \
+   feeds/NodeStatsFeed.cpp \
    feeds/NodeUsersFeed.cpp \
    NodeChannelIndex.cpp \
    NodeChannelsCh.cpp \

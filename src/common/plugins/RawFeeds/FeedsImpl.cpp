@@ -1,6 +1,5 @@
-/* $Id: FeedsImpl.cpp 2729 2012-06-02 11:51:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,9 +15,12 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ChatCore.h"
 #include "client/ChatClient.h"
 #include "client/ClientFeeds.h"
 #include "FeedsImpl.h"
+#include "messages/AlertMessage.h"
+#include "net/NetReply.h"
 #include "net/packets/FeedNotice.h"
 #include "RawFeedsMessage.h"
 #include "RawFeedsPlugin_p.h"
@@ -32,6 +34,15 @@ FeedsImpl::FeedsImpl(RawFeeds *parent)
   , m_plugin(parent)
 {
   ChatClient::feeds()->hooks()->add(this);
+}
+
+
+void FeedsImpl::onReply(const NetRequest &req, const NetReply &reply)
+{
+  if (!m_plugin->remove(req.id))
+    return;
+
+  AlertMessage::show(reply.toJSON(), ALERT_MESSAGE_INFO, ChatCore::currentId());
 }
 
 

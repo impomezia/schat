@@ -1,6 +1,5 @@
-/* $Id: ClientFeeds.cpp 3590 2013-03-23 21:46:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,18 +20,26 @@
 #include "client/ClientFeeds.h"
 #include "client/ClientHooks.h"
 #include "client/SimpleClient.h"
+#include "DateTime.h"
 #include "feeds/FeedStrings.h"
+#include "net/NetReply.h"
+#include "net/PacketReader.h"
 #include "net/packets/FeedNotice.h"
 #include "net/packets/Notice.h"
+#include "net/PacketWriter.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
+
+ClientFeeds *ClientFeeds::m_self = 0;
 
 ClientFeeds::ClientFeeds(QObject *parent)
   : QObject(parent)
 {
+  m_self = this;
   m_hooks = new Hooks::Feeds(this);
 
   connect(ChatClient::io(), SIGNAL(notice(int)), SLOT(notice(int)));
+  connect(ChatClient::io(), SIGNAL(jsonPacket()), SLOT(json()));
 }
 
 
@@ -67,6 +74,18 @@ bool ClientFeeds::put(const QByteArray &id, const QString &name, const QVariant 
   json[FEED_KEY_VALUE]   = value;
   json[FEED_KEY_OPTIONS] = options;
   return request(id, FEED_METHOD_PUT, name, json);
+}
+
+
+bool ClientFeeds::req(const NetRequest &request)
+{
+  PacketWriter writer(ChatClient::io()->sendStream(), Protocol::JSONPacket);
+  writer.put(request.toJSON());
+
+  m_self->m_req[request.id]      = request;
+  m_self->m_req[request.id].date = DateTime::utc();
+
+  return ChatClient::io()->send(writer.data());
 }
 
 
@@ -143,6 +162,23 @@ int ClientFeeds::match(ClientChannel channel, ClientChannel user)
   }
 
   return acl;
+}
+
+
+void ClientFeeds::json()
+{
+  const QVariantList list = JSON::parse(ChatClient::io()->reader()->get<QByteArray>()).toList();
+  if (list.size() < 4)
+    return;
+
+  if (list.first() == LS("REP")) {
+    const NetReply reply(list);
+    if (!m_req.contains(reply.id))
+      return;
+
+    NetRequest req = m_req.take(reply.id);
+    m_hooks->reply(req, reply);
+  }
 }
 
 

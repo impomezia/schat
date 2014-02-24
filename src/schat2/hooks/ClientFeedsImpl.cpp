@@ -1,6 +1,5 @@
-/* $Id: ClientFeedsImpl.cpp 3463 2013-02-03 22:11:41Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -49,6 +48,13 @@ void ClientFeedsImpl::addImpl(ClientChannel channel, const ChannelInfo & /*info*
   feeds.removeAll(FEED_NAME_HOSTS);
 
   get(channel->id(), feeds);
+}
+
+
+void ClientFeedsImpl::onReply(const NetRequest &req, const NetReply &reply)
+{
+  NetReplyNotify notify(req, reply);
+  ChatNotify::start(notify);
 }
 
 

@@ -1,6 +1,5 @@
-/* $Id: SimpleClient.h 3496 2013-02-12 05:44:20Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -49,6 +48,7 @@ public:
 
 signals:
   void notice(int type);
+  void jsonPacket();
 
 protected:
   SimpleClient(SimpleClientPrivate &dd, QObject *parent);

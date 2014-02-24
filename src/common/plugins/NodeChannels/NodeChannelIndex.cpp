@@ -1,6 +1,5 @@
-/* $Id: NodeChannelIndex.cpp 3637 2013-04-14 15:12:11Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -126,6 +125,7 @@ void NodeChannelIndex::build()
   m_date    = DateTime::utc();
   m_updated = true;
 
+  FeedsCore::put(FEED_NAME_STATS + LS("/rooms"), QVariant(), Feed::Broadcast);
   FeedsCore::put(FEED_NAME_LIST + LS("/channels"), QVariant(), Feed::Broadcast);
 }
 

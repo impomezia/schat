@@ -1,6 +1,5 @@
-/* $Id: NodeAclFeed.cpp 3735 2013-07-07 23:38:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -272,7 +271,7 @@ int NodeAclFeed::setAcl(const QString &encodedId, int acl, bool sudo)
   }
 
   if (isGenericUser(id))
-    return head().post(LS("other/") + encodedId, acl);
+    return head().post(LS("other/") + encodedId, acl, 0);
 
   return Notice::Forbidden;
 }

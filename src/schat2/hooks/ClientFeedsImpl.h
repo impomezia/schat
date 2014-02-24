@@ -1,6 +1,5 @@
-/* $Id: ClientFeedsImpl.h 3198 2012-10-19 21:43:43Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,6 +31,7 @@ public:
 
 protected:
   void addImpl(ClientChannel channel, const ChannelInfo &info, const QVariantMap &json);
+  void onReply(const NetRequest &req, const NetReply &reply);
   void readFeedImpl(const FeedNotice &packet);
 
 private:

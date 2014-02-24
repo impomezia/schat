@@ -1,6 +1,5 @@
-/* $Id: Acl.cpp 3579 2013-03-14 18:33:02Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -43,7 +42,7 @@ bool Acl::add(const QByteArray &other, int acl)
  */
 bool Acl::get(QVariantMap &data, Channel *channel) const
 {
-  int acl = match(channel);
+  const int acl = match(channel);
 
   if (!(acl & Read))
     return false;

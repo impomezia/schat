@@ -1,6 +1,5 @@
-/* $Id: ChannelsMenuImpl.cpp 3643 2013-04-17 10:50:31Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -90,7 +89,7 @@ void ChannelsMenuImpl::bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope
 
     m_ignore = menu->addAction(SCHAT_ICON(Prohibition), tr("Ignore"));
     m_ignore->setCheckable(true);
-    m_ignore->setChecked(Hooks::MessagesImpl::ignored(channel));
+    m_ignore->setChecked(Hooks::MessagesImpl::isIgnored(channel));
   }
 }
 
@@ -187,7 +186,7 @@ void ChannelsMenuImpl::permissions(QMenu *menu, ClientChannel user)
     return;
 
   const bool moderator = !m_self && (acl & Acl::Edit || acl & Acl::SpecialWrite);
-  const bool advanced  = acl & Acl::Edit;
+  const bool advanced  = (acl & Acl::Edit) && ChatClient::id() != user->id();
 
   if (moderator || advanced) {
     menu->addSeparator();
