@@ -81,6 +81,7 @@ ChatWindow::ChatWindow(QWidget *parent)
   m_mainLay->setMargin(0);
 #endif
 
+  setMinimumSize(400, 300);
   setCentralWidget(m_central);
   stylize();
   restoreGeometry();
@@ -189,20 +190,6 @@ void ChatWindow::resizeEvent(QResizeEvent *event)
 }
 
 
-void ChatWindow::showEvent(QShowEvent *event)
-{
-  if (!m_settings->value(SETTINGS_MAXIMIZED).toBool()) {
-    const QRect geometry    = frameGeometry();
-    const QRect available   = m_desktop->availableGeometry(this);
-    const QRect intersected = available.intersected(geometry);
-    if (intersected != geometry)
-      resize(intersected.width() - (geometry.width() - width()), intersected.height() - (geometry.height() - height()));
-  }
-
-  QMainWindow::showEvent(event);
-}
-
-
 #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
 bool ChatWindow::winEvent(MSG *message, long *result)
 {
@@ -308,7 +295,7 @@ void ChatWindow::restoreGeometry()
     move(data.at(0).toInt(), data.at(1).toInt());
     resize(data.at(2).toInt(), data.at(3).toInt());
   } else
-    resize(666, 420);
+    resize(666, 440);
 }
 
 

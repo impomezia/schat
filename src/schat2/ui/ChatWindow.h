@@ -52,7 +52,6 @@ protected:
   void keyPressEvent(QKeyEvent *event);
   void moveEvent(QMoveEvent *event);
   void resizeEvent(QResizeEvent *event);
-  void showEvent(QShowEvent *event);
 
 # if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
   bool winEvent(MSG *message, long *result);
