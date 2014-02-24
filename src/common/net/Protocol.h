@@ -1,6 +1,5 @@
-/* $Id: Protocol.h 3760 2013-07-25 03:59:53Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -98,7 +97,8 @@ public:
     AuthRequestPacket           = 0x6152, // "aR" or 24914
     /// Ответ на запрос авторизации.
     AuthReplyPacket             = 0x6172, // "ar" or 24946
-    NoticePacket                = 0x6e // "n" or 110
+    NoticePacket                = 0x6e,   // "n" or 110
+    JSONPacket                  = 0x6a73  // "js" or 27251
   };
 
   /// Опция заголовка виртуального пакета.

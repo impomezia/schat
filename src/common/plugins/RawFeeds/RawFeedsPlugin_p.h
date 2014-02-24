@@ -1,6 +1,5 @@
-/* $Id: RawFeedsPlugin_p.h 2732 2012-06-02 17:51:29Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,6 +18,8 @@
 #ifndef RAWFEEDSPLUGIN_P_H_
 #define RAWFEEDSPLUGIN_P_H_
 
+#include <QStringList>
+
 #include "plugins/ChatPlugin.h"
 
 class ChatView;
@@ -29,8 +30,10 @@ class RawFeeds : public ChatPlugin
 
 public:
   RawFeeds(QObject *parent);
-  inline bool isEnabled() const        { return m_enabled; }
-  inline void setEnabled(bool enabled) { m_enabled = enabled; }
+  inline bool isEnabled() const         { return m_enabled; }
+  inline bool remove(const QString &id) { if (m_req.contains(id)) { m_req.removeAll(id); return true; } return false; }
+  inline void add(const QString &id)    { if (!m_req.contains(id)) m_req.append(id); }
+  inline void setEnabled(bool enabled)  { m_enabled = enabled; }
 
 private slots:
   void init(ChatView *view);
@@ -38,6 +41,7 @@ private slots:
 
 private:
   bool m_enabled;
+  QStringList m_req;
 };
 
 #endif /* RAWFEEDSPLUGIN_P_H_ */

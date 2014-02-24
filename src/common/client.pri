@@ -1,6 +1,5 @@
-# $Id: client.pri 3700 2013-06-22 00:23:39Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -40,6 +39,8 @@ HEADERS += \
     JSON.h \
     k8json/k8json.h \
     net/dns/ChatDNS.h \
+    net/NetReply.h \
+    net/NetRequest.h \
     net/PacketReader.h \
     net/packets/auth.h \
     net/packets/ChannelNotice.h \
@@ -87,6 +88,8 @@ SOURCES += \
     JSON.cpp \
     k8json/k8json.cpp \
     net/dns/ChatDNS.cpp \
+    net/NetReply.cpp \
+    net/NetRequest.cpp \
     net/PacketReader.cpp \
     net/packets/auth.cpp \
     net/packets/ChannelNotice.cpp \

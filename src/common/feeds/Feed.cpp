@@ -1,6 +1,5 @@
-/* $Id: Feed.cpp 3735 2013-07-07 23:38:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -141,7 +140,7 @@ FeedReply Feed::post(const QString &path, const QVariantMap &json, Channel *chan
     if (!can(channel, Acl::Edit | Acl::SpecialEdit))
       return Notice::Forbidden;
 
-    const int status = head().post(path.mid(5), value);
+    const int status = head().post(path.mid(5), value, channel);
     if (status == Notice::OK)
       return FeedReply(status, DateTime::utc());
 

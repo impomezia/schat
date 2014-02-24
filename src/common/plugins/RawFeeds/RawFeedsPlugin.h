@@ -1,6 +1,5 @@
-/* $Id: RawFeedsPlugin.h 3408 2013-01-16 12:40:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -37,7 +36,7 @@ public:
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "RawFeeds";
     out[CORE_API_NAME]     = "Raw Feeds";
-    out[CORE_API_VERSION]  = "0.2.4";
+    out[CORE_API_VERSION]  = "0.3.0";
     out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/RawFeeds";
     out[CORE_API_DESC]     = "Debug plugin to access the raw data feeds";
     out[CORE_API_DESC_RU]  = "Отладочный плагин для доступа к данным фидов";

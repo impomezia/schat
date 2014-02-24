@@ -1,6 +1,5 @@
-/* $Id: MessagesFeed.h 3744 2013-07-10 20:58:58Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +15,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INFOFEED_H_
-#define INFOFEED_H_
+#ifndef MESSAGESFEED_H_
+#define MESSAGESFEED_H_
 
 #define MESSAGES_FEED_BEFORE_KEY   QLatin1String("before")
 #define MESSAGES_FEED_COUNT_KEY    QLatin1String("count")
@@ -39,4 +38,4 @@
 #define MESSAGES_FEED_TIMEOUT_KEY  QLatin1String("timeout")
 #define MESSAGES_FEED_V_KEY        QLatin1String("v")
 
-#endif /* INFOFEED_H_ */
+#endif /* MESSAGESFEED_H_ */

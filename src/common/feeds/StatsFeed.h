@@ -15,34 +15,10 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TR_H_
-#define TR_H_
+#ifndef STATSFEED_H_
+#define STATSFEED_H_
 
-#include <QString>
-#include <QList>
+#define STATS_FEED_USERS_KEY QLatin1String("users")
+#define STATS_FEED_ROOMS_KEY QLatin1String("rooms")
 
-#include "schat.h"
-
-class SCHAT_EXPORT Tr
-{
-public:
-  Tr();
-  virtual ~Tr();
-  inline const QString& prefix() const { return m_prefix; }
-
-  inline static void add(Tr *hook)     { m_hooks.append(hook); }
-  inline static void remove(Tr *hook)  { m_hooks.removeAll(hook); }
-  static QString value(const QString &key);
-  static QString value(const QString &key, int number);
-
-protected:
-  virtual QString valueImpl(const QString &key) const;
-  virtual QString valueImpl(const QString &key, int number) const;
-
-  QString m_prefix;          ///< Префикс переводов.
-
-private:
-  static QList<Tr*> m_hooks; ///< Хуки.
-};
-
-#endif /* TR_H_ */
+#endif /* STATSFEED_H_ */
