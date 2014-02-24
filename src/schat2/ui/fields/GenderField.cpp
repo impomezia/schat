@@ -1,6 +1,5 @@
-/* $Id: GenderField.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,9 +26,9 @@
 #include "ChatSettings.h"
 #include "client/ChatClient.h"
 #include "client/ClientChannels.h"
+#include "sglobal.h"
 #include "ui/ChatIcons.h"
 #include "ui/fields/GenderField.h"
-
 
 GenderField::GenderField(QWidget *parent)
   : QWidget(parent)
@@ -57,6 +56,7 @@ GenderField::GenderField(QWidget *parent)
   m_config->setIcon(SCHAT_ICON(Gear));
   m_config->setMenu(m_menu);
   m_config->setPopupMode(QToolButton::InstantPopup);
+  m_config->setStyleSheet(LS("QToolButton::menu-indicator {image:none}"));
 
   m_toolBar = new QToolBar(this);
   m_toolBar->setIconSize(QSize(16, 16));

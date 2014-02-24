@@ -1,6 +1,5 @@
-/* $Id: TabWidget.h 3692 2013-06-14 18:14:42Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -100,7 +99,7 @@ private slots:
   void notify(const Notify &notify);
   void openTab();
 
-  void addChannel(const QByteArray &id);
+  void addChannel(const QByteArray &id, const QString &xName = QString());
 
   void clientStateChanged(int state, int previousState);
 

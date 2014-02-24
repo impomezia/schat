@@ -1,6 +1,5 @@
-/* $Id: TabWidget.cpp 3699 2013-06-18 23:29:34Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -72,13 +71,16 @@ TabWidget::TabWidget(QWidget *parent)
   setTabBar(m_tabBar);
   setDocumentMode(true);
 
-  #if !defined(Q_OS_MAC)
+# if !defined(Q_OS_MAC)
   setStyleSheet(LS("QToolBar { margin:0px; border:0px; }"));
-  #endif
+# endif
 
   QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFontSize,         fontInfo().pixelSize());
   QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFixedFontSize,    fontInfo().pixelSize());
   QWebSettings::globalSettings()->setFontFamily(QWebSettings::StandardFont,          fontInfo().family());
+  QWebSettings::globalSettings()->setFontFamily(QWebSettings::SerifFont,             fontInfo().family());
+  QWebSettings::globalSettings()->setFontFamily(QWebSettings::SansSerifFont,         fontInfo().family());
+  QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalStorageEnabled,    true);
   QWebSettings::globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, ChatCore::settings()->value(SETTINGS_LABS_DEVELOPER_EXTRAS).toBool());
 
   m_authIcon = new AuthIcon();
@@ -99,7 +101,7 @@ TabWidget::TabWidget(QWidget *parent)
 
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTab(int)));
   connect(this, SIGNAL(currentChanged(int)), SLOT(currentChanged(int)));
-  connect(ChatClient::channels(), SIGNAL(channel(QByteArray)), SLOT(addChannel(QByteArray)));
+  connect(ChatClient::channels(), SIGNAL(channel(QByteArray,QString)), SLOT(addChannel(QByteArray,QString)));
   connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
   connect(m_serverTab, SIGNAL(actionTriggered(bool)), SLOT(openTab()));
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
@@ -600,14 +602,16 @@ void TabWidget::openTab()
 }
 
 
-void TabWidget::addChannel(const QByteArray &id)
+void TabWidget::addChannel(const QByteArray &id, const QString &xName)
 {
   const int type = SimpleID::typeOf(id);
 
-  if (type == SimpleID::ChannelId || m_prefetch.contains(id)) {
+  if (type == ChatId::ChannelId || m_prefetch.contains(id)) {
     m_prefetch.removeAll(id);
-    channelTab(id, true, type == SimpleID::ChannelId ? !m_channels.contains(id) : false);
+    channelTab(id, true, type == ChatId::ChannelId ? !m_channels.contains(id) : false);
   }
+  else if (type == ChatId::UserId && !xName.isEmpty())
+    channelTab(id, true, true);
 }
 
 

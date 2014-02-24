@@ -1,6 +1,5 @@
-/* $Id: MessagesImpl.cpp 3841 2013-10-27 00:22:25Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -57,7 +56,7 @@ int MessagesImpl::read(MessagePacket packet)
   if (command != LS("m") && command != LS("me") && command != LS("say"))
     return 0;
 
-  if (SimpleID::typeOf(packet->dest()) == SimpleID::ChannelId && ignored(ChatClient::channels()->get(packet->sender())))
+  if (isIgnored(packet))
     return 0;
 
   ChannelMessage message(packet);
@@ -82,16 +81,25 @@ int MessagesImpl::read(MessagePacket packet)
 /*!
  * \return \b true если сообщения пользователя игнорируются.
  */
-bool MessagesImpl::ignored(ClientChannel user)
+bool MessagesImpl::isIgnored(ClientChannel user)
 {
-  if (!user || user->type() != SimpleID::UserId)
+  if (!user || user->type() != ChatId::UserId)
     return false;
 
-  FeedPtr feed = ChatClient::channel()->feed(FEED_NAME_ACL, false);
+  const FeedPtr feed = ChatClient::channel()->feed(FEED_NAME_ACL, false);
   if (!feed)
     return false;
 
   return !feed->can(user.data(), Acl::Write);
+}
+
+
+bool MessagesImpl::isIgnored(MessagePacket packet)
+{
+  if (ChatId(packet->dest()).type() != ChatId::ChannelId)
+    return false;
+
+  return isIgnored(ChatClient::channels()->get(packet->sender()));
 }
 
 

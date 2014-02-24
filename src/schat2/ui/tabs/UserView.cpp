@@ -1,6 +1,5 @@
-/* $Id: UserView.cpp 3690 2013-06-13 22:54:47Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -65,7 +64,7 @@ bool UserItem::reload()
 
     if (m_user->status() != Status::Offline) {
       m_bold      = acl & Acl::Edit || acl & Acl::SpecialWrite;
-      m_italic    = !(acl & Acl::Write) || Hooks::MessagesImpl::ignored(m_user);
+      m_italic    = !(acl & Acl::Write) || Hooks::MessagesImpl::isIgnored(m_user);
       m_underline = acl & Acl::SpecialEdit;
     }
     else {

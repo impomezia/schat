@@ -1,6 +1,5 @@
-/* $Id: EmoticonsButton.cpp 3064 2012-09-10 22:12:42Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,6 +33,7 @@ EmoticonsButton::EmoticonsButton(Emoticons *emoticons, QWidget *parent)
   setIcon(QIcon(LS(":/images/Emoticons/edit.png")));
   setPopupMode(QToolButton::InstantPopup);
   setMenu(m_menu);
+  setStyleSheet(LS("QToolButton::menu-indicator {image:none}"));
 
   retranslateUi();
 
@@ -54,10 +54,10 @@ void EmoticonsButton::changeEvent(QEvent *event)
 void EmoticonsButton::menuAboutToHide()
 {
   QList<QAction *> actions = m_menu->actions();
-  foreach (QAction *action, actions) {
-    m_menu->removeAction(action);
+  foreach (QAction *action, actions)
     action->deleteLater();
-  }
+
+  m_menu->clear();
 }
 
 
