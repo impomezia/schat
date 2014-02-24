@@ -28,3 +28,6 @@ Makefile.schat*
 *.opensdf
 *.vcxproj.user
 *.vcxproj.filters
+/node_modules
+
+/.idea
