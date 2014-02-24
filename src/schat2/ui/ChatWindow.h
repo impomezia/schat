@@ -1,6 +1,5 @@
-/* $Id: ChatWindow.h 3653 2013-04-21 21:40:40Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -47,15 +46,16 @@ public slots:
   void showChat();
 
 protected:
+  bool event(QEvent *event);
   void changeEvent(QEvent *event);
   void closeEvent(QCloseEvent *event);
   void keyPressEvent(QKeyEvent *event);
   void moveEvent(QMoveEvent *event);
   void resizeEvent(QResizeEvent *event);
-  void showEvent(QShowEvent *event);
-  #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
+
+# if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
   bool winEvent(MSG *message, long *result);
-  #endif
+# endif
 
 private slots:
   void notify(const Notify &notify);
@@ -68,11 +68,8 @@ private:
   void restoreGeometry();
   void retranslateUi();
   void saveGeometry();
-  void setAppIcon();
-
-  #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
-  void setWindowsAero();
-  #endif
+  void setupAppIcon();
+  void stylize();
 
   ChatSettings *m_settings;  ///< Настройки.
   QDesktopWidget *m_desktop; ///< Виджет для определения геометрии экрана.

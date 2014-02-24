@@ -30,7 +30,9 @@ macx {
 QT = core gui network webkit
 TEMPLATE = app
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+}
 
 HEADERS = \
     ChatApp.h \
@@ -41,16 +43,32 @@ SOURCES = \
     ChatApp.cpp \
     main.cpp \
     ui/ChatWindow.cpp \
-    
-win32:contains(QT_VERSION, ^4.*) {
-    HEADERS += qtwin/qtwin.h
-    SOURCES += qtwin/qtwin.cpp
-}
 
 DEFINES += SCHAT_WEBKIT
 
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB = 1
+
+win32 {
+    greaterThan(QT_MAJOR_VERSION, 4):greaterThan(QT_MINOR_VERSION, 1) {
+        QT += winextras
+    }
+    else {
+        HEADERS += qtwin/qtwin.h
+        SOURCES += qtwin/qtwin.cpp
+    }
+
+    SOURCES += ui/ChatWindow_win.cpp
+}
+
+unix {
+    macx {
+        SOURCES += ui/ChatWindow_mac.cpp
+    }
+    else {
+        SOURCES += ui/ChatWindow_unix.cpp
+    }
+}
 
 for(LANG, AVAILABLE_LANGS) {
   TS = ../../res/translations/schat2-client_$${LANG}.ts ../../res/translations/schat2_$${LANG}.ts

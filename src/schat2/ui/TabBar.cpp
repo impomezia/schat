@@ -1,6 +1,5 @@
-/* $Id: TabBar.cpp 3699 2013-06-18 23:29:34Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -75,10 +74,11 @@ TabBar::ButtonPosition TabBar::closeButtonPosition() const
 
 void TabBar::mousePressEvent(QMouseEvent *event)
 {
-# if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
+# if defined(Q_OS_WIN32)
   if (event->button() == Qt::LeftButton && tabAt(event->pos()) == -1) {
     ReleaseCapture();
-    PostMessage(parentWidget()->parentWidget()->parentWidget()->winId(), WM_SYSCOMMAND, SC_MOVE | HTCAPTION, 0);
+    HWND hwnd = reinterpret_cast<HWND>(parentWidget()->parentWidget()->parentWidget()->winId());
+    PostMessage(hwnd, WM_SYSCOMMAND, SC_MOVE | HTCAPTION, 0);
   }
 # endif
 

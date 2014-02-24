@@ -1,6 +1,5 @@
-/* $Id: ChatWindow.cpp 3767 2013-08-13 22:30:40Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,6 +22,10 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
+#if QT_VERSION >= 0x050200
+# include <QWinEvent>
+#endif
+
 #include "ChatAlerts.h"
 #include "ChatCore.h"
 #include "ChatNotify.h"
@@ -39,20 +42,21 @@
 #include "ui/TabWidget.h"
 
 #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
-  #include "qtwin/qtwin.h"
-  #include <qt_windows.h>
-  #define WM_DWMCOMPOSITIONCHANGED 0x031E // Composition changed window message
+# include <qt_windows.h>
+# include "qtwin/qtwin.h"
 #endif
 
 #if defined(SCHAT_OPTION)
-  #undef SCHAT_OPTION
-  #define SCHAT_OPTION(x) m_settings->value(QLatin1String(x))
+# undef SCHAT_OPTION
+# define SCHAT_OPTION(x) m_settings->value(QLatin1String(x))
 #endif
 
 ChatWindow::ChatWindow(QWidget *parent)
   : QMainWindow(parent)
   , m_settings(ChatCore::settings())
 {
+  setObjectName(LS("ChatWindow"));
+
   m_desktop = new QDesktopWidget();
   new StatusMenu(this);
 
@@ -69,14 +73,17 @@ ChatWindow::ChatWindow(QWidget *parent)
   m_mainLay->addWidget(m_send);
   m_mainLay->setStretchFactor(m_tabs, 999);
   m_mainLay->setStretchFactor(m_send, 1);
-  m_mainLay->setMargin(0);
   m_mainLay->setSpacing(0);
+
+# if defined(Q_OS_WIN)
+  m_mainLay->setContentsMargins(3, 3, 3, 0);
+#else
+  m_mainLay->setMargin(0);
+#endif
+
+  setMinimumSize(400, 300);
   setCentralWidget(m_central);
-
-  #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
-  setWindowsAero();
-  #endif
-
+  stylize();
   restoreGeometry();
 
   connect(m_send, SIGNAL(send(QString)), ChatCore::i(), SLOT(send(QString)));
@@ -86,7 +93,7 @@ ChatWindow::ChatWindow(QWidget *parent)
 
   setWindowTitle(QApplication::applicationName());
 
-  setAppIcon();
+  setupAppIcon();
 }
 
 
@@ -124,6 +131,17 @@ void ChatWindow::showChat()
 
   if (m_send->isVisible())
     m_send->setInputFocus();
+}
+
+
+bool ChatWindow::event(QEvent *event)
+{
+# if QT_VERSION >= 0x050200
+  if (event->type() == QWinEvent::CompositionChange || event->type() == QWinEvent::ColorizationChange)
+    stylize();
+# endif
+
+  return QMainWindow::event(event);
 }
 
 
@@ -172,25 +190,11 @@ void ChatWindow::resizeEvent(QResizeEvent *event)
 }
 
 
-void ChatWindow::showEvent(QShowEvent *event)
-{
-  if (!m_settings->value(SETTINGS_MAXIMIZED).toBool()) {
-    const QRect geometry    = frameGeometry();
-    const QRect available   = m_desktop->availableGeometry(this);
-    const QRect intersected = available.intersected(geometry);
-    if (intersected != geometry)
-      resize(intersected.width() - (geometry.width() - width()), intersected.height() - (geometry.height() - height()));
-  }
-
-  QMainWindow::showEvent(event);
-}
-
-
 #if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
 bool ChatWindow::winEvent(MSG *message, long *result)
 {
-  if (message && message->message == WM_DWMCOMPOSITIONCHANGED) {
-    setWindowsAero();
+  if (message && (message->message == QtWin::CompositionChange || message->message == QtWin::ColorizationChange)) {
+    stylize();
   }
 
   return QMainWindow::winEvent(message, result);
@@ -222,7 +226,7 @@ void ChatWindow::notify(const Notify &notify)
   }
   else if (notify.type() == Notify::ForceShowChat) {
     showChat();
-#   if defined(Q_OS_WIN)
+#   if defined(Q_OS_WIN) && QT_VERSION < 0x50000
     HWND hWnd = window()->internalWinId();
     ShowWindow(hWnd, SW_MINIMIZE);
     ShowWindow(hWnd, SW_RESTORE);
@@ -291,7 +295,7 @@ void ChatWindow::restoreGeometry()
     move(data.at(0).toInt(), data.at(1).toInt());
     resize(data.at(2).toInt(), data.at(3).toInt());
   } else
-    resize(666, 420);
+    resize(666, 440);
 }
 
 
@@ -308,38 +312,3 @@ void ChatWindow::saveGeometry()
 
   m_settings->setValue(LS("Geometry/") + geometryKey(), data, false, true);
 }
-
-
-void ChatWindow::setAppIcon()
-{
-# if defined(Q_OS_LINUX)
-  QIcon icon;
-  QList<int> sizes;
-  sizes << 16 << 22 << 24 << 32 << 36 << 48 << 64 << 72 << 96 << 128;
-
-  foreach (const int size, sizes) {
-    const QString file = QString(LS("/usr/share/icons/hicolor/%1x%1/apps/schat2.png")).arg(size);
-    if (QFile::exists(file))
-      icon.addFile(file, QSize(size, size));
-  }
-
-  if (icon.availableSizes().isEmpty())
-    setWindowIcon(QIcon(LS(":/images/icons/48x48/schat2.png")));
-  else
-    setWindowIcon(icon);
-# endif
-}
-
-
-#if defined(Q_OS_WIN32) && QT_VERSION < 0x050000
-void ChatWindow::setWindowsAero()
-{
-  if (SCHAT_OPTION("WindowsAero").toBool() && QtWin::isCompositionEnabled()) {
-    QtWin::extendFrameIntoClientArea(this);
-    m_mainLay->setMargin(0);
-  }
-  else {
-    m_mainLay->setContentsMargins(3, 3, 3, 0);
-  }
-}
-#endif
