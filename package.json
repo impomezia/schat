@@ -1,0 +1,25 @@
+{
+  "name": "schat",
+  "version": "2.2.0",
+  "homepage": "https://schat.me",
+  "author": {
+    "name": "Alexander Sedov",
+    "url": "https://schat.me",
+    "email": "imp@schat.me"
+  },
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/impomezia/schat/issues",
+    "email": "support@schat.me"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-contrib-cssmin": "~0.8.0",
+    "grunt-contrib-less": "~0.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/impomezia/schat.git"
+  }
+}

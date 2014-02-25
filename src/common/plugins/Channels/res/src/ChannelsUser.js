@@ -5,8 +5,8 @@ Messages.addInviteMessage = function(json) {
   Messages.addAlertMessage(json);
 
   $('#' + json.Id + ' .alert-box-buttons').html(
-      '<a href="' + json.Url + '" class="btn btn-small btn-invite" data-tr="channels_accept" data-id="' + json.Id + '">' + Utils.tr('channels_accept') + '</a> ' +
-      '<a href="#" class="btn btn-small btn-close-invite"          data-tr="channels_reject" data-id="' + json.Id + '">' + Utils.tr('channels_reject') + '</a>'
+      '<a href="' + json.Url + '" class="btn btn-small btn-invite" data-tr="channels-accept" data-id="' + json.Id + '">' + Utils.tr('channels-accept') + '</a> ' +
+      '<a href="#" class="btn btn-small btn-close-invite"          data-tr="channels-reject" data-id="' + json.Id + '">' + Utils.tr('channels-reject') + '</a>'
   )
 
   $('#' + json.Id + ' .btn-invite').data('channel', json.Channel);

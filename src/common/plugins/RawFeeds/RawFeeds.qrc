@@ -3,7 +3,6 @@
   <file alias="css/RawFeeds/RawFeeds.css">res/css/RawFeeds.min.css</file>
   <file alias="images/RawFeeds/icon.png">res/images/picons_social/picons20.png</file>
   <file alias="images/RawFeeds/feeds.png">res/images/feeds.png</file>
-  <file alias="js/RawFeeds/KelpJSONView.js">res/js/KelpJSONView.min.js</file>
   <file alias="js/RawFeeds/RawFeeds.js">res/js/RawFeeds.min.js</file>
 </qresource>
 </RCC>

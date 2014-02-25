@@ -1,4 +1,0 @@
-Body type and links
-Labels and badges
-Forms
-Navbar

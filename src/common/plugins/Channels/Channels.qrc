@@ -2,7 +2,6 @@
 <qresource prefix="/">
   <file alias="css/Channels/bootstrap.css">res/css/bootstrap.min.css</file>
   <file alias="css/Channels/bootstrap-dropdown.css">res/css/bootstrap-dropdown.min.css</file>
-  <file alias="css/Channels/bootstrap-override.css">res/css/bootstrap-override.min.css</file>
   <file alias="css/Channels/Channels.css">res/css/Channels.min.css</file>
   <file alias="css/Channels/ListView.css">res/css/ListView.min.css</file>
   <file alias="html/channel_options.html">res/html/channel_options.html</file>
@@ -11,6 +10,7 @@
   <file alias="images/Channels/icon.png">res/images/hypic/forum_32.png</file>
   <file alias="images/Channels/list.png">res/images/silk/text_list_bullets.png</file>
   <file alias="images/Channels/reload.png">res/images/reload.png</file>
+  <file alias="images/Channels/schat-icons.png">res/images/schat-icons.png</file>
   <file alias="images/Channels/settings.png">res/images/settings.png</file>
   <file alias="js/Channels/bootstrap-dropdown.js">res/js/bootstrap-dropdown.min.js</file>
   <file alias="js/Channels/Channels.js">res/js/Channels.min.js</file>
