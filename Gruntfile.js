@@ -21,14 +21,16 @@ module.exports = function(grunt) {
           'src/common/plugins/SendFile/res/js/SendFile.min.js': ['src/common/plugins/SendFile/res/src/SendFile.js'],
           'src/common/plugins/History/res/js/History.min.js': ['src/common/plugins/History/res/src/History.js'],
           'src/common/plugins/History/res/js/days.min.js': ['src/common/plugins/History/res/src/days.js'],
-          'src/common/plugins/Console/res/js/console.min.js': ['src/common/plugins/Console/res/html/src/console.js'],
-          'src/common/plugins/Console/res/js/console-login.min.js': ['src/common/plugins/Console/res/html/src/console-login.js'],
-          'src/common/plugins/Console/res/js/console-password.min.js': ['src/common/plugins/Console/res/html/src/console-password.js'],
-          'src/common/plugins/Console/res/js/console-home.min.js': ['src/common/plugins/Console/res/html/src/console-home.js'],
           'src/common/plugins/Channels/res/js/bootstrap-dropdown.min.js': ['src/common/plugins/Channels/res/src/bootstrap-dropdown.js'],
           'src/common/plugins/Channels/res/js/Channels.min.js': ['src/common/plugins/Channels/res/src/Channels.js'],
           'src/common/plugins/Channels/res/js/ChannelsUser.min.js': ['src/common/plugins/Channels/res/src/ChannelsUser.js'],
-          'src/common/plugins/Channels/res/js/ListView.min.js': ['src/common/plugins/Channels/res/src/ListView.js']
+          'src/common/plugins/Channels/res/js/ListView.min.js': ['src/common/plugins/Channels/res/src/ListView.js'],
+          'src/common/plugins/Console/res/js/console.min.js': [
+            'src/common/plugins/Console/res/html/src/console.js',
+            'src/common/plugins/Console/res/html/src/console-login.js',
+            'src/common/plugins/Console/res/html/src/console-password.js',
+            'src/common/plugins/Console/res/html/src/console-home.js'
+          ]
         }
       }
     },
@@ -46,12 +48,16 @@ module.exports = function(grunt) {
           'src/common/plugins/YouTube/res/css/YouTube.min.css': ['src/common/plugins/YouTube/res/src/YouTube.css'],
           'src/common/plugins/SendFile/res/css/SendFile.min.css': ['src/common/plugins/SendFile/res/src/SendFile.css'],
           'src/common/plugins/History/res/css/History.min.css': ['src/common/plugins/History/res/src/History.css'],
-          'src/common/plugins/Console/res/css/console.min.css': ['src/common/plugins/Console/res/html/src/console.css'],
           'src/common/plugins/Channels/res/css/bootstrap.min.css': ['src/common/plugins/Channels/res/src/bootstrap.css'],
           'src/common/plugins/Channels/res/css/bootstrap-dropdown.min.css': ['src/common/plugins/Channels/res/src/bootstrap-dropdown.css'],
           'src/common/plugins/Channels/res/css/bootstrap-override.min.css': ['src/common/plugins/Channels/res/src/bootstrap-override.css'],
           'src/common/plugins/Channels/res/css/Channels.min.css': ['src/common/plugins/Channels/res/src/Channels.css'],
-          'src/common/plugins/Channels/res/css/ListView.min.css': ['src/common/plugins/Channels/res/src/ListView.css']
+          'src/common/plugins/Channels/res/css/ListView.min.css': ['src/common/plugins/Channels/res/src/ListView.css'],
+          'src/common/plugins/Console/res/css/console.min.css': ['src/common/plugins/Console/res/html/src/console.css'],
+          'src/common/plugins/Console/res/css/bootstrap.min.css': [
+            'src/common/plugins/Console/res/src/bootstrap.css',
+            'src/common/plugins/Console/res/src/bootstrap-override.css'
+          ]
         }
       }
     }

@@ -64,6 +64,10 @@ h3 {
   color: inherit;
 }
 
+#providers {
+  text-align: center;
+}
+
 #providers .btn {
   font-weight: bold;
   text-align: left;
