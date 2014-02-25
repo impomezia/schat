@@ -67,7 +67,7 @@ protected:
     else if (key == LS("hidden"))         return tr("Hidden");
     else if (key == LS("pin"))            return tr("Pin to channel list");
     else if (key == LS("permissions"))    return tr("Permissions");
-    else if (key == LS("default_acl"))    return tr("Default permissions");
+    else if (key == LS("default-acl"))    return tr("Default permissions");
     else if (key == LS("owner"))          return tr("Owner");
     else if (key == LS("readonly"))       return tr("Read only");
     else if (key == LS("moderator"))      return tr("Moderator");
@@ -81,7 +81,6 @@ protected:
     else if (key == LS("create"))         return tr("Create");
     else if (key == LS("create-title"))   return tr("Create new channel");
     else if (key == LS("name-label"))     return tr("Name:");
-    else if (key == LS("access-label"))   return tr("Access:");
     else if (key == LS("access-checkbox"))return tr("This channel is private");
     else if (key == LS("cancel"))         return tr("Cancel");
     else if (key == LS("bad-name"))       return tr("Invalid channel name. Please choose another name.");
