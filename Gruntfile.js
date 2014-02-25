@@ -24,7 +24,20 @@ module.exports = function(grunt) {
           'src/common/plugins/Channels/res/js/bootstrap-dropdown.min.js': ['src/common/plugins/Channels/res/src/bootstrap-dropdown.js'],
           'src/common/plugins/Channels/res/js/Channels.min.js': ['src/common/plugins/Channels/res/src/Channels.js'],
           'src/common/plugins/Channels/res/js/ChannelsUser.min.js': ['src/common/plugins/Channels/res/src/ChannelsUser.js'],
-          'src/common/plugins/Channels/res/js/ListView.min.js': ['src/common/plugins/Channels/res/src/ListView.js'],
+          'src/common/plugins/Channels/res/js/ListView.min.js': [
+            'res/html/js/bootstrap-modal.js',
+            'res/html/js/jquery.timeago.js',
+            'res/html/src/lib/base.js',
+            'res/html/src/lib/utils.js',
+            'res/html/src/lib/phpjs.js',
+            'res/html/src/lang.js',
+            'res/html/src/lib/ui-base.js',
+            'res/html/src/lib/ui-modal.js',
+            'res/html/src/lib/ui-index.js',
+            'src/common/plugins/Channels/res/src/rooms-ui-navbar.js',
+            'src/common/plugins/Channels/res/src/rooms-ui-create.js',
+            'src/common/plugins/Channels/res/src/rooms-base.js'
+          ],
           'src/common/plugins/Console/res/js/console.min.js': [
             'src/common/plugins/Console/res/html/src/console.js',
             'src/common/plugins/Console/res/html/src/console-login.js',
@@ -48,11 +61,8 @@ module.exports = function(grunt) {
           'src/common/plugins/YouTube/res/css/YouTube.min.css': ['src/common/plugins/YouTube/res/src/YouTube.css'],
           'src/common/plugins/SendFile/res/css/SendFile.min.css': ['src/common/plugins/SendFile/res/src/SendFile.css'],
           'src/common/plugins/History/res/css/History.min.css': ['src/common/plugins/History/res/src/History.css'],
-          'src/common/plugins/Channels/res/css/bootstrap.min.css': ['src/common/plugins/Channels/res/src/bootstrap.css'],
           'src/common/plugins/Channels/res/css/bootstrap-dropdown.min.css': ['src/common/plugins/Channels/res/src/bootstrap-dropdown.css'],
-          'src/common/plugins/Channels/res/css/bootstrap-override.min.css': ['src/common/plugins/Channels/res/src/bootstrap-override.css'],
           'src/common/plugins/Channels/res/css/Channels.min.css': ['src/common/plugins/Channels/res/src/Channels.css'],
-          'src/common/plugins/Channels/res/css/ListView.min.css': ['src/common/plugins/Channels/res/src/ListView.css'],
           'src/common/plugins/Console/res/css/console.min.css': ['src/common/plugins/Console/res/html/src/console.css'],
           'src/common/plugins/Console/res/css/bootstrap.min.css': [
             'src/common/plugins/Console/res/src/bootstrap.css',
@@ -60,11 +70,24 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+    less: {
+      all: {
+        options: {
+          compress: true,
+          paths: ['res/less/bootstrap', 'res/less']
+        },
+        files: {
+          'src/common/plugins/Channels/res/css/bootstrap.min.css': ['src/common/plugins/Channels/res/src/bootstrap.less'],
+          'src/common/plugins/Channels/res/css/ListView.min.css': ['src/common/plugins/Channels/res/src/ListView.less']
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-less');
 
-  grunt.registerTask('default', ['uglify', 'cssmin']);
+  grunt.registerTask('default', ['uglify', 'cssmin', 'less']);
 };
