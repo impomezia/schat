@@ -1,6 +1,5 @@
-/* $Id: Tr.h 2502 2012-04-06 15:37:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,9 +33,11 @@ public:
   inline static void add(Tr *hook)     { m_hooks.append(hook); }
   inline static void remove(Tr *hook)  { m_hooks.removeAll(hook); }
   static QString value(const QString &key);
+  static QString value(const QString &key, int number);
 
 protected:
   virtual QString valueImpl(const QString &key) const;
+  virtual QString valueImpl(const QString &key, int number) const;
 
   QString m_prefix;          ///< Префикс переводов.
 

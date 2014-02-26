@@ -5,42 +5,42 @@
 <context>
     <name>UpdatePluginImpl</name>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="207"/>
+        <location filename="../../UpdatePlugin.cpp" line="206"/>
         <source>Release Notes</source>
         <translation>Об обновлении</translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="213"/>
+        <location filename="../../UpdatePlugin.cpp" line="212"/>
         <source>Download</source>
         <translation>Cкачать</translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="216"/>
+        <location filename="../../UpdatePlugin.cpp" line="215"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="219"/>
+        <location filename="../../UpdatePlugin.cpp" line="218"/>
         <source>Resume</source>
         <translation>Возобновить</translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="260"/>
+        <location filename="../../UpdatePlugin.cpp" line="259"/>
         <source>Downloading update</source>
         <translation>Загрузка обновления</translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="437"/>
+        <location filename="../../UpdatePlugin.cpp" line="438"/>
         <source>Install Update Now</source>
         <translation>Установить обновление сейчас</translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="442"/>
+        <location filename="../../UpdatePlugin.cpp" line="443"/>
         <source>Update Error</source>
         <translation>Ошибка обновления</translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="446"/>
+        <location filename="../../UpdatePlugin.cpp" line="447"/>
         <source>Update Available</source>
         <translation>Доступно обновление</translation>
     </message>
@@ -48,12 +48,12 @@
 <context>
     <name>UpdateSettings</name>
     <message>
-        <location filename="../../UpdateSettings.cpp" line="73"/>
+        <location filename="../../UpdateSettings.cpp" line="77"/>
         <source>Automatically download and install updates</source>
         <translation>Автоматически загружать и устанавливать обновления</translation>
     </message>
     <message>
-        <location filename="../../UpdateSettings.cpp" line="74"/>
+        <location filename="../../UpdateSettings.cpp" line="78"/>
         <source>Update to beta versions</source>
         <translation>Обновлять до бета версий</translation>
     </message>

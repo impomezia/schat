@@ -1,6 +1,5 @@
-/* $Id: InfoFeed.h 3623 2013-04-06 04:12:59Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
 
 #define INFO_FEED_AUTHOR_KEY     QLatin1String("author")
 #define INFO_FEED_DATE_KEY       QLatin1String("date")
+#define INFO_FEED_IMAGES_KEY     QLatin1String("images")
 #define INFO_FEED_PINNED_KEY     QLatin1String("pinned")
 #define INFO_FEED_SUDO_KEY       QLatin1String("sudo")
 #define INFO_FEED_SUDO_REQ       QLatin1String("info/sudo")

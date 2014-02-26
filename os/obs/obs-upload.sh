@@ -18,7 +18,7 @@
 set -e
 
 PROJECT=$1
-VERSION=$2~`git rev-parse --short HEAD`
+VERSION=$2_`git rev-parse --short HEAD`
 SOURCE=schat2-$VERSION
 
 cd ..

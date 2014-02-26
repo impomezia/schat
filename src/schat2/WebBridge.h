@@ -1,6 +1,5 @@
-/* $Id: WebBridge.h 3726 2013-07-05 01:44:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -52,7 +51,7 @@ public:
   Q_INVOKABLE QString status(const QString &id) const;
   Q_INVOKABLE QString statusText(int status) const;
   Q_INVOKABLE QString toBase32(const QString &text);
-  Q_INVOKABLE QString translate(const QString &key) const;
+  Q_INVOKABLE QString translate(const QString &key, const QVariant &param = QVariant()) const;
   Q_INVOKABLE QStringList fields() const;
   Q_INVOKABLE QVariant channel(const QString &id) const;
   Q_INVOKABLE QVariant encryption() const;

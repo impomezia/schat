@@ -1,6 +1,5 @@
-/* $Id: ServerChannel.cpp 3643 2013-04-17 10:50:31Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -75,11 +74,15 @@ ServerChannel::~ServerChannel()
  */
 bool ServerChannel::addChannel(const QByteArray &id)
 {
+  const ChatId _id(id);
+
   if (m_channels.add(id)) {
     m_offline.remove(id);
 
-    if (SimpleID::typeOf(id) == SimpleID::UserId)
-      FeedsCore::post(this, FEED_NAME_USERS + LC('/') + SimpleID::encode(id), Ch::server().data(), QVariant(), Feed::Broadcast);
+    if (_id.type() == ChatId::UserId) {
+      FeedsCore::post(this, FEED_NAME_USERS + LC('/') + _id.toString(), Ch::server().data(), QVariant(), Feed::Broadcast);
+      FeedsCore::post(this, FEED_NAME_STATS + LC('/') + _id.toString(), Ch::server().data(), QVariant(), Feed::Broadcast);
+    }
 
     return true;
   }
@@ -93,14 +96,18 @@ bool ServerChannel::addChannel(const QByteArray &id)
  */
 bool ServerChannel::removeChannel(const QByteArray &id, bool offline)
 {
+  const ChatId _id(id);
+
   if (m_channels.contains(id)) {
     m_channels.remove(id);
 
     if (offline)
       m_offline.add(id);
 
-    if (SimpleID::typeOf(id) == SimpleID::UserId)
-      FeedsCore::del(this, FEED_NAME_USERS + LC('/') + SimpleID::encode(id), Ch::server().data(), Feed::Broadcast);
+    if (_id.type() == ChatId::UserId) {
+      FeedsCore::del(this, FEED_NAME_USERS + LC('/') + _id.toString(), Ch::server().data(), Feed::Broadcast);
+      FeedsCore::del(this, FEED_NAME_STATS + LC('/') + _id.toString(), Ch::server().data(), Feed::Broadcast);
+    }
 
     return true;
   }

@@ -1,6 +1,5 @@
-/* $Id: SimpleClient.cpp 3705 2013-06-23 02:24:46Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -94,7 +93,7 @@ SimpleClientPrivate::AuthReplyAction SimpleClientPrivate::authReply(const AuthRe
 bool SimpleClientPrivate::notice()
 {
   Q_Q(SimpleClient);
-  quint16 type = reader->get<quint16>();
+  const quint16 type = reader->get<quint16>();
   emit(q->notice(type));
 
   return true;
@@ -188,6 +187,10 @@ void SimpleClient::newPacketsImpl()
 
       case Protocol::NoticePacket:
         d->notice();
+        break;
+
+      case Protocol::JSONPacket:
+        emit jsonPacket();
         break;
 
       default:

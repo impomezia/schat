@@ -17,11 +17,11 @@
 
 set -e
 
-SCHAT_VERSION=$SCHAT_VERSION
-PPA_VERSION=$SCHAT_VERSION-1~ppa0~`git rev-parse --short HEAD`
+SCHAT_VERSION=${SCHAT_VERSION}.${SCHAT_BUILDNUMBER}
+PPA_VERSION=${SCHAT_VERSION}-1~ppa0~`git rev-parse --short HEAD`
 RDATE=`date -R`
-SCHAT_SOURCE=schat2_$SCHAT_VERSION
-PPA_SOURCE=schat2_$PPA_VERSION
+SCHAT_SOURCE=schat2_${SCHAT_VERSION}
+PPA_SOURCE=schat2_${PPA_VERSION}
 
 function upload() {
   local DIST=$1
@@ -39,7 +39,7 @@ rm -fr ppa
 mkdir ppa
 cp -fR $WORKDIR ppa/$SCHAT_SOURCE
 cp -fR $WORKDIR ppa/$PPA_SOURCE
-find ppa/$SCHAT_SOURCE -name .svn -exec rm -rf {} \; > /dev/null 2>&1 || true
+rm -fr ppa/$SCHAT_SOURCE/.git
 
 cd ppa
 tar -cJf $SCHAT_SOURCE.orig.tar.xz $SCHAT_SOURCE 
@@ -54,7 +54,6 @@ rm debian/changelog.ppa
 
 upload "trusty"
 upload "saucy"
-upload "raring"
 upload "quantal"
 upload "precise"
 upload "lucid"

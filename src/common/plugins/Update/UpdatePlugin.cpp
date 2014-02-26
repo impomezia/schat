@@ -252,7 +252,7 @@ void UpdatePluginImpl::download()
 {
   m_state = DownloadUpdate;
   m_sha1->reset();
-  m_file.setFileName(Path::cache() + LS("/schat2-") + m_info.version + LS(".") + QString::number(m_info.revision) + LS(".exe"));
+  m_file.setFileName(Path::cache() + LS("/schat2-") + m_info.version + LS(".exe"));
   if (!m_file.open(QIODevice::WriteOnly))
     return setDone(DownloadError);
 
@@ -327,11 +327,10 @@ void UpdatePluginImpl::restart()
 }
 
 
-// \bug Автоматическое обновление сломано из-за перехода на git и отказа от глобальной ревизии.
 void UpdatePluginImpl::start()
 {
   if (SCHAT_VER_PATH)
-    QFile::remove(Path::cache() + LS("/schat2-") + QApplication::applicationVersion() + LS(".") + QString::number(SCHAT_VER_PATH) + LS(".exe"));
+    QFile::remove(Path::cache() + LS("/schat2-") + QApplication::applicationVersion() + LS(".exe"));
 
   connect(BgOperationWidget::i(), SIGNAL(clicked(QString,QMouseEvent*)), SLOT(clicked(QString,QMouseEvent*)));
   connect(ChatClient::i(), SIGNAL(ready()), SLOT(online()));
@@ -369,7 +368,6 @@ void UpdatePluginImpl::startDownload()
  */
 void UpdatePluginImpl::checkUpdate()
 {
-  m_file.close();
   if (m_info.hash == m_sha1->result()) {
     m_settings->setValue(m_prefix + LS("/Version"),  m_info.version);
     m_settings->setValue(m_prefix + LS("/Revision"), m_info.revision);
@@ -400,8 +398,7 @@ void UpdatePluginImpl::readJSON()
 
   m_lastCheck = DateTime::utc();
 
-  // \bug Автоматическое обновление сломано из-за перехода на git и отказа от глобальной ревизии.
-  if (SCHAT_VER_PATH >= m_info.revision)
+  if (int(GIT_TIMESTAMP) >= m_info.revision)
     return setDone(NoUpdates);
 
   setDone(UpdateAvailable);
@@ -419,7 +416,7 @@ void UpdatePluginImpl::readJSON()
 void UpdatePluginImpl::setDone(Status status)
 {
   m_status = status;
-  m_state = Idle;
+  m_state  = Idle;
 
   if (m_file.isOpen())
     m_file.close();
@@ -454,8 +451,7 @@ void UpdatePluginImpl::setDone(Status status)
 
 bool UpdatePlugin::check() const
 {
-  // \bug Автоматическое обновление сломано из-за перехода на git и отказа от глобальной ревизии.
-  if (!SCHAT_VER_PATH || QString(LS(SCHAT_PLATFORM)).isEmpty())
+  if (QString(LS(SCHAT_PLATFORM)).isEmpty())
     return false;
 
   if (UpdatePluginImpl::supportDownload() && Path::app() != LS("schat2"))
@@ -474,10 +470,7 @@ ChatPlugin *UpdatePlugin::create()
 
 QWidget *UpdatePlugin::settings(QWidget *parent)
 {
-  if (UpdatePluginImpl::supportDownload())
-    return new UpdateSettings(parent);
-
-  return 0;
+  return new UpdateSettings(parent);
 }
 
 #if QT_VERSION < 0x050000

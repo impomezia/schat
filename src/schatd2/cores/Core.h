@@ -1,6 +1,5 @@
-/* $Id: Core.h 3496 2013-02-12 05:44:20Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,6 +26,7 @@
 #include "ServerChannel.h"
 
 class AuthResult;
+class Net;
 class NewPacketsEvent;
 class NodeAuth;
 class Notice;
@@ -52,6 +52,7 @@ public:
   bool send(const QList<quint64> &sockets, const QByteArray &packet, int option = 0, const QByteArray &userId = QByteArray());
   bool send(const QList<quint64> &sockets, const QList<QByteArray> &packets, int option = 0, const QByteArray &userId = QByteArray());
   bool send(const QList<quint64> &sockets, Packet packet, int option = 0, const QByteArray &userId = QByteArray());
+  inline static Net *net()            { return m_self->m_net; }
   inline static QDataStream *stream() { return m_self->m_sendStream; }
   inline static quint64 socket()      { return m_self->m_socket; }
   static bool send(const QByteArray &packet);
@@ -86,8 +87,10 @@ protected:
   void release(SocketReleaseEvent *event);
 
   // notices.
-  virtual void notice(quint16 type);
+  void json();
+  void notice(quint16 type);
 
+  Net *m_net;                         ///< Главный обработчик JSON пакетов.
   NewPacketsEvent *m_packetsEvent;    ///< Текущий объект NewPacketsEvent.
   Notice *m_notice;                   ///< Текущий прочитанный объект Notice.
   PacketReader *m_reader;             ///< Текущий объект PacketReader выполняющий чтение пакета.

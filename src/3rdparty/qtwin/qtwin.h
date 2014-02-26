@@ -1,7 +1,8 @@
-/* $Id: qtwin.h 1334 2010-08-26 15:17:17Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2010 IMPOMEZIA <schat@impomezia.com>
- * Copyright © 2009 Nokia Corporation and/or its subsidiary(-ies).
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2013 Ivan Vizir <define-true-false@yandex.com>
+ * Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+ * Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
  * <http://labs.qt.nokia.com/2009/09/15/using-blur-behind-on-windows/>
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -18,40 +19,23 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/****************************************************************************
-**
-** Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
-**
-** Use, modification and distribution is allowed without limitation,
-** warranty, liability or support of any kind.
-**
-****************************************************************************/
-
-#ifndef QTWIN_H
-#define QTWIN_H
+#ifndef QTWIN_H_
+#define QTWIN_H_
 
 #include <QColor>
-#include <QWidget>
-/**
-  * This is a helper class for using the Desktop Window Manager
-  * functionality on Windows 7 and Windows Vista. On other platforms
-  * these functions will simply not do anything.
-  */
 
 class WindowNotifier;
 
 class QtWin
 {
 public:
-    static bool enableBlurBehindWindow(QWidget *widget, bool enable = true);
-    static bool extendFrameIntoClientArea(QWidget *widget,
-                                          int left = -1, int top = -1,
-                                          int right = -1, int bottom = -1);
-    static bool isCompositionEnabled();
-    static QColor colorizatinColor();
+    static const int ColorizationChange = 0x0320;
+    static const int CompositionChange  = 0x031E;
 
-private:
-    static WindowNotifier *windowNotifier();
+    static bool extendFrameIntoClientArea(QWidget *widget, int left = -1, int top = -1, int right = -1, int bottom = -1);
+    static bool isCompositionEnabled();
+    static QColor realColorizationColor();
+    static void resetExtendedFrame(QWidget *widget);
 };
 
-#endif // QTWIN_H
+#endif // QTWIN_H_

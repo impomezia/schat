@@ -1,6 +1,5 @@
-/* $Id: ClientHooks.h 3664 2013-05-11 18:19:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,6 +26,8 @@
 class ChannelInfo;
 class ClientCmd;
 class FeedNotice;
+class NetReply;
+class NetRequest;
 
 namespace Hooks
 {
@@ -110,10 +111,12 @@ public:
 
   void add(ClientChannel channel, const ChannelInfo &info, const QVariantMap &json);
   void readFeed(const FeedNotice &packet);
+  void reply(const NetRequest &req, const NetReply &reply);
 
 protected:
   virtual QStringList unsynced(ClientChannel channel, const QVariantMap &feeds, const QStringList &extra = QStringList());
   virtual void addImpl(ClientChannel channel, const ChannelInfo &info, const QVariantMap &json);
+  virtual void onReply(const NetRequest &req, const NetReply &reply);
   virtual void readFeedImpl(const FeedNotice &packet);
 
   QList<Feeds*> m_hooks;            ///< Хуки.

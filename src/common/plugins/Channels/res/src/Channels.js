@@ -136,8 +136,8 @@ var Channels = {
    */
   menu: function() {
     return '<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">' +
-             '<li><a href="#" data-tr="channels_title" class="modal-toggle" data-handler="title">' + Utils.tr('channels_title') + '</a></li>' +
-             '<li><a href="#" data-tr="channels_options" class="modal-toggle" data-handler="options">' + Utils.tr('channels_options') + '</a></li>' +
+             '<li><a href="#" data-tr="channels-title" class="modal-toggle" data-handler="title">' + Utils.tr('channels-title') + '</a></li>' +
+             '<li><a href="#" data-tr="channels-options" class="modal-toggle" data-handler="options">' + Utils.tr('channels-options') + '</a></li>' +
            '</ul>';
   },
 
@@ -156,14 +156,14 @@ var Channels = {
     body.append(
       '<form>' +
         '<div id="acl-row" class="row">' +
-          '<label for="acl" data-tr="channels_permissions">' + Utils.tr('channels_permissions') + '</label> ' +
+          '<label for="acl" data-tr="channels-permissions">' + Utils.tr('channels-permissions') + '</label> ' +
           '<select id="acl" data-user="' + id + '" class="btn">' +
-            '<option value="-1" data-tr="channels_default">'   + Utils.tr('channels_default')   + '</option>' +
-            '<option value="15" data-tr="channels_owner">'     + Utils.tr('channels_owner')     + '</option>' +
-            '<option value="22" data-tr="channels_moderator">' + Utils.tr('channels_moderator') + '</option>' +
-            '<option value="6" data-tr="channels_readwrite">'  + Utils.tr('channels_readwrite') + '</option>' +
-            '<option value="4" data-tr="channels_readonly">'   + Utils.tr('channels_readonly')  + '</option>' +
-            '<option value="0" data-tr="channels_forbidden">'  + Utils.tr('channels_forbidden') + '</option>' +
+            '<option value="-1" data-tr="channels-default">'   + Utils.tr('channels-default')   + '</option>' +
+            '<option value="15" data-tr="channels-owner">'     + Utils.tr('channels-owner')     + '</option>' +
+            '<option value="22" data-tr="channels-moderator">' + Utils.tr('channels-moderator') + '</option>' +
+            '<option value="6" data-tr="channels-readwrite">'  + Utils.tr('channels-readwrite') + '</option>' +
+            '<option value="4" data-tr="channels-readonly">'   + Utils.tr('channels-readonly')  + '</option>' +
+            '<option value="0" data-tr="channels-forbidden">'  + Utils.tr('channels-forbidden') + '</option>' +
           '</select> ' +
           '<i id="acl-spinner" class="icon-spinner hide"></i>' +
           '<div id="acl-error" class="alert alert-error hide"></div>' +
@@ -241,7 +241,7 @@ Modal.create.title = function(event)
 
   var h3 = $('#modal-header h3');
   h3.text(event.target.innerText);
-  h3.attr('data-tr', 'channels_title');
+  h3.attr('data-tr', 'channels-title');
 
   $('#modal-body').append(
     '<form id="title-form">' +
@@ -284,7 +284,7 @@ var OptionsWindow = {
   load: function(event) {
     var h3 = $('#modal-header h3');
     h3.text(event.target.innerText);
-    h3.attr('data-tr', 'channels_options');
+    h3.attr('data-tr', 'channels-options');
 
     SimpleChat.feed(Settings.getId(), FEED_NAME_INFO, 1);
 
@@ -415,8 +415,8 @@ var OptionsWindow = {
     Utils.adjustWidth($('.options-select'));
     $('#visibility').addClass('btn');
 
-    $('#pin-button').attr('title', Utils.tr('channels_pin'));
-    $('#sudo-button').attr('title', Utils.tr('channels_sudo_invite'));
+    $('#pin-button').attr('title', Utils.tr('channels-pin'));
+    $('#sudo-button').attr('title', Utils.tr('channels-sudo-invite'));
   }
 };
 

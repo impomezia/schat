@@ -1,6 +1,5 @@
-/* $Id: ChannelsPlugin.cpp 3625 2013-04-07 07:53:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -51,41 +50,49 @@ class ChannelsTr : public Tr
   Q_DECLARE_TR_FUNCTIONS(ChannelsTr)
 
 public:
-  ChannelsTr() : Tr() { m_prefix = LS("channels_"); }
+  ChannelsTr() : Tr() { m_prefix = LS("channels-"); }
 
 protected:
   QString valueImpl(const QString &key) const
   {
     if      (key == LS("join"))           return tr("Join");
-    else if (key == LS("channel_name"))   return tr("Channel name");
+    else if (key == LS("channel-name"))   return tr("Channel name");
     else if (key == LS("list"))           return tr("Channels");
-    else if (key == LS("no_title"))       return tr("No title");
+    else if (key == LS("no-title"))       return tr("No title");
     else if (key == LS("title"))          return tr("Channel title");
     else if (key == LS("options"))        return tr("Options");
     else if (key == LS("visibility"))     return tr("Visibility in the channel list");
     else if (key == LS("default"))        return tr("Default");
-    else if (key == LS("always_visible")) return tr("Always visible");
+    else if (key == LS("always-visible")) return tr("Always visible");
     else if (key == LS("hidden"))         return tr("Hidden");
     else if (key == LS("pin"))            return tr("Pin to channel list");
     else if (key == LS("permissions"))    return tr("Permissions");
-    else if (key == LS("default_acl"))    return tr("Default permissions");
+    else if (key == LS("default-acl"))    return tr("Default permissions");
     else if (key == LS("owner"))          return tr("Owner");
     else if (key == LS("readonly"))       return tr("Read only");
     else if (key == LS("moderator"))      return tr("Moderator");
     else if (key == LS("readwrite"))      return tr("Read write");
     else if (key == LS("forbidden"))      return tr("No access");
     else if (key == LS("logging"))        return tr("Logging messages");
+    else if (key == LS("images"))         return tr("Images");
     else if (key == LS("accept"))         return tr("Accept invitation");
     else if (key == LS("reject"))         return tr("Reject");
-    else if (key == LS("sudo_invite"))    return tr("Only owners and moderators can invite to channel");
+    else if (key == LS("sudo-invite"))    return tr("Only owners and moderators can invite to channel");
     else if (key == LS("create"))         return tr("Create");
-    else if (key == LS("create_title"))   return tr("Create new channel");
-    else if (key == LS("name_label"))     return tr("Name:");
-    else if (key == LS("access_label"))   return tr("Access:");
-    else if (key == LS("access_checkbox"))return tr("This channel is private");
+    else if (key == LS("create-title"))   return tr("Create new channel");
+    else if (key == LS("name-label"))     return tr("Name:");
+    else if (key == LS("access-checkbox"))return tr("This channel is private");
     else if (key == LS("cancel"))         return tr("Cancel");
-    else if (key == LS("bad_name"))       return tr("Invalid channel name. Please choose another name.");
-    else if (key == LS("already_exists")) return tr("That channel already exists. Please choose another name.");
+    else if (key == LS("bad-name"))       return tr("Invalid channel name. Please choose another name.");
+    else if (key == LS("already-exists")) return tr("That channel already exists. Please choose another name.");
+    else if (key == LS("stats-stats"))    return tr("Now {0} online in {1}. Peak online <b>{2}</b> was <span class=\"timeago\" data-date=\"{3}\"></span>.");
+    return QString();
+  }
+
+
+  QString valueImpl(const QString &key, int number) const {
+    if      (key == LS("stats-users")) return tr("<b>%n</b> user(s)", "", number);
+    else if (key == LS("stats-rooms")) return tr("<b>%n</b> room(s)", "", number);
     return QString();
   }
 };

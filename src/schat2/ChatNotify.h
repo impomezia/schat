@@ -1,6 +1,5 @@
-/* $Id: ChatNotify.h 3767 2013-08-13 22:30:40Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,6 +26,8 @@
 #include "schat.h"
 
 class FeedNotice;
+class NetReply;
+class NetRequest;
 
 /*!
  * Базовый класс уведомления.
@@ -63,7 +64,8 @@ public:
     FindPrevious      = 0x4650, ///< "FP" Поиск текста в чате в обратном направлении.
     PageOpen          = 0x504F, ///< "PO" Уведомление об открытии вкладки не связанной с каналами.
     PageClosed        = 0x5043, ///< "PC" Уведомление о закрытии вкладки не связанной с каналами.
-    UpdateChannelIcon = 0x4349  ///< "CI" Уведомление о необходимости обновить иконку канала.
+    UpdateChannelIcon = 0x4349, ///< "CI" Уведомление о необходимости обновить иконку канала.
+    NetReplyAction    = 0x4E52  ///< "NR" Получен ответ на запрос.
   };
 
   Notify(int type, const QVariant &data = QVariant())
@@ -122,6 +124,20 @@ private:
   QString m_name;       ///< Имя фида с опциональным путём запроса.
   QString m_path;       ///< Путь запроса.
   QVariantMap m_json;   ///< JSON данные.
+};
+
+
+class NetReplyNotify : public Notify
+{
+public:
+  NetReplyNotify(const NetRequest &req, const NetReply &reply)
+  : Notify(NetReplyAction)
+  , req(req)
+  , reply(reply)
+  {}
+
+  const NetRequest &req;
+  const NetReply &reply;
 };
 
 

@@ -1,6 +1,5 @@
-/* $Id: FeedHeader.cpp 3477 2013-02-08 10:54:29Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,6 +15,7 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Channel.h"
 #include "DateTime.h"
 #include "feeds/FeedHeader.h"
 #include "feeds/FeedStrings.h"
@@ -65,7 +65,7 @@ int FeedHeader::del(const QString &path)
 }
 
 
-int FeedHeader::post(const QString &path, const QVariant &value)
+int FeedHeader::post(const QString &path, const QVariant &value, Channel *user)
 {
   if (path == LS("owner")) {
     const QByteArray id = SimpleID::decode(value.toString());
@@ -81,6 +81,10 @@ int FeedHeader::post(const QString &path, const QVariant &value)
   }
   else if (path.startsWith(LS("other/"))) {
     const QByteArray id = SimpleID::decode(path.mid(6));
+
+    if (user && user->id() == id && (m_acl.match(user) & (Acl::Edit | Acl::SpecialEdit)))
+      return Notice::BadRequest;
+
     if (!m_acl.add(id, value.toInt()))
       return Notice::BadRequest;
 

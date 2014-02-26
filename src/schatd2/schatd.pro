@@ -1,6 +1,5 @@
-# $Id: schatd.pro 3732 2013-07-07 18:55:44Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -40,9 +39,14 @@ HEADERS = \
     feeds/NodeAclFeed.h \
     Host.h \
     Hosts.h \
+    net/DataCreator.h \
+    net/Net.h \
+    net/NetContext.h \
+    net/NetRecord.h \
     net/NodeAuthReply.h \
     net/NodePool.h \
     net/NodeWorker.h \
+    net/Subscribers.h \
     net/TcpServer.h \
     NodeLog.h \
     NodeNoticeReader.h \
@@ -72,9 +76,12 @@ SOURCES = \
     feeds/NodeAclFeed.cpp \
     Host.cpp \
     Hosts.cpp \
+    net/Net.cpp \
+    net/NetContext.cpp \
     net/NodeAuthReply.cpp \
     net/NodePool.cpp \
     net/NodeWorker.cpp \
+    net/Subscribers.cpp \
     net/TcpServer.cpp \
     NodeLog.cpp \
     NodeNoticeReader.cpp \

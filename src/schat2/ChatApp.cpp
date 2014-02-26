@@ -124,17 +124,13 @@ void ChatApp::stop()
 }
 
 
-// \bug Автоматическое обновление сломано из-за перехода на git и отказа от глобальной ревизии.
 #if defined(Q_OS_WIN)
 bool ChatApp::selfUpdate()
 {
-  if (!SCHAT_VER_PATH)
+  if (QString(LS(SCHAT_PLATFORM)).isEmpty() || QFileInfo(applicationFilePath()).baseName() != LS("schat2"))
     return false;
 
-  if (QFileInfo(applicationFilePath()).baseName() != LS("schat2"))
-    return false;
-
-  QString appPath = QApplication::applicationDirPath();
+  const QString appPath = QApplication::applicationDirPath();
   QSettings s(appPath + LS("/schat2.conf"), QSettings::IniFormat);
   s.setIniCodec("UTF-8");
   s.beginGroup(LS("Update"));
@@ -142,7 +138,7 @@ bool ChatApp::selfUpdate()
     return false;
 
   s.setValue(LS("Ready"), false);
-  QString version = s.value(LS("Version"), QString()).toString();
+  const QString version = s.value(LS("Version"), QString()).toString();
   if (version.isEmpty())
     return false;
 
@@ -153,7 +149,7 @@ bool ChatApp::selfUpdate()
   if (SCHAT_VER_PATH >= revision)
     return false;
 
-  QString file = appPath + LS("/.schat2/schat2-") + version + LS(".") + QString::number(revision) + LS(".exe");
+  const QString file = appPath + LS("/.schat2/schat2-") + version + LS(".exe");
   if (!QFile::exists(file))
     return false;
 

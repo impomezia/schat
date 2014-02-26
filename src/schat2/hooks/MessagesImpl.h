@@ -1,6 +1,5 @@
-/* $Id: MessagesImpl.h 3667 2013-05-29 23:02:50Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,7 +33,8 @@ class SCHAT_CORE_EXPORT MessagesImpl : public Messages
 public:
   MessagesImpl(QObject *parent = 0);
   int read(MessagePacket packet);
-  static bool ignored(ClientChannel user);
+  static bool isIgnored(ClientChannel user);
+  static bool isIgnored(MessagePacket packet);
   void error(MessagePacket packet);
   void sent(MessagePacket packet);
   void unhandled(MessagePacket packet);

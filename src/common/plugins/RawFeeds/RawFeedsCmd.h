@@ -1,6 +1,5 @@
-/* $Id: RawFeedsCmd.h 3224 2012-10-27 03:43:46Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -37,8 +36,10 @@ public:
 private:
   void localFeeds(const QByteArray &dest);
   void request(const QByteArray &dest, const ClientCmd &cmd);
+  void request(const QString &method, const QByteArray &dest, const QString &body);
 
   RawFeeds *m_plugin;
+  QVariantMap m_headers;
 };
 
 } // namespace Hooks

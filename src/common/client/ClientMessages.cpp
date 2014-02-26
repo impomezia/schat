@@ -1,6 +1,5 @@
-/* $Id: ClientMessages.cpp 3749 2013-07-12 20:50:37Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -171,6 +170,13 @@ bool ClientMessages::command(const QByteArray &dest, const ClientCmd &cmd)
     }
     else
       ChatClient::channels()->join(dest);
+
+    return true;
+  }
+
+  if (command == LS("talk")) {
+    if (cmd.isBody())
+      ChatClient::channels()->join(body, ChatClient::id());
 
     return true;
   }

@@ -1,6 +1,5 @@
-/* $Id: JSON.cpp 2762 2012-06-11 06:37:18Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -64,6 +63,11 @@ QVariant JSON::parse(const QByteArray &data)
 
   int size = data.size();
   K8JSON::parseRecord(res, reinterpret_cast<const uchar *>(data.constData()), &size);
+  if (res.isNull()) {
+    size = data.size();
+    K8JSON::parseValue(res, reinterpret_cast<const uchar *>(data.constData()), &size);
+  }
+
   return res;
 }
 

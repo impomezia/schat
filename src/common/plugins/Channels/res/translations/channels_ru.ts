@@ -21,42 +21,42 @@
 <context>
     <name>ChannelsMenuImpl</name>
     <message>
-        <location filename="../../ChannelsMenuImpl.cpp" line="91"/>
+        <location filename="../../ChannelsMenuImpl.cpp" line="90"/>
         <source>Ignore</source>
         <translation>Игнорировать</translation>
     </message>
     <message>
-        <location filename="../../ChannelsMenuImpl.cpp" line="167"/>
+        <location filename="../../ChannelsMenuImpl.cpp" line="166"/>
         <source>Invite to</source>
         <translation>Пригласить в</translation>
     </message>
     <message>
-        <location filename="../../ChannelsMenuImpl.cpp" line="194"/>
+        <location filename="../../ChannelsMenuImpl.cpp" line="193"/>
         <source>Permissions</source>
         <translation>Права доступа</translation>
     </message>
     <message>
-        <location filename="../../ChannelsMenuImpl.cpp" line="200"/>
+        <location filename="../../ChannelsMenuImpl.cpp" line="199"/>
         <source>Read write</source>
         <translation>Чтение и запись</translation>
     </message>
     <message>
-        <location filename="../../ChannelsMenuImpl.cpp" line="205"/>
+        <location filename="../../ChannelsMenuImpl.cpp" line="204"/>
         <source>Read only</source>
         <translation>Только чтение</translation>
     </message>
     <message>
-        <location filename="../../ChannelsMenuImpl.cpp" line="210"/>
+        <location filename="../../ChannelsMenuImpl.cpp" line="209"/>
         <source>No access</source>
         <translation>Нет доступа</translation>
     </message>
     <message>
-        <location filename="../../ChannelsMenuImpl.cpp" line="222"/>
+        <location filename="../../ChannelsMenuImpl.cpp" line="221"/>
         <source>Advanced...</source>
         <translation>Расширенные...</translation>
     </message>
     <message>
-        <location filename="../../ChannelsMenuImpl.cpp" line="227"/>
+        <location filename="../../ChannelsMenuImpl.cpp" line="226"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
@@ -64,7 +64,7 @@
 <context>
     <name>ChannelsPluginImpl</name>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="216"/>
+        <location filename="../../ChannelsPlugin.cpp" line="223"/>
         <source>Channels</source>
         <translation>Каналы</translation>
     </message>
@@ -80,99 +80,104 @@
 <context>
     <name>ChannelsTr</name>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="59"/>
+        <location filename="../../ChannelsPlugin.cpp" line="58"/>
         <source>Join</source>
         <translation>Войти</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="60"/>
+        <location filename="../../ChannelsPlugin.cpp" line="59"/>
         <source>Channel name</source>
         <translation>Имя канала</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="61"/>
+        <location filename="../../ChannelsPlugin.cpp" line="60"/>
         <source>Channels</source>
         <translation>Каналы</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="62"/>
+        <location filename="../../ChannelsPlugin.cpp" line="61"/>
         <source>No title</source>
         <translation>Без заголовка</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="63"/>
+        <location filename="../../ChannelsPlugin.cpp" line="62"/>
         <source>Channel title</source>
         <translation>Заголовок канала</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="64"/>
+        <location filename="../../ChannelsPlugin.cpp" line="63"/>
         <source>Options</source>
         <translation>Опции</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="65"/>
+        <location filename="../../ChannelsPlugin.cpp" line="64"/>
         <source>Visibility in the channel list</source>
         <translation>Видимость в списке каналов</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="66"/>
+        <location filename="../../ChannelsPlugin.cpp" line="65"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="67"/>
+        <location filename="../../ChannelsPlugin.cpp" line="66"/>
         <source>Always visible</source>
         <translation>Всегда видимый</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="68"/>
+        <location filename="../../ChannelsPlugin.cpp" line="67"/>
         <source>Hidden</source>
         <translation>Скрытый</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="69"/>
+        <location filename="../../ChannelsPlugin.cpp" line="68"/>
         <source>Pin to channel list</source>
         <translation>Закрепить в списке каналов</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="70"/>
+        <location filename="../../ChannelsPlugin.cpp" line="69"/>
         <source>Permissions</source>
         <translation>Права доступа</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="71"/>
+        <location filename="../../ChannelsPlugin.cpp" line="70"/>
         <source>Default permissions</source>
         <translation>Права доступа по умолчанию</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="72"/>
+        <location filename="../../ChannelsPlugin.cpp" line="71"/>
         <source>Owner</source>
         <translation>Владелец</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="73"/>
+        <location filename="../../ChannelsPlugin.cpp" line="72"/>
         <source>Read only</source>
         <translation>Только чтение</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="74"/>
+        <location filename="../../ChannelsPlugin.cpp" line="73"/>
         <source>Moderator</source>
         <translation>Модератор</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="75"/>
+        <location filename="../../ChannelsPlugin.cpp" line="74"/>
         <source>Read write</source>
         <translation>Чтение и запись</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="76"/>
+        <location filename="../../ChannelsPlugin.cpp" line="75"/>
         <source>No access</source>
         <translation>Нет доступа</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="77"/>
+        <location filename="../../ChannelsPlugin.cpp" line="76"/>
         <source>Logging messages</source>
         <translation>Журналирование сообщений</translation>
+    </message>
+    <message>
+        <location filename="../../ChannelsPlugin.cpp" line="77"/>
+        <source>Images</source>
+        <translation>Изображения</translation>
     </message>
     <message>
         <location filename="../../ChannelsPlugin.cpp" line="78"/>
@@ -205,27 +210,49 @@
         <translation>Имя канала:</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="84"/>
-        <source>Access:</source>
-        <translation>Доступ:</translation>
+        <location filename="../../ChannelsPlugin.cpp" line="88"/>
+        <source>Now {0} online in {1}. Peak online &lt;b&gt;{2}&lt;/b&gt; was &lt;span class=&quot;timeago&quot; data-date=&quot;{3}&quot;&gt;&lt;/span&gt;.</source>
+        <translation>Сейчас {0} онлайн в {1}. Пиковый онлайн &lt;b&gt;{2}&lt;/b&gt; был &lt;span class=&quot;timeago&quot; data-date=&quot;{3}&quot;&gt;&lt;/span&gt;.</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../ChannelsPlugin.cpp" line="94"/>
+        <source>&lt;b&gt;%n&lt;/b&gt; user(s)</source>
+        <translation>
+            <numerusform>&lt;b&gt;%n&lt;/b&gt; пользователь</numerusform>
+            <numerusform>&lt;b&gt;%n&lt;/b&gt; пользователя</numerusform>
+            <numerusform>&lt;b&gt;%n&lt;/b&gt; пользователей</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../ChannelsPlugin.cpp" line="95"/>
+        <source>&lt;b&gt;%n&lt;/b&gt; room(s)</source>
+        <translation>
+            <numerusform>&lt;b&gt;%n&lt;/b&gt; комнате</numerusform>
+            <numerusform>&lt;b&gt;%n&lt;/b&gt; комнатах</numerusform>
+            <numerusform>&lt;b&gt;%n&lt;/b&gt; комнатах</numerusform>
+        </translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="85"/>
+        <source>Access:</source>
+        <translation type="obsolete">Доступ:</translation>
+    </message>
+    <message>
+        <location filename="../../ChannelsPlugin.cpp" line="84"/>
         <source>This channel is private</source>
         <translation>Приватный канал</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="86"/>
+        <location filename="../../ChannelsPlugin.cpp" line="85"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="87"/>
+        <location filename="../../ChannelsPlugin.cpp" line="86"/>
         <source>Invalid channel name. Please choose another name.</source>
         <translation>Неправильное имя канала. Пожалуйста, выберите другое имя.</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="88"/>
+        <location filename="../../ChannelsPlugin.cpp" line="87"/>
         <source>That channel already exists. Please choose another name.</source>
         <translation>Такой канал уже существует. Пожалуйста, выберите другое имя.</translation>
     </message>

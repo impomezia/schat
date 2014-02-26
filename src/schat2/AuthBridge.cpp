@@ -1,6 +1,5 @@
-/* $Id: AuthBridge.cpp 3767 2013-08-13 22:30:40Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -73,7 +72,8 @@ void AuthBridge::open()
 
 void AuthBridge::retry()
 {
-  ChatClient::open();
+  ChatClient::io()->setAuthType(AuthRequest::Discovery);
+  ChatClient::open(ChatClient::io()->url());
 }
 
 
