@@ -398,7 +398,7 @@ void UpdatePluginImpl::readJSON()
 
   m_lastCheck = DateTime::utc();
 
-  if (int(GIT_TIMESTAMP - 1) >= m_info.revision)
+  if (int(GIT_TIMESTAMP) >= m_info.revision)
     return setDone(NoUpdates);
 
   setDone(UpdateAvailable);
