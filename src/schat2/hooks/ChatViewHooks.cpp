@@ -15,11 +15,9 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QWebHitTestResult>
-
 #include "hooks/ChatViewHooks.h"
-#include "ui/tabs/ChatView.h"
 #include "interfaces/IChatViewHook.h"
+#include "ui/tabs/ChatView.h"
 
 ChatViewHooks *ChatViewHooks::m_self = 0;
 
@@ -28,8 +26,6 @@ ChatViewHooks::ChatViewHooks(QObject *parent)
 {
   if (!m_self)
     m_self = this;
-  else
-    add(this);
 }
 
 
@@ -169,8 +165,6 @@ void ChatViewHooks::remove(ChatView *view)
 
 void ChatViewHooks::remove(IChatViewHook *hook)
 {
-  Q_ASSERT(m_self && hook);
-
   if (m_self)
     m_self->m_hooks.removeAll(hook);
 }

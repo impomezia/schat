@@ -1,6 +1,5 @@
-/* $Id: HistoryChatView.h 3756 2013-07-15 15:23:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,30 +18,32 @@
 #ifndef HISTORYCHATVIEW_H_
 #define HISTORYCHATVIEW_H_
 
-#include "hooks/ChatViewHooks.h"
+#include <QObject>
+
+#include "interfaces/IChatViewHook.h"
 
 class Notify;
 class QAction;
 
 struct MessageRecord;
 
-class HistoryChatView : public ChatViewHooks
+class HistoryChatView : public QObject, public IChatViewHook
 {
   Q_OBJECT
 
 public:
   HistoryChatView(QObject *parent = 0);
+  ~HistoryChatView();
   Q_INVOKABLE bool isAutoLoad(const QString &id) const;
+
+  bool contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result) Q_DECL_OVERRIDE;
+  void add(ChatView *view) Q_DECL_OVERRIDE;
+  void init(ChatView *view) Q_DECL_OVERRIDE;
+  void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
+  void retranslate() Q_DECL_OVERRIDE;
 
 signals:
   void loading(const QString &id);
-
-protected:
-  bool onContextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result);
-  void addImpl(ChatView *view);
-  void initImpl(ChatView *view);
-  void loadFinishedImpl(ChatView *view);
-  void onRetranslate();
 
 private slots:
   void notify(const Notify &notify);

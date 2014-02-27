@@ -1,6 +1,5 @@
-/* $Id: ProfileChatView.h 2501 2012-04-06 13:48:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,18 +18,20 @@
 #ifndef PROFILECHATVIEW_H_
 #define PROFILECHATVIEW_H_
 
-#include "hooks/ChatViewHooks.h"
+#include <QObject>
 
-class ProfileChatView : public ChatViewHooks
+#include "interfaces/IChatViewHook.h"
+
+class ProfileChatView : public QObject, public IChatViewHook
 {
   Q_OBJECT
 
 public:
   ProfileChatView(QObject *parent = 0);
+  ~ProfileChatView();
 
-protected:
-  void initImpl(ChatView *view);
-  void loadFinishedImpl(ChatView *view);
+  void init(ChatView *view) Q_DECL_OVERRIDE;
+  void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
 };
 
 #endif /* PROFILECHATVIEW_H_ */

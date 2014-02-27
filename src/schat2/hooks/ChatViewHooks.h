@@ -40,7 +40,6 @@ public:
   inline const QList<ChatView *>& views() const      { return m_views; }
   inline static ChatView* view(const QByteArray &id) { return m_self->m_map.value(id); }
   inline static ChatViewHooks *i()                   { return m_self; }
-  inline static void add(ChatViewHooks *)            {}
 
   static bool contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result);
   static bool dragEnterEvent(ChatView *view, QDragEnterEvent *event);
