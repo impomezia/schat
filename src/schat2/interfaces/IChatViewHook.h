@@ -39,4 +39,8 @@ public:
   virtual void retranslate()                                                                   {}
 };
 
+#ifndef Q_DECL_OVERRIDE
+# define Q_DECL_OVERRIDE
+#endif
+
 #endif // ICHATVIEWHOOK_H_

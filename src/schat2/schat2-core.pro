@@ -57,7 +57,7 @@ HEADERS = \
     hooks/SettingsTabImpl.h \
     hooks/ToolBarActions.h \
     hooks/UserMenuImpl.h \
-    interfaces\IChatViewHook.h \
+    interfaces/IChatViewHook.h \
     messages/AlertMessage.h \
     messages/ChannelMessage.h \
     messages/Message.h \
