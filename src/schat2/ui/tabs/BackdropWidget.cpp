@@ -16,10 +16,13 @@
  */
 
 #include <QGridLayout>
+#include <QMenu>
 #include <QMouseEvent>
 #include <QPainter>
 
 #include "BackdropWidget.h"
+#include "ChatCore.h"
+#include "ChatSettings.h"
 #include "sglobal.h"
 
 BackdropWidget::BackdropWidget(QWidget *parent)
@@ -52,7 +55,9 @@ bool BackdropWidget::eventFilter(QObject *watched, QEvent *event)
 {
   if (m_widget && m_widget == watched && event->type() == QEvent::Close) {
     m_widget = 0;
-    hide();
+    close();
+
+    emit closed();
   }
 
   return QFrame::eventFilter(watched, event);
@@ -61,7 +66,19 @@ bool BackdropWidget::eventFilter(QObject *watched, QEvent *event)
 
 void BackdropWidget::contextMenuEvent(QContextMenuEvent *event)
 {
-  QFrame::contextMenuEvent(event);
+  if (childAt(event->pos())) {
+    QFrame::contextMenuEvent(event);
+    return;
+  }
+
+  QMenu menu(this);
+  QAction *blur = menu.addAction(tr("Blur Effect"));
+  blur->setCheckable(true);
+  blur->setChecked(ChatCore::settings()->value(SETTINGS_BLUR_EFFECT).toBool());
+
+  QAction *action = menu.exec(event->globalPos());
+  if (action == blur)
+    ChatCore::settings()->setValue(SETTINGS_BLUR_EFFECT, blur->isChecked());
 }
 
 

@@ -23,6 +23,7 @@
 #include "schat.h"
 
 class BackdropWidget;
+class QGraphicsBlurEffect;
 
 class SCHAT_CORE_EXPORT WebView : public QWebView
 {
@@ -32,6 +33,7 @@ public:
   WebView(QWidget *parent = 0);
   static bool canPaste();
   void setBackdropParent(QWidget *parent);
+  void showDialog(QWidget *widget);
 
 protected:
   void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
@@ -43,7 +45,13 @@ protected:
   virtual void contextMenu(QMenu *menu, const QWebHitTestResult &result);
   virtual void retranslateUi();
 
+private slots:
+  void onBackdropClosed();
+  void onSettingsChanged(const QString &key, const QVariant &value);
+
 private:
+  void blur(bool enabled);
+
   BackdropWidget *m_backdrop;
 };
 

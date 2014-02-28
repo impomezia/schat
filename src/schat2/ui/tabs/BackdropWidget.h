@@ -34,6 +34,9 @@ public:
   inline void setAutoClose(bool autoClose) { m_autoClose = autoClose; }
   void setWidget(QWidget *widget);
 
+signals:
+  void closed();
+
 protected:
   bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
   void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
