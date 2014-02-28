@@ -18,6 +18,8 @@
 #ifndef ICHATVIEWHOOK_H_
 #define ICHATVIEWHOOK_H_
 
+#include "schat.h"
+
 class ChatView;
 class QMenu;
 class QWebHitTestResult;
@@ -38,9 +40,5 @@ public:
   virtual void remove(ChatView *)                                                              {}
   virtual void retranslate()                                                                   {}
 };
-
-#ifndef Q_DECL_OVERRIDE
-# define Q_DECL_OVERRIDE
-#endif
 
 #endif // ICHATVIEWHOOK_H_

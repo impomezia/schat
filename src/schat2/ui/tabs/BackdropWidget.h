@@ -15,32 +15,25 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCHAT_H_
-#define SCHAT_H_
+#ifndef BACKDROPWIDGET_H_
+#define BACKDROPWIDGET_H_
 
-#if defined(SCHAT_NO_DLL)
-#  define SCHAT_EXPORT
-#  define SCHAT_CORE_EXPORT
-#else
-#  if defined(SCHAT_LIBRARY)
-#    define SCHAT_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_EXPORT Q_DECL_IMPORT
-#  endif
-#  if defined(SCHAT_CORE_LIBRARY)
-#    define SCHAT_CORE_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_CORE_EXPORT Q_DECL_IMPORT
-#  endif
-#  if defined(SCHAT_REST_LIBRARY)
-#    define SCHAT_REST_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_REST_EXPORT Q_DECL_IMPORT
-#  endif
-#endif
+#include <QFrame>
 
-#ifndef Q_DECL_OVERRIDE
-#  define Q_DECL_OVERRIDE
-#endif
+class QGridLayout;
 
-#endif /* SCHAT_H_ */
+class BackdropWidget : public QFrame
+{
+  Q_OBJECT
+
+public:
+  BackdropWidget(QWidget *parent = 0);
+  void setWidget(QWidget *widget);
+  inline QWidget *widget() const { return m_widget; }
+
+private:
+  QGridLayout *m_layout;
+  QWidget *m_widget;
+};
+
+#endif // BACKDROPWIDGET_H_

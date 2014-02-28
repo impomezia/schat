@@ -1,6 +1,5 @@
-/* $Id: WebView.cpp 3697 2013-06-16 17:20:20Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,19 +19,24 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QContextMenuEvent>
+#include <QGraphicsColorizeEffect>
 #include <QMenu>
 #include <QMimeData>
 #include <QWebFrame>
 
-#include "ui/tabs/WebView.h"
-#include "ui/ChatIcons.h"
+#include "BackdropWidget.h"
 #include "sglobal.h"
+#include "ui/ChatIcons.h"
+#include "ui/tabs/WebView.h"
 
 WebView::WebView(QWidget *parent)
   : QWebView(parent)
 {
   setPage(new WebPage(this));
   setAcceptDrops(false);
+
+  m_backdrop = new BackdropWidget(parentWidget());
+  m_backdrop->hide();
 
   setIcons();
 }
@@ -45,6 +49,14 @@ bool WebView::canPaste()
     return false;
 
   return (md->hasText() && !md->text().isEmpty()) || md->hasHtml() || md->hasFormat(LS("application/x-qrichtext")) || md->hasFormat(LS("application/x-qt-richtext"));
+}
+
+
+void WebView::setBackdropParent(QWidget *parent)
+{
+  Q_ASSERT(parent);
+
+  m_backdrop->setParent(parent);
 }
 
 
@@ -93,6 +105,14 @@ void WebView::developerMenu(QMenu *menu)
     menu->addAction(pageAction(QWebPage::Reload));
     menu->addAction(pageAction(QWebPage::InspectElement));
   }
+}
+
+
+void WebView::resizeEvent(QResizeEvent *event)
+{
+  QWebView::resizeEvent(event);
+
+  m_backdrop->resize(event->size());
 }
 
 

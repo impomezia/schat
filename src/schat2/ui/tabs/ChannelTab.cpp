@@ -1,6 +1,5 @@
-/* $Id: ChannelTab.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -47,6 +46,7 @@ ChannelTab::ChannelTab(ClientChannel channel, TabWidget *parent)
 
   QWidget *left = new QWidget(this);
   left->setLayout(m_leftLayout);
+  m_chatView->setBackdropParent(left);
 
   m_splitter = new QSplitter(this);
   m_splitter->addWidget(left);

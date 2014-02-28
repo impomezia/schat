@@ -1,6 +1,5 @@
-/* $Id: WebView.h 3368 2013-01-02 22:52:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,6 +22,8 @@
 
 #include "schat.h"
 
+class BackdropWidget;
+
 class SCHAT_CORE_EXPORT WebView : public QWebView
 {
   Q_OBJECT
@@ -30,15 +31,20 @@ class SCHAT_CORE_EXPORT WebView : public QWebView
 public:
   WebView(QWidget *parent = 0);
   static bool canPaste();
+  void setBackdropParent(QWidget *parent);
 
 protected:
-  void changeEvent(QEvent *event);
-  void contextMenuEvent(QContextMenuEvent *event);
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+  void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
   void developerMenu(QMenu *menu);
+  void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
   void setIcons();
 
   virtual void contextMenu(QMenu *menu, const QWebHitTestResult &result);
   virtual void retranslateUi();
+
+private:
+  BackdropWidget *m_backdrop;
 };
 
 

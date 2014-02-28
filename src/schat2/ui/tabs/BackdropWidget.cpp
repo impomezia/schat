@@ -15,32 +15,32 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCHAT_H_
-#define SCHAT_H_
+#include <QGridLayout>
 
-#if defined(SCHAT_NO_DLL)
-#  define SCHAT_EXPORT
-#  define SCHAT_CORE_EXPORT
-#else
-#  if defined(SCHAT_LIBRARY)
-#    define SCHAT_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_EXPORT Q_DECL_IMPORT
-#  endif
-#  if defined(SCHAT_CORE_LIBRARY)
-#    define SCHAT_CORE_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_CORE_EXPORT Q_DECL_IMPORT
-#  endif
-#  if defined(SCHAT_REST_LIBRARY)
-#    define SCHAT_REST_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_REST_EXPORT Q_DECL_IMPORT
-#  endif
-#endif
+#include "BackdropWidget.h"
+#include "sglobal.h"
 
-#ifndef Q_DECL_OVERRIDE
-#  define Q_DECL_OVERRIDE
-#endif
+BackdropWidget::BackdropWidget(QWidget *parent)
+  : QFrame(parent)
+  , m_widget(0)
+{
+  setObjectName(LS("BackdropWidget"));
+  setStyleSheet(LS("BackdropWidget{background:rgba(0,0,0,.5)}"));
 
-#endif /* SCHAT_H_ */
+  m_layout = new QGridLayout(this);
+  m_layout->setColumnStretch(0, 1);
+  m_layout->setColumnStretch(2, 1);
+  m_layout->setRowStretch(0, 1);
+  m_layout->setRowStretch(2, 3);
+}
+
+
+void BackdropWidget::setWidget(QWidget *widget)
+{
+  Q_ASSERT(widget);
+
+  widget->setParent(this);
+  widget->setAutoFillBackground(true);
+
+  m_layout->addWidget(widget, 1, 1);
+}

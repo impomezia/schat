@@ -102,6 +102,7 @@ HEADERS = \
     ui/TabCreator.h \
     ui/tabs/AboutTab.h \
     ui/tabs/AbstractTab.h \
+    ui/tabs/BackdropWidget.h \
     ui/tabs/ChannelBaseTab.h \
     ui/tabs/ChannelTab.h \
     ui/tabs/ChatView.h \
@@ -191,6 +192,7 @@ SOURCES = \
     ui/TabBar.cpp \
     ui/tabs/AboutTab.cpp \
     ui/tabs/AbstractTab.cpp \
+    ui/tabs/BackdropWidget.cpp \
     ui/tabs/ChannelBaseTab.cpp \
     ui/tabs/ChannelTab.cpp \
     ui/tabs/ChatView.cpp \
