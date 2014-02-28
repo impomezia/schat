@@ -106,6 +106,7 @@ HEADERS = \
     ui/tabs/ChannelBaseTab.h \
     ui/tabs/ChannelTab.h \
     ui/tabs/ChatView.h \
+    ui/tabs/DialogFrame.h \
     ui/tabs/FindWidget.h \
     ui/tabs/PrivateTab.h \
     ui/tabs/ProgressTab.h \
@@ -196,6 +197,7 @@ SOURCES = \
     ui/tabs/ChannelBaseTab.cpp \
     ui/tabs/ChannelTab.cpp \
     ui/tabs/ChatView.cpp \
+    ui/tabs/DialogFrame.cpp \
     ui/tabs/FindWidget.cpp \
     ui/tabs/PrivateTab.cpp \
     ui/tabs/ProgressTab.cpp \

@@ -72,6 +72,7 @@
   <file alias="images/text-italic.png">images/oxygen/format-text-italic.png</file>
   <file alias="images/text-strikethrough.png">images/oxygen/format-text-strikethrough.png</file>
   <file alias="images/text-underline.png">images/oxygen/format-text-underline.png</file>
+  <file alias="images/times.png">images/fontawesome/fa-times.png</file>
   <file alias="images/toggle-small.png">images/diagona/10/130.png</file>
   <file alias="images/toggle-small-expand.png">images/diagona/10/129.png</file>
   <file alias="images/topic-edit.png">images/diagona/018.png</file>

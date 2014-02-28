@@ -18,7 +18,7 @@
 #include <QPixmap>
 #include <QPainter>
 
-#include "net/SimpleID.h"
+#include "id/ChatId.h"
 #include "sglobal.h"
 #include "ui/ChatIcons.h"
 
@@ -32,7 +32,7 @@ QIcon ChatIcons::icon(ClientChannel channel, int options)
 {
   QString file = LS(":/images/channel.png");
 
-  if (channel->type() == SimpleID::UserId || channel->id().isEmpty()) {
+  if (channel->type() == ChatId::UserId || channel->id().isEmpty()) {
     file = LS(":/images/user");
     int gender = channel->gender().value();
     int color  = channel->gender().color();
@@ -55,7 +55,7 @@ QIcon ChatIcons::icon(ClientChannel channel, int options)
 
     file += LS(".png");
   }
-  else if (channel->type() == SimpleID::ChannelId && channel->gender().color() == Gender::Green) {
+  else if (channel->type() == ChatId::ChannelId && channel->gender().color() == Gender::Green) {
     file = LS(":/images/secure.png");
   }
 
@@ -201,4 +201,5 @@ void ChatIcons::init()
   m_icons[Prohibition]    = LS("prohibition");
   m_icons[Clock]          = LS("clock");
   m_icons[Channels]       = LS("channels");
+  m_icons[Times]          = LS("times");
 }

@@ -16,12 +16,14 @@
  */
 
 #include <QGridLayout>
+#include <QMouseEvent>
 
 #include "BackdropWidget.h"
 #include "sglobal.h"
 
 BackdropWidget::BackdropWidget(QWidget *parent)
   : QFrame(parent)
+  , m_autoClose(true)
   , m_widget(0)
 {
   setObjectName(LS("BackdropWidget"));
@@ -41,6 +43,35 @@ void BackdropWidget::setWidget(QWidget *widget)
 
   widget->setParent(this);
   widget->setAutoFillBackground(true);
+  widget->installEventFilter(this);
 
+  m_widget = widget;
   m_layout->addWidget(widget, 1, 1);
+}
+
+
+bool BackdropWidget::eventFilter(QObject *watched, QEvent *event)
+{
+  if (m_widget && m_widget == watched && event->type() == QEvent::Close) {
+    m_widget = 0;
+    hide();
+  }
+
+  return QFrame::eventFilter(watched, event);
+}
+
+
+void BackdropWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+  QFrame::contextMenuEvent(event);
+}
+
+
+void BackdropWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+  if (event->button() == Qt::LeftButton && m_autoClose && m_widget && !childAt(event->pos())) {
+    m_widget->close();
+  }
+
+  QFrame::mouseReleaseEvent(event);
 }

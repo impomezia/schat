@@ -15,34 +15,32 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BACKDROPWIDGET_H_
-#define BACKDROPWIDGET_H_
+#ifndef DIALOGFRAME_H_
+#define DIALOGFRAME_H_
 
 #include <QFrame>
 
 #include "schat.h"
 
-class QGridLayout;
+class QHBoxLayout;
+class QLabel;
+class QVBoxLayout;
+class QToolButton;
 
-class BackdropWidget : public QFrame
+class SCHAT_CORE_EXPORT DialogFrame : public QFrame
 {
   Q_OBJECT
 
 public:
-  BackdropWidget(QWidget *parent = 0);
-  inline QWidget *widget() const           { return m_widget; }
-  inline void setAutoClose(bool autoClose) { m_autoClose = autoClose; }
-  void setWidget(QWidget *widget);
+  DialogFrame(QWidget *parent = 0);
+  QString title() const;
+  void setTitle(const QString &title);
 
 protected:
-  bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
-  void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
-  void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-
-private:
-  bool m_autoClose;
-  QGridLayout *m_layout;
-  QWidget *m_widget;
+  QHBoxLayout *m_headerLayout;
+  QLabel *m_titleLabel;
+  QToolButton *m_closeBtn;
+  QVBoxLayout *m_layout;
 };
 
-#endif // BACKDROPWIDGET_H_
+#endif // DIALOGFRAME_H_
