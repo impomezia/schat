@@ -17,6 +17,7 @@
 
 #include <QGridLayout>
 #include <QMouseEvent>
+#include <QPainter>
 
 #include "BackdropWidget.h"
 #include "sglobal.h"
@@ -26,9 +27,6 @@ BackdropWidget::BackdropWidget(QWidget *parent)
   , m_autoClose(true)
   , m_widget(0)
 {
-  setObjectName(LS("BackdropWidget"));
-  setStyleSheet(LS("BackdropWidget{background:rgba(0,0,0,.5)}"));
-
   m_layout = new QGridLayout(this);
   m_layout->setColumnStretch(0, 1);
   m_layout->setColumnStretch(2, 1);
@@ -74,4 +72,17 @@ void BackdropWidget::mouseReleaseEvent(QMouseEvent *event)
   }
 
   QFrame::mouseReleaseEvent(event);
+}
+
+
+void BackdropWidget::paintEvent(QPaintEvent *event)
+{
+  Q_UNUSED(event)
+
+  QPainter painter(this);
+
+  painter.setRenderHint(QPainter::Antialiasing);
+  painter.setPen(Qt::NoPen);
+  painter.setBrush(QColor(0, 0, 0, 127));
+  painter.drawRect(0, 0, width(),  height());
 }

@@ -38,6 +38,7 @@ protected:
   bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
   void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
   void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+  void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
   bool m_autoClose;
