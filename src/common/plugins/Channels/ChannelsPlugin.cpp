@@ -40,6 +40,7 @@
 #include "sglobal.h"
 #include "Tr.h"
 #include "Translation.h"
+#include "ui/ChatIcons.h"
 #include "ui/ListTab.h"
 #include "ui/tabs/ChatView.h"
 #include "ui/TabsToolBar.h"
@@ -229,7 +230,7 @@ void ChannelsPluginImpl::start()
     return;
 
   m_list = new QAction(this);
-  m_list->setIcon(QIcon(LS(":/images/Channels/list.png")));
+  m_list->setIcon(SCHAT_ICON(Channels));
   m_list->setCheckable(true);
 
   tabs->add(new ListTabCreator());

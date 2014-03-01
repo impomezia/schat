@@ -21,6 +21,7 @@
 
 #include "sglobal.h"
 #include "ui/ChannelsView.h"
+#include "ui/ChatIcons.h"
 #include "ui/ListTab.h"
 
 ListTab::ListTab(TabWidget *parent)
@@ -40,7 +41,7 @@ ListTab::ListTab(TabWidget *parent)
   mainLay->setMargin(0);
   mainLay->setSpacing(0);
 
-  setIcon(QIcon(LS(":/images/Channels/list.png")));
+  setIcon(SCHAT_ICON(Channels));
   retranslateUi();
 }
 
