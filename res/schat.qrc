@@ -18,6 +18,7 @@
   <file alias="images/br-prev.png">images/wireframe/br_prev.png</file>
   <file alias="images/channel.png">images/hypic/forum_16.png</file>
   <file alias="images/channel-alert.png">images/diagona/029.png</file>
+  <file alias="images/channels.png">images/font-awesome/fa-list-ul.png</file>
   <file alias="images/computer.png">images/fugue/computer.png</file>
   <file alias="images/dnd-small.png">images/fugue/cross-circle-small.png</file>
   <file alias="images/edit-clear.png">images/fugue/broom.png</file>
@@ -72,6 +73,7 @@
   <file alias="images/text-italic.png">images/oxygen/format-text-italic.png</file>
   <file alias="images/text-strikethrough.png">images/oxygen/format-text-strikethrough.png</file>
   <file alias="images/text-underline.png">images/oxygen/format-text-underline.png</file>
+  <file alias="images/times.png">images/font-awesome/fa-times.png</file>
   <file alias="images/toggle-small.png">images/diagona/10/130.png</file>
   <file alias="images/toggle-small-expand.png">images/diagona/10/129.png</file>
   <file alias="images/topic-edit.png">images/diagona/018.png</file>

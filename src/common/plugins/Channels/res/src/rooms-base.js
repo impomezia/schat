@@ -47,28 +47,9 @@
     if (json.feed == 'list') {
       if (json.type == 'body' && (json.status == 200 || json.status == 303))
         rooms.setRooms(json.data.channels);
-      else if (json.type == 'reply' && json.path == 'id') {
-        createRoom(json.data, json.status);
-      }
     }
     else if (json.feed == 'stats' && json.type == 'body' && (json.status == 200 || json.status == 303))
       rooms.setStats(json.data);
-  }
-
-
-  function createRoom(json, status) {
-    var dialog = schat.ui.modal.current;
-    if (!dialog instanceof schat.ui.RoomCreateDialog)
-      return;
-
-    if (status == 403) {
-      ChannelsView.create(json.value, dialog.name(), $(dialog.aclCheckbox).is(':checked'));
-      $(schat.ui.modal.element).modal('hide');
-    }
-    else if (status == 400)
-      dialog.setError('channels-bad-name');
-    else if (status == 200)
-      dialog.setError('channels-already-exists');
   }
 
 
@@ -114,25 +95,7 @@
     $(navbar.createBtn).on('click.create', function(event) {
       event.preventDefault();
 
-      var dialog = new schat.ui.RoomCreateDialog();
-      schat.ui.modal.current = dialog;
-
-      $(schat.ui.modal.element).modal();
-
-      $(dialog.createBtn).on('click.create', function(event) {
-        event.preventDefault();
-
-        var name = dialog.name();
-        if (name.length == 0)
-          return;
-
-        if (name.length < 3) {
-          dialog.setError('channels-bad-name');
-          return;
-        }
-
-        SimpleChat.request(SimpleChat.serverId(), 'get', 'list/id', {value:name});
-      })
+      ChannelsView.addRoom();
     })
   }
 

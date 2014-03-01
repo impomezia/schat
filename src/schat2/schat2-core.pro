@@ -1,6 +1,5 @@
-# $Id: schat2-core.pro 3726 2013-07-05 01:44:24Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -58,6 +57,7 @@ HEADERS = \
     hooks/SettingsTabImpl.h \
     hooks/ToolBarActions.h \
     hooks/UserMenuImpl.h \
+    interfaces/IChatViewHook.h \
     messages/AlertMessage.h \
     messages/ChannelMessage.h \
     messages/Message.h \
@@ -102,9 +102,11 @@ HEADERS = \
     ui/TabCreator.h \
     ui/tabs/AboutTab.h \
     ui/tabs/AbstractTab.h \
+    ui/tabs/BackdropWidget.h \
     ui/tabs/ChannelBaseTab.h \
     ui/tabs/ChannelTab.h \
     ui/tabs/ChatView.h \
+    ui/tabs/DialogFrame.h \
     ui/tabs/FindWidget.h \
     ui/tabs/PrivateTab.h \
     ui/tabs/ProgressTab.h \
@@ -191,9 +193,11 @@ SOURCES = \
     ui/TabBar.cpp \
     ui/tabs/AboutTab.cpp \
     ui/tabs/AbstractTab.cpp \
+    ui/tabs/BackdropWidget.cpp \
     ui/tabs/ChannelBaseTab.cpp \
     ui/tabs/ChannelTab.cpp \
     ui/tabs/ChatView.cpp \
+    ui/tabs/DialogFrame.cpp \
     ui/tabs/FindWidget.cpp \
     ui/tabs/PrivateTab.cpp \
     ui/tabs/ProgressTab.cpp \

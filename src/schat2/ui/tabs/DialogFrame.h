@@ -15,23 +15,38 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef YOUTUBECHATVIEW_H_
-#define YOUTUBECHATVIEW_H_
+#ifndef DIALOGFRAME_H_
+#define DIALOGFRAME_H_
 
-#include <QObject>
+#include <QFrame>
 
-#include "interfaces/IChatViewHook.h"
+#include "schat.h"
 
-class YouTubeChatView : public QObject, public IChatViewHook
+class QHBoxLayout;
+class QLabel;
+class QVBoxLayout;
+class QToolButton;
+
+class SCHAT_CORE_EXPORT DialogFrame : public QFrame
 {
   Q_OBJECT
 
 public:
-  YouTubeChatView(QObject *parent = 0);
-  ~YouTubeChatView();
+  DialogFrame(QWidget *parent = 0);
+  QSize sizeHint() const Q_DECL_OVERRIDE;
+  QString title() const;
+  void setTitle(const QString &title);
 
-  void init(ChatView *view) Q_DECL_OVERRIDE;
-  void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
+protected:
+  QFrame *line();
+  virtual void retranslateUi() {}
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+  void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+
+  QHBoxLayout *m_headerLayout;
+  QLabel *m_titleLabel;
+  QToolButton *m_closeBtn;
+  QVBoxLayout *m_layout;
 };
 
-#endif /* YOUTUBECHATVIEW_H_ */
+#endif // DIALOGFRAME_H_

@@ -31,6 +31,8 @@
 
 #include <QLineEdit>
 
+#include "schat.h"
+
 class QHBoxLayout;
 
 /*
@@ -44,7 +46,7 @@ class QHBoxLayout;
     into the center of the widget.
 */
 class SideWidget;
-class LineEdit : public QLineEdit
+class SCHAT_CORE_EXPORT LineEdit : public QLineEdit
 {
     Q_OBJECT
     Q_PROPERTY(QString inactiveText READ inactiveText WRITE setInactiveText)

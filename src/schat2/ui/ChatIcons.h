@@ -84,7 +84,8 @@ public:
     Pin                = 0x5069, ///< "Pi"
     Prohibition        = 0x5068, ///< "Ph"
     Clock              = 0x436B, ///< "Ck"
-    Channels           = 0x4348  ///< "CH"
+    Channels           = 0x4348, ///< "CH"
+    Times              = 0x5469  ///< "Ti"
   };
 
   /// Опции получения иконки канала.

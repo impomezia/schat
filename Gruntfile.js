@@ -25,7 +25,6 @@ module.exports = function(grunt) {
           'src/common/plugins/Channels/res/js/Channels.min.js': ['src/common/plugins/Channels/res/src/Channels.js'],
           'src/common/plugins/Channels/res/js/ChannelsUser.min.js': ['src/common/plugins/Channels/res/src/ChannelsUser.js'],
           'src/common/plugins/Channels/res/js/ListView.min.js': [
-            'res/html/js/bootstrap-modal.js',
             'res/html/js/jquery.timeago.js',
             'res/html/src/lib/base.js',
             'res/html/src/lib/utils.js',
@@ -35,7 +34,6 @@ module.exports = function(grunt) {
             'res/html/src/lib/ui-modal.js',
             'res/html/src/lib/ui-index.js',
             'src/common/plugins/Channels/res/src/rooms-ui-navbar.js',
-            'src/common/plugins/Channels/res/src/rooms-ui-create.js',
             'src/common/plugins/Channels/res/src/rooms-base.js'
           ],
           'src/common/plugins/Console/res/js/console.min.js': [

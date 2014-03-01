@@ -54,6 +54,8 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
   setDefault(SETTINGS_LABS_STATIC_TRAY_ALERTS,    false);
   setDefault(SETTINGS_TOOLBAR_ACTIONS,            QStringList());
   setDefault(SETTINGS_TRANSLATION,                LS("auto"));
+  setDefault(SETTINGS_BLUR_EFFECT,                true);
+  setDefault(SETTINGS_BLUR_RADIUS,                2);
 
   setValue(SETTINGS_AUTO_SCROLL, true);
 }

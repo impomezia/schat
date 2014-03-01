@@ -30,17 +30,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="438"/>
+        <location filename="../../UpdatePlugin.cpp" line="435"/>
         <source>Install Update Now</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="443"/>
+        <location filename="../../UpdatePlugin.cpp" line="440"/>
         <source>Update Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../UpdatePlugin.cpp" line="447"/>
+        <location filename="../../UpdatePlugin.cpp" line="444"/>
         <source>Update Available</source>
         <translation type="unfinished"></translation>
     </message>

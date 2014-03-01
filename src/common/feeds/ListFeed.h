@@ -1,6 +1,5 @@
-/* $Id: ListFeed.h 3624 2013-04-06 04:18:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,5 +21,6 @@
 #define LIST_FEED_CHANNELS_KEY   QLatin1String("channels")
 #define LIST_FEED_FORMAT_KEY     QLatin1String("format")
 #define LIST_FEED_ID_KEY         QLatin1String("id")
+#define LIST_FEED_ID_REQ         QLatin1String("list/id")
 
 #endif /* LISTFEED_H_ */

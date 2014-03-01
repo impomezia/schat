@@ -1,6 +1,5 @@
-/* $Id: HistoryChatView.cpp 3755 2013-07-14 23:11:47Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,21 +31,30 @@
 #include "HistoryChatView.h"
 #include "HistoryDB.h"
 #include "HistoryPlugin_p.h"
+#include "hooks/ChatViewHooks.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
 #include "ui/ChatIcons.h"
 #include "ui/tabs/ChatView.h"
 
 HistoryChatView::HistoryChatView(QObject *parent)
-  : ChatViewHooks(parent)
+  : QObject(parent)
   , m_remove(0)
 {
+  ChatViewHooks::add(this);
+
   synced();
 
   connect(ChatClient::io(), SIGNAL(ready()), SLOT(ready()));
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
   connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
   connect(ChatCore::settings(), SIGNAL(synced()), SLOT(synced()));
+}
+
+
+HistoryChatView::~HistoryChatView()
+{
+  ChatViewHooks::remove(this);
 }
 
 
@@ -59,7 +67,7 @@ bool HistoryChatView::isAutoLoad(const QString &id) const
 }
 
 
-bool HistoryChatView::onContextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result)
+bool HistoryChatView::contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result)
 {
   ChatId id(view->id());
   if (id.type() != ChatId::ChannelId && id.type() != ChatId::UserId)
@@ -94,14 +102,14 @@ bool HistoryChatView::onContextMenu(ChatView *view, QMenu *menu, const QWebHitTe
 }
 
 
-void HistoryChatView::addImpl(ChatView *view)
+void HistoryChatView::add(ChatView *view)
 {
   if (compatible(view->id()) && sync(view->id()))
     emit loading(SimpleID::encode(view->id()));
 }
 
 
-void HistoryChatView::initImpl(ChatView *view)
+void HistoryChatView::init(ChatView *view)
 {
   view->addJS(LS("qrc:/js/History/days.js"));
 
@@ -112,15 +120,16 @@ void HistoryChatView::initImpl(ChatView *view)
 }
 
 
-void HistoryChatView::loadFinishedImpl(ChatView *view)
+void HistoryChatView::loadFinished(ChatView *view)
 {
   view->addCSS(LS("qrc:/css/History/History.css"));
 }
 
 
-void HistoryChatView::onRetranslate()
+void HistoryChatView::retranslate()
 {
-  if (m_remove) m_remove->setText(tr("Remove message"));
+  if (m_remove)
+    m_remove->setText(tr("Remove message"));
 }
 
 
@@ -148,7 +157,9 @@ void HistoryChatView::ready()
 {
   ChatClientLocker locker;
 
-  foreach (ChatView *view, i()->views()) {
+  const QList<ChatView *> &views = ChatViewHooks::i()->views();
+
+  foreach (ChatView *view, views) {
     const QByteArray &id = view->id();
     if (compatible(id) && sync(id, view->lastMessage())) {
       emit loading(SimpleID::encode(id));

@@ -1,6 +1,5 @@
-/* $Id: SendFileChatView.cpp 3728 2013-07-05 22:24:27Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@
 #include <QFileInfo>
 #include <QMimeData>
 
+#include "hooks/ChatViewHooks.h"
 #include "net/SimpleID.h"
 #include "SendFileChatView.h"
 #include "SendFilePlugin_p.h"
@@ -28,13 +28,20 @@
 #include "ui/tabs/ChatView.h"
 
 SendFileChatView::SendFileChatView(SendFilePluginImpl *plugin)
-  : ChatViewHooks(plugin)
+  : QObject(plugin)
   , m_plugin(plugin)
 {
+  ChatViewHooks::add(this);
 }
 
 
-bool SendFileChatView::onDragEnterEvent(ChatView *view, QDragEnterEvent *event)
+SendFileChatView::~SendFileChatView()
+{
+  ChatViewHooks::remove(this);
+}
+
+
+bool SendFileChatView::dragEnterEvent(ChatView *view, QDragEnterEvent *event)
 {
   if (SimpleID::typeOf(view->id()) != SimpleID::UserId || !event->mimeData()->hasUrls() || getFiles(event->mimeData()->urls()).isEmpty())
     return false;
@@ -44,7 +51,7 @@ bool SendFileChatView::onDragEnterEvent(ChatView *view, QDragEnterEvent *event)
 }
 
 
-bool SendFileChatView::onDropEvent(ChatView *view, QDropEvent *event)
+bool SendFileChatView::dropEvent(ChatView *view, QDropEvent *event)
 {
   if (SimpleID::typeOf(view->id()) != SimpleID::UserId || !event->mimeData()->hasUrls())
     return false;
@@ -59,7 +66,7 @@ bool SendFileChatView::onDropEvent(ChatView *view, QDropEvent *event)
 }
 
 
-void SendFileChatView::initImpl(ChatView *view)
+void SendFileChatView::init(ChatView *view)
 {
   if (SimpleID::typeOf(view->id()) != SimpleID::UserId)
     return;
@@ -69,7 +76,7 @@ void SendFileChatView::initImpl(ChatView *view)
 }
 
 
-void SendFileChatView::loadFinishedImpl(ChatView *view)
+void SendFileChatView::loadFinished(ChatView *view)
 {
   if (SimpleID::typeOf(view->id()) == SimpleID::UserId)
     view->addCSS(LS("qrc:/css/SendFile/SendFile.css"));

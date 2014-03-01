@@ -15,23 +15,38 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef YOUTUBECHATVIEW_H_
-#define YOUTUBECHATVIEW_H_
+#ifndef BACKDROPWIDGET_H_
+#define BACKDROPWIDGET_H_
 
-#include <QObject>
+#include <QFrame>
 
-#include "interfaces/IChatViewHook.h"
+#include "schat.h"
 
-class YouTubeChatView : public QObject, public IChatViewHook
+class QGridLayout;
+
+class BackdropWidget : public QFrame
 {
   Q_OBJECT
 
 public:
-  YouTubeChatView(QObject *parent = 0);
-  ~YouTubeChatView();
+  BackdropWidget(QWidget *parent = 0);
+  inline QWidget *widget() const           { return m_widget; }
+  inline void setAutoClose(bool autoClose) { m_autoClose = autoClose; }
+  void setWidget(QWidget *widget);
 
-  void init(ChatView *view) Q_DECL_OVERRIDE;
-  void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
+signals:
+  void closed();
+
+protected:
+  bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+  void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
+  void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+  void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+
+private:
+  bool m_autoClose;
+  QGridLayout *m_layout;
+  QWidget *m_widget;
 };
 
-#endif /* YOUTUBECHATVIEW_H_ */
+#endif // BACKDROPWIDGET_H_

@@ -47,6 +47,8 @@ class Notify;
 #define SETTINGS_TOOLBAR_ACTIONS         QLatin1String("ToolBarActions")
 #define SETTINGS_TRANSLATION             QLatin1String("Translation")
 #define SETTINGS_WINDOWS_AERO            QLatin1String("WindowsAero")
+#define SETTINGS_BLUR_EFFECT             QLatin1String("BlurEffect")
+#define SETTINGS_BLUR_RADIUS             QLatin1String("BlurRadius")
 
 class SCHAT_CORE_EXPORT ChatSettings : public Settings
 {

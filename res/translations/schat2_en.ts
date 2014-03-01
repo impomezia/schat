@@ -124,6 +124,14 @@
     </message>
 </context>
 <context>
+    <name>BackdropWidget</name>
+    <message>
+        <location filename="../../src/schat2/ui/tabs/BackdropWidget.cpp" line="76"/>
+        <source>Blur Effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChannelMenuImpl</name>
     <message>
         <location filename="../../src/schat2/hooks/ChannelMenuImpl.cpp" line="48"/>
@@ -210,6 +218,15 @@
     <message>
         <location filename="../../src/schat2/ui/ColorButton.cpp" line="136"/>
         <source>Text color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DialogFrame</name>
+    <message>
+        <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="52"/>
+        <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="104"/>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -609,27 +626,27 @@
 <context>
     <name>SLineEdit</name>
     <message>
-        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="46"/>
+        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="55"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="49"/>
+        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="58"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="52"/>
+        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="61"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="55"/>
+        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="64"/>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="61"/>
+        <location filename="../../src/schat2/ui/SLineEdit.cpp" line="70"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1121,27 +1138,27 @@
 <context>
     <name>WebView</name>
     <message>
-        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="118"/>
+        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="158"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="119"/>
+        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="159"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="120"/>
+        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="160"/>
         <source>Copy Link</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="121"/>
+        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="161"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="122"/>
+        <location filename="../../src/schat2/ui/tabs/WebView.cpp" line="162"/>
         <source>Select All</source>
         <translation type="unfinished"></translation>
     </message>

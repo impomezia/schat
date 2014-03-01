@@ -1,6 +1,5 @@
-/* $Id: schat.h 2991 2012-08-10 10:41:40Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,6 +37,10 @@
 #  else
 #    define SCHAT_REST_EXPORT Q_DECL_IMPORT
 #  endif
+#endif
+
+#ifndef Q_DECL_OVERRIDE
+#  define Q_DECL_OVERRIDE
 #endif
 
 #endif /* SCHAT_H_ */

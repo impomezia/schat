@@ -15,23 +15,42 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef YOUTUBECHATVIEW_H_
-#define YOUTUBECHATVIEW_H_
+#ifndef ADDROOMDIALOG_H_
+#define ADDROOMDIALOG_H_
 
-#include <QObject>
+#include "ui/tabs/DialogFrame.h"
 
-#include "interfaces/IChatViewHook.h"
+class QCheckBox;
+class QDialogButtonBox;
+class SLineEdit;
+class Spinner;
+class Notify;
 
-class YouTubeChatView : public QObject, public IChatViewHook
+class AddRoomDialog : public DialogFrame
 {
   Q_OBJECT
 
 public:
-  YouTubeChatView(QObject *parent = 0);
-  ~YouTubeChatView();
+  AddRoomDialog(QWidget *parent = 0);
 
-  void init(ChatView *view) Q_DECL_OVERRIDE;
-  void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
+signals:
+  void create(const QString &id, const QString &name, bool _private);
+
+protected:
+  void retranslateUi() Q_DECL_OVERRIDE;
+
+private slots:
+  void onAccepted();
+  void onNotify(const Notify &notify);
+  void onTextChanged(const QString &text);
+
+private:
+  QCheckBox *m_privateBtn;
+  QDialogButtonBox *m_box;
+  QLabel *m_nameLabel;
+  QString m_name;
+  SLineEdit *m_nameEdit;
+  Spinner *m_spinner;
 };
 
-#endif /* YOUTUBECHATVIEW_H_ */
+#endif // ADDROOMDIALOG_H_

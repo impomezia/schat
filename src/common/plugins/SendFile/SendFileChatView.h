@@ -1,6 +1,5 @@
-/* $Id: SendFileChatView.h 3682 2013-06-09 02:01:12Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,23 +19,24 @@
 #define SENDFILECHATVIEW_H_
 
 #include <QUrl>
+#include <QObject>
 
-#include "hooks/ChatViewHooks.h"
+#include "interfaces/IChatViewHook.h"
 
 class SendFilePluginImpl;
 
-class SendFileChatView : public ChatViewHooks
+class SendFileChatView : public QObject, public IChatViewHook
 {
   Q_OBJECT
 
 public:
   SendFileChatView(SendFilePluginImpl *plugin);
+  ~SendFileChatView();
 
-protected:
-  bool onDragEnterEvent(ChatView *view, QDragEnterEvent *event);
-  bool onDropEvent(ChatView *view, QDropEvent *event);
-  void initImpl(ChatView *view);
-  void loadFinishedImpl(ChatView *view);
+  bool dragEnterEvent(ChatView *view, QDragEnterEvent *event) Q_DECL_OVERRIDE;
+  bool dropEvent(ChatView *view, QDropEvent *event) Q_DECL_OVERRIDE;
+  void init(ChatView *view) Q_DECL_OVERRIDE;
+  void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
 
 private:
   QStringList getFiles(const QList<QUrl> &urls) const;
