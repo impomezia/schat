@@ -16,6 +16,7 @@
   <file alias="js/Channels/Channels.js">res/js/Channels.min.js</file>
   <file alias="js/Channels/ChannelsUser.js">res/js/ChannelsUser.min.js</file>
   <file alias="js/Channels/ListView.js">res/js/ListView.min.js</file>
+  <file alias="translations/channels_en.qm">res/translations/channels_en.qm</file>
   <file alias="translations/channels_ru.qm">res/translations/channels_ru.qm</file>
   <file alias="translations/channels_uk.qm">res/translations/channels_uk.qm</file>
 </qresource>
