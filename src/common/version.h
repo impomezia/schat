@@ -20,8 +20,8 @@
 
 #include "revision.h"
 
-#define SCHAT_VERSION      "2.2.0"
-#define SCHAT_VERSION_RC   2,2,0,0
+#define SCHAT_VERSION      "2.3.0"
+#define SCHAT_VERSION_RC   2,3,0,0
 #define SCHAT_VER_PATH     0
 
 #define SCHAT_NAME         "Simple Chat"
