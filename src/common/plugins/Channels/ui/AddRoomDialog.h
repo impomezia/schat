@@ -15,36 +15,39 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DIALOGFRAME_H_
-#define DIALOGFRAME_H_
+#ifndef ADDROOMDIALOG_H_
+#define ADDROOMDIALOG_H_
 
-#include <QFrame>
+#include "ui/tabs/DialogFrame.h"
 
-#include "schat.h"
+class QCheckBox;
+class QDialogButtonBox;
+class SLineEdit;
+class Spinner;
+class Notify;
 
-class QHBoxLayout;
-class QLabel;
-class QVBoxLayout;
-class QToolButton;
-
-class SCHAT_CORE_EXPORT DialogFrame : public QFrame
+class AddRoomDialog : public DialogFrame
 {
   Q_OBJECT
 
 public:
-  DialogFrame(QWidget *parent = 0);
-  QSize sizeHint() const Q_DECL_OVERRIDE;
-  QString title() const;
-  void setTitle(const QString &title);
+  AddRoomDialog(QWidget *parent = 0);
 
-protected:
-  QFrame *line();
-  void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+signals:
+  void create(const QString &id, const QString &name, bool _private);
 
-  QHBoxLayout *m_headerLayout;
-  QLabel *m_titleLabel;
-  QToolButton *m_closeBtn;
-  QVBoxLayout *m_layout;
+private slots:
+  void onAccepted();
+  void onNotify(const Notify &notify);
+  void onTextChanged(const QString &text);
+
+private:
+  QCheckBox *m_privateBtn;
+  QDialogButtonBox *m_box;
+  QLabel *m_nameLabel;
+  QString m_name;
+  SLineEdit *m_nameEdit;
+  Spinner *m_spinner;
 };
 
-#endif // DIALOGFRAME_H_
+#endif // ADDROOMDIALOG_H_

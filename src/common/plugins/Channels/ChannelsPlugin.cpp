@@ -79,12 +79,7 @@ protected:
     else if (key == LS("reject"))         return tr("Reject");
     else if (key == LS("sudo-invite"))    return tr("Only owners and moderators can invite to channel");
     else if (key == LS("create"))         return tr("Create");
-    else if (key == LS("create-title"))   return tr("Create new channel");
-    else if (key == LS("name-label"))     return tr("Name:");
-    else if (key == LS("access-checkbox"))return tr("This channel is private");
     else if (key == LS("cancel"))         return tr("Cancel");
-    else if (key == LS("bad-name"))       return tr("Invalid channel name. Please choose another name.");
-    else if (key == LS("already-exists")) return tr("That channel already exists. Please choose another name.");
     else if (key == LS("stats-stats"))    return tr("Now {0} online in {1}. Peak online <b>{2}</b> was <span class=\"timeago\" data-date=\"{3}\"></span>.");
     return QString();
   }

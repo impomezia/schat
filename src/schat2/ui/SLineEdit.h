@@ -28,9 +28,10 @@ class SCHAT_CORE_EXPORT SLineEdit : public LineEdit
 public:
   SLineEdit(QWidget *parent = 0);
   SLineEdit(const QString &contents, QWidget *parent = 0);
+  void setError(bool error);
 
 protected:
-  void contextMenuEvent(QContextMenuEvent *event);
+  void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
   inline void deleteSelected() { if (!hasSelectedText()) return; del(); }

@@ -15,12 +15,11 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDebug>
-
-#include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
+#include <QKeyEvent>
 #include <QLabel>
 #include <QToolButton>
+#include <QVBoxLayout>
 
 #include "DialogFrame.h"
 #include "sglobal.h"
@@ -32,13 +31,12 @@ DialogFrame::DialogFrame(QWidget *parent)
   setObjectName(LS("DialogFrame"));
   setStyleSheet(LS("DialogFrame{background-color:#fff;border: 1px solid #5b5b5b;border-radius: 5px;}"));
   setAttribute(Qt::WA_DeleteOnClose);
+  setFocusPolicy(Qt::WheelFocus);
 
   QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
   shadow->setBlurRadius(10);
   shadow->setOffset(0);
   setGraphicsEffect(shadow);
-
-  setMinimumSize(400, 200);
 
   m_titleLabel = new QLabel(this);
 
@@ -60,13 +58,22 @@ DialogFrame::DialogFrame(QWidget *parent)
   m_layout = new QVBoxLayout(this);
   m_layout->addLayout(m_headerLayout);
 
-  setTitle("Test");
-
 # if QT_VERSION >= 0x050000
   connect(m_closeBtn, &QToolButton::clicked, this, &DialogFrame::close);
 # else
   connect(m_closeBtn, SIGNAL(clicked()), SLOT(close()));
 # endif
+}
+
+
+QSize DialogFrame::sizeHint() const
+{
+  QSize size = QFrame::sizeHint();
+
+  if (size.width() < 500)
+    size.setWidth(500);
+
+  return size;
 }
 
 
@@ -79,4 +86,22 @@ QString DialogFrame::title() const
 void DialogFrame::setTitle(const QString &title)
 {
   m_titleLabel->setText(title);
+}
+
+
+QFrame *DialogFrame::line()
+{
+  QFrame *frame = new QFrame(this);
+  frame->setMinimumHeight(1);
+  frame->setStyleSheet(LS("border:1px solid #e5e5e5;"));
+  return frame;
+}
+
+
+void DialogFrame::keyPressEvent(QKeyEvent *event)
+{
+  if (event->key() == Qt::Key_Escape)
+    close();
+  else
+    QFrame::keyPressEvent(event);
 }

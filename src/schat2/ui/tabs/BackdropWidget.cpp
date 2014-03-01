@@ -33,8 +33,8 @@ BackdropWidget::BackdropWidget(QWidget *parent)
   m_layout = new QGridLayout(this);
   m_layout->setColumnStretch(0, 1);
   m_layout->setColumnStretch(2, 1);
-  m_layout->setRowStretch(0, 1);
-  m_layout->setRowStretch(2, 3);
+  m_layout->setRowStretch(1, 1);
+  m_layout->setMargin(22);
 }
 
 
@@ -45,9 +45,10 @@ void BackdropWidget::setWidget(QWidget *widget)
   widget->setParent(this);
   widget->setAutoFillBackground(true);
   widget->installEventFilter(this);
+  widget->setFocus();
 
   m_widget = widget;
-  m_layout->addWidget(widget, 1, 1);
+  m_layout->addWidget(widget, 0, 1);
 }
 
 
