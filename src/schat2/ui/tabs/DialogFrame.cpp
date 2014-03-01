@@ -98,6 +98,17 @@ QFrame *DialogFrame::line()
 }
 
 
+void DialogFrame::changeEvent(QEvent *event)
+{
+  if (event->type() == QEvent::LanguageChange) {
+    m_closeBtn->setToolTip(tr("Close"));
+    retranslateUi();
+  }
+
+  QFrame::changeEvent(event);
+}
+
+
 void DialogFrame::keyPressEvent(QKeyEvent *event)
 {
   if (event->key() == Qt::Key_Escape)

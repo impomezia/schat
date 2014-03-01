@@ -39,6 +39,8 @@ public:
 
 protected:
   QFrame *line();
+  virtual void retranslateUi() {}
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
   void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
 
   QHBoxLayout *m_headerLayout;

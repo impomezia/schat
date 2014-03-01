@@ -36,6 +36,9 @@ public:
 signals:
   void create(const QString &id, const QString &name, bool _private);
 
+protected:
+  void retranslateUi() Q_DECL_OVERRIDE;
+
 private slots:
   void onAccepted();
   void onNotify(const Notify &notify);

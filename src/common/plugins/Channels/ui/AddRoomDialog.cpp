@@ -35,10 +35,9 @@
 AddRoomDialog::AddRoomDialog(QWidget *parent)
   : DialogFrame(parent)
 {
-  setTitle(tr("Create new room"));
   m_layout->addWidget(line());
 
-  m_nameLabel = new QLabel(tr("Room name:"), this);
+  m_nameLabel = new QLabel(this);
 
   m_nameEdit = new SLineEdit(this);
   m_nameEdit->setMaxLength(64);
@@ -47,7 +46,7 @@ AddRoomDialog::AddRoomDialog(QWidget *parent)
 
   m_spinner = new Spinner(this);
 
-  m_privateBtn = new QCheckBox(tr("This room is private"), this);
+  m_privateBtn = new QCheckBox(this);
 
   m_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, this);
   m_box->button(QDialogButtonBox::Ok)->setEnabled(false);
@@ -63,19 +62,29 @@ AddRoomDialog::AddRoomDialog(QWidget *parent)
 
   m_layout->addLayout(layout);
 
+  retranslateUi();
+
 # if QT_VERSION >= 0x050000
   connect(m_box, &QDialogButtonBox::accepted, this, &AddRoomDialog::onAccepted);
   connect(m_box, &QDialogButtonBox::rejected, this, &AddRoomDialog::close);
   connect(m_nameEdit, &SLineEdit::textChanged, this, &AddRoomDialog::onTextChanged);
   connect(m_nameEdit, &SLineEdit::returnPressed, this, &AddRoomDialog::onAccepted);
+  connect(ChatNotify::i(), &ChatNotify::notify, this, &AddRoomDialog::onNotify);
 # else
   connect(m_box, SIGNAL(accepted()), SLOT(onAccepted()));
   connect(m_box, SIGNAL(rejected()), SLOT(close()));
   connect(m_nameEdit, SIGNAL(textChanged(QString)), SLOT(onTextChanged(QString)));
   connect(m_nameEdit, SIGNAL(returnPressed()), SLOT(onAccepted()));
-# endif
-
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(onNotify(Notify)));
+# endif
+}
+
+
+void AddRoomDialog::retranslateUi()
+{
+  setTitle(tr("Create new room"));
+  m_nameLabel->setText(tr("Room name:"));
+  m_privateBtn->setText(tr("This room is private"));
 }
 
 

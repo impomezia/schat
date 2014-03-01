@@ -56,16 +56,16 @@ protected:
   QString valueImpl(const QString &key) const
   {
     if      (key == LS("join"))           return tr("Join");
-    else if (key == LS("channel-name"))   return tr("Channel name");
-    else if (key == LS("list"))           return tr("Channels");
+    else if (key == LS("channel-name"))   return tr("Room name");
+    else if (key == LS("list"))           return tr("Rooms");
     else if (key == LS("no-title"))       return tr("No title");
-    else if (key == LS("title"))          return tr("Channel title");
+    else if (key == LS("title"))          return tr("Room title");
     else if (key == LS("options"))        return tr("Options");
-    else if (key == LS("visibility"))     return tr("Visibility in the channel list");
+    else if (key == LS("visibility"))     return tr("Visibility in the room list");
     else if (key == LS("default"))        return tr("Default");
     else if (key == LS("always-visible")) return tr("Always visible");
     else if (key == LS("hidden"))         return tr("Hidden");
-    else if (key == LS("pin"))            return tr("Pin to channel list");
+    else if (key == LS("pin"))            return tr("Pin to room list");
     else if (key == LS("permissions"))    return tr("Permissions");
     else if (key == LS("default-acl"))    return tr("Default permissions");
     else if (key == LS("owner"))          return tr("Owner");
@@ -215,7 +215,7 @@ void ChannelsPluginImpl::showMenu(QMenu *menu, QAction *separator)
 {
   Q_UNUSED(separator)
 
-  m_list->setText(tr("Channels"));
+  m_list->setText(tr("Rooms"));
   m_list->setChecked(TabWidget::isCurrent(TabWidget::i()->tab(LIST_TAB, TabWidget::NoOptions)));
 
   menu->addAction(m_list);

@@ -3,6 +3,34 @@
 <TS version="2.0" language="ru_RU">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
+    <name>AddRoomDialog</name>
+    <message>
+        <location filename="../../ui/AddRoomDialog.cpp" line="85"/>
+        <source>Create new room</source>
+        <translation>Создать новую комнату</translation>
+    </message>
+    <message>
+        <location filename="../../ui/AddRoomDialog.cpp" line="86"/>
+        <source>Room name:</source>
+        <translation>Имя комнаты:</translation>
+    </message>
+    <message>
+        <location filename="../../ui/AddRoomDialog.cpp" line="87"/>
+        <source>This room is private</source>
+        <translation>Приватная комната</translation>
+    </message>
+    <message>
+        <location filename="../../ui/AddRoomDialog.cpp" line="122"/>
+        <source>That room already exists. Please choose another name.</source>
+        <translation>Такая комната уже существует. Пожалуйста, выберите другое имя.</translation>
+    </message>
+    <message>
+        <location filename="../../ui/AddRoomDialog.cpp" line="124"/>
+        <source>Invalid room name. Please choose another name.</source>
+        <translation>Неправильное имя комнаты. Пожалуйста, выберите другое имя.</translation>
+    </message>
+</context>
+<context>
     <name>ChannelsCmd</name>
     <message>
         <location filename="../../ChannelsCmd.cpp" line="131"/>
@@ -64,9 +92,9 @@
 <context>
     <name>ChannelsPluginImpl</name>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="223"/>
-        <source>Channels</source>
-        <translation>Каналы</translation>
+        <location filename="../../ChannelsPlugin.cpp" line="218"/>
+        <source>Rooms</source>
+        <translation>Комнаты</translation>
     </message>
 </context>
 <context>
@@ -85,34 +113,14 @@
         <translation>Войти</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="59"/>
-        <source>Channel name</source>
-        <translation>Имя канала</translation>
-    </message>
-    <message>
-        <location filename="../../ChannelsPlugin.cpp" line="60"/>
-        <source>Channels</source>
-        <translation>Каналы</translation>
-    </message>
-    <message>
         <location filename="../../ChannelsPlugin.cpp" line="61"/>
         <source>No title</source>
         <translation>Без заголовка</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="62"/>
-        <source>Channel title</source>
-        <translation>Заголовок канала</translation>
-    </message>
-    <message>
         <location filename="../../ChannelsPlugin.cpp" line="63"/>
         <source>Options</source>
         <translation>Опции</translation>
-    </message>
-    <message>
-        <location filename="../../ChannelsPlugin.cpp" line="64"/>
-        <source>Visibility in the channel list</source>
-        <translation>Видимость в списке каналов</translation>
     </message>
     <message>
         <location filename="../../ChannelsPlugin.cpp" line="65"/>
@@ -130,9 +138,29 @@
         <translation>Скрытый</translation>
     </message>
     <message>
+        <location filename="../../ChannelsPlugin.cpp" line="59"/>
+        <source>Room name</source>
+        <translation>Имя комнаты</translation>
+    </message>
+    <message>
+        <location filename="../../ChannelsPlugin.cpp" line="60"/>
+        <source>Rooms</source>
+        <translation>Комнаты</translation>
+    </message>
+    <message>
+        <location filename="../../ChannelsPlugin.cpp" line="62"/>
+        <source>Room title</source>
+        <translation>Заголовок комнаты</translation>
+    </message>
+    <message>
+        <location filename="../../ChannelsPlugin.cpp" line="64"/>
+        <source>Visibility in the room list</source>
+        <translation>Видимость в списке комнат</translation>
+    </message>
+    <message>
         <location filename="../../ChannelsPlugin.cpp" line="68"/>
-        <source>Pin to channel list</source>
-        <translation>Закрепить в списке каналов</translation>
+        <source>Pin to room list</source>
+        <translation>Закрепить в списке комнат</translation>
     </message>
     <message>
         <location filename="../../ChannelsPlugin.cpp" line="69"/>
@@ -200,22 +228,12 @@
         <translation>Создать</translation>
     </message>
     <message>
-        <location filename="../../ChannelsPlugin.cpp" line="82"/>
-        <source>Create new channel</source>
-        <translation>Создать новый канал</translation>
-    </message>
-    <message>
         <location filename="../../ChannelsPlugin.cpp" line="83"/>
-        <source>Name:</source>
-        <translation>Имя канала:</translation>
-    </message>
-    <message>
-        <location filename="../../ChannelsPlugin.cpp" line="88"/>
         <source>Now {0} online in {1}. Peak online &lt;b&gt;{2}&lt;/b&gt; was &lt;span class=&quot;timeago&quot; data-date=&quot;{3}&quot;&gt;&lt;/span&gt;.</source>
         <translation>Сейчас {0} онлайн в {1}. Пиковый онлайн &lt;b&gt;{2}&lt;/b&gt; был &lt;span class=&quot;timeago&quot; data-date=&quot;{3}&quot;&gt;&lt;/span&gt;.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../ChannelsPlugin.cpp" line="94"/>
+        <location filename="../../ChannelsPlugin.cpp" line="89"/>
         <source>&lt;b&gt;%n&lt;/b&gt; user(s)</source>
         <translation>
             <numerusform>&lt;b&gt;%n&lt;/b&gt; пользователь</numerusform>
@@ -224,7 +242,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../ChannelsPlugin.cpp" line="95"/>
+        <location filename="../../ChannelsPlugin.cpp" line="90"/>
         <source>&lt;b&gt;%n&lt;/b&gt; room(s)</source>
         <translation>
             <numerusform>&lt;b&gt;%n&lt;/b&gt; комнате</numerusform>
@@ -233,36 +251,17 @@
         </translation>
     </message>
     <message>
-        <source>Access:</source>
-        <translation type="obsolete">Доступ:</translation>
-    </message>
-    <message>
-        <location filename="../../ChannelsPlugin.cpp" line="84"/>
-        <source>This channel is private</source>
-        <translation>Приватный канал</translation>
-    </message>
-    <message>
-        <location filename="../../ChannelsPlugin.cpp" line="85"/>
+        <location filename="../../ChannelsPlugin.cpp" line="82"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
-    </message>
-    <message>
-        <location filename="../../ChannelsPlugin.cpp" line="86"/>
-        <source>Invalid channel name. Please choose another name.</source>
-        <translation>Неправильное имя канала. Пожалуйста, выберите другое имя.</translation>
-    </message>
-    <message>
-        <location filename="../../ChannelsPlugin.cpp" line="87"/>
-        <source>That channel already exists. Please choose another name.</source>
-        <translation>Такой канал уже существует. Пожалуйста, выберите другое имя.</translation>
     </message>
 </context>
 <context>
     <name>ListTab</name>
     <message>
-        <location filename="../../ui/ListTab.cpp" line="51"/>
-        <source>Channels</source>
-        <translation>Каналы</translation>
+        <location filename="../../ui/ListTab.cpp" line="50"/>
+        <source>Rooms</source>
+        <translation>Комнаты</translation>
     </message>
 </context>
 <context>
