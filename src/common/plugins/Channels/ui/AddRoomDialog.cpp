@@ -49,7 +49,7 @@ AddRoomDialog::AddRoomDialog(QWidget *parent)
 
   m_privateBtn = new QCheckBox(tr("This room is private"), this);
 
-  m_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, this);
+  m_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal, this);
   m_box->button(QDialogButtonBox::Ok)->setEnabled(false);
 
   QGridLayout *layout = new QGridLayout();
