@@ -60,6 +60,7 @@
 #include "ui/tabs/SettingsTabHook.h"
 #include "WebBridge.h"
 
+bool ChatCore::m_ready     = false;
 ChatCore *ChatCore::m_self = 0;
 
 
@@ -129,7 +130,8 @@ ChatCore::ChatCore(QObject *parent)
 
 ChatCore::~ChatCore()
 {
-  m_self = 0;
+  m_ready = false;
+  m_self  = 0;
 
   TokenFilter::clear();
   ProfileFieldFactory::clear();
@@ -182,6 +184,7 @@ void ChatCore::send(const QString &text)
 
 void ChatCore::onReady()
 {
+  m_ready = true;
   emit ready();
 }
 
@@ -196,7 +199,7 @@ void ChatCore::settingsChanged(const QString &key, const QVariant &value)
 
 void ChatCore::start()
 {
-  ChatClient::open();
+//  ChatClient::open();
 }
 
 

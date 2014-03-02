@@ -1,6 +1,5 @@
-/* $Id: MainToolBar.h 2009 2011-12-17 11:26:48Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2011 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,6 +30,7 @@ class MainToolBar : public QToolBar
 
 public:
   MainToolBar(QWidget *parent = 0);
+  void setReady(bool ready);
 
 protected:
   void changeEvent(QEvent *event);

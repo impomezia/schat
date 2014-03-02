@@ -42,6 +42,7 @@ class SCHAT_CORE_EXPORT ChatCore : public QObject
 public:
   ChatCore(QObject *parent = 0);
   ~ChatCore();
+  inline static bool isReady()                          { return m_ready; }
   inline static ChatCore *i()                           { return m_self; }
   inline static ChatPlugins *plugins()                  { return m_self->m_plugins; }
   inline static ChatSettings *settings()                { return m_self->m_settings; }
@@ -76,6 +77,7 @@ private:
   QByteArray m_currentId;           ///< Идентификатор текущей вкладки.
   QThreadPool *m_pool;              ///< Пул для запуска потоков.
   ServiceThread *m_service;         ///< Сервисный поток для выполнения фоновых задач.
+  static bool m_ready;              ///< true после полной инициализации.
   static ChatCore *m_self;          ///< Указатель на себя.
   Translation *m_translation;       ///< Модуль загрузки переводов.
 };

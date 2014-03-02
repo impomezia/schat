@@ -95,13 +95,12 @@ protected:
   void tabRemoved(int index);
 
 private slots:
+  void addChannel(const QByteArray &id, const QString &xName = QString());
+  void clientStateChanged(int state, int previousState);
   void currentChanged(int index);
   void notify(const Notify &notify);
+  void onReady();
   void openTab();
-
-  void addChannel(const QByteArray &id, const QString &xName = QString());
-
-  void clientStateChanged(int state, int previousState);
 
 private:
   bool isAutoPin(const QByteArray &id) const;
