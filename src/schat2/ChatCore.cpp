@@ -199,7 +199,7 @@ void ChatCore::settingsChanged(const QString &key, const QVariant &value)
 
 void ChatCore::start()
 {
-//  ChatClient::open();
+  ChatClient::open();
 }
 
 
