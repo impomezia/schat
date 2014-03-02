@@ -36,6 +36,7 @@ HEADERS += \
     id/ChatId.h \
     id/ObjectId.h \
     id/SecureRandom.h \
+    interfaces/IServiceTask.h \
     JSON.h \
     k8json/k8json.h \
     net/dns/ChatDNS.h \
@@ -56,6 +57,8 @@ HEADERS += \
     Path.h \
     Plugins.h \
     schat.h \
+    ServiceList.h \
+    ServiceThread.h \
     Settings.h \
     sglobal.h \
     text/HtmlFilter.h \
@@ -102,6 +105,8 @@ SOURCES += \
     net/TransportWriter.cpp \
     Path.cpp \
     Plugins.cpp \
+    ServiceList.cpp \
+    ServiceThread.cpp \
     Settings.cpp \
     text/HtmlFilter.cpp \
     text/PlainTextFilter.cpp \
