@@ -1,6 +1,5 @@
-/* $Id: ChatClient.cpp 3776 2013-08-24 06:03:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -45,6 +44,12 @@ ChatClient::ChatClient(QObject *parent)
   connect(m_client, SIGNAL(setup()), SLOT(setup()));
   connect(m_client, SIGNAL(ready()), SIGNAL(ready()));
   connect(m_client, SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
+}
+
+
+ChatClient::~ChatClient()
+{
+  m_self = 0;
 }
 
 
@@ -121,6 +126,14 @@ qint64 ChatClient::date()
 QString ChatClient::serverName()
 {
   return io()->serverName();
+}
+
+
+SimpleClient *ChatClient::io()
+{
+  Q_ASSERT(m_self);
+
+  return m_self ? m_self->m_client : 0;
 }
 
 

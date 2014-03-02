@@ -1,6 +1,5 @@
-/* $Id: ChatCore.h 3041 2012-08-31 10:41:21Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,6 +29,7 @@ class ChatSettings;
 class Extensions;
 class NetworkManager;
 class QThreadPool;
+class ServiceThread;
 class SimpleClient;
 class Translation;
 
@@ -49,15 +49,20 @@ public:
   inline static NetworkManager *networks()              { return m_self->m_networkManager; }
   inline static QByteArray currentId()                  { return m_self->m_currentId; }
   inline static QThreadPool *pool()                     { return m_self->m_pool; }
+  inline static ServiceThread *service()                { return m_self->m_service; }
   inline static Translation *translation()              { return m_self->m_translation; }
   inline static void setCurrentId(const QByteArray &id) { m_self->m_currentId = id; }
   static QByteArray randomId();
   static QStringList config();
 
+signals:
+  void ready();
+
 public slots:
   void send(const QString &text);
 
 private slots:
+  void onReady();
   void settingsChanged(const QString &key, const QVariant &value);
   void start();
 
@@ -70,6 +75,7 @@ private:
   NetworkManager *m_networkManager; ///< Объект управляющих сетями.
   QByteArray m_currentId;           ///< Идентификатор текущей вкладки.
   QThreadPool *m_pool;              ///< Пул для запуска потоков.
+  ServiceThread *m_service;         ///< Сервисный поток для выполнения фоновых задач.
   static ChatCore *m_self;          ///< Указатель на себя.
   Translation *m_translation;       ///< Модуль загрузки переводов.
 };

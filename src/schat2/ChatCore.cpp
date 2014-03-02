@@ -1,6 +1,5 @@
-/* $Id: ChatCore.cpp 3707 2013-06-23 22:38:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -50,6 +49,7 @@
 #include "NetworkManager.h"
 #include "Path.h"
 #include "Profile.h"
+#include "ServiceThread.h"
 #include "sglobal.h"
 #include "text/HtmlFilter.h"
 #include "text/PlainTextFilter.h"
@@ -73,6 +73,8 @@ ChatCore::ChatCore(QObject *parent)
 
   m_pool = new QThreadPool(this);
   m_pool->setMaxThreadCount(1);
+
+  m_service = new ServiceThread(this);
 
   new ChatUrls(this);
   m_settings = new ChatSettings(Path::config(), Path::data(Path::SystemScope) + LS("/default.conf"), this);
@@ -118,15 +120,22 @@ ChatCore::ChatCore(QObject *parent)
   new WebBridge(this);
 
   connect(m_settings, SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
+  connect(m_service, SIGNAL(ready()), SLOT(onReady()));
 
+  m_service->start();
   QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
 ChatCore::~ChatCore()
 {
+  m_self = 0;
+
   TokenFilter::clear();
   ProfileFieldFactory::clear();
+
+  m_service->quit();
+  m_service->wait();
 }
 
 
@@ -168,6 +177,12 @@ void ChatCore::send(const QString &text)
     return;
 
   ChatClient::messages()->send(m_currentId, text);
+}
+
+
+void ChatCore::onReady()
+{
+  emit ready();
 }
 
 
