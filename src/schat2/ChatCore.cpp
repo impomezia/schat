@@ -92,24 +92,7 @@ ChatCore::ChatCore(QObject *parent)
   new ChatNotify(this);
   new FeedStorage(this);
 
-  new Hooks::MessagesImpl(this);
-  new Hooks::CommandsImpl(this);
-  new Hooks::ChannelsImpl(this);
-  new Hooks::ClientImpl(this);
-  new ClientFeedsImpl(this);
-
-  new Hooks::ChannelMenu(this);
-  new ChannelMenuImpl(this);
-  new UserMenuImpl(this);
-  new ServerMenuImpl(this);
-
-  new ChatViewHooks(this);
-  new SettingsTabHook(this);
-
   new ChatAlerts(this);
-
-  m_networkManager = new NetworkManager(this);
-  ChatClient::id(); // Необходимо для инициализации базовых настроек.
 
   ChatIcons::init();
 
@@ -120,13 +103,10 @@ ChatCore::ChatCore(QObject *parent)
 
   m_settings->init();
 
-  new WebBridge(this);
-
-  connect(m_settings, SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
+  connect(m_settings, SIGNAL(changed(QString,QVariant)), SLOT(onSettingsChanged(QString,QVariant)));
   connect(m_service, SIGNAL(ready()), SLOT(onReady()));
 
   m_service->start();
-  QTimer::singleShot(0, this, SLOT(start()));
 
   SLOG_DEBUG(t.elapsed() << "ms");
 }
@@ -190,22 +170,36 @@ void ChatCore::onReady()
 {
   m_client->setReady();
 
+  new Hooks::MessagesImpl(this);
+  new Hooks::CommandsImpl(this);
+  new Hooks::ChannelsImpl(this);
+  new Hooks::ClientImpl(this);
+  new ClientFeedsImpl(this);
+
+  new Hooks::ChannelMenu(this);
+  new ChannelMenuImpl(this);
+  new UserMenuImpl(this);
+  new ServerMenuImpl(this);
+
+  new ChatViewHooks(this);
+  new SettingsTabHook(this);
+
+  m_networkManager = new NetworkManager(this);
+  ChatClient::id(); // Необходимо для инициализации базовых настроек.
+
+  new WebBridge(this);
+
   m_ready = true;
   emit ready();
-}
 
-
-void ChatCore::settingsChanged(const QString &key, const QVariant &value)
-{
-  if (key == LS("Translation")) {
-    m_translation->load(value.toString());
-  }
-}
-
-
-void ChatCore::start()
-{
   ChatClient::open();
+}
+
+
+void ChatCore::onSettingsChanged(const QString &key, const QVariant &value)
+{
+  if (key == LS("Translation"))
+    m_translation->load(value.toString());
 }
 
 

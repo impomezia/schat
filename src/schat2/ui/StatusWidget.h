@@ -1,6 +1,5 @@
-/* $Id: StatusWidget.h 1976 2011-12-12 18:45:29Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2011 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,6 +20,8 @@
 
 #include <QLabel>
 
+#include "schat.h"
+
 class StatusWidget: public QLabel
 {
   Q_OBJECT
@@ -29,9 +30,10 @@ public:
   StatusWidget(QWidget *parent = 0);
 
 protected:
-  void mouseReleaseEvent(QMouseEvent *event);
+  void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
+  void onReady();
   void reload();
 };
 

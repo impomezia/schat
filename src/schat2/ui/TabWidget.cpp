@@ -93,12 +93,12 @@ TabWidget::TabWidget(QWidget *parent)
   add(new WelcomeTabCreator());
   add(new ProgressTabCreator());
 
-  showWelcome();
+  tab(PROGRESS_TAB);
+
   createToolBars();
 
-  if (!ChatCore::isReady()) {
+  if (!ChatCore::isReady())
     connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
-  }
   else
     onReady();
 
@@ -651,6 +651,8 @@ void TabWidget::onReady()
   connect(ChatClient::channels(), SIGNAL(channel(QByteArray,QString)), SLOT(addChannel(QByteArray,QString)));
   connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
   connect(m_serverTab, SIGNAL(actionTriggered(bool)), SLOT(openTab()));
+
+  showWelcome();
 }
 
 
@@ -767,10 +769,12 @@ void TabWidget::retranslateUi()
  */
 void TabWidget::showWelcome()
 {
-  if (ChatCore::networks()->isAutoConnect())
-    tab(PROGRESS_TAB);
-  else
+  if (!ChatCore::networks()->isAutoConnect()) {
     tab(WELCOME_TAB);
+    closePage(PROGRESS_TAB);
+  }
+  else
+    tab(PROGRESS_TAB)->setText(tr("Connecting"));
 }
 
 

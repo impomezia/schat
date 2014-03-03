@@ -36,19 +36,6 @@ ChatClient::ChatClient(QObject *parent)
   , m_client(0)
 {
   m_self = this;
-
-  m_client = new SimpleClient(this);
-
-  m_channels = new ClientChannels(this);
-  m_messages = new ClientMessages(this);
-  m_feeds = new ClientFeeds(this);
-
-  m_hooks = new Hooks::Client(this);
-
-  connect(m_client, SIGNAL(restore()), SLOT(restore()));
-  connect(m_client, SIGNAL(setup()), SLOT(setup()));
-  connect(m_client, SIGNAL(ready()), SIGNAL(ready()));
-  connect(m_client, SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
 }
 
 
@@ -145,6 +132,7 @@ QString ChatClient::serverName()
 SimpleClient *ChatClient::io()
 {
   Q_ASSERT(m_self);
+  //Q_ASSERT(m_self->m_client);
 
   return m_self ? m_self->m_client : 0;
 }
@@ -165,7 +153,18 @@ bool ChatClient::open(const QUrl &url)
 
 void ChatClient::setReady()
 {
+  m_client = new SimpleClient(this);
 
+  m_channels = new ClientChannels(this);
+  m_messages = new ClientMessages(this);
+  m_feeds = new ClientFeeds(this);
+
+  m_hooks = new Hooks::Client(this);
+
+  connect(m_client, SIGNAL(restore()), SLOT(restore()));
+  connect(m_client, SIGNAL(setup()), SLOT(setup()));
+  connect(m_client, SIGNAL(ready()), SIGNAL(ready()));
+  connect(m_client, SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
 }
 
 

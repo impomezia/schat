@@ -1,6 +1,5 @@
-/* $Id: LoginIcon.h 2939 2012-07-29 02:47:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,6 +28,7 @@ public:
   LoginIcon(QWidget *parent = 0);
 
 private slots:
+  void onReady();
   void reload();
 };
 

@@ -51,7 +51,7 @@ ProgressTab::ProgressTab(TabWidget *parent)
 
 void ProgressTab::retranslateUi()
 {
-  setText(tr("Connecting"));
+  setText(tr("Starting..."));
 }
 
 
