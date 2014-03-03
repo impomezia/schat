@@ -24,6 +24,7 @@
 
 #include "schat.h"
 
+class ChatClient;
 class ChatPlugins;
 class ChatSettings;
 class Extensions;
@@ -70,6 +71,7 @@ private slots:
 private:
   void loadTranslation();
 
+  ChatClient *m_client;             ///< Клиент чата.
   ChatPlugins *m_plugins;           ///< Загрузчик плагинов.
   ChatSettings *m_settings;         ///< Настройки.
   Extensions *m_extensions;         ///< Загрузчик расширений.

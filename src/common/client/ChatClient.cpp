@@ -29,6 +29,11 @@ ChatClient *ChatClient::m_self = 0;
 
 ChatClient::ChatClient(QObject *parent)
   : QObject(parent)
+  , m_channels(0)
+  , m_feeds(0)
+  , m_messages(0)
+  , m_hooks(0)
+  , m_client(0)
 {
   m_self = this;
 
@@ -50,6 +55,14 @@ ChatClient::ChatClient(QObject *parent)
 ChatClient::~ChatClient()
 {
   m_self = 0;
+}
+
+
+ChatClient *ChatClient::i()
+{
+  Q_ASSERT(m_self);
+
+  return m_self;
 }
 
 
@@ -87,7 +100,7 @@ QByteArray ChatClient::id()
   if (!id.isNull())
     return id.toByteArray();
 
-  return m_self->m_hooks->id();
+  return i()->m_hooks->id();
 }
 
 
@@ -97,7 +110,7 @@ QByteArray ChatClient::serverId()
   if (!id.isNull())
     return id.toByteArray();
 
-  return m_self->m_hooks->serverId();
+  return i()->m_hooks->serverId();
 }
 
 
@@ -140,13 +153,19 @@ SimpleClient *ChatClient::io()
 bool ChatClient::open(const QByteArray &id)
 {
   bool matched = false;
-  return m_self->m_hooks->openId(id, matched);
+  return i()->m_hooks->openId(id, matched);
 }
 
 
 bool ChatClient::open(const QUrl &url)
 {
   return io()->openUrl(url);
+}
+
+
+void ChatClient::setReady()
+{
+
 }
 
 

@@ -50,10 +50,10 @@ public:
   ChatClient(QObject *parent = 0);
   ~ChatClient();
   inline Hooks::Client *hooks() const      { return m_hooks; }
-  inline static ChatClient *i()            { return m_self; }
-  inline static ClientChannels *channels() { return m_self->m_channels; }
-  inline static ClientFeeds *feeds()       { return m_self->m_feeds; }
-  inline static ClientMessages *messages() { return m_self->m_messages; }
+  inline static ClientChannels *channels() { return i()->m_channels; }
+  inline static ClientFeeds *feeds()       { return i()->m_feeds; }
+  inline static ClientMessages *messages() { return i()->m_messages; }
+  static ChatClient *i();
   static ClientChannel channel();
   static ClientChannel server();
   static int state();
@@ -68,6 +68,8 @@ public:
   inline static bool open(const QString &url)   { return open(QUrl(url)); }
   static bool open(const QByteArray &id);
   static bool open(const QUrl &url);
+
+  void setReady();
 
 signals:
   void offline();

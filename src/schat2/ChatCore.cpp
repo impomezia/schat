@@ -70,6 +70,8 @@ ChatCore::ChatCore(QObject *parent)
 {
   m_self = this;
 
+  SCHAT_DEBUG_CODE(QTime t; t.start();)
+
   qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()) ^ reinterpret_cast<quintptr>(this));
 
   m_pool = new QThreadPool(this);
@@ -86,7 +88,7 @@ ChatCore::ChatCore(QObject *parent)
 
   loadTranslation();
 
-  new ChatClient(this);
+  m_client = new ChatClient(this);
   new ChatNotify(this);
   new FeedStorage(this);
 
@@ -125,6 +127,8 @@ ChatCore::ChatCore(QObject *parent)
 
   m_service->start();
   QTimer::singleShot(0, this, SLOT(start()));
+
+  SLOG_DEBUG(t.elapsed() << "ms");
 }
 
 
@@ -184,6 +188,8 @@ void ChatCore::send(const QString &text)
 
 void ChatCore::onReady()
 {
+  m_client->setReady();
+
   m_ready = true;
   emit ready();
 }
