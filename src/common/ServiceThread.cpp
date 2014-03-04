@@ -16,6 +16,7 @@
  */
 
 #include <QTime>
+#include <QMetaType>
 
 #include "ServiceThread.h"
 #include "interfaces/IServiceTask.h"
