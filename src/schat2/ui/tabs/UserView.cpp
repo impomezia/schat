@@ -261,7 +261,7 @@ void UserView::contextMenuEvent(QContextMenuEvent *event)
 
   UserItem *item = static_cast<UserItem *>(m_model.itemFromIndex(index));
   QMenu menu(this);
-  Hooks::ChannelMenu::bind(&menu, item->user(), Hooks::UserViewScope);
+  ChannelMenu::bind(&menu, item->user(), IChannelMenu::UserViewScope);
   menu.exec(event->globalPos());
 }
 

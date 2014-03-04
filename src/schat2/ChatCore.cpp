@@ -98,6 +98,11 @@ ChatCore::ChatCore(QObject *parent)
 
   new Profile(this);
 
+  new ChannelMenu(this);
+  new ChannelMenuImpl(this);
+  new UserMenuImpl(this);
+  new ServerMenuImpl(this);
+
   m_plugins = new ChatPlugins(this);
   m_plugins->load();
 
@@ -175,11 +180,6 @@ void ChatCore::onReady()
   new Hooks::ChannelsImpl(m_client);
   new Hooks::ClientImpl(m_client);
   new ClientFeedsImpl(m_client);
-
-  new Hooks::ChannelMenu(m_client);
-  new ChannelMenuImpl(m_client);
-  new UserMenuImpl(m_client);
-  new ServerMenuImpl(m_client);
 
   new ChatViewHooks(m_client);
   new SettingsTabHook(m_client);

@@ -190,7 +190,7 @@ void StatusBar::menu(const QPoint &point)
   m_connect = menu.addAction(action->icon(), action->text());
 
   menu.addSeparator();
-  Hooks::ChannelMenu::bind(&menu, ChatClient::server(), Hooks::StatusBarScope);
+  ChannelMenu::bind(&menu, ChatClient::server(), IChannelMenu::StatusBarScope);
 
   connect(&menu, SIGNAL(triggered(QAction*)), SLOT(onMenuTriggered(QAction*)));
   menu.exec(point);

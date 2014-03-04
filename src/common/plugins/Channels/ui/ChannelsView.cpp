@@ -92,7 +92,7 @@ void ChannelsView::contextMenu(QMenu *menu, const QWebHitTestResult &result)
 
   const QUrl url = result.linkUrl();
   if (url.scheme() == LS("chat") && url.host() == LS("channel"))
-    Hooks::ChannelMenu::bind(menu, ChatUrls::channel(url), Hooks::ChatViewScope);
+    ChannelMenu::bind(menu, ChatUrls::channel(url), IChannelMenu::ChatViewScope);
 
   menu->addSeparator();
 

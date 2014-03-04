@@ -15,27 +15,29 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef USERMENUIMPL_H_
-#define USERMENUIMPL_H_
+#ifndef ICHANNELMENU_H_
+#define ICHANNELMENU_H_
 
-#include "interfaces/IChannelMenu.h"
+#include "Channel.h"
 
-class UserMenuImpl : public QObject, public IChannelMenu
+class QMenu;
+class QAction;
+
+class IChannelMenu
 {
-  Q_OBJECT
-
 public:
-  UserMenuImpl(QObject *parent = 0);
+  enum Scope {
+    UnknownScope,   ///< Неизвестное место.
+    StatusBarScope, ///< Статус бар.
+    TabScope,       ///< Заголовок вкладки.
+    UserViewScope,  ///< Список пользователей.
+    ChatViewScope   ///< Текст чата.
+  };
 
-protected:
-  bool trigger(QAction *action) Q_DECL_OVERRIDE;
-  void bind(QMenu *menu, ClientChannel channel, Scope scope) Q_DECL_OVERRIDE;
-  void cleanup() Q_DECL_OVERRIDE;
-
-private:
-  QAction *m_info;
-  QAction *m_insert;
-  QAction *m_talk;
+  virtual ~IChannelMenu() {}
+  virtual bool trigger(QAction *action) = 0;
+  virtual void bind(QMenu *menu, ClientChannel channel, Scope scope) = 0;
+  virtual void cleanup() = 0;
 };
 
-#endif /* USERMENUIMPL_H_ */
+#endif // ICHANNELMENU_H_
