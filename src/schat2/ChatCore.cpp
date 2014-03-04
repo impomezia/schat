@@ -78,6 +78,9 @@ ChatCore::ChatCore(QObject *parent)
   m_pool->setMaxThreadCount(1);
 
   m_service = new ServiceThread(this);
+  connect(m_service, SIGNAL(ready()), SLOT(onReady()));
+
+  m_service->start();
 
   new ChatUrls(this);
   m_settings = new ChatSettings(Path::config(), Path::data(Path::SystemScope) + LS("/default.conf"), this);
@@ -109,9 +112,6 @@ ChatCore::ChatCore(QObject *parent)
   m_settings->init();
 
   connect(m_settings, SIGNAL(changed(QString,QVariant)), SLOT(onSettingsChanged(QString,QVariant)));
-  connect(m_service, SIGNAL(ready()), SLOT(onReady()));
-
-  m_service->start();
 
   SLOG_DEBUG(t.elapsed() << "ms");
 }
