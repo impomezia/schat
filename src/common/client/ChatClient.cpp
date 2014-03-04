@@ -132,7 +132,7 @@ QString ChatClient::serverName()
 SimpleClient *ChatClient::io()
 {
   Q_ASSERT(m_self);
-  //Q_ASSERT(m_self->m_client);
+  Q_ASSERT(m_self->m_client);
 
   return m_self ? m_self->m_client : 0;
 }
