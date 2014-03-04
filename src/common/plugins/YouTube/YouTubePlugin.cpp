@@ -45,7 +45,7 @@ YouTubePluginImpl::YouTubePluginImpl(QObject *parent)
 }
 
 
-void YouTubePluginImpl::chatReady() Q_DECL_OVERRIDE
+void YouTubePluginImpl::chatReady()
 {
   new YouTubeChatView(this);
 }
