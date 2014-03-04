@@ -31,13 +31,13 @@ class ChannelsPlugin : public QObject, CoreApi, ChatApi
 # endif
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out            = CoreApi::header();
     out[CORE_API_ID]           = "Channels";
     out[CORE_API_NAME]         = "Channels";
     out[CORE_API_VERSION]      = "2.3.0";
-    out[CORE_API_SITE]         = "http://wiki.schat.me/Plugin/Channels";
+    out[CORE_API_SITE]         = "https://wiki.schat.me/Plugin/Channels";
     out[CORE_API_DESC]         = "Advanced rooms (channels) support";
     out[CORE_API_DESC_RU]      = "Расширенная поддержка комнат (каналов)";
     out[CORE_API_CONFIGURABLE] = true;
@@ -45,8 +45,8 @@ public:
     return out;
   }
 
-  ChatPlugin *create();
-  QWidget *settings(QWidget *parent);
+  ChatPlugin *create() Q_DECL_OVERRIDE;
+  QWidget *settings(QWidget *parent) Q_DECL_OVERRIDE;
 };
 
 #endif /* CHANNELSPLUGIN_H_ */

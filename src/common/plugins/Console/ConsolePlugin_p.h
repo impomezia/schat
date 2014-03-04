@@ -1,6 +1,5 @@
-/* $Id: ConsolePlugin_p.h 3459 2013-02-02 06:07:07Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,6 +31,7 @@ class ConsolePluginImpl : public ChatPlugin
 public:
   ConsolePluginImpl(QObject *parent);
   ~ConsolePluginImpl();
+  void chatReady() Q_DECL_OVERRIDE;
 
 public slots:
   void show();

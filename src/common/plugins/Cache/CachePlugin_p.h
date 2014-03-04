@@ -29,9 +29,9 @@ class Cache : public ChatPlugin
 
 public:
   Cache(QObject *parent);
+  void chatReady() Q_DECL_OVERRIDE;
 
 private slots:
-  void onChatReady();
   void onClientReady();
   void onNotify(const Notify &notify);
   void open();

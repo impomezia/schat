@@ -170,24 +170,24 @@ void ChatCore::onReady()
 {
   m_client->setReady();
 
-  new Hooks::MessagesImpl(this);
-  new Hooks::CommandsImpl(this);
-  new Hooks::ChannelsImpl(this);
-  new Hooks::ClientImpl(this);
-  new ClientFeedsImpl(this);
+  new Hooks::MessagesImpl(m_client);
+  new Hooks::CommandsImpl(m_client);
+  new Hooks::ChannelsImpl(m_client);
+  new Hooks::ClientImpl(m_client);
+  new ClientFeedsImpl(m_client);
 
-  new Hooks::ChannelMenu(this);
-  new ChannelMenuImpl(this);
-  new UserMenuImpl(this);
-  new ServerMenuImpl(this);
+  new Hooks::ChannelMenu(m_client);
+  new ChannelMenuImpl(m_client);
+  new UserMenuImpl(m_client);
+  new ServerMenuImpl(m_client);
 
-  new ChatViewHooks(this);
-  new SettingsTabHook(this);
+  new ChatViewHooks(m_client);
+  new SettingsTabHook(m_client);
 
   m_networkManager = new NetworkManager(this);
   ChatClient::id(); // Необходимо для инициализации базовых настроек.
 
-  new WebBridge(this);
+  new WebBridge(m_client);
 
   m_ready = true;
   emit ready();

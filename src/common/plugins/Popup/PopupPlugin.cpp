@@ -1,6 +1,5 @@
-/* $Id: PopupPlugin.cpp 3146 2012-10-10 16:59:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,7 +32,11 @@ PopupPluginImpl::PopupPluginImpl(QObject *parent)
 {
   m_manager = new PopupManager(this);
   ChatCore::translation()->addOther(LS("popup"));
+}
 
+
+void PopupPluginImpl::chatReady()
+{
   connect(SettingsTabHook::i(), SIGNAL(added(QString,SettingsPage*)), SLOT(added(QString,SettingsPage*)));
 }
 

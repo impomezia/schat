@@ -51,15 +51,10 @@ Cache::Cache(QObject *parent)
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(onNotify(Notify)));
 
   ChatCore::translation()->addOther(LS("cache"));
-
-  if (!ChatCore::isReady())
-    connect(ChatCore::i(), SIGNAL(ready()), SLOT(onChatReady()));
-  else
-    onChatReady();
 }
 
 
-void Cache::onChatReady()
+void Cache::chatReady()
 {
   new Hooks::CacheChannels(this);
 

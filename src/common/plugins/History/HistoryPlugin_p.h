@@ -1,6 +1,5 @@
-/* $Id: HistoryPlugin_p.h 3755 2013-07-14 23:11:47Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,7 +21,6 @@
 #include "plugins/ChatPlugin.h"
 
 class FeedNotify;
-class HistoryChatView;
 class HistoryPluginTr;
 class Notify;
 
@@ -37,6 +35,7 @@ public:
   static bool get(const QByteArray &id, const QList<QByteArray> &messages);
   static bool since(const QByteArray &id, qint64 date);
   static QList<QByteArray> getLocal(const QList<QByteArray> &messages);
+  void chatReady() Q_DECL_OVERRIDE;
 
 private slots:
   void notify(const Notify &notify);
@@ -45,7 +44,6 @@ private slots:
   void start();
 
 private:
-  HistoryChatView *m_chatView;
   HistoryPluginTr *m_tr;
 };
 

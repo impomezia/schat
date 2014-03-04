@@ -136,7 +136,6 @@ UpdatePluginImpl::UpdatePluginImpl(QObject *parent)
   m_timer = new QBasicTimer();
   m_timer->start(60 * 60 * 1000, this);
   m_sha1 = new QCryptographicHash(QCryptographicHash::Sha1);
-  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
@@ -157,6 +156,12 @@ bool UpdatePluginImpl::supportDownload()
 # else
   return false;
 # endif
+}
+
+
+void UpdatePluginImpl::chatReady()
+{
+  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 

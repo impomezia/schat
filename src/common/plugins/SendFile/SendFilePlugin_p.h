@@ -1,6 +1,5 @@
-/* $Id: SendFilePlugin_p.h 3681 2013-06-08 23:46:45Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -53,6 +52,7 @@ public:
   bool sendFile(const QByteArray &dest);
   bool sendFile(const QByteArray &dest, const QString &file);
   int setPort(quint16 port);
+  void chatReady() Q_DECL_OVERRIDE;
   void read(const MessagePacket &packet);
 
   Q_INVOKABLE int role(const QString &id) const;

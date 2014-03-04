@@ -1,6 +1,5 @@
-/* $Id: EmoticonsPlugin.cpp 3708 2013-06-23 23:40:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -55,8 +54,12 @@ EmoticonsPluginImpl::EmoticonsPluginImpl(QObject *parent)
   connect(ChatCore::extensions(), SIGNAL(installed(QString)), SLOT(installed(QString)));
 
   ChatCore::translation()->addOther(LS("emoticons"));
+}
 
-  QTimer::singleShot(0, this, SLOT(start()));
+
+void EmoticonsPluginImpl::chatReady()
+{
+    QTimer::singleShot(0, this, SLOT(start()));
 }
 
 

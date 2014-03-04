@@ -1,6 +1,5 @@
-/* $Id: EmoticonsPlugin_p.h 2711 2012-05-27 13:14:12Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,6 +29,7 @@ class EmoticonsPluginImpl : public ChatPlugin
 
 public:
   EmoticonsPluginImpl(QObject *parent);
+  void chatReady() Q_DECL_OVERRIDE;
 
 private slots:
   void installed(const QString &key);

@@ -1,6 +1,5 @@
-/* $Id: SendFilePlugin.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -120,13 +119,10 @@ SendFilePluginImpl::SendFilePluginImpl(QObject *parent)
   m_port = getPort();
 
   m_tr = new SendFileTr();
-  new SendFileMessages(this);
 
   ChatCore::translation()->addOther(LS("sendfile"));
   QDesktopServices::setUrlHandler(LS("chat-sendfile"), this, "openUrl");
-  SettingsTabHook::add(new SendFilePageCreator(this));
   ChatAlerts::add(new IncomingFileAlertType(400));
-  new SendFileChatView(this);
 
   m_thread = new SendFile::Thread(m_port);
   connect(m_thread, SIGNAL(finished(QByteArray,qint64)), SLOT(finished(QByteArray)));
@@ -135,8 +131,6 @@ SendFilePluginImpl::SendFilePluginImpl(QObject *parent)
 
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
   connect(ChatClient::i(), SIGNAL(online()), SLOT(openDB()));
-
-  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
@@ -211,6 +205,16 @@ int SendFilePluginImpl::setPort(quint16 port)
   }
 
   return m_port;
+}
+
+
+void SendFilePluginImpl::chatReady()
+{
+  new SendFileMessages(this);
+  SettingsTabHook::add(new SendFilePageCreator(this));
+  new SendFileChatView(this);
+
+  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
