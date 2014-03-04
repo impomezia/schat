@@ -1,6 +1,5 @@
-/* $Id: ProgressTab.cpp 3501 2013-02-14 07:16:38Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,7 +29,7 @@ ProgressTab::ProgressTab(TabWidget *parent)
 {
   QFrame *frame = new QFrame(this);
 # if defined(Q_OS_WIN32)
-  frame->setStyleSheet(LS("QFrame { background-color: #fff; }"));
+  frame->setStyleSheet(LS("QFrame{background-color:#fff;}"));
 # endif
 
   m_progress = new QProgressIndicator(frame);
@@ -52,7 +51,7 @@ ProgressTab::ProgressTab(TabWidget *parent)
 
 void ProgressTab::retranslateUi()
 {
-  setText(tr("Connecting"));
+  setText(tr("Starting..."));
 }
 
 

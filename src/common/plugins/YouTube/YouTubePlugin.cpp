@@ -40,9 +40,14 @@ YouTubePluginImpl::YouTubePluginImpl(QObject *parent)
 
   ChatCore::translation()->addOther(LS("youtube"));
   TokenFilter::add(LS("channel"), new YouTubeFilter());
-  new YouTubeChatView(this);
 
   connect(settings, SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
+}
+
+
+void YouTubePluginImpl::chatReady()
+{
+  new YouTubeChatView(this);
 }
 
 

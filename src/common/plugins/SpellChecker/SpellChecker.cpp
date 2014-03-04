@@ -1,7 +1,5 @@
-/* $Id: SpellChecker.cpp 3454 2013-02-01 21:21:54Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
- * Copyright © 2012 Alexey Ivanov <alexey.ivanes@gmail.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -54,8 +52,6 @@ SpellChecker::SpellChecker(QObject *parent)
   ChatCore::settings()->setLocalDefault(LS("SpellChecker/Advanced"), false);
 
   ChatCore::translation()->addOther(LS("spellchecker"));
-
-  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
@@ -124,6 +120,12 @@ void SpellChecker::reload()
     m_self->m_dictionaries = dictionaries;
     SpellBackend::instance()->setLangs(dictionaries);
   }
+}
+
+
+void SpellChecker::chatReady()
+{
+  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 

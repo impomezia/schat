@@ -1,6 +1,5 @@
-/* $Id: ChatAlerts.cpp 3843 2013-10-27 04:09:43Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -164,7 +163,7 @@ bool ChatAlerts::add(AlertType *type)
  */
 bool ChatAlerts::isMute()
 {
-  if (ChatClient::channel()->status() == Status::DnD)
+  if (ChatCore::isReady() && ChatClient::channel()->status() == Status::DnD)
     return !m_self->m_soundsDnD;
 
   return !m_self->m_sounds;

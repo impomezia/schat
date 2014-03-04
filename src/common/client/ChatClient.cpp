@@ -1,6 +1,5 @@
-/* $Id: ChatClient.cpp 3776 2013-08-24 06:03:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,21 +29,27 @@ ChatClient *ChatClient::m_self = 0;
 
 ChatClient::ChatClient(QObject *parent)
   : QObject(parent)
+  , m_channels(0)
+  , m_feeds(0)
+  , m_messages(0)
+  , m_hooks(0)
+  , m_client(0)
 {
   m_self = this;
+}
 
-  m_client = new SimpleClient(this);
 
-  m_channels = new ClientChannels(this);
-  m_messages = new ClientMessages(this);
-  m_feeds = new ClientFeeds(this);
+ChatClient::~ChatClient()
+{
+  m_self = 0;
+}
 
-  m_hooks = new Hooks::Client(this);
 
-  connect(m_client, SIGNAL(restore()), SLOT(restore()));
-  connect(m_client, SIGNAL(setup()), SLOT(setup()));
-  connect(m_client, SIGNAL(ready()), SIGNAL(ready()));
-  connect(m_client, SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
+ChatClient *ChatClient::i()
+{
+  Q_ASSERT(m_self);
+
+  return m_self;
 }
 
 
@@ -82,7 +87,7 @@ QByteArray ChatClient::id()
   if (!id.isNull())
     return id.toByteArray();
 
-  return m_self->m_hooks->id();
+  return i()->m_hooks->id();
 }
 
 
@@ -92,7 +97,7 @@ QByteArray ChatClient::serverId()
   if (!id.isNull())
     return id.toByteArray();
 
-  return m_self->m_hooks->serverId();
+  return i()->m_hooks->serverId();
 }
 
 
@@ -124,16 +129,42 @@ QString ChatClient::serverName()
 }
 
 
+SimpleClient *ChatClient::io()
+{
+  Q_ASSERT(m_self);
+  Q_ASSERT(m_self->m_client);
+
+  return m_self ? m_self->m_client : 0;
+}
+
+
 bool ChatClient::open(const QByteArray &id)
 {
   bool matched = false;
-  return m_self->m_hooks->openId(id, matched);
+  return i()->m_hooks->openId(id, matched);
 }
 
 
 bool ChatClient::open(const QUrl &url)
 {
   return io()->openUrl(url);
+}
+
+
+void ChatClient::setReady()
+{
+  m_client = new SimpleClient(this);
+
+  m_channels = new ClientChannels(this);
+  m_messages = new ClientMessages(this);
+  m_feeds = new ClientFeeds(this);
+
+  m_hooks = new Hooks::Client(this);
+
+  connect(m_client, SIGNAL(restore()), SLOT(restore()));
+  connect(m_client, SIGNAL(setup()), SLOT(setup()));
+  connect(m_client, SIGNAL(ready()), SIGNAL(ready()));
+  connect(m_client, SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
 }
 
 

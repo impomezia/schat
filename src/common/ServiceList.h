@@ -15,30 +15,38 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CACHEPLUGIN_P_H_
-#define CACHEPLUGIN_P_H_
+#ifndef SERVICELIST_H_
+#define SERVICELIST_H_
 
-#include "Channel.h"
-#include "plugins/ChatPlugin.h"
+#include <QObject>
+#include <QQueue>
 
-class Notify;
+#include "schat.h"
 
-class Cache : public ChatPlugin
+class IServiceTask;
+class QNetworkAccessManager;
+
+/*!
+ * Список сервисных задач.
+ */
+class ServiceList : public QObject
 {
   Q_OBJECT
 
 public:
-  Cache(QObject *parent);
-  void chatReady() Q_DECL_OVERRIDE;
+  ServiceList();
+  inline int size() const { return m_tasks.size(); }
 
-private slots:
-  void onClientReady();
-  void onNotify(const Notify &notify);
-  void open();
+signals:
+  void ready(qint64 counter, QObject *object);
+
+public slots:
+  void append(IServiceTask *task);
+  void append(QQueue<IServiceTask*> queue);
 
 private:
-  void load(ClientChannel channel);
-  void loadCache();
+  QList<QObject*> m_tasks;      ///< Созданные и запущенные задачи.
+  QNetworkAccessManager *m_net; ///< Менеджер доступа к сети.
 };
 
-#endif /* CACHEPLUGIN_P_H_ */
+#endif // SERVICELIST_H_

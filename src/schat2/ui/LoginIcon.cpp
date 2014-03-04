@@ -1,6 +1,5 @@
-/* $Id: LoginIcon.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,6 +16,7 @@
  */
 
 #include "Account.h"
+#include "ChatCore.h"
 #include "client/ChatClient.h"
 #include "client/SimpleClient.h"
 #include "sglobal.h"
@@ -26,7 +26,17 @@
 LoginIcon::LoginIcon(QWidget *parent)
   : QLabel(parent)
 {
-  setVisible(false);
+  hide();
+
+  if (!ChatCore::isReady())
+    connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
+  else
+    onReady();
+}
+
+
+void LoginIcon::onReady()
+{
   connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(reload()));
 
   reload();

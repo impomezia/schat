@@ -34,6 +34,7 @@ public:
   inline bool remove(const QString &id) { if (m_req.contains(id)) { m_req.removeAll(id); return true; } return false; }
   inline void add(const QString &id)    { if (!m_req.contains(id)) m_req.append(id); }
   inline void setEnabled(bool enabled)  { m_enabled = enabled; }
+  void chatReady() Q_DECL_OVERRIDE;
 
 private slots:
   void init(ChatView *view);

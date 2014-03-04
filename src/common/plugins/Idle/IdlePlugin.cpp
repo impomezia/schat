@@ -1,6 +1,5 @@
-/* $Id: IdlePlugin.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -40,8 +39,12 @@ IdlePluginImpl::IdlePluginImpl(QObject *parent)
 
   connect(m_idle, SIGNAL(secondsIdle(int)), SLOT(idle(int)));
   connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
+}
 
-  QTimer::singleShot(0, this, SLOT(start()));
+
+void IdlePluginImpl::chatReady()
+{
+    QTimer::singleShot(0, this, SLOT(start()));
 }
 
 

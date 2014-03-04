@@ -15,30 +15,25 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CACHEPLUGIN_P_H_
-#define CACHEPLUGIN_P_H_
+#ifndef ISERVICETASK_H_
+#define ISERVICETASK_H_
 
-#include "Channel.h"
-#include "plugins/ChatPlugin.h"
+#include <QtGlobal>
 
-class Notify;
+class QObject;
+class QNetworkAccessManager;
 
-class Cache : public ChatPlugin
+class IServiceTask
 {
-  Q_OBJECT
-
 public:
-  Cache(QObject *parent);
-  void chatReady() Q_DECL_OVERRIDE;
-
-private slots:
-  void onClientReady();
-  void onNotify(const Notify &notify);
-  void open();
+  inline IServiceTask() : m_counter(0)   {}
+  inline virtual ~IServiceTask()         {}
+  inline qint64 counter() const          { return m_counter; }
+  inline void setCounter(qint64 counter) { m_counter = counter; }
+  virtual QObject *create(QNetworkAccessManager *net, QObject *parent) = 0;
 
 private:
-  void load(ClientChannel channel);
-  void loadCache();
+  qint64 m_counter;
 };
 
-#endif /* CACHEPLUGIN_P_H_ */
+#endif // ISERVICETASK_H_

@@ -1,6 +1,5 @@
-/* $Id: ProfilePlugin.h 3756 2013-07-15 15:23:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,20 +31,20 @@ class ProfilePlugin : public QObject, CoreApi, ChatApi
 # endif
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Profile";
     out[CORE_API_NAME]     = "Profile";
-    out[CORE_API_VERSION]  = "0.2.6";
-    out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/Profile";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Profile";
     out[CORE_API_DESC]     = "Adds support for additional profile fields";
     out[CORE_API_DESC_RU]  = "Добавляет поддержку дополнительных полей профиля";
 
     return out;
   }
 
-  ChatPlugin *create();
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* PROFILEPLUGIN_H_ */

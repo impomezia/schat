@@ -1,6 +1,5 @@
-/* $Id: ChatClient.h 3423 2013-01-21 05:48:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -49,12 +48,12 @@ public:
   };
 
   ChatClient(QObject *parent = 0);
+  ~ChatClient();
   inline Hooks::Client *hooks() const      { return m_hooks; }
-  inline static ChatClient *i()            { return m_self; }
-  inline static ClientChannels *channels() { return m_self->m_channels; }
-  inline static ClientFeeds *feeds()       { return m_self->m_feeds; }
-  inline static ClientMessages *messages() { return m_self->m_messages; }
-  inline static SimpleClient *io()         { return m_self->m_client; }
+  inline static ClientChannels *channels() { return i()->m_channels; }
+  inline static ClientFeeds *feeds()       { return i()->m_feeds; }
+  inline static ClientMessages *messages() { return i()->m_messages; }
+  static ChatClient *i();
   static ClientChannel channel();
   static ClientChannel server();
   static int state();
@@ -63,11 +62,14 @@ public:
   static QDataStream *stream();
   static qint64 date();
   static QString serverName();
+  static SimpleClient *io();
 
   inline static bool open()                     { return open(QByteArray()); }
   inline static bool open(const QString &url)   { return open(QUrl(url)); }
   static bool open(const QByteArray &id);
   static bool open(const QUrl &url);
+
+  void setReady();
 
 signals:
   void offline();

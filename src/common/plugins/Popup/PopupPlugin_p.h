@@ -1,6 +1,5 @@
-/* $Id: PopupPlugin_p.h 3145 2012-10-09 21:11:31Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,6 +31,7 @@ class PopupPluginImpl : public ChatPlugin
 
 public:
   PopupPluginImpl(QObject *parent);
+  void chatReady() Q_DECL_OVERRIDE;
 
 private slots:
   void added(const QString &id, SettingsPage *page);

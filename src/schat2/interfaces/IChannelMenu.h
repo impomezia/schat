@@ -15,30 +15,29 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CACHEPLUGIN_P_H_
-#define CACHEPLUGIN_P_H_
+#ifndef ICHANNELMENU_H_
+#define ICHANNELMENU_H_
 
 #include "Channel.h"
-#include "plugins/ChatPlugin.h"
 
-class Notify;
+class QMenu;
+class QAction;
 
-class Cache : public ChatPlugin
+class IChannelMenu
 {
-  Q_OBJECT
-
 public:
-  Cache(QObject *parent);
-  void chatReady() Q_DECL_OVERRIDE;
+  enum Scope {
+    UnknownScope,   ///< Неизвестное место.
+    StatusBarScope, ///< Статус бар.
+    TabScope,       ///< Заголовок вкладки.
+    UserViewScope,  ///< Список пользователей.
+    ChatViewScope   ///< Текст чата.
+  };
 
-private slots:
-  void onClientReady();
-  void onNotify(const Notify &notify);
-  void open();
-
-private:
-  void load(ClientChannel channel);
-  void loadCache();
+  virtual ~IChannelMenu() {}
+  virtual bool trigger(QAction *action) = 0;
+  virtual void bind(QMenu *menu, ClientChannel channel, Scope scope) = 0;
+  virtual void cleanup() = 0;
 };
 
-#endif /* CACHEPLUGIN_P_H_ */
+#endif // ICHANNELMENU_H_

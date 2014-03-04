@@ -1,6 +1,5 @@
-/* $Id: HistoryPlugin.cpp 3755 2013-07-14 23:11:47Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -68,19 +67,13 @@ HistoryImpl::HistoryImpl(QObject *parent)
 {
   m_tr = new HistoryPluginTr();
   new HistoryDB(this);
-  m_chatView = new HistoryChatView(this);
-  new HistoryMessages(this);
 
-  open();
   connect(ChatClient::i(), SIGNAL(online()), SLOT(open()));
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
+  connect(ChatClient::i(), SIGNAL(ready()), SLOT(ready()));
 
   ChatCore::translation()->addOther(LS("history"));
   ChatCore::settings()->setDefault(SETTINGS_HISTORY_AUTO_LOAD, true);
-
-  connect(ChatClient::i(), SIGNAL(ready()), SLOT(ready()));
-
-  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
@@ -146,6 +139,16 @@ QList<QByteArray> HistoryImpl::getLocal(const QList<QByteArray> &messages)
   }
 
   return out;
+}
+
+
+void HistoryImpl::chatReady()
+{
+    new HistoryChatView(this);
+    new HistoryMessages(this);
+    open();
+
+    QTimer::singleShot(0, this, SLOT(start()));
 }
 
 

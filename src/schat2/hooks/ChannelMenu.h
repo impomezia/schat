@@ -1,6 +1,5 @@
-/* $Id: ChannelMenu.h 3280 2012-11-20 17:26:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2011 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,20 +18,7 @@
 #ifndef CHANNELMENU_H_
 #define CHANNELMENU_H_
 
-#include "actions/MenuBuilder.h"
-#include "Channel.h"
-
-namespace Hooks
-{
-
-/// Место из которого вызывается меню.
-enum Scope {
-  UnknownScope,   ///< Неизвестное место.
-  StatusBarScope, ///< Статус бар.
-  TabScope,       ///< Заголовок вкладки.
-  UserViewScope,  ///< Список пользователей.
-  ChatViewScope   ///< Текст чата.
-};
+#include "interfaces/IChannelMenu.h"
 
 class SCHAT_CORE_EXPORT ChannelMenu : public QObject
 {
@@ -41,9 +27,9 @@ class SCHAT_CORE_EXPORT ChannelMenu : public QObject
 public:
   ChannelMenu(QObject *parent = 0);
   ~ChannelMenu();
-  inline static void add(ChannelMenu *hook)                   { if (!m_self->m_hooks.contains(hook)) m_self->m_hooks.append(hook); }
-  inline static void remove(ChannelMenu *hook)                { m_self->m_hooks.removeAll(hook); }
-  static void bind(QMenu *menu, ClientChannel channel, Scope scope);
+  static void add(IChannelMenu *hook);
+  static void bind(QMenu *menu, ClientChannel channel, IChannelMenu::Scope scope);
+  static void remove(IChannelMenu *hook);
 
 protected slots:
   void cleanup();
@@ -51,15 +37,12 @@ protected slots:
 
 protected:
   virtual bool triggerImpl(QAction *action);
-  virtual void bindImpl(QMenu *menu, ClientChannel channel, Scope scope);
+  virtual void bindImpl(QMenu *menu, ClientChannel channel, IChannelMenu::Scope scope);
   virtual void cleanupImpl();
 
-  static ChannelMenu *m_self;  ///< Указатель на себя.
-
 private:
-  QList<ChannelMenu*> m_hooks; ///< Хуки.
+  static ChannelMenu *m_self;   ///< Указатель на себя.
+  QList<IChannelMenu*> m_hooks; ///< Хуки.
 };
-
-} // namespace Hooks
 
 #endif /* CHANNELMENU_H_ */

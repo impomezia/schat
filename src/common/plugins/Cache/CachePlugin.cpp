@@ -1,6 +1,5 @@
-/* $Id: CachePlugin.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -43,22 +42,36 @@ Cache::Cache(QObject *parent)
   : ChatPlugin(parent)
 {
   new CacheDB(this);
-  new Hooks::CacheChannels(this);
   new CacheFeedStorage(this);
   new TalksCache(this);
   new StateCache(this);
-  open();
 
   connect(ChatClient::i(), SIGNAL(online()), SLOT(open()));
-  connect(ChatClient::i(), SIGNAL(ready()), SLOT(ready()));
-  connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
+  connect(ChatClient::i(), SIGNAL(ready()), SLOT(onClientReady()));
+  connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(onNotify(Notify)));
 
   ChatCore::translation()->addOther(LS("cache"));
-  loadCache();
 }
 
 
-void Cache::notify(const Notify &notify)
+void Cache::chatReady()
+{
+  new Hooks::CacheChannels(this);
+
+  loadCache();
+  open();
+}
+
+
+void Cache::onClientReady()
+{
+  QFile file(Path::cache() + LS("/dns.cache"));
+  if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    file.write(JSON::generate(ChatClient::io()->dns()->cache()));
+}
+
+
+void Cache::onNotify(const Notify &notify)
 {
   if (notify.type() == Notify::ClearCache) {
     CacheDB::clear();
@@ -72,14 +85,14 @@ void Cache::notify(const Notify &notify)
     CacheDB::add(ChatClient::channel());
 
     ChatClient::io()->dns()->setCache(QVariantMap());
-    ready();
+    onClientReady();
   }
 }
 
 
 void Cache::open()
 {
-  QByteArray id = ChatClient::serverId();
+  const QByteArray id = ChatClient::serverId();
   if (id.isEmpty())
     return;
 
@@ -91,15 +104,6 @@ void Cache::open()
 
   load(ChatClient::server());
   load(ChatClient::channel());
-}
-
-
-void Cache::ready()
-{
-  QFile file(Path::cache() + LS("/dns.cache"));
-  if (file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-    file.write(JSON::generate(ChatClient::io()->dns()->cache()));
-  }
 }
 
 
@@ -135,7 +139,7 @@ void Cache::loadCache()
 {
   QFile file(Path::cache() + LS("/dns.cache"));
   if (file.open(QIODevice::ReadOnly)) {
-    QVariantMap data = JSON::parse(file.readAll()).toMap();
+    const QVariantMap data = JSON::parse(file.readAll()).toMap();
     ChatClient::io()->dns()->setCache(data);
   }
 }

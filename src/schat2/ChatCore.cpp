@@ -1,6 +1,5 @@
-/* $Id: ChatCore.cpp 3707 2013-06-23 22:38:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -50,6 +49,7 @@
 #include "NetworkManager.h"
 #include "Path.h"
 #include "Profile.h"
+#include "ServiceThread.h"
 #include "sglobal.h"
 #include "text/HtmlFilter.h"
 #include "text/PlainTextFilter.h"
@@ -60,6 +60,7 @@
 #include "ui/tabs/SettingsTabHook.h"
 #include "WebBridge.h"
 
+bool ChatCore::m_ready     = false;
 ChatCore *ChatCore::m_self = 0;
 
 
@@ -69,10 +70,17 @@ ChatCore::ChatCore(QObject *parent)
 {
   m_self = this;
 
+  SCHAT_DEBUG_CODE(QTime t; t.start();)
+
   qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()) ^ reinterpret_cast<quintptr>(this));
 
   m_pool = new QThreadPool(this);
   m_pool->setMaxThreadCount(1);
+
+  m_service = new ServiceThread(this);
+  connect(m_service, SIGNAL(ready()), SLOT(onReady()));
+
+  m_service->start();
 
   new ChatUrls(this);
   m_settings = new ChatSettings(Path::config(), Path::data(Path::SystemScope) + LS("/default.conf"), this);
@@ -83,50 +91,42 @@ ChatCore::ChatCore(QObject *parent)
 
   loadTranslation();
 
-  new ChatClient(this);
+  m_client = new ChatClient(this);
   new ChatNotify(this);
   new FeedStorage(this);
 
-  new Hooks::MessagesImpl(this);
-  new Hooks::CommandsImpl(this);
-  new Hooks::ChannelsImpl(this);
-  new Hooks::ClientImpl(this);
-  new ClientFeedsImpl(this);
-
-  new Hooks::ChannelMenu(this);
-  new ChannelMenuImpl(this);
-  new UserMenuImpl(this);
-  new ServerMenuImpl(this);
-
-  new ChatViewHooks(this);
-  new SettingsTabHook(this);
-
   new ChatAlerts(this);
-
-  m_networkManager = new NetworkManager(this);
-  ChatClient::id(); // Необходимо для инициализации базовых настроек.
 
   ChatIcons::init();
 
   new Profile(this);
+
+  new ChannelMenu(this);
+  new ChannelMenuImpl(this);
+  new UserMenuImpl(this);
+  new ServerMenuImpl(this);
 
   m_plugins = new ChatPlugins(this);
   m_plugins->load();
 
   m_settings->init();
 
-  new WebBridge(this);
+  connect(m_settings, SIGNAL(changed(QString,QVariant)), SLOT(onSettingsChanged(QString,QVariant)));
 
-  connect(m_settings, SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
-
-  QTimer::singleShot(0, this, SLOT(start()));
+  SLOG_DEBUG(t.elapsed() << "ms");
 }
 
 
 ChatCore::~ChatCore()
 {
+  m_ready = false;
+  m_self  = 0;
+
   TokenFilter::clear();
   ProfileFieldFactory::clear();
+
+  m_service->quit();
+  m_service->wait();
 }
 
 
@@ -171,17 +171,35 @@ void ChatCore::send(const QString &text)
 }
 
 
-void ChatCore::settingsChanged(const QString &key, const QVariant &value)
+void ChatCore::onReady()
 {
-  if (key == LS("Translation")) {
-    m_translation->load(value.toString());
-  }
+  m_client->setReady();
+
+  new Hooks::MessagesImpl(m_client);
+  new Hooks::CommandsImpl(m_client);
+  new Hooks::ChannelsImpl(m_client);
+  new Hooks::ClientImpl(m_client);
+  new ClientFeedsImpl(m_client);
+
+  new ChatViewHooks(m_client);
+  new SettingsTabHook(m_client);
+
+  m_networkManager = new NetworkManager(this);
+  ChatClient::id(); // Необходимо для инициализации базовых настроек.
+
+  new WebBridge(m_client);
+
+  m_ready = true;
+  emit ready();
+
+  ChatClient::open();
 }
 
 
-void ChatCore::start()
+void ChatCore::onSettingsChanged(const QString &key, const QVariant &value)
 {
-  ChatClient::open();
+  if (key == LS("Translation"))
+    m_translation->load(value.toString());
 }
 
 

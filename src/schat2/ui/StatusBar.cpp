@@ -1,6 +1,5 @@
-/* $Id: StatusBar.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -40,27 +39,22 @@
 #include "ui/StatusBar.h"
 #include "ui/StatusWidget.h"
 
-StatusBar *StatusBar::m_self = 0;
-
 StatusBar::StatusBar(QWidget *parent)
   : QStatusBar(parent)
+  , m_url(0)
 {
-  m_self = this;
-
   m_spinner = new Spinner(this);
   m_icon = new QLabel(this);
+  m_icon->hide();
+
   m_login = new LoginIcon(this);
   m_secure = new QLabel(this);
   m_label = new QLabel(this);
 
 # if !defined(SCHAT_NO_SSL)
   m_secure->setPixmap(QPixmap(LS(":/images/secure.png")));
+  m_secure->hide();
 # endif
-
-  m_url = new NetworkWidget(this, NetworkWidget::BasicLayout);
-  m_url->setMinimumWidth(m_url->width() * 2 + 50);
-  m_urlAction = new QWidgetAction(this);
-  m_urlAction->setDefaultWidget(m_url);
 
   m_bg = new BgOperationWidget(this);
   m_status = new StatusWidget(this);
@@ -73,20 +67,24 @@ StatusBar::StatusBar(QWidget *parent)
   addWidget(m_bg);
   addPermanentWidget(m_status);
 
-  connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int)));
-  connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
-
   updateStyleSheet();
-  clientStateChanged(SimpleClient::ClientOffline);
+
+  connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(onNotify(Notify)));
+
+  if (!ChatCore::isReady()) {
+    connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
+    retranslateUi();
+  }
+  else
+    onReady();
 }
 
 
 bool StatusBar::event(QEvent *event)
 {
   #if defined(Q_OS_WIN32)
-  if (event->type() == QEvent::ApplicationPaletteChange) {
+  if (event->type() == QEvent::ApplicationPaletteChange)
     updateStyleSheet();
-  }
   #endif
 
   return QStatusBar::event(event);
@@ -114,9 +112,9 @@ void StatusBar::mouseReleaseEvent(QMouseEvent *event)
 }
 
 
-void StatusBar::clientStateChanged(int state)
+void StatusBar::onClientStateChanged(int state)
 {
-  if (state == SimpleClient::ClientConnecting || state == SimpleClient::ClientWaitAuth) {
+  if (state == ChatClient::Connecting || state == ChatClient::WaitAuth) {
     m_icon->setVisible(false);
     m_spinner->setVisible(true);
     m_spinner->startAnimation();
@@ -127,13 +125,13 @@ void StatusBar::clientStateChanged(int state)
     m_spinner->stopAnimation();
   }
 
-  if (state != SimpleClient::ClientOnline)
+  if (state != ChatClient::Online)
     m_secure->setVisible(false);
 
-  if (state == SimpleClient::ClientOffline) {
+  if (state == ChatClient::Offline) {
     m_icon->setPixmap(QPixmap(LS(":/images/offline.png")));
   }
-  else if (state == SimpleClient::ClientOnline) {
+  else if (state == ChatClient::Online) {
     m_icon->setPixmap(QPixmap(LS(":/images/online.png")));
 
 #   if !defined(SCHAT_NO_SSL)
@@ -141,7 +139,7 @@ void StatusBar::clientStateChanged(int state)
       m_secure->setVisible(true);
 #   endif
   }
-  else if (state == SimpleClient::ClientError) {
+  else if (state == ChatClient::Error) {
     m_icon->setPixmap(QPixmap(LS(":/images/exclamation-red.png")));
   }
 
@@ -149,22 +147,41 @@ void StatusBar::clientStateChanged(int state)
 }
 
 
-void StatusBar::menuTriggered(QAction *action)
+void StatusBar::onMenuTriggered(QAction *action)
 {
-  if (action == m_connect)
+  Q_ASSERT(m_url);
+
+  if (m_url && action == m_connect)
     m_url->open();
 }
 
 
-void StatusBar::notify(const Notify &notify)
+void StatusBar::onNotify(const Notify &notify)
 {
   if (notify.type() == Notify::ServerRenamed)
     setServerName();
 }
 
 
+void StatusBar::onReady()
+{
+  m_url = new NetworkWidget(this, NetworkWidget::BasicLayout);
+  m_url->setMinimumWidth(m_url->width() * 2 + 50);
+  m_urlAction = new QWidgetAction(this);
+  m_urlAction->setDefaultWidget(m_url);
+
+  onClientStateChanged(ChatClient::state());
+  connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(onClientStateChanged(int)));
+}
+
+
 void StatusBar::menu(const QPoint &point)
 {
+  Q_ASSERT(m_url);
+  
+  if (!m_url)
+    return;
+
   QMenu menu(this);
   if (ChatClient::state() == ChatClient::Offline || ChatClient::state() == ChatClient::Error)
     menu.addAction(m_urlAction);
@@ -173,9 +190,9 @@ void StatusBar::menu(const QPoint &point)
   m_connect = menu.addAction(action->icon(), action->text());
 
   menu.addSeparator();
-  Hooks::ChannelMenu::bind(&menu, ChatClient::server(), Hooks::StatusBarScope);
+  ChannelMenu::bind(&menu, ChatClient::server(), IChannelMenu::StatusBarScope);
 
-  connect(&menu, SIGNAL(triggered(QAction*)), SLOT(menuTriggered(QAction*)));
+  connect(&menu, SIGNAL(triggered(QAction*)), SLOT(onMenuTriggered(QAction*)));
   menu.exec(point);
 }
 
@@ -183,24 +200,39 @@ void StatusBar::menu(const QPoint &point)
 void StatusBar::retranslateUi()
 {
   m_secure->setToolTip(tr("Encrypted connection"));
-  int state = ChatClient::state();
+  const int state = ChatCore::isReady() ? ChatClient::state() : -1;
 
-  if (state == ChatClient::Offline) {
+  switch (state)
+  {
+  case ChatClient::Offline:
     m_label->setText(tr("No connection"));
     m_icon->setToolTip(tr("No connection"));
-  }
-  else if (state == ChatClient::Connecting) {
+    break;
+
+  case ChatClient::Connecting:
     m_label->setText(ChatClient::io()->url().toString());
-  }
-  else if (state == ChatClient::Online) {
+    break;
+
+  case ChatClient::Online:
     setServerName();
     m_icon->setToolTip(tr("Connected"));
-  }
-  else if (state == ChatClient::Error) {
+    break;
+
+  case ChatClient::Error:
     setError();
-  }
-  else if (state == ChatClient::WaitAuth)
+    break;
+
+  case ChatClient::WaitAuth:
     setServerName();
+    break;
+
+  case -1:
+    m_label->setText(tr("Starting..."));
+    break;
+
+  default:
+    break;
+  }
 }
 
 

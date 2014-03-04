@@ -99,20 +99,11 @@ ChannelsPluginImpl::ChannelsPluginImpl(QObject *parent)
   , m_list(0)
 {
   m_tr = new ChannelsTr();
-  new ChannelsCmd(this);
   new ChannelsMenuImpl(this);
   new ChannelsFeedListener(this);
 
-  connect(ChatClient::i(), SIGNAL(ready()), SLOT(ready()));
-  connect(ChatClient::channels(), SIGNAL(channel(QByteArray)), SLOT(channel(QByteArray)));
-
   ChatCore::translation()->addOther(LS("channels"));
   ChatCore::settings()->setDefault(SETTINGS_CHANNELS_IGNORING, false);
-
-  connect(ChatViewHooks::i(), SIGNAL(initHook(ChatView*)), SLOT(init(ChatView*)));
-  connect(ChatViewHooks::i(), SIGNAL(loadFinishedHook(ChatView*)), SLOT(loadFinished(ChatView*)));
-
-  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
@@ -166,6 +157,19 @@ void ChannelsPluginImpl::setAcl(const QByteArray &userId, const QByteArray &chan
 void ChannelsPluginImpl::show()
 {
   TabWidget::i()->tab(LIST_TAB);
+}
+
+
+void ChannelsPluginImpl::chatReady()
+{
+  new ChannelsCmd(this);
+
+  connect(ChatClient::i(), SIGNAL(ready()), SLOT(ready()));
+  connect(ChatClient::channels(), SIGNAL(channel(QByteArray)), SLOT(channel(QByteArray)));
+  connect(ChatViewHooks::i(), SIGNAL(initHook(ChatView*)), SLOT(init(ChatView*)));
+  connect(ChatViewHooks::i(), SIGNAL(loadFinishedHook(ChatView*)), SLOT(loadFinished(ChatView*)));
+
+  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
@@ -226,6 +230,9 @@ void ChannelsPluginImpl::showMenu(QMenu *menu, QAction *separator)
 void ChannelsPluginImpl::start()
 {
   TabWidget *tabs = TabWidget::i();
+
+  Q_ASSERT(tabs);
+
   if (!tabs)
     return;
 

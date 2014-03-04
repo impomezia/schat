@@ -1,6 +1,5 @@
-/* $Id: MainToolBar.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,9 +19,9 @@
 #include <QMenu>
 
 #include "ChatNotify.h"
+#include "ui/ChatIcons.h"
 #include "ui/MainToolBar.h"
 #include "ui/SoundButton.h"
-#include "ui/ChatIcons.h"
 
 MainToolBar::MainToolBar(QWidget *parent)
   : QToolBar(parent)
@@ -47,7 +46,15 @@ MainToolBar::MainToolBar(QWidget *parent)
   addWidget(m_button);
   addWidget(m_sound);
 
+  setReady(false);
+
   connect(m_menu, SIGNAL(triggered(QAction*)), SLOT(triggered(QAction*)));
+}
+
+
+void MainToolBar::setReady(bool ready)
+{
+  m_settings->setEnabled(ready);
 }
 
 

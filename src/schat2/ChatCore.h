@@ -1,6 +1,5 @@
-/* $Id: ChatCore.h 3041 2012-08-31 10:41:21Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,11 +24,13 @@
 
 #include "schat.h"
 
+class ChatClient;
 class ChatPlugins;
 class ChatSettings;
 class Extensions;
 class NetworkManager;
 class QThreadPool;
+class ServiceThread;
 class SimpleClient;
 class Translation;
 
@@ -42,6 +43,7 @@ class SCHAT_CORE_EXPORT ChatCore : public QObject
 public:
   ChatCore(QObject *parent = 0);
   ~ChatCore();
+  inline static bool isReady()                          { return m_ready; }
   inline static ChatCore *i()                           { return m_self; }
   inline static ChatPlugins *plugins()                  { return m_self->m_plugins; }
   inline static ChatSettings *settings()                { return m_self->m_settings; }
@@ -49,27 +51,34 @@ public:
   inline static NetworkManager *networks()              { return m_self->m_networkManager; }
   inline static QByteArray currentId()                  { return m_self->m_currentId; }
   inline static QThreadPool *pool()                     { return m_self->m_pool; }
+  inline static ServiceThread *service()                { return m_self->m_service; }
   inline static Translation *translation()              { return m_self->m_translation; }
   inline static void setCurrentId(const QByteArray &id) { m_self->m_currentId = id; }
   static QByteArray randomId();
   static QStringList config();
 
+signals:
+  void ready();
+
 public slots:
   void send(const QString &text);
 
 private slots:
-  void settingsChanged(const QString &key, const QVariant &value);
-  void start();
+  void onReady();
+  void onSettingsChanged(const QString &key, const QVariant &value);
 
 private:
   void loadTranslation();
 
+  ChatClient *m_client;             ///< Клиент чата.
   ChatPlugins *m_plugins;           ///< Загрузчик плагинов.
   ChatSettings *m_settings;         ///< Настройки.
   Extensions *m_extensions;         ///< Загрузчик расширений.
   NetworkManager *m_networkManager; ///< Объект управляющих сетями.
   QByteArray m_currentId;           ///< Идентификатор текущей вкладки.
   QThreadPool *m_pool;              ///< Пул для запуска потоков.
+  ServiceThread *m_service;         ///< Сервисный поток для выполнения фоновых задач.
+  static bool m_ready;              ///< true после полной инициализации.
   static ChatCore *m_self;          ///< Указатель на себя.
   Translation *m_translation;       ///< Модуль загрузки переводов.
 };

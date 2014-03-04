@@ -65,9 +65,12 @@ TabWidget *TabWidget::m_self = 0;
 
 TabWidget::TabWidget(QWidget *parent)
   : QTabWidget(parent)
-  , m_tabBar(new TabBar(this))
+  , m_serverTab(0)
+  , m_tray(0)
 {
   m_self = this;
+
+  m_tabBar = new TabBar(this);
   setTabBar(m_tabBar);
   setDocumentMode(true);
 
@@ -84,32 +87,31 @@ TabWidget::TabWidget(QWidget *parent)
   QWebSettings::globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, ChatCore::settings()->value(SETTINGS_LABS_DEVELOPER_EXTRAS).toBool());
 
   m_authIcon = new AuthIcon();
-  m_serverTab = new ServerTab(this);
-  m_serverTab->setVisible(false);
 
   add(new AboutTabCreator());
   add(new SettingsTabCreator());
   add(new WelcomeTabCreator());
   add(new ProgressTabCreator());
 
-  showWelcome();
-
-  m_tray = new TrayIcon(this);
+  tab(PROGRESS_TAB);
 
   createToolBars();
-  retranslateUi();
+
+  if (!ChatCore::isReady())
+    connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
+  else
+    onReady();
 
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTab(int)));
   connect(this, SIGNAL(currentChanged(int)), SLOT(currentChanged(int)));
-  connect(ChatClient::channels(), SIGNAL(channel(QByteArray,QString)), SLOT(addChannel(QByteArray,QString)));
-  connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
-  connect(m_serverTab, SIGNAL(actionTriggered(bool)), SLOT(openTab()));
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
 }
 
 
 TabWidget::~TabWidget()
 {
+  m_self = 0;
+
   ChatAlerts::reset();
   delete m_authIcon;
   qDeleteAll(m_creators);
@@ -213,6 +215,8 @@ void TabWidget::closePage(const QByteArray &name)
  */
 ChannelBaseTab *TabWidget::channelTab(const QByteArray &id, bool create, bool show)
 {
+  SLOG_DEBUG("id =" << SimpleID::encode(id) << "create =" << create << "show =" << show);
+
   if (!Channel::isCompatibleId(id))
     return 0;
 
@@ -547,6 +551,46 @@ void TabWidget::tabRemoved(int index)
 }
 
 
+/*!
+ * Установка индекса на вкладку.
+ */
+void TabWidget::openTab()
+{
+  addChatTab(qobject_cast<AbstractTab *>(sender()));
+}
+
+
+void TabWidget::addChannel(const QByteArray &id, const QString &xName)
+{
+  const int type = SimpleID::typeOf(id);
+
+  if (type == ChatId::ChannelId || m_prefetch.contains(id)) {
+    m_prefetch.removeAll(id);
+    channelTab(id, true, type == ChatId::ChannelId ? !m_channels.contains(id) : false);
+  }
+  else if (type == ChatId::UserId && !xName.isEmpty())
+    channelTab(id, true, true);
+}
+
+
+/*!
+ * Обработка изменения состояния клиента.
+ */
+void TabWidget::clientStateChanged(int state, int previousState)
+{
+  if (state == ChatClient::Error) {
+    const QVariantMap error = ChatClient::io()->json().value(CLIENT_PROP_ERROR).toMap();
+    const int status = error.value(CLIENT_PROP_ERROR_STATUS).toInt();
+
+    if (status == Notice::Unauthorized && !m_pages.contains(WELCOME_TAB))
+      ChatUrls::open(QUrl(LS("chat://settings/network")));
+  }
+
+  if ((state == ChatClient::Error || state == ChatClient::Offline) && previousState == ChatClient::Connecting)
+    closePage(PROGRESS_TAB);
+}
+
+
 void TabWidget::currentChanged(int index)
 {
   AbstractTab *tab = widget(index);
@@ -593,43 +637,22 @@ void TabWidget::notify(const Notify &notify)
 }
 
 
-/*!
- * Установка индекса на вкладку.
- */
-void TabWidget::openTab()
+void TabWidget::onReady()
 {
-  addChatTab(qobject_cast<AbstractTab *>(sender()));
-}
+  SLOG_DEBUG("ready");
 
+  m_serverTab = new ServerTab(this);
+  m_serverTab->setVisible(false);
 
-void TabWidget::addChannel(const QByteArray &id, const QString &xName)
-{
-  const int type = SimpleID::typeOf(id);
+  m_tray = new TrayIcon(this);
+  m_tabsToolBar->setEnabled(true);
+  m_mainToolBar->setReady(true);
 
-  if (type == ChatId::ChannelId || m_prefetch.contains(id)) {
-    m_prefetch.removeAll(id);
-    channelTab(id, true, type == ChatId::ChannelId ? !m_channels.contains(id) : false);
-  }
-  else if (type == ChatId::UserId && !xName.isEmpty())
-    channelTab(id, true, true);
-}
+  connect(ChatClient::channels(), SIGNAL(channel(QByteArray,QString)), SLOT(addChannel(QByteArray,QString)));
+  connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged(int,int)));
+  connect(m_serverTab, SIGNAL(actionTriggered(bool)), SLOT(openTab()));
 
-
-/*!
- * Обработка изменения состояния клиента.
- */
-void TabWidget::clientStateChanged(int state, int previousState)
-{
-  if (state == ChatClient::Error) {
-    const QVariantMap error = ChatClient::io()->json().value(CLIENT_PROP_ERROR).toMap();
-    const int status = error.value(CLIENT_PROP_ERROR_STATUS).toInt();
-
-    if (status == Notice::Unauthorized && !m_pages.contains(WELCOME_TAB))
-      ChatUrls::open(QUrl(LS("chat://settings/network")));
-  }
-
-  if ((state == ChatClient::Error || state == ChatClient::Offline) && previousState == ChatClient::Connecting)
-    closePage(PROGRESS_TAB);
+  showWelcome();
 }
 
 
@@ -718,6 +741,8 @@ void TabWidget::addImpl(const Message &message, bool create)
 void TabWidget::createToolBars()
 {
   m_tabsToolBar = new TabsToolBar(this);
+  m_tabsToolBar->setEnabled(false);
+
   m_mainToolBar = new MainToolBar(this);
 
   setCornerWidget(m_tabsToolBar, Qt::TopLeftCorner);
@@ -734,7 +759,8 @@ void TabWidget::lastTab()
 
 void TabWidget::retranslateUi()
 {
-  m_tray->retranslateUi();
+  if (m_tray)
+    m_tray->retranslateUi();
 }
 
 
@@ -743,10 +769,12 @@ void TabWidget::retranslateUi()
  */
 void TabWidget::showWelcome()
 {
-  if (ChatCore::networks()->isAutoConnect())
-    tab(PROGRESS_TAB);
-  else
+  if (!ChatCore::networks()->isAutoConnect()) {
     tab(WELCOME_TAB);
+    closePage(PROGRESS_TAB);
+  }
+  else
+    tab(PROGRESS_TAB)->setText(tr("Connecting"));
 }
 
 

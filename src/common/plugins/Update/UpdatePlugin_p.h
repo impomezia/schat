@@ -1,6 +1,5 @@
-/* $Id: UpdatePlugin_p.h 3381 2013-01-07 13:23:27Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -86,6 +85,7 @@ public:
   inline DownloadState state() const    { return m_state; }
   inline Status status() const          { return m_status; }
   static bool supportDownload();
+  void chatReady() Q_DECL_OVERRIDE;
 
 signals:
   void done(int status);

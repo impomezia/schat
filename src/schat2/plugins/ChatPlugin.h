@@ -1,6 +1,5 @@
-/* $Id: ChatPlugin.h 2034 2011-12-24 12:15:57Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2011 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,6 +28,7 @@ class SCHAT_CORE_EXPORT ChatPlugin : public QObject
 
 public:
   ChatPlugin(QObject *parent);
+  virtual void chatReady() = 0;
 };
 
 #endif /* CHATPLUGIN_H_ */

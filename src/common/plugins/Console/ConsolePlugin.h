@@ -1,6 +1,5 @@
-/* $Id: ConsolePlugin.h 3775 2013-08-24 03:41:07Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,13 +31,13 @@ class ConsolePlugin : public QObject, CoreApi, ChatApi
 # endif
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Console";
     out[CORE_API_NAME]     = "Console";
-    out[CORE_API_VERSION]  = "0.2.2";
-    out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/Console";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Console";
     out[CORE_API_DESC]     = "Server Management console";
     out[CORE_API_DESC_RU]  = "Консоль управления сервером";
     out[CORE_API_ENABLED]  = false;
@@ -46,7 +45,7 @@ public:
     return out;
   }
 
-  ChatPlugin *create();
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* CONSOLEPLUGIN_H_ */

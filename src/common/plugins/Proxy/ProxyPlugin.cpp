@@ -1,6 +1,5 @@
-/* $Id: ProxyPlugin.cpp 3159 2012-10-12 21:02:04Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -48,7 +47,11 @@ ProxyPluginImpl::ProxyPluginImpl(QObject *parent)
 
   if (settings->value(prefix + LS("Type")) != LS("none"))
     ProxySettings::setProxy();
+}
 
+
+void ProxyPluginImpl::chatReady()
+{
   connect(SettingsTabHook::i(), SIGNAL(added(QString,SettingsPage*)), SLOT(added(QString,SettingsPage*)));
 }
 

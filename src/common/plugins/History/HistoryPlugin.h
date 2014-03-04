@@ -1,6 +1,5 @@
-/* $Id: HistoryPlugin.h 3841 2013-10-27 00:22:25Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,12 +33,12 @@ class HistoryPlugin : public QObject, CoreApi, ChatApi
 # endif
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out            = CoreApi::header();
     out[CORE_API_ID]           = "History";
     out[CORE_API_NAME]         = "History";
-    out[CORE_API_VERSION]      = "0.5.1";
+    out[CORE_API_VERSION]      = "2.3.0";
     out[CORE_API_SITE]         = "https://wiki.schat.me/Plugin/History";
     out[CORE_API_DESC]         = "Adds support for access to the message history";
     out[CORE_API_DESC_RU]      = "Добавляет поддержку доступа к истории сообщений";
@@ -48,8 +47,8 @@ public:
     return out;
   }
 
-  ChatPlugin *create();
-  QWidget *settings(QWidget *parent);
+  ChatPlugin *create() Q_DECL_OVERRIDE;
+  QWidget *settings(QWidget *parent) Q_DECL_OVERRIDE;
 };
 
 #endif /* HISTORYPLUGIN_H_ */

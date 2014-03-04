@@ -26,6 +26,7 @@
 #include "client/ClientFeeds.h"
 #include "feeds/AclFeed.h"
 #include "feeds/InfoFeed.h"
+#include "hooks/ChannelMenu.h"
 #include "hooks/MessagesImpl.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
@@ -35,18 +36,24 @@
 #include "ui/TabWidget.h"
 
 ChannelsMenuImpl::ChannelsMenuImpl(QObject *parent)
-  : ChannelMenu(parent)
+  : QObject(parent)
   , m_advanced(0)
   , m_ignore(0)
   , m_kick(0)
   , m_ro(0)
   , m_permissions(0)
 {
-  add(this);
+  ChannelMenu::add(this);
 }
 
 
-bool ChannelsMenuImpl::triggerImpl(QAction *action)
+ChannelsMenuImpl::~ChannelsMenuImpl()
+{
+  ChannelMenu::remove(this);
+}
+
+
+bool ChannelsMenuImpl::trigger(QAction *action)
 {
   if (action == m_ignore) {
     ChannelsPluginImpl::ignore(m_id, action->isChecked());
@@ -69,7 +76,7 @@ bool ChannelsMenuImpl::triggerImpl(QAction *action)
 }
 
 
-void ChannelsMenuImpl::bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope scope)
+void ChannelsMenuImpl::bind(QMenu *menu, ClientChannel channel, IChannelMenu::Scope scope)
 {
   if (channel->type() != SimpleID::UserId)
     return;
@@ -77,7 +84,7 @@ void ChannelsMenuImpl::bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope
   m_id   = channel->id();
   m_self = m_id == ChatClient::id();
 
-  if (scope == Hooks::UserViewScope || scope == Hooks::ChatViewScope)
+  if (scope == IChannelMenu::UserViewScope || scope == IChannelMenu::ChatViewScope)
     permissions(menu, channel);
 
   if (!m_self)
@@ -94,7 +101,7 @@ void ChannelsMenuImpl::bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope
 }
 
 
-void ChannelsMenuImpl::cleanupImpl()
+void ChannelsMenuImpl::cleanup()
 {
   m_advanced = 0;
   m_ignore = 0;

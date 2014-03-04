@@ -1,6 +1,5 @@
-/* $Id: StatusBar.h 3461 2013-02-03 03:53:58Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -41,17 +40,17 @@ class SCHAT_CORE_EXPORT StatusBar : public QStatusBar
 
 public:
   StatusBar(QWidget *parent = 0);
-  inline static StatusBar *i() { return m_self; }
 
 protected:
-  bool event(QEvent *event);
-  void changeEvent(QEvent *event);
-  void mouseReleaseEvent(QMouseEvent *event);
+  bool event(QEvent *event) Q_DECL_OVERRIDE;
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+  void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
-  void clientStateChanged(int state);
-  void menuTriggered(QAction *action);
-  void notify(const Notify &notify);
+  void onClientStateChanged(int state);
+  void onMenuTriggered(QAction *action);
+  void onNotify(const Notify &notify);
+  void onReady();
 
 private:
   void menu(const QPoint &point);
@@ -69,7 +68,6 @@ private:
   QLabel *m_secure;               ///< Иконка безопасного соединения.
   QWidgetAction *m_urlAction;     ///< Действие для добавления в меню поля ввода адреса сервера.
   Spinner *m_spinner;             ///< Отображает состояние подключения.
-  static StatusBar *m_self;       ///< Указатель на себя.
   StatusWidget *m_status;         ///< Виджет выбора статуса.
 };
 
