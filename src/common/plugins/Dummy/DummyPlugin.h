@@ -15,28 +15,33 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHATAPI_H_
-#define CHATAPI_H_
+#ifndef DUMMYPLUGIN_H_
+#define DUMMYPLUGIN_H_
 
-#include <QObject>
+#include "ChatApi.h"
+#include "CoreApi.h"
 
-class ChatCore;
-class ChatPlugin;
-
-class ChatApi
+class DummyPlugin : public QObject, CoreApi, ChatApi
 {
-public:
-  inline ChatApi() : m_plugin(0)              {}
-  inline virtual ~ChatApi()                   {}
-  inline ChatPlugin *plugin() const           { return m_plugin; }
-  inline virtual bool check() const           { return true; }
-  inline virtual QWidget *settings(QWidget *) { return 0; }
-  virtual ChatPlugin *create() = 0;
+  Q_OBJECT
+  Q_INTERFACES(CoreApi ChatApi)
+  Q_PLUGIN_METADATA(IID "me.schat.client.Dummy")
 
-protected:
-  ChatPlugin *m_plugin;
+public:
+  QVariantMap header() const Q_DECL_OVERRIDE
+  {
+    QVariantMap out        = CoreApi::header();
+    out[CORE_API_ID]       = "Dummy";
+    out[CORE_API_NAME]     = "Dummy";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Dummy";
+    out[CORE_API_DESC]     = "Dummy plugin";
+    out[CORE_API_DESC_RU]  = "Плагин заглушка";
+
+    return out;
+  }
+
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
-Q_DECLARE_INTERFACE(ChatApi, "me.schat.ChatApi/1.3")
-
-#endif /* CHATAPI_H_ */
+#endif // DUMMYPLUGIN_H_

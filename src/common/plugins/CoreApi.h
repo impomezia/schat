@@ -73,4 +73,9 @@ Q_DECLARE_INTERFACE(CoreApi, "me.schat.CoreApi/1.2")
 # define Q_PLUGIN_METADATA(...)
 #endif
 
+#if QT_VERSION >= 0x050000 && defined(Q_EXPORT_PLUGIN2)
+# undef Q_EXPORT_PLUGIN2
+# define Q_EXPORT_PLUGIN2(...)
+#endif
+
 #endif /* COREINTERFACE_H_ */

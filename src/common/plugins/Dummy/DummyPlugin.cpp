@@ -15,28 +15,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHATAPI_H_
-#define CHATAPI_H_
+#include <QtPlugin>
 
-#include <QObject>
+#include "DummyPlugin.h"
+#include "src/DummyCore.h"
 
-class ChatCore;
-class ChatPlugin;
-
-class ChatApi
+ChatPlugin *DummyPlugin::create()
 {
-public:
-  inline ChatApi() : m_plugin(0)              {}
-  inline virtual ~ChatApi()                   {}
-  inline ChatPlugin *plugin() const           { return m_plugin; }
-  inline virtual bool check() const           { return true; }
-  inline virtual QWidget *settings(QWidget *) { return 0; }
-  virtual ChatPlugin *create() = 0;
+  m_plugin = new DummyCore(this);
+  return m_plugin;
+}
 
-protected:
-  ChatPlugin *m_plugin;
-};
-
-Q_DECLARE_INTERFACE(ChatApi, "me.schat.ChatApi/1.3")
-
-#endif /* CHATAPI_H_ */
+Q_EXPORT_PLUGIN2(Dummy, DummyPlugin);
