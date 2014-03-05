@@ -14,6 +14,8 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+include(config.pri)
+
 unix:!macx {
   isEmpty(PREFIX):PREFIX = /usr
   isEmpty(LIBDIR):LIBDIR = $${PREFIX}/lib
@@ -38,7 +40,9 @@ isEmpty(LRELEASE) {
 isEmpty(GIT_TIMESTAMP) {
     GIT_TIMESTAMP = $$system($$quote(git log -n 1 --format=format:"%at"))
     GIT_REVISION  = $$system($$quote(git rev-parse HEAD))
-    
-    DEFINES += GIT_TIMESTAMP=$$GIT_TIMESTAMP
-    DEFINES += GIT_REVISION=\\\"$${GIT_REVISION}\\\"
+
+    lessThan(GIT_TIMESTAMP, 1):GIT_TIMESTAMP = 0
 }
+
+DEFINES += GIT_TIMESTAMP=$$GIT_TIMESTAMP
+DEFINES += GIT_REVISION=\\\"$${GIT_REVISION}\\\"
