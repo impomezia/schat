@@ -1,6 +1,5 @@
-/* $Id: Plugins.h 3453 2013-02-01 18:36:49Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,7 +18,7 @@
 #ifndef PLUGINS_H_
 #define PLUGINS_H_
 
-#include <QHash>
+#include <QMap>
 #include <QObject>
 #include <QPluginLoader>
 #include <QStringList>
@@ -41,6 +40,7 @@ public:
   inline bool isLoaded() const             { return m_loaded; }
   inline bool isValid() const              { return m_valid; }
   inline const QVariantMap& header() const { return m_header; }
+  inline int priority() const              { return m_header.value(CORE_API_PRIORITY, 0).toInt(); }
   inline QObject *plugin()                 { return m_plugin; }
   inline QString id() const                { return m_header.value(CORE_API_ID).toString(); }
   inline void setLoaded(bool loaded)       { m_loaded = loaded; }
@@ -68,17 +68,17 @@ public:
 
   inline const QString& type() const           { return m_type; }
   inline PluginItem *plugin(const QString &id) { return m_plugins.value(id); }
+  inline QList<PluginItem *> list() const      { return m_list; }
   inline void setType(const QString &type)     { m_type = type; }
-  QList<PluginItem *> list() const;
   void load();
 
 protected:
   virtual void init() {}
 
-  QHash<QString, PluginItem *> m_plugins;   ///< Таблица плагинов.
+  QList<PluginItem *> m_list;               ///< Список плагинов.
+  QMap<QString, PluginItem *> m_plugins;    ///< Таблица плагинов.
   QString m_min;                            ///< Минимальная совместимая версия.
   QString m_type;                           ///< Тип плагинов, загрузка которых разрешена.
-  QStringList m_sorted;                     ///< Сортированный список плагинов, этот список определяет очерёдность загрузки наследниками этого класса.
 
 private:
   bool check(PluginItem *plugin);
