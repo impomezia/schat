@@ -1,6 +1,5 @@
-# $Id: RawFeeds.pro 3302 2012-12-08 11:15:48Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,7 +17,6 @@
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB = 1
 QT = core gui network webkit
-OTHER_FILES += RawFeeds.json
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 

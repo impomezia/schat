@@ -1,6 +1,5 @@
-# $Id: Proxy.pro 3555 2013-03-04 23:55:58Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,7 +17,6 @@
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB = 1
 QT = core gui network
-OTHER_FILES += Proxy.json
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -36,7 +34,5 @@ RESOURCES += Proxy.qrc
 TRANSLATIONS += res/translations/proxy_en.ts
 TRANSLATIONS += res/translations/proxy_ru.ts
 TRANSLATIONS += res/translations/proxy_uk.ts
-CODECFORTR  = UTF-8
-CODECFORSRC = UTF-8
 
 include(../plugins.pri)

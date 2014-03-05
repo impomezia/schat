@@ -25,10 +25,7 @@ class YouTubePlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.YouTube" FILE "YouTube.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.YouTube")
 
 public:
   QVariantMap header() const Q_DECL_OVERRIDE

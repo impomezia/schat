@@ -67,6 +67,10 @@ public:
   }
 };
 
-Q_DECLARE_INTERFACE(CoreApi, "me.schat.CoreApi/1.2");
+Q_DECLARE_INTERFACE(CoreApi, "me.schat.CoreApi/1.2")
+
+#if QT_VERSION < 0x050000
+# define Q_PLUGIN_METADATA(...)
+#endif
 
 #endif /* COREINTERFACE_H_ */

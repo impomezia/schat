@@ -25,10 +25,7 @@ class ConsolePlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.ConsolePlugin" FILE "Console.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.ConsolePlugin")
 
 public:
   QVariantMap header() const Q_DECL_OVERRIDE

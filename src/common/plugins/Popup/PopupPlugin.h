@@ -25,10 +25,7 @@ class PopupPlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.Popup" FILE "Popup.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.Popup")
 
 public:
   QVariantMap header() const Q_DECL_OVERRIDE

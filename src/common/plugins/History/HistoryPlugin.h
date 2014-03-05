@@ -27,10 +27,7 @@ class HistoryPlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.History" FILE "History.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.History")
 
 public:
   QVariantMap header() const Q_DECL_OVERRIDE

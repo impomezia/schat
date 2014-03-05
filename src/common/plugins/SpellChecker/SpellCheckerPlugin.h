@@ -25,10 +25,7 @@ class SpellCheckerPlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.SpellChecker" FILE "SpellChecker.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.SpellChecker")
 
 public:
   QVariantMap header() const Q_DECL_OVERRIDE

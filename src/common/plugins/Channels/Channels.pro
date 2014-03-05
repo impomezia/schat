@@ -17,7 +17,6 @@
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB = 1
 QT = core gui network webkit
-OTHER_FILES += Channels.json
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
@@ -47,7 +46,5 @@ RESOURCES += Channels.qrc
 TRANSLATIONS += res/translations/channels_en.ts
 TRANSLATIONS += res/translations/channels_ru.ts
 TRANSLATIONS += res/translations/channels_uk.ts
-CODECFORTR  = UTF-8
-CODECFORSRC = UTF-8
 
 include(../plugins.pri)
