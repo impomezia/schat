@@ -192,7 +192,7 @@ void ChatCore::onReady()
   m_ready = true;
   emit ready();
 
-  ChatClient::open();
+  QTimer::singleShot(0, this, SLOT(open()));
 }
 
 
@@ -200,6 +200,12 @@ void ChatCore::onSettingsChanged(const QString &key, const QVariant &value)
 {
   if (key == LS("Translation"))
     m_translation->load(value.toString());
+}
+
+
+void ChatCore::open()
+{
+  ChatClient::open();
 }
 
 

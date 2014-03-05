@@ -66,6 +66,7 @@ public slots:
 private slots:
   void onReady();
   void onSettingsChanged(const QString &key, const QVariant &value);
+  void open();
 
 private:
   void loadTranslation();
