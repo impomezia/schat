@@ -1,5 +1,5 @@
 # Simple Chat
-# Copyright (с) 2008-2014 Alexander Sedov <imp@schat.me>
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -14,30 +14,24 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-CONFIG   += ordered
-TEMPLATE = subdirs
+SCHAT_CLIENT_LIB = 1
+SCHAT_CORE_LIB   = 1
+QT = core gui network
 
-SUBDIRS += \
-    GenericNode \
-    Messages \
-    NodeChannels \
-    NodeMaster \
-    NodeConsole \
-    RestApi \
-    GeoIP \
-    NodeFeedLog \
-    Http \
-    Cache \
-    History \
-    Profile \
-    Channels \
-    Popup \
-    Emoticons \
-    Idle \
-    SendFile \
-    SpellChecker \
-    Proxy \
-    Console \
-    RawFeeds \
-    YouTube \
-    Update \
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+HEADERS  = \
+   HttpPlugin.h \
+   src/HttpCore.h \
+
+SOURCES  = \
+   HttpPlugin.cpp \
+   src/HttpCore.cpp \
+
+RESOURCES += Http.qrc
+
+TRANSLATIONS += res/translations/dummy_en.ts
+TRANSLATIONS += res/translations/dummy_ru.ts
+TRANSLATIONS += res/translations/dummy_uk.ts
+
+include(../plugins.pri)
