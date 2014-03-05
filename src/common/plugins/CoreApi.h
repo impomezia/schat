@@ -39,6 +39,7 @@
 #define CORE_API_REQUIRED     QLatin1String("required")
 #define CORE_API_ENABLED      QLatin1String("enabled")
 #define CORE_API_CONFIGURABLE QLatin1String("configurable")
+#define CORE_API_PRIORITY     QLatin1String("priority")
 
 /*!
  * Базовый интерфейс для всех типов плагинов.
@@ -62,6 +63,7 @@ public:
     out[CORE_API_REQUIRED]     = SCHAT_VERSION;      // Версия чата необходимая для работы плагина.
     out[CORE_API_ENABLED]      = true;               // \b true если плагин по умолчанию включен.
     out[CORE_API_CONFIGURABLE] = false;              // \b true если поддерживается дополнительный пользовательский интерфейс настроек.
+    out[CORE_API_PRIORITY]     = 0;                  // Приоритет загрузки, плагины с большим приоритетом загружаются раньше.
 
     return out;
   }

@@ -43,8 +43,8 @@ void ChatPlugins::init()
   ChatSettings *settings = ChatCore::settings();
   QStringList invalid;
 
-  for (int i = 0; i < m_sorted.size(); ++i) {
-    PluginItem *item = m_plugins.value(m_sorted.at(i));
+  for (int i = 0; i < m_list.size(); ++i) {
+    PluginItem *item = m_list.at(i);
     ChatApi *api = qobject_cast<ChatApi *>(item->plugin());
 
     if (!api || !api->check()) {
@@ -66,16 +66,16 @@ void ChatPlugins::init()
     if (ChatCore::isReady())
       plugin->chatReady();
 
-    SLOG_DEBUG(item->header().value(CORE_API_VERSION).toString() << item->header().value(CORE_API_ID).toString());
+    SLOG_DEBUG(item->header().value(CORE_API_VERSION).toString() << item->id());
 
     item->setLoaded(true);
     m_chatPlugins.append(plugin);
   }
 
   foreach (const QString &id, invalid) {
-    m_sorted.removeAll(id);
     PluginItem *item = m_plugins.value(id);
     m_plugins.remove(id);
+    m_list.removeAll(item);
 
     if (item)
       delete item;

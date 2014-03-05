@@ -1,6 +1,5 @@
-/* $Id: Plugins.cpp 3453 2013-02-01 18:36:49Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -78,7 +77,6 @@ QString PluginItem::icon() const
 Plugins::Plugins(QObject *parent)
   : QObject(parent)
 {
-  m_min = LS("1.99.8");
 }
 
 
@@ -88,19 +86,12 @@ Plugins::~Plugins()
 }
 
 
-/*!
- * Получение списка плагинов.
- */
-QList<PluginItem *> Plugins::list() const
+inline bool priorityLessThan(PluginItem *p1, PluginItem *p2)
 {
-  QList<PluginItem *> out;
-  foreach (const QString &id, m_sorted) {
-    PluginItem *item = m_plugins.value(id);
-    if (item)
-      out.append(item);
-  }
+  if (p1->priority() == p2->priority())
+    return p1->id().toLower() < p2->id().toLower();
 
-  return out;
+  return p1->priority() > p2->priority();
 }
 
 
@@ -115,6 +106,8 @@ void Plugins::load()
   foreach (const QString &path, paths) {
     load(path);
   }
+
+  qSort(m_list.begin(), m_list.end(), priorityLessThan);
 
   init();
 }
@@ -139,7 +132,6 @@ bool Plugins::check(PluginItem *plugin)
 
   return true;
 }
-
 
 
 /*!
@@ -174,7 +166,7 @@ void Plugins::load(const QString &path)
       continue;
     }
 
-    m_plugins[item->id()] = item;
-    m_sorted.append(item->id());
+    m_plugins.insert(item->id(), item);
+    m_list.append(item);
   }
 }

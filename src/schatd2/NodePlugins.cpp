@@ -1,6 +1,5 @@
-/* $Id: NodePlugins.cpp 3409 2013-01-17 02:35:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,13 +37,14 @@ void NodePlugins::init()
 {
   Settings *settings = Storage::settings();
 
-  for (int i = 0; i < m_sorted.size(); ++i) {
-    NodeApi *api = qobject_cast<NodeApi *>(m_plugins.value(m_sorted.at(i))->plugin());
+  for (int i = 0; i < m_list.size(); ++i) {
+    PluginItem *item = m_list.at(i);
+
+    NodeApi *api = qobject_cast<NodeApi *>(item->plugin());
 
     if (!api)
       continue;
 
-    PluginItem *item = m_plugins.value(m_sorted.at(i));
     const QString key = LS("Plugins/") + item->id();
     settings->setDefault(key, item->header().value(CORE_API_ENABLED).toBool());
     if (settings->value(key) == false)
