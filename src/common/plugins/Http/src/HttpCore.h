@@ -29,6 +29,12 @@ class HttpCore : public ChatPlugin
 public:
   HttpCore(QObject *parent);
   void chatReady() Q_DECL_OVERRIDE;
+
+private slots:
+  void onTaskReady(qint64 counter, QObject *object);
+
+private:
+  qint64 m_httpTaskId;
 };
 
 #endif // DUMMYCORE_H_

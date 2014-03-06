@@ -15,36 +15,35 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NETWORKACCESS_H_
-#define NETWORKACCESS_H_
+#include "ChatCore.h"
+#include "client/ChatClient.h"
+#include "client/ClientCmd.h"
+#include "client/ClientMessages.h"
+#include "HttpCmd.h"
+#include "NetworkAccess.h"
+#include "sglobal.h"
 
-#include <QObject>
-
-#include "interfaces/IDownloadItem.h"
-#include "interfaces/INetworkListener.h"
-#include "schat.h"
-
-class INetworkHandler;
-
-/*!
- * Высокоуровневый модуль доступа к сети.
- */
-class SCHAT_EXPORT NetworkAccess : public QObject, public INetworkListener
+HttpCmd::HttpCmd(QObject *parent)
+  : Hooks::Messages(parent)
 {
-  Q_OBJECT
+  ChatClient::messages()->add(this);
+}
 
-public:
-  NetworkAccess(QObject *parent = 0);
-  bool canDownload(const QUrl &url) const;
-  DownloadItem download(const QUrl &url, const QString &fileName = QString());
-  void addHandler(INetworkHandler *handler);
 
-signals:
-  void handlerAdded();
+bool HttpCmd::command(const QByteArray &dest, const ClientCmd &cmd)
+{
+  Q_UNUSED(dest);
 
-protected:
-  qint64 m_counter;
-  QList<INetworkHandler*> m_handlers;
-};
+  const QString command = cmd.command().toLower();
 
-#endif // NETWORKACCESS_H_
+  if (command == LS("wget")) {
+    if (cmd.body().isEmpty())
+      return true;
+
+    ClientCmd body(cmd.body());
+    ChatCore::networkAccess()->download(body.command(), body.body());
+    return true;
+  }
+
+  return false;
+}

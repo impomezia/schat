@@ -16,8 +16,35 @@
  */
 
 #include "NetworkAccess.h"
+#include "interfaces/INetworkHandler.h"
 
 NetworkAccess::NetworkAccess(QObject *parent)
   : QObject(parent)
+  , m_counter(0)
 {
+}
+
+
+bool NetworkAccess::canDownload(const QUrl &url) const
+{
+  SLOG_DEBUG(url);
+
+  return false;
+}
+
+
+DownloadItem NetworkAccess::download(const QUrl &url, const QString &fileName)
+{
+  SLOG_DEBUG(url << fileName);
+
+  return DownloadItem();
+}
+
+
+void NetworkAccess::addHandler(INetworkHandler *handler)
+{
+  handler->addListener(this);
+  m_handlers.append(handler);
+
+  emit handlerAdded();
 }

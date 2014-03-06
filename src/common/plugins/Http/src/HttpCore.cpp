@@ -15,14 +15,36 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ChatCore.h"
+#include "HttpCmd.h"
 #include "HttpCore.h"
+#include "HttpHandler.h"
+#include "HttpTask.h"
+#include "NetworkAccess.h"
+#include "ServiceThread.h"
 
 HttpCore::HttpCore(QObject *parent)
   : ChatPlugin(parent)
 {
+  connect(ChatCore::service(), SIGNAL(ready(qint64,QObject*)), SLOT(onTaskReady(qint64,QObject*)));
+
+  m_httpTaskId = ChatCore::service()->add(new HttpTaskCreator());
 }
 
 
 void HttpCore::chatReady()
 {
+  new HttpCmd(this);
+}
+
+
+void HttpCore::onTaskReady(qint64 counter, QObject *object)
+{
+  if (counter == m_httpTaskId) {
+    HttpTask *task = qobject_cast<HttpTask*>(object);
+    if (!task)
+      return;
+
+    ChatCore::networkAccess()->addHandler(new HttpHandler(task, this));
+  }
 }

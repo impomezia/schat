@@ -15,36 +15,17 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NETWORKACCESS_H_
-#define NETWORKACCESS_H_
+#include "HttpTask.h"
 
-#include <QObject>
 
-#include "interfaces/IDownloadItem.h"
-#include "interfaces/INetworkListener.h"
-#include "schat.h"
-
-class INetworkHandler;
-
-/*!
- * Высокоуровневый модуль доступа к сети.
- */
-class SCHAT_EXPORT NetworkAccess : public QObject, public INetworkListener
+HttpTask::HttpTask(QNetworkAccessManager *net, QObject *parent)
+  : QObject(parent)
+  , m_net(net)
 {
-  Q_OBJECT
+}
 
-public:
-  NetworkAccess(QObject *parent = 0);
-  bool canDownload(const QUrl &url) const;
-  DownloadItem download(const QUrl &url, const QString &fileName = QString());
-  void addHandler(INetworkHandler *handler);
 
-signals:
-  void handlerAdded();
-
-protected:
-  qint64 m_counter;
-  QList<INetworkHandler*> m_handlers;
-};
-
-#endif // NETWORKACCESS_H_
+QObject *HttpTaskCreator::create(QNetworkAccessManager *net, QObject *parent)
+{
+  return new HttpTask(net, parent);
+}

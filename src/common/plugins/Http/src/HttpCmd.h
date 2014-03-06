@@ -15,36 +15,20 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NETWORKACCESS_H_
-#define NETWORKACCESS_H_
+#ifndef HTTPCMD_H_
+#define HTTPCMD_H_
 
 #include <QObject>
 
-#include "interfaces/IDownloadItem.h"
-#include "interfaces/INetworkListener.h"
-#include "schat.h"
+#include "client/ClientHooks.h"
 
-class INetworkHandler;
-
-/*!
- * Высокоуровневый модуль доступа к сети.
- */
-class SCHAT_EXPORT NetworkAccess : public QObject, public INetworkListener
+class HttpCmd : public Hooks::Messages
 {
   Q_OBJECT
 
 public:
-  NetworkAccess(QObject *parent = 0);
-  bool canDownload(const QUrl &url) const;
-  DownloadItem download(const QUrl &url, const QString &fileName = QString());
-  void addHandler(INetworkHandler *handler);
-
-signals:
-  void handlerAdded();
-
-protected:
-  qint64 m_counter;
-  QList<INetworkHandler*> m_handlers;
+  HttpCmd(QObject *parent = 0);
+  bool command(const QByteArray &dest, const ClientCmd &cmd) Q_DECL_OVERRIDE;
 };
 
-#endif // NETWORKACCESS_H_
+#endif // HTTPCMD_H

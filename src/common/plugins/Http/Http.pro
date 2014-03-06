@@ -22,11 +22,17 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 HEADERS  = \
    HttpPlugin.h \
+   src/HttpCmd.h \
    src/HttpCore.h \
+   src/HttpHandler.h \
+   src/HttpTask.h \
 
 SOURCES  = \
    HttpPlugin.cpp \
+   src/HttpCmd.cpp \
    src/HttpCore.cpp \
+   src/HttpHandler.cpp \
+   src/HttpTask.cpp \
 
 RESOURCES += Http.qrc
 
