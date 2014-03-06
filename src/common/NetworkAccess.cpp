@@ -15,8 +15,9 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "NetworkAccess.h"
+#include "DateTime.h"
 #include "interfaces/INetworkHandler.h"
+#include "NetworkAccess.h"
 
 NetworkAccess::NetworkAccess(QObject *parent)
   : QObject(parent)
@@ -29,6 +30,11 @@ bool NetworkAccess::canDownload(const QUrl &url) const
 {
   SLOG_DEBUG(url);
 
+  foreach (INetworkHandler *handler, m_handlers) {
+    if (handler->canDownload(url))
+      return true;
+  }
+
   return false;
 }
 
@@ -37,7 +43,26 @@ DownloadItem NetworkAccess::download(const QUrl &url, const QString &fileName)
 {
   SLOG_DEBUG(url << fileName);
 
-  return DownloadItem();
+  DownloadItem item;
+
+  if (!canDownload(url))
+    return item;
+
+  ++m_counter;
+
+  foreach (INetworkHandler *handler, m_handlers) {
+    item = handler->download(m_counter, url, fileName);
+    if (item)
+      break;
+  }
+
+  if (!item)
+    return item;
+
+  item->setStartDate(DateTime::utc());
+
+  m_items.insert(m_counter, item);
+  return item;
 }
 
 

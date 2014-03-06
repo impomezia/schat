@@ -24,6 +24,7 @@ HEADERS  = \
    HttpPlugin.h \
    src/HttpCmd.h \
    src/HttpCore.h \
+   src/HttpDownloadItem.h \
    src/HttpHandler.h \
    src/HttpTask.h \
 
@@ -31,6 +32,7 @@ SOURCES  = \
    HttpPlugin.cpp \
    src/HttpCmd.cpp \
    src/HttpCore.cpp \
+   src/HttpDownloadItem.cpp \
    src/HttpHandler.cpp \
    src/HttpTask.cpp \
 

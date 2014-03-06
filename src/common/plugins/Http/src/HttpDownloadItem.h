@@ -15,30 +15,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef HTTPHANDLER_H_
-#define HTTPHANDLER_H_
+#ifndef HTTPDOWNLOADITEM_H_
+#define HTTPDOWNLOADITEM_H_
 
-#include <QObject>
+#include "GenericDownloadItem.h"
 
-#include "interfaces/INetworkHandler.h"
-#include "schat.h"
-
-class HttpTask;
-
-class HttpHandler : public QObject, public INetworkHandler
+class HttpDownloadItem : public GenericDownloadItem
 {
-  Q_OBJECT
-
 public:
-  HttpHandler(HttpTask *task, QObject *parent = 0);
-  bool canDownload(const QUrl &url) const Q_DECL_OVERRIDE;
-  DownloadItem download(const qint64 &id, const QUrl &url, const QString &fileName = QString()) Q_DECL_OVERRIDE;
-  void addListener(INetworkListener *listener) Q_DECL_OVERRIDE;
-  void removeListener(INetworkListener *listener) Q_DECL_OVERRIDE;
-
-private:
-  HttpTask *m_task;
-  QList<INetworkListener*> m_listeners;
+  HttpDownloadItem(qint64 id, const QUrl &url, const QString &fileName);
 };
 
-#endif // HTTPHANDLER_H_
+#endif // HTTPDOWNLOADITEM_H_

@@ -42,9 +42,10 @@ public:
 signals:
   void handlerAdded();
 
-protected:
+private:
   qint64 m_counter;
   QList<INetworkHandler*> m_handlers;
+  QMap<qint64, DownloadItem> m_items;
 };
 
 #endif // NETWORKACCESS_H_

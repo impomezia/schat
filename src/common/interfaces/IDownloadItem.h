@@ -25,7 +25,16 @@ class IDownloadItem
 {
 public:
   virtual ~IDownloadItem() {}
-  virtual QUrl url() const = 0;
+  virtual bool isFinished() const        = 0;
+  virtual qint64 endDate() const         = 0;
+  virtual qint64 id() const              = 0;
+  virtual qint64 pos() const             = 0;
+  virtual qint64 size() const            = 0;
+  virtual qint64 startDate() const       = 0;
+  virtual QString fileName() const       = 0;
+  virtual QUrl url() const               = 0;
+  virtual void setEndDate(qint64 date)   = 0;
+  virtual void setStartDate(qint64 date) = 0;
 };
 
 typedef QSharedPointer<IDownloadItem> DownloadItem;

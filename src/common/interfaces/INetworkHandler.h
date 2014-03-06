@@ -18,12 +18,17 @@
 #ifndef INETWORKHANDLER_H_
 #define INETWORKHANDLER_H_
 
+#include "interfaces/IDownloadItem.h"
+
 class INetworkListener;
+class QUrl;
 
 class INetworkHandler
 {
 public:
   virtual ~INetworkHandler() {}
+  virtual bool canDownload(const QUrl &url) const = 0;
+  virtual DownloadItem download(const qint64 &id, const QUrl &url, const QString &fileName = QString()) = 0;
   virtual void addListener(INetworkListener *listener) = 0;
   virtual void removeListener(INetworkListener *listener) = 0;
 };

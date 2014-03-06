@@ -33,6 +33,7 @@ HEADERS += \
     feeds/Feeds.h \
     feeds/FeedStorage.h \
     Gender.h \
+    GenericDownloadItem.h \
     id/ChatId.h \
     id/ObjectId.h \
     id/SecureRandom.h \

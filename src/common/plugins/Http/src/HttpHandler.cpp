@@ -15,12 +15,39 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QUrl>
+#include <QSslSocket>
+
+#include "HttpDownloadItem.h"
 #include "HttpHandler.h"
+#include "sglobal.h"
 
 HttpHandler::HttpHandler(HttpTask *task, QObject *parent)
   : QObject(parent)
   , m_task(task)
 {
+}
+
+
+bool HttpHandler::canDownload(const QUrl &url) const
+{
+  if (url.scheme() == LS("http"))
+    return true;
+
+  if (url.scheme() == LS("https") && QSslSocket::supportsSsl())
+    return true;
+
+  return false;
+}
+
+
+DownloadItem HttpHandler::download(const qint64 &id, const QUrl &url, const QString &fileName)
+{
+  SLOG_DEBUG(id);
+
+  HttpDownloadItem *item = new HttpDownloadItem(id, url, fileName);
+
+  return DownloadItem(item);
 }
 
 
