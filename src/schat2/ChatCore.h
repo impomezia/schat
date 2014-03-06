@@ -28,6 +28,7 @@ class ChatClient;
 class ChatPlugins;
 class ChatSettings;
 class Extensions;
+class NetworkAccess;
 class NetworkManager;
 class QThreadPool;
 class ServiceThread;
@@ -44,16 +45,17 @@ public:
   ChatCore(QObject *parent = 0);
   ~ChatCore();
   inline static bool isReady()                          { return m_ready; }
-  inline static ChatCore *i()                           { return m_self; }
-  inline static ChatPlugins *plugins()                  { return m_self->m_plugins; }
-  inline static ChatSettings *settings()                { return m_self->m_settings; }
-  inline static Extensions *extensions()                { return m_self->m_extensions; }
-  inline static NetworkManager *networks()              { return m_self->m_networkManager; }
-  inline static QByteArray currentId()                  { return m_self->m_currentId; }
-  inline static QThreadPool *pool()                     { return m_self->m_pool; }
-  inline static ServiceThread *service()                { return m_self->m_service; }
-  inline static Translation *translation()              { return m_self->m_translation; }
-  inline static void setCurrentId(const QByteArray &id) { m_self->m_currentId = id; }
+  inline static ChatPlugins *plugins()                  { return i()->m_plugins; }
+  inline static ChatSettings *settings()                { return i()->m_settings; }
+  inline static Extensions *extensions()                { return i()->m_extensions; }
+  inline static NetworkAccess *networkAccess()          { return i()->m_networkAccess; }
+  inline static NetworkManager *networks()              { return i()->m_networkManager; }
+  inline static QByteArray currentId()                  { return i()->m_currentId; }
+  inline static QThreadPool *pool()                     { return i()->m_pool; }
+  inline static ServiceThread *service()                { return i()->m_service; }
+  inline static Translation *translation()              { return i()->m_translation; }
+  inline static void setCurrentId(const QByteArray &id) { i()->m_currentId = id; }
+  static ChatCore *i();
   static QByteArray randomId();
   static QStringList config();
 
@@ -75,6 +77,7 @@ private:
   ChatPlugins *m_plugins;           ///< Загрузчик плагинов.
   ChatSettings *m_settings;         ///< Настройки.
   Extensions *m_extensions;         ///< Загрузчик расширений.
+  NetworkAccess *m_networkAccess;   ///< Модуль доступа к сети.
   NetworkManager *m_networkManager; ///< Объект управляющих сетями.
   QByteArray m_currentId;           ///< Идентификатор текущей вкладки.
   QThreadPool *m_pool;              ///< Пул для запуска потоков.

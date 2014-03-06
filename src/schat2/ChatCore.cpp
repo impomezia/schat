@@ -46,6 +46,7 @@
 #include "hooks/ServerMenuImpl.h"
 #include "hooks/UserMenuImpl.h"
 #include "net/SimpleID.h"
+#include "NetworkAccess.h"
 #include "NetworkManager.h"
 #include "Path.h"
 #include "Profile.h"
@@ -91,6 +92,8 @@ ChatCore::ChatCore(QObject *parent)
 
   loadTranslation();
 
+  m_networkAccess = new NetworkAccess(this);
+
   m_client = new ChatClient(this);
   new ChatNotify(this);
   new FeedStorage(this);
@@ -119,14 +122,22 @@ ChatCore::ChatCore(QObject *parent)
 
 ChatCore::~ChatCore()
 {
-  m_ready = false;
-  m_self  = 0;
-
   TokenFilter::clear();
   ProfileFieldFactory::clear();
 
   m_service->quit();
   m_service->wait();
+
+  m_ready = false;
+  m_self  = 0;
+}
+
+
+ChatCore *ChatCore::i()
+{
+  Q_ASSERT(m_self);
+
+  return m_self;
 }
 
 

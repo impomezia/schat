@@ -36,6 +36,9 @@ HEADERS += \
     id/ChatId.h \
     id/ObjectId.h \
     id/SecureRandom.h \
+    interfaces/IDownloadItem.h \
+    interfaces/INetworkHandler.h \
+    interfaces/INetworkListener.h \
     interfaces/IServiceTask.h \
     JSON.h \
     k8json/k8json.h \
@@ -54,6 +57,7 @@ HEADERS += \
     net/SimpleSocket_p.h \
     net/TransportReader.h \
     net/TransportWriter.h \
+    NetworkAccess.h \
     Path.h \
     Plugins.h \
     schat.h \
@@ -103,6 +107,7 @@ SOURCES += \
     net/SimpleSocket.cpp \
     net/TransportReader.cpp \
     net/TransportWriter.cpp \
+    NetworkAccess.cpp \
     Path.cpp \
     Plugins.cpp \
     ServiceList.cpp \
