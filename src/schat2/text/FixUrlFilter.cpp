@@ -1,6 +1,5 @@
-/* $Id: FixUrlFilter.cpp 3652 2013-04-21 20:25:14Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,12 +18,6 @@
 #include "ChatUrls.h"
 #include "sglobal.h"
 #include "text/FixUrlFilter.h"
-
-FixUrlFilter::FixUrlFilter()
-  : AbstractFilter(100)
-{
-}
-
 
 bool FixUrlFilter::filter(QList<HtmlToken> &tokens, int options) const
 {

@@ -15,11 +15,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ChatCore.h"
 #include "PreviewCore.h"
+#include "sglobal.h"
+#include "Translation.h"
 
 PreviewCore::PreviewCore(QObject *parent)
   : ChatPlugin(parent)
 {
+  ChatCore::translation()->addOther(LS("preview"));
 }
 
 

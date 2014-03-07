@@ -1,6 +1,5 @@
-/* $Id: EmoticonsFilter.h 3650 2013-04-21 00:21:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,11 +22,12 @@
 
 class Emoticons;
 
-class EmoticonsFilter : public AbstractFilter
+class EmoticonsFilter : public ITokenFilter
 {
 public:
   EmoticonsFilter(Emoticons *emoticons);
-  bool filter(QList<HtmlToken> &tokens, int options = 0) const;
+  bool filter(QList<HtmlToken> &tokens, int options = 0) const Q_DECL_OVERRIDE;
+  inline int weight() const Q_DECL_OVERRIDE { return 1000; }
 
 private:
   void make(QList<HtmlToken> &tokens, const QString &text) const;
@@ -38,11 +38,12 @@ private:
 };
 
 
-class EmoticonsInputFilter : public AbstractFilter
+class EmoticonsInputFilter : public ITokenFilter
 {
 public:
-  EmoticonsInputFilter();
-  bool filter(QList<HtmlToken> &tokens, int options = 0) const;
+  EmoticonsInputFilter() : m_delete(false) {}
+  bool filter(QList<HtmlToken> &tokens, int options = 0) const Q_DECL_OVERRIDE;
+  inline int weight() const Q_DECL_OVERRIDE { return 50; }
 
 private:
   mutable bool m_delete;

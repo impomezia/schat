@@ -15,22 +15,19 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef URLFILTER_H_
-#define URLFILTER_H_
+#ifndef ITOKENFILTER_H_
+#define ITOKENFILTER_H_
 
-#include "text/TokenFilter.h"
+#include <QList>
 
-/*!
- * Фильтр ссылок на ники.
- *
- * Вес 100.
- */
-class UrlFilter : public ITokenFilter
+#include "text/HtmlToken.h"
+
+class ITokenFilter
 {
 public:
-  inline UrlFilter() {}
-  bool filter(QList<HtmlToken> &tokens, int options = 0) const Q_DECL_OVERRIDE;
-  inline int weight() const Q_DECL_OVERRIDE { return 100; }
+  virtual ~ITokenFilter() {}
+  virtual bool filter(QList<HtmlToken> &tokens, int options = 0) const = 0;
+  virtual int weight() const = 0;
 };
 
-#endif /* URLFILTER_H_ */
+#endif // ITOKENFILTER_H_

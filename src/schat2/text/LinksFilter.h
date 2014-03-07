@@ -1,6 +1,5 @@
-/* $Id: LinksFilter.h 3650 2013-04-21 00:21:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,11 +20,17 @@
 
 #include "text/TokenFilter.h"
 
-class LinksFilter : public AbstractFilter
+/*!
+ * Фильтр преобразующий текст в ссылки.
+ *
+ * Вес 200
+ */
+class LinksFilter : public ITokenFilter
 {
 public:
   LinksFilter();
-  bool filter(QList<HtmlToken> &tokens, int options = 0) const;
+  bool filter(QList<HtmlToken> &tokens, int options = 0) const Q_DECL_OVERRIDE;
+  inline int weight() const Q_DECL_OVERRIDE { return 200; }
 
 private:
   QString url(const QString &text, int index, int &last) const;
