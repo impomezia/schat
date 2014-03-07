@@ -15,34 +15,28 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "id/ChatId.h"
-#include "PreviewChatView.h"
-#include "PreviewCore.h"
-#include "PreviewFilter.h"
-#include "PreviewWindowObject.h"
-#include "sglobal.h"
-#include "text/TokenFilter.h"
-#include "Translation.h"
+#ifndef PREVIEWCHATVIEW_H_
+#define PREVIEWCHATVIEW_H_
 
-PreviewCore::PreviewCore(QObject *parent)
-  : ChatPlugin(parent)
+#include <QObject>
+
+#include "interfaces/IChatViewHook.h"
+
+class PreviewCore;
+
+class PreviewChatView : public QObject, public IChatViewHook
 {
-  ChatCore::translation()->addOther(LS("preview"));
+  Q_OBJECT
 
-  TokenFilter::add(LS("channel"), new PreviewFilter(this));
+public:
+  PreviewChatView(PreviewCore *core);
+  ~PreviewChatView();
 
-  m_windowObject = new PreviewWindowObject(this);
-}
+  void init(ChatView *view) Q_DECL_OVERRIDE;
+  void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
 
+private:
+  PreviewCore *m_core;
+};
 
-void PreviewCore::add(const ChatId &id, const QList<QUrl> &urls)
-{
-  SLOG_DEBUG(id.toBase32() << urls);
-}
-
-
-void PreviewCore::chatReady()
-{
-  new PreviewChatView(this);
-}
+#endif // PREVIEWCHATVIEW_H_

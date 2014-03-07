@@ -1,5 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
+  <file alias="css/Preview/Preview.css">res/css/Preview.css</file>
+  <file alias="js/Preview/Preview.js">res/js/Preview.js</file>
   <file alias="translations/preview_en.qm">res/translations/preview_en.qm</file>
   <file alias="translations/preview_ru.qm">res/translations/preview_ru.qm</file>
   <file alias="translations/preview_uk.qm">res/translations/preview_uk.qm</file>

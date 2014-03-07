@@ -15,34 +15,43 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "id/ChatId.h"
+#include <QWebFrame>
+
+#include "hooks/ChatViewHooks.h"
 #include "PreviewChatView.h"
 #include "PreviewCore.h"
-#include "PreviewFilter.h"
-#include "PreviewWindowObject.h"
 #include "sglobal.h"
-#include "text/TokenFilter.h"
-#include "Translation.h"
+#include "ui/tabs/ChatView.h"
+#include "PreviewWindowObject.h"
 
-PreviewCore::PreviewCore(QObject *parent)
-  : ChatPlugin(parent)
+PreviewChatView::PreviewChatView(PreviewCore *core)
+  : QObject(core)
+  , m_core(core)
 {
-  ChatCore::translation()->addOther(LS("preview"));
-
-  TokenFilter::add(LS("channel"), new PreviewFilter(this));
-
-  m_windowObject = new PreviewWindowObject(this);
+  ChatViewHooks::add(this);
 }
 
 
-void PreviewCore::add(const ChatId &id, const QList<QUrl> &urls)
+PreviewChatView::~PreviewChatView()
 {
-  SLOG_DEBUG(id.toBase32() << urls);
+  ChatViewHooks::remove(this);
 }
 
 
-void PreviewCore::chatReady()
+void PreviewChatView::init(ChatView *view)
 {
-  new PreviewChatView(this);
+  if (ChatId(view->id()).type() == ChatId::ServerId)
+    return;
+
+  view->page()->mainFrame()->addToJavaScriptWindowObject(LS("PreviewPlugin"), m_core->windowObject());
+  view->addJS(LS("qrc:/js/Preview/Preview.js"));
+}
+
+
+void PreviewChatView::loadFinished(ChatView *view)
+{
+  if (ChatId(view->id()).type() == ChatId::ServerId)
+    return;
+
+  view->addCSS(LS("qrc:/css/Preview/Preview.css"));
 }

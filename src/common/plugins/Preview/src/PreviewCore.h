@@ -23,6 +23,7 @@
 #include "plugins/ChatPlugin.h"
 
 class ChatId;
+class PreviewWindowObject;
 
 class PreviewCore : public ChatPlugin
 {
@@ -30,8 +31,12 @@ class PreviewCore : public ChatPlugin
 
 public:
   PreviewCore(QObject *parent);
+  inline PreviewWindowObject *windowObject() const { return m_windowObject; }
   void add(const ChatId &id, const QList<QUrl> &urls);
   void chatReady() Q_DECL_OVERRIDE;
+
+private:
+  PreviewWindowObject *m_windowObject;
 };
 
 #endif // PREVIEWCORE_H_
