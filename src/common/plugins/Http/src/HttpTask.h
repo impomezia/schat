@@ -20,8 +20,10 @@
 
 #include <QMap>
 #include <QObject>
+#include <QUrl>
 
 #include "interfaces/IServiceTask.h"
+#include "schat.h"
 
 class HttpTaskState;
 class INetworkError;

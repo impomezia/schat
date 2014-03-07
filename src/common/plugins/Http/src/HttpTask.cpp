@@ -35,8 +35,8 @@
 
 
 HttpTaskState::HttpTaskState(const QUrl &url, const QString &fileName, const QVariantMap &options)
-  : m_url(url)
-  , m_file(0)
+  : m_file(0)
+  , m_url(url)
 {
   Q_UNUSED(options)
 
