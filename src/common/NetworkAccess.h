@@ -43,6 +43,7 @@ public:
   void onReadyRead(const QUrl &url, const QByteArray &data) Q_DECL_OVERRIDE;
 
 signals:
+  void finished(DownloadItem item);
   void handlerAdded();
 
 private:

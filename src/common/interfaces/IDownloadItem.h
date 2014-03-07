@@ -28,7 +28,9 @@ class IDownloadItem
 public:
   virtual ~IDownloadItem() {}
   virtual bool isFinished() const             = 0;
+  virtual const QByteArray &data() const      = 0;
   virtual INetworkError *error() const        = 0;
+  virtual QByteArray &data()                  = 0;
   virtual qint64 endDate() const              = 0;
   virtual qint64 pos() const                  = 0;
   virtual qint64 size() const                 = 0;

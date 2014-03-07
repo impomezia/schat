@@ -42,7 +42,9 @@ public:
   }
 
   inline bool isFinished() const             Q_DECL_OVERRIDE { return m_endDate > 0; }
+  inline const QByteArray &data() const      Q_DECL_OVERRIDE { return m_data; }
   inline INetworkError *error() const        Q_DECL_OVERRIDE { return m_error; }
+  inline QByteArray &data()                  Q_DECL_OVERRIDE { return m_data; }
   inline qint64 endDate() const              Q_DECL_OVERRIDE { return m_endDate; }
   inline qint64 pos() const                  Q_DECL_OVERRIDE { return m_pos; }
   inline qint64 size() const                 Q_DECL_OVERRIDE { return m_size; }
@@ -55,6 +57,7 @@ public:
 
 protected:
   INetworkError *m_error;
+  QByteArray m_data;
   qint64 m_endDate;
   qint64 m_pos;
   qint64 m_size;

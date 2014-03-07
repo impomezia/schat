@@ -16,6 +16,7 @@
  */
 
 #include "DateTime.h"
+#include "interfaces/INetworkError.h"
 #include "interfaces/INetworkHandler.h"
 #include "NetworkAccess.h"
 
@@ -56,6 +57,8 @@ DownloadItem NetworkAccess::download(const QUrl &url, const QString &fileName, c
   if (!item)
     return item;
 
+  Q_ASSERT(item->url() == url);
+
   item->setStartDate(DateTime::utc());
 
   m_items.insert(url, item);
@@ -82,13 +85,24 @@ void NetworkAccess::onDownloadProgress(const QUrl &url, qint64 bytesReceived, qi
 
 void NetworkAccess::onFinished(const QUrl &url, INetworkError *error)
 {
-  Q_UNUSED(url)
-  Q_UNUSED(error)
+  SCHAT_DEBUG_CODE(if (error) SLOG_DEBUG(url << error->error() << error->status()); else SLOG_DEBUG(url));
+
+  DownloadItem item = m_items.value(url);
+  if (!item)
+    return;
+
+  item->setEndDate(DateTime::utc());
+  item->setError(error);
+
+  emit finished(item);
 }
 
 
 void NetworkAccess::onReadyRead(const QUrl &url, const QByteArray &data)
 {
-  Q_UNUSED(url)
-  Q_UNUSED(data)
+  DownloadItem item = m_items.value(url);
+  if (!item)
+    return;
+
+  item->data().append(data);
 }

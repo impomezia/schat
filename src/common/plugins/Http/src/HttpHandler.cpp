@@ -48,8 +48,6 @@ bool HttpHandler::canDownload(const QUrl &url) const
 
 DownloadItem HttpHandler::download(const QUrl &url, const QString &fileName, const QVariantMap &options)
 {
-  SLOG_DEBUG(url);
-
   HttpDownloadItem *item = new HttpDownloadItem(url, fileName);
 
   QMetaObject::invokeMethod(m_task, "download", Qt::QueuedConnection, Q_ARG(QUrl, url), Q_ARG(QString, fileName), Q_ARG(QVariantMap, options));
