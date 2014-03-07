@@ -21,6 +21,7 @@
 #include <QMap>
 #include <QObject>
 #include <QUrl>
+#include <QVariant>
 
 #include "interfaces/IServiceTask.h"
 #include "schat.h"
