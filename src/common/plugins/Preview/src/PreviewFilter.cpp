@@ -15,29 +15,32 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "id/ChatId.h"
+#include <QUrl>
+
 #include "PreviewCore.h"
 #include "PreviewFilter.h"
 #include "sglobal.h"
-#include "text/TokenFilter.h"
-#include "Translation.h"
 
-PreviewCore::PreviewCore(QObject *parent)
-  : ChatPlugin(parent)
+PreviewFilter::PreviewFilter(PreviewCore *core)
+  : m_core(core)
 {
-  ChatCore::translation()->addOther(LS("preview"));
-
-  TokenFilter::add(LS("channel"), new PreviewFilter(this));
 }
 
 
-void PreviewCore::add(const ChatId &id, const QList<QUrl> &urls)
+bool PreviewFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  SLOG_DEBUG(id.toBase32() << urls);
-}
+  QList<QUrl> urls;
 
+  foreach (const HtmlToken &token, tokens) {
+    if (token.type != HtmlToken::StartTag || token.tag != LS("a"))
+      continue;
 
-void PreviewCore::chatReady()
-{
+    HtmlATag tag(token);
+    urls.append(tag.url);
+  }
+
+  if (!urls.isEmpty())
+    m_core->add(id, urls);
+
+  return true;
 }

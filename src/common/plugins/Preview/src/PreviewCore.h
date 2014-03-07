@@ -22,12 +22,15 @@
 
 #include "plugins/ChatPlugin.h"
 
+class ChatId;
+
 class PreviewCore : public ChatPlugin
 {
   Q_OBJECT
 
 public:
   PreviewCore(QObject *parent);
+  void add(const ChatId &id, const QList<QUrl> &urls);
   void chatReady() Q_DECL_OVERRIDE;
 };
 

@@ -23,10 +23,12 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 HEADERS  = \
    PreviewPlugin.h \
    src/PreviewCore.h \
+   src/PreviewFilter.h \
 
 SOURCES  = \
    PreviewPlugin.cpp \
    src/PreviewCore.cpp \
+   src/PreviewFilter.cpp \
 
 RESOURCES += Preview.qrc
 
