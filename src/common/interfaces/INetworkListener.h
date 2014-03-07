@@ -22,6 +22,9 @@ class INetworkListener
 {
 public:
   virtual ~INetworkListener() {}
+  virtual void onDownloadProgress(const QUrl &url, qint64 bytesReceived, qint64 bytesTotal) = 0;
+  virtual void onFinished(const QUrl &url, INetworkError *error) = 0;
+  virtual void onReadyRead(const QUrl &url, const QByteArray &data) = 0;
 };
 
 #endif // INETWORKLISTENER_H_

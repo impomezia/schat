@@ -15,24 +15,26 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INETWORKHANDLER_H_
-#define INETWORKHANDLER_H_
+#ifndef HTTPTASK_P_H_
+#define HTTPTASK_P_H_
 
 #include <QVariant>
 
-#include "interfaces/IDownloadItem.h"
+class QFile;
+class QNetworkReply;
 
-class INetworkListener;
-class QUrl;
-
-class INetworkHandler
+class HttpTaskState
 {
 public:
-  virtual ~INetworkHandler() {}
-  virtual bool canDownload(const QUrl &url) const = 0;
-  virtual DownloadItem download(const QUrl &url, const QString &fileName = QString(), const QVariantMap &options = QVariantMap()) = 0;
-  virtual void addListener(INetworkListener *listener) = 0;
-  virtual void removeListener(INetworkListener *listener) = 0;
+  HttpTaskState(const QUrl &url, const QString &fileName, const QVariantMap &options);
+  ~HttpTaskState();
+  bool read(QNetworkReply *reply);
+  inline QUrl url() const { return m_url; }
+  void finish(QNetworkReply *reply);
+
+private:
+  QFile *m_file;
+  QUrl m_url;
 };
 
-#endif // INETWORKHANDLER_H_
+#endif // HTTPTASK_P_H_

@@ -36,16 +36,18 @@ class SCHAT_EXPORT NetworkAccess : public QObject, public INetworkListener
 public:
   NetworkAccess(QObject *parent = 0);
   bool canDownload(const QUrl &url) const;
-  DownloadItem download(const QUrl &url, const QString &fileName = QString());
+  DownloadItem download(const QUrl &url, const QString &fileName = QString(), const QVariantMap &options = QVariantMap());
   void addHandler(INetworkHandler *handler);
+  void onDownloadProgress(const QUrl &url, qint64 bytesReceived, qint64 bytesTotal) Q_DECL_OVERRIDE;
+  void onFinished(const QUrl &url, INetworkError *error) Q_DECL_OVERRIDE;
+  void onReadyRead(const QUrl &url, const QByteArray &data) Q_DECL_OVERRIDE;
 
 signals:
   void handlerAdded();
 
 private:
-  qint64 m_counter;
   QList<INetworkHandler*> m_handlers;
-  QMap<qint64, DownloadItem> m_items;
+  QMap<QUrl, DownloadItem> m_items;
 };
 
 #endif // NETWORKACCESS_H_

@@ -18,9 +18,13 @@
 #ifndef HTTPTASK_H_
 #define HTTPTASK_H_
 
+#include <QMap>
 #include <QObject>
 
 #include "interfaces/IServiceTask.h"
+
+class HttpTaskState;
+class INetworkError;
 
 class HttpTask : public QObject
 {
@@ -28,8 +32,23 @@ class HttpTask : public QObject
 
 public:
   HttpTask(QNetworkAccessManager *net, QObject *parent = 0);
+  ~HttpTask();
+
+signals:
+  void downloadProgress(const QUrl &url, qint64 bytesReceived, qint64 bytesTotal);
+  void finished(const QUrl &url, INetworkError *error);
+  void readyRead(const QUrl &url, const QByteArray &data);
+
+public slots:
+  void download(const QUrl &url, const QString &fileName, const QVariantMap &options);
+
+private slots:
+  void onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+  void onFinished();
+  void onReadyRead();
 
 private:
+  QMap<QUrl, HttpTaskState*> m_states;
   QNetworkAccessManager *m_net;
 };
 

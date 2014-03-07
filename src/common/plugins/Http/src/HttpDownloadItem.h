@@ -23,7 +23,7 @@
 class HttpDownloadItem : public GenericDownloadItem
 {
 public:
-  HttpDownloadItem(qint64 id, const QUrl &url, const QString &fileName);
+  HttpDownloadItem(const QUrl &url, const QString &fileName);
 };
 
 #endif // HTTPDOWNLOADITEM_H_

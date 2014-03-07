@@ -16,23 +16,26 @@
 
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB   = 1
-QT = core gui network
+QT = core gui network webkit
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 HEADERS  = \
    HttpPlugin.h \
    src/HttpCmd.h \
    src/HttpCore.h \
    src/HttpDownloadItem.h \
+   src/HttpError.h \
    src/HttpHandler.h \
    src/HttpTask.h \
+   src/HttpTask_p.h \
 
 SOURCES  = \
    HttpPlugin.cpp \
    src/HttpCmd.cpp \
    src/HttpCore.cpp \
    src/HttpDownloadItem.cpp \
+   src/HttpError.cpp \
    src/HttpHandler.cpp \
    src/HttpTask.cpp \
 

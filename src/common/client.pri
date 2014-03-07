@@ -38,6 +38,7 @@ HEADERS += \
     id/ObjectId.h \
     id/SecureRandom.h \
     interfaces/IDownloadItem.h \
+    interfaces/INetworkError.h \
     interfaces/INetworkHandler.h \
     interfaces/INetworkListener.h \
     interfaces/IServiceTask.h \

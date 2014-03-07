@@ -19,14 +19,15 @@
 #define GENERICDOWNLOADITEM_H_
 
 #include "interfaces/IDownloadItem.h"
+#include "interfaces/INetworkError.h"
 #include "schat.h"
 
 class GenericDownloadItem : public IDownloadItem
 {
 public:
-  inline GenericDownloadItem(qint64 id, const QUrl &url, const QString &fileName)
-    : m_endDate(0)
-    , m_id(id)
+  inline GenericDownloadItem(const QUrl &url, const QString &fileName)
+    : m_error(0)
+    , m_endDate(0)
     , m_pos(0)
     , m_size(0)
     , m_startDate(0)
@@ -34,20 +35,27 @@ public:
     , m_url(url)
   {}
 
-  inline bool isFinished() const        Q_DECL_OVERRIDE { return m_endDate > 0; }
-  inline qint64 endDate() const         Q_DECL_OVERRIDE { return m_endDate; }
-  inline qint64 id() const              Q_DECL_OVERRIDE { return m_id; }
-  inline qint64 pos() const             Q_DECL_OVERRIDE { return m_pos; }
-  inline qint64 size() const            Q_DECL_OVERRIDE { return m_size; }
-  inline qint64 startDate() const       Q_DECL_OVERRIDE { return m_startDate; }
-  inline QString fileName() const       Q_DECL_OVERRIDE { return m_fileName; }
-  inline QUrl url() const               Q_DECL_OVERRIDE { return m_url; }
-  inline void setEndDate(qint64 date)   Q_DECL_OVERRIDE { m_endDate = date; }
-  inline void setStartDate(qint64 date) Q_DECL_OVERRIDE { m_startDate = date; }
+  inline ~GenericDownloadItem()
+  {
+    if (m_error)
+      delete m_error;
+  }
+
+  inline bool isFinished() const             Q_DECL_OVERRIDE { return m_endDate > 0; }
+  inline INetworkError *error() const        Q_DECL_OVERRIDE { return m_error; }
+  inline qint64 endDate() const              Q_DECL_OVERRIDE { return m_endDate; }
+  inline qint64 pos() const                  Q_DECL_OVERRIDE { return m_pos; }
+  inline qint64 size() const                 Q_DECL_OVERRIDE { return m_size; }
+  inline qint64 startDate() const            Q_DECL_OVERRIDE { return m_startDate; }
+  inline QString fileName() const            Q_DECL_OVERRIDE { return m_fileName; }
+  inline QUrl url() const                    Q_DECL_OVERRIDE { return m_url; }
+  inline void setEndDate(qint64 date)        Q_DECL_OVERRIDE { m_endDate = date; }
+  inline void setError(INetworkError *error) Q_DECL_OVERRIDE { if (m_error) delete m_error; m_error = error; }
+  inline void setStartDate(qint64 date)      Q_DECL_OVERRIDE { m_startDate = date; }
 
 protected:
+  INetworkError *m_error;
   qint64 m_endDate;
-  qint64 m_id;
   qint64 m_pos;
   qint64 m_size;
   qint64 m_startDate;

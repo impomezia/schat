@@ -32,9 +32,14 @@ class HttpHandler : public QObject, public INetworkHandler
 public:
   HttpHandler(HttpTask *task, QObject *parent = 0);
   bool canDownload(const QUrl &url) const Q_DECL_OVERRIDE;
-  DownloadItem download(const qint64 &id, const QUrl &url, const QString &fileName = QString()) Q_DECL_OVERRIDE;
+  DownloadItem download(const QUrl &url, const QString &fileName = QString(), const QVariantMap &options = QVariantMap()) Q_DECL_OVERRIDE;
   void addListener(INetworkListener *listener) Q_DECL_OVERRIDE;
   void removeListener(INetworkListener *listener) Q_DECL_OVERRIDE;
+
+private slots:
+  void onDownloadProgress(const QUrl &url, qint64 bytesReceived, qint64 bytesTotal);
+  void onFinished(const QUrl &url, INetworkError *error);
+  void onReadyRead(const QUrl &url, const QByteArray &data);
 
 private:
   HttpTask *m_task;

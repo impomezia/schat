@@ -15,17 +15,22 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QUrl>
 #include <QSslSocket>
+#include <QUrl>
 
 #include "HttpDownloadItem.h"
 #include "HttpHandler.h"
+#include "HttpTask.h"
+#include "interfaces/INetworkListener.h"
 #include "sglobal.h"
 
 HttpHandler::HttpHandler(HttpTask *task, QObject *parent)
   : QObject(parent)
   , m_task(task)
 {
+  connect(task, SIGNAL(readyRead(QUrl,QByteArray)), SLOT(onReadyRead(QUrl,QByteArray)));
+  connect(task, SIGNAL(downloadProgress(QUrl,qint64,qint64)), SLOT(onDownloadProgress(QUrl,qint64,qint64)));
+  connect(task, SIGNAL(finished(QUrl,INetworkError*)), SLOT(onFinished(QUrl,INetworkError*)));
 }
 
 
@@ -41,11 +46,13 @@ bool HttpHandler::canDownload(const QUrl &url) const
 }
 
 
-DownloadItem HttpHandler::download(const qint64 &id, const QUrl &url, const QString &fileName)
+DownloadItem HttpHandler::download(const QUrl &url, const QString &fileName, const QVariantMap &options)
 {
-  SLOG_DEBUG(id);
+  SLOG_DEBUG(url);
 
-  HttpDownloadItem *item = new HttpDownloadItem(id, url, fileName);
+  HttpDownloadItem *item = new HttpDownloadItem(url, fileName);
+
+  QMetaObject::invokeMethod(m_task, "download", Qt::QueuedConnection, Q_ARG(QUrl, url), Q_ARG(QString, fileName), Q_ARG(QVariantMap, options));
 
   return DownloadItem(item);
 }
@@ -63,4 +70,25 @@ void HttpHandler::addListener(INetworkListener *listener)
 void HttpHandler::removeListener(INetworkListener *listener)
 {
   m_listeners.removeAll(listener);
+}
+
+
+void HttpHandler::onDownloadProgress(const QUrl &url, qint64 bytesReceived, qint64 bytesTotal)
+{
+  foreach (INetworkListener *listener, m_listeners)
+    listener->onDownloadProgress(url, bytesReceived, bytesTotal);
+}
+
+
+void HttpHandler::onFinished(const QUrl &url, INetworkError *error)
+{
+  foreach (INetworkListener *listener, m_listeners)
+    listener->onFinished(url, error);
+}
+
+
+void HttpHandler::onReadyRead(const QUrl &url, const QByteArray &data)
+{
+  foreach (INetworkListener *listener, m_listeners)
+    listener->onReadyRead(url, data);
 }

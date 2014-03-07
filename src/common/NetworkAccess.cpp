@@ -21,7 +21,6 @@
 
 NetworkAccess::NetworkAccess(QObject *parent)
   : QObject(parent)
-  , m_counter(0)
 {
 }
 
@@ -39,7 +38,7 @@ bool NetworkAccess::canDownload(const QUrl &url) const
 }
 
 
-DownloadItem NetworkAccess::download(const QUrl &url, const QString &fileName)
+DownloadItem NetworkAccess::download(const QUrl &url, const QString &fileName, const QVariantMap &options)
 {
   SLOG_DEBUG(url << fileName);
 
@@ -48,10 +47,8 @@ DownloadItem NetworkAccess::download(const QUrl &url, const QString &fileName)
   if (!canDownload(url))
     return item;
 
-  ++m_counter;
-
   foreach (INetworkHandler *handler, m_handlers) {
-    item = handler->download(m_counter, url, fileName);
+    item = handler->download(url, fileName, options);
     if (item)
       break;
   }
@@ -61,7 +58,7 @@ DownloadItem NetworkAccess::download(const QUrl &url, const QString &fileName)
 
   item->setStartDate(DateTime::utc());
 
-  m_items.insert(m_counter, item);
+  m_items.insert(url, item);
   return item;
 }
 
@@ -72,4 +69,26 @@ void NetworkAccess::addHandler(INetworkHandler *handler)
   m_handlers.append(handler);
 
   emit handlerAdded();
+}
+
+
+void NetworkAccess::onDownloadProgress(const QUrl &url, qint64 bytesReceived, qint64 bytesTotal)
+{
+  Q_UNUSED(url)
+  Q_UNUSED(bytesReceived)
+  Q_UNUSED(bytesTotal)
+}
+
+
+void NetworkAccess::onFinished(const QUrl &url, INetworkError *error)
+{
+  Q_UNUSED(url)
+  Q_UNUSED(error)
+}
+
+
+void NetworkAccess::onReadyRead(const QUrl &url, const QByteArray &data)
+{
+  Q_UNUSED(url)
+  Q_UNUSED(data)
 }

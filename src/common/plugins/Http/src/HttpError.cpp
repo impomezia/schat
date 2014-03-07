@@ -15,24 +15,24 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef INETWORKHANDLER_H_
-#define INETWORKHANDLER_H_
+#include <QNetworkReply>
 
-#include <QVariant>
+#include "HttpError.h"
 
-#include "interfaces/IDownloadItem.h"
-
-class INetworkListener;
-class QUrl;
-
-class INetworkHandler
+HttpError::HttpError(QNetworkReply *reply, int error)
+  : m_status(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt())
 {
-public:
-  virtual ~INetworkHandler() {}
-  virtual bool canDownload(const QUrl &url) const = 0;
-  virtual DownloadItem download(const QUrl &url, const QString &fileName = QString(), const QVariantMap &options = QVariantMap()) = 0;
-  virtual void addListener(INetworkListener *listener) = 0;
-  virtual void removeListener(INetworkListener *listener) = 0;
-};
+  m_error = (error == -1 ? reply->error() : error);
+}
 
-#endif // INETWORKHANDLER_H_
+
+HttpError *HttpError::create(QNetworkReply *reply)
+{
+  HttpError *error = new HttpError(reply);
+  if (error->error() == 0 && error->status() == 200) {
+    delete error;
+    error = 0;
+  }
+
+  return error;
+}

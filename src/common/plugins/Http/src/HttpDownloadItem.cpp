@@ -17,7 +17,7 @@
 
 #include "HttpDownloadItem.h"
 
-HttpDownloadItem::HttpDownloadItem(qint64 id, const QUrl &url, const QString &fileName)
-  : GenericDownloadItem(id, url, fileName)
+HttpDownloadItem::HttpDownloadItem(const QUrl &url, const QString &fileName)
+  : GenericDownloadItem(url, fileName)
 {
 }
