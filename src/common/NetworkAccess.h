@@ -19,6 +19,7 @@
 #define NETWORKACCESS_H_
 
 #include <QObject>
+#include <QVariant>
 
 #include "interfaces/IDownloadItem.h"
 #include "interfaces/INetworkListener.h"
