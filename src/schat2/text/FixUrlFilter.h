@@ -24,7 +24,7 @@ class FixUrlFilter : public ITokenFilter
 {
 public:
   inline FixUrlFilter() {}
-  bool filter(QList<HtmlToken> &tokens, int options = 0) const Q_DECL_OVERRIDE;
+  bool filter(QList<HtmlToken> &tokens, const ChatId &id) const Q_DECL_OVERRIDE;
   inline int weight() const Q_DECL_OVERRIDE { return 100; }
 };
 

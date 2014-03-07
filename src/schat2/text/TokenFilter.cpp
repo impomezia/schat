@@ -20,13 +20,13 @@
 
 QMap<QString, QMap<int, FilterPtr> > TokenFilter::m_filters;
 
-QString TokenFilter::filter(const QString &type, const QString &text, int options)
+QString TokenFilter::filter(const QString &type, const QString &text, int options, const ChatId &id)
 {
   QList<HtmlToken> tokens = HtmlFilter(options).tokenize(text);
-  QMap<int, FilterPtr> filters = m_filters.value(type);
+  const QMap<int, FilterPtr> &filters = m_filters[type];
 
   foreach (FilterPtr filter, filters) {
-    filter->filter(tokens);
+    filter->filter(tokens, id);
   }
 
   return HtmlFilter::build(tokens);

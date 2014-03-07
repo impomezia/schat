@@ -23,9 +23,9 @@
 #include "sglobal.h"
 #include "text/UrlFilter.h"
 
-bool UrlFilter::filter(QList<HtmlToken> &tokens, int options) const
+bool UrlFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   QString name;
 

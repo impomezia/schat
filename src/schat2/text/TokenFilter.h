@@ -35,7 +35,7 @@ class SCHAT_CORE_EXPORT TokenFilter
   TokenFilter() {}
 
 public:
-  static QString filter(const QString &type, const QString &text, int options = 0);
+  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
   static void add(const QString &type, ITokenFilter *filter);
   static void clear();
 

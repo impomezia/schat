@@ -30,9 +30,9 @@ EmoticonsFilter::EmoticonsFilter(Emoticons *emoticons)
 }
 
 
-bool EmoticonsFilter::filter(QList<HtmlToken> &tokens, int options) const
+bool EmoticonsFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   m_count = 1;
   QList<HtmlToken> out;
@@ -119,9 +119,9 @@ void EmoticonsFilter::parse(QList<HtmlToken> &tokens, const QString &text, int p
 }
 
 
-bool EmoticonsInputFilter::filter(QList<HtmlToken> &tokens, int options) const
+bool EmoticonsInputFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   QList<HtmlToken> out;
   m_delete = false;

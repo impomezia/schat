@@ -26,7 +26,7 @@ class EmoticonsFilter : public ITokenFilter
 {
 public:
   EmoticonsFilter(Emoticons *emoticons);
-  bool filter(QList<HtmlToken> &tokens, int options = 0) const Q_DECL_OVERRIDE;
+  bool filter(QList<HtmlToken> &tokens, const ChatId &id) const Q_DECL_OVERRIDE;
   inline int weight() const Q_DECL_OVERRIDE { return 1000; }
 
 private:
@@ -42,7 +42,7 @@ class EmoticonsInputFilter : public ITokenFilter
 {
 public:
   EmoticonsInputFilter() : m_delete(false) {}
-  bool filter(QList<HtmlToken> &tokens, int options = 0) const Q_DECL_OVERRIDE;
+  bool filter(QList<HtmlToken> &tokens, const ChatId &id) const Q_DECL_OVERRIDE;
   inline int weight() const Q_DECL_OVERRIDE { return 50; }
 
 private:

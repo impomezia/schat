@@ -19,9 +19,9 @@
 #include "sglobal.h"
 #include "text/FixUrlFilter.h"
 
-bool FixUrlFilter::filter(QList<HtmlToken> &tokens, int options) const
+bool FixUrlFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   QList<HtmlToken> out;
   QString name;

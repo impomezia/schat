@@ -28,9 +28,9 @@ YouTubeFilter::YouTubeFilter()
 }
 
 
-bool YouTubeFilter::filter(QList<HtmlToken> &tokens, int options) const
+bool YouTubeFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   for (int i = 0; i < tokens.size(); ++i) {
     if (tokens.at(i).type == HtmlToken::StartTag && tokens.at(i).tag == LS("a")) {

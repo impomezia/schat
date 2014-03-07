@@ -27,9 +27,9 @@ LinksFilter::LinksFilter()
 }
 
 
-bool LinksFilter::filter(QList<HtmlToken> &tokens, int options) const
+bool LinksFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   QList<HtmlToken> out;
 

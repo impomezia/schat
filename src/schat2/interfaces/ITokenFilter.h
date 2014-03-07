@@ -20,13 +20,14 @@
 
 #include <QList>
 
+#include "id/ChatId.h"
 #include "text/HtmlToken.h"
 
 class ITokenFilter
 {
 public:
   virtual ~ITokenFilter() {}
-  virtual bool filter(QList<HtmlToken> &tokens, int options = 0) const = 0;
+  virtual bool filter(QList<HtmlToken> &tokens, const ChatId &id) const = 0;
   virtual int weight() const = 0;
 };
 
