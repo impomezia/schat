@@ -17,9 +17,11 @@
 
 #include "ChatCore.h"
 #include "id/ChatId.h"
+#include "Path.h"
 #include "PreviewChatView.h"
 #include "PreviewCore.h"
 #include "PreviewFilter.h"
+#include "PreviewStorage.h"
 #include "PreviewWindowObject.h"
 #include "sglobal.h"
 #include "text/TokenFilter.h"
@@ -32,6 +34,7 @@ PreviewCore::PreviewCore(QObject *parent)
 
   TokenFilter::add(LS("channel"), new PreviewFilter(this));
 
+  m_storage = new PreviewStorage(this);
   m_windowObject = new PreviewWindowObject(this);
 }
 

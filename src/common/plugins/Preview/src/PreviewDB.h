@@ -15,25 +15,24 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PREVIEWFILTER_H_
-#define PREVIEWFILTER_H_
+#ifndef PREVIEWDB_H_
+#define PREVIEWDB_H_
 
-#include "interfaces/ITokenFilter.h"
+#include <QObject>
 
-class PreviewCore;
-
-class PreviewFilter : public ITokenFilter
+class PreviewDB : public QObject
 {
+  Q_OBJECT
+
 public:
-  PreviewFilter(PreviewCore *core);
-  bool filter(QList<HtmlToken> &tokens, const ChatId &id) const Q_DECL_OVERRIDE;
-  inline int weight() const Q_DECL_OVERRIDE { return 900; }
+  PreviewDB(QObject *parent = 0);
+  bool open(const QString &path);
 
 private:
-  bool isProbablyImage(const QUrl &url) const;
+  void create();
+  void version();
 
-  PreviewCore *m_core;
-  QStringList m_formats;
+  const QString m_id;
 };
 
-#endif // PREVIEWFILTER_H_
+#endif // PREVIEWDB_H_

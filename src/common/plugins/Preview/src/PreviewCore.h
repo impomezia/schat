@@ -23,6 +23,7 @@
 #include "plugins/ChatPlugin.h"
 
 class ChatId;
+class PreviewStorage;
 class PreviewWindowObject;
 
 class PreviewCore : public ChatPlugin
@@ -36,6 +37,7 @@ public:
   void chatReady() Q_DECL_OVERRIDE;
 
 private:
+  PreviewStorage *m_storage;
   PreviewWindowObject *m_windowObject;
 };
 

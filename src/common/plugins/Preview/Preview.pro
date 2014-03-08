@@ -16,7 +16,7 @@
 
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB   = 1
-QT = core network gui webkit
+QT = core network sql gui webkit
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
@@ -24,14 +24,18 @@ HEADERS  = \
    PreviewPlugin.h \
    src/PreviewChatView.h \
    src/PreviewCore.h \
+   src/PreviewDB.h \
    src/PreviewFilter.h \
+   src/PreviewStorage.h \
    src/PreviewWindowObject.h \
 
 SOURCES  = \
    PreviewPlugin.cpp \
    src/PreviewChatView.cpp \
    src/PreviewCore.cpp \
+   src/PreviewDB.cpp \
    src/PreviewFilter.cpp \
+   src/PreviewStorage.cpp \
    src/PreviewWindowObject.cpp \
 
 RESOURCES += Preview.qrc
