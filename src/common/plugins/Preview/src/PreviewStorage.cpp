@@ -15,14 +15,54 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDir>
+
 #include "PreviewDB.h"
 #include "PreviewStorage.h"
 #include "Path.h"
 #include "sglobal.h"
+#include "PreviewItem.h"
+#include "ChatCore.h"
+#include "NetworkAccess.h"
 
 PreviewStorage::PreviewStorage(QObject *parent) :
   QObject(parent)
 {
   m_db = new PreviewDB(this);
   m_db->open(Path::cache() + LS("/preview.sqlite"));
+}
+
+
+PreviewStorage::~PreviewStorage()
+{
+  qDeleteAll(m_items);
+}
+
+
+void PreviewStorage::add(const ChatId &messageId, const QList<QUrl> &urls)
+{
+  QList<ChatId> ids;
+
+  foreach (const QUrl &url, urls) {
+    PreviewItem *item = new PreviewItem(url);
+    const ChatId &id  = item->id();
+
+    if (!ids.contains(id))
+      ids.append(id);
+
+    if (m_items.contains(id)) {
+      delete item;
+      continue;
+    }
+
+    m_items.insert(id, item);
+
+    item->setRecord(m_db->findById(id));
+    if (item->state() == PreviewItem::Downloading) {
+      item->setDownloadItem(ChatCore::networkAccess()->download(item->url(), QDir::tempPath() + LS("/") + id.toString()));
+    }
+  }
+
+  if (!ids.isEmpty())
+    m_messages.insert(messageId, ids);
 }

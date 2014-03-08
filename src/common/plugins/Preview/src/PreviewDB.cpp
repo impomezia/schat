@@ -41,6 +41,29 @@ bool PreviewDB::open(const QString &path)
 }
 
 
+ImageRecord *PreviewDB::findById(const ChatId &id)
+{
+  QSqlQuery query(QSqlDatabase::database(m_id));
+  query.prepare(LS("SELECT url, format, width, height, size, name FROM images WHERE id = :id;"));
+  query.bindValue(LS(":id"), id.toString());
+  query.exec();
+
+  if (!query.first())
+    return 0;
+
+  ImageRecord *record = new ImageRecord();
+  record->id     = id;
+  record->url    = query.value(0).toUrl();
+  record->format = query.value(1).toString();
+  record->width  = query.value(2).toInt();
+  record->height = query.value(3).toInt();
+  record->size   = query.value(4).toInt();
+  record->name   = query.value(5).toString();
+
+  return record;
+}
+
+
 void PreviewDB::create()
 {
   QSqlQuery query(QSqlDatabase::database(m_id));

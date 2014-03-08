@@ -15,39 +15,46 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "id/ChatId.h"
-#include "Path.h"
-#include "PreviewChatView.h"
-#include "PreviewCore.h"
-#include "PreviewFilter.h"
-#include "PreviewStorage.h"
-#include "PreviewWindowObject.h"
-#include "sglobal.h"
-#include "text/TokenFilter.h"
-#include "Translation.h"
+#include "PreviewDB.h"
+#include "PreviewItem.h"
 
-PreviewCore::PreviewCore(QObject *parent)
-  : ChatPlugin(parent)
+PreviewItem::PreviewItem(const QUrl &url)
+  : m_record(0)
+  , m_url(url)
+  , m_state(Downloading)
 {
-  ChatCore::translation()->addOther(LS("preview"));
-
-  TokenFilter::add(LS("channel"), new PreviewFilter(this));
-
-  m_storage = new PreviewStorage(this);
-  m_windowObject = new PreviewWindowObject(this);
+  m_id.init(url.toEncoded(), ChatId::NormalizedId);
 }
 
 
-void PreviewCore::add(const ChatId &id, const QList<QUrl> &urls)
+PreviewItem::~PreviewItem()
 {
-  SLOG_DEBUG(id.toBase32() << urls);
-
-  m_storage->add(id, urls);
+  if (m_record)
+    delete m_record;
 }
 
 
-void PreviewCore::chatReady()
+void PreviewItem::setDownloadItem(DownloadItem item)
 {
-  new PreviewChatView(this);
+  m_state = Downloading;
+  m_item  = item;
+}
+
+
+void PreviewItem::setRecord(ImageRecord *record)
+{
+  if (m_record)
+    delete m_record;
+
+  m_record = record;
+
+  if (!m_record) {
+    m_state = Downloading;
+  }
+  else if (record->width && record->height && record->size) {
+    m_state = Ready;
+  }
+  else {
+    m_state = Error;
+  }
 }

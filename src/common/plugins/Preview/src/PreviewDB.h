@@ -19,6 +19,23 @@
 #define PREVIEWDB_H_
 
 #include <QObject>
+#include <QUrl>
+
+#include "id/ChatId.h"
+
+struct ImageRecord
+{
+  inline ImageRecord() : width(0), height(0), size(0) {}
+
+  ChatId id;
+  QUrl url;
+  QString format;
+  int width;
+  int height;
+  int size;
+  QString name;
+};
+
 
 class PreviewDB : public QObject
 {
@@ -27,6 +44,7 @@ class PreviewDB : public QObject
 public:
   PreviewDB(QObject *parent = 0);
   bool open(const QString &path);
+  ImageRecord *findById(const ChatId &id);
 
 private:
   void create();

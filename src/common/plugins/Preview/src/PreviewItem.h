@@ -15,29 +15,39 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PREVIEWSTORAGE_H_
-#define PREVIEWSTORAGE_H_
-
-#include <QObject>
+#ifndef PREVIEWITEM_H_
+#define PREVIEWITEM_H_
 
 #include "id/ChatId.h"
+#include "interfaces/IDownloadItem.h"
 
-class PreviewDB;
-class PreviewItem;
+struct ImageRecord;
 
-class PreviewStorage : public QObject
+class PreviewItem
 {
-  Q_OBJECT
-
 public:
-  PreviewStorage(QObject *parent = 0);
-  ~PreviewStorage();
-  void add(const ChatId &messageId, const QList<QUrl> &urls);
+  enum State {
+    Downloading,
+    Ready,
+    Error
+  };
+
+  PreviewItem(const QUrl &url);
+  ~PreviewItem();
+  inline const ChatId &id() const    { return m_id; }
+  inline const QUrl &url() const     { return m_url; }
+  inline DownloadItem item() const   { return m_item; }
+  inline ImageRecord *record() const { return m_record; }
+  inline State state() const         { return m_state; }
+  void setDownloadItem(DownloadItem item);
+  void setRecord(ImageRecord *record);
 
 private:
-  PreviewDB *m_db;
-  QMap<ChatId, PreviewItem*> m_items;
-  QMap<ChatId, QList<ChatId> > m_messages;
+  ChatId m_id;
+  DownloadItem m_item;
+  ImageRecord *m_record;
+  QUrl m_url;
+  State m_state;
 };
 
-#endif // PREVIEWSTORAGE_H
+#endif // PREVIEWITEM_H_
