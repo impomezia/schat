@@ -40,7 +40,7 @@ SOURCES  = \
    src/PreviewStorage.cpp \
    src/PreviewWindowObject.cpp \
 
-RESOURCES += Preview.qrc
+RESOURCES += res/Preview.qrc
 
 TRANSLATIONS += res/translations/preview_en.ts
 TRANSLATIONS += res/translations/preview_ru.ts
