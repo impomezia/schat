@@ -36,7 +36,6 @@ public:
   ~PreviewItem();
   inline const ChatId &id() const    { return m_id; }
   inline const QUrl &url() const     { return m_url; }
-  inline DownloadItem item() const   { return m_item; }
   inline ImageRecord *record() const { return m_record; }
   inline State state() const         { return m_state; }
   void setDownloadItem(DownloadItem item);
@@ -44,7 +43,7 @@ public:
 
 private:
   ChatId m_id;
-  DownloadItem m_item;
+  QWeakPointer<IDownloadItem> m_item;
   ImageRecord *m_record;
   QUrl m_url;
   State m_state;
