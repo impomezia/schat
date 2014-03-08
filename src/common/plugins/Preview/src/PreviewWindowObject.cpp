@@ -15,11 +15,31 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "PreviewWindowObject.h"
 #include "PreviewCore.h"
+#include "PreviewStorage.h"
+#include "PreviewWindowObject.h"
 
 PreviewWindowObject::PreviewWindowObject(PreviewCore *core)
   : QObject(core)
   , m_core(core)
 {
+}
+
+
+QVariant PreviewWindowObject::findByOID(const QString &id) const
+{
+  if (id.size() != ObjectId::kEncodedSize)
+    return QVariant();
+
+  const QList<ChatId> ids = m_core->storage()->findByOID(id);
+  if (ids.isEmpty())
+    return QVariant();
+
+  QStringList out;
+
+  foreach (const ChatId &id, ids) {
+    out.append(id.toString());
+  }
+
+  return out;
 }

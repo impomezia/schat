@@ -38,6 +38,7 @@ public:
   inline const QUrl &url() const     { return m_url; }
   inline ImageRecord *record() const { return m_record; }
   inline State state() const         { return m_state; }
+  inline void setState(State state)  { m_state = state; }
   void setDownloadItem(DownloadItem item);
   void setRecord(ImageRecord *record);
 

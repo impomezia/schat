@@ -32,6 +32,7 @@ class PreviewCore : public ChatPlugin
 
 public:
   PreviewCore(QObject *parent);
+  inline PreviewStorage *storage() const           { return m_storage; }
   inline PreviewWindowObject *windowObject() const { return m_windowObject; }
   void add(const ChatId &id, const QList<QUrl> &urls);
   void chatReady() Q_DECL_OVERRIDE;

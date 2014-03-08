@@ -21,6 +21,7 @@
 #include <QObject>
 
 #include "id/ChatId.h"
+#include "interfaces/IDownloadItem.h"
 
 class PreviewDB;
 class PreviewItem;
@@ -32,7 +33,11 @@ class PreviewStorage : public QObject
 public:
   PreviewStorage(QObject *parent = 0);
   ~PreviewStorage();
+  QList<ChatId> findByOID(const ChatId &id) const;
   void add(const ChatId &messageId, const QList<QUrl> &urls);
+
+private slots:
+  void onFinished(DownloadItem item);
 
 private:
   PreviewDB *m_db;

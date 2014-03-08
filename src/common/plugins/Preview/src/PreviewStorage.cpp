@@ -30,12 +30,20 @@ PreviewStorage::PreviewStorage(QObject *parent) :
 {
   m_db = new PreviewDB(this);
   m_db->open(Path::cache() + LS("/preview.sqlite"));
+
+  connect(ChatCore::networkAccess(), SIGNAL(finished(DownloadItem)), SLOT(onFinished(DownloadItem)));
 }
 
 
 PreviewStorage::~PreviewStorage()
 {
   qDeleteAll(m_items);
+}
+
+
+QList<ChatId> PreviewStorage::findByOID(const ChatId &id) const
+{
+  return m_messages.value(id);
 }
 
 
@@ -64,5 +72,18 @@ void PreviewStorage::add(const ChatId &messageId, const QList<QUrl> &urls)
   }
 
   if (!ids.isEmpty())
-    m_messages.insert(messageId, ids);
+    m_messages.insert(messageId.oid(), ids);
+}
+
+
+void PreviewStorage::onFinished(DownloadItem item)
+{
+  PreviewItem *i = m_items.value(ChatId(item->url().toEncoded(), ChatId::NormalizedId));
+  if (!i)
+    return;
+
+  if (item->error()) {
+    i->setState(PreviewItem::Error);
+    return;
+  }
 }

@@ -19,6 +19,7 @@
 #define PREVIEWWINDOWOBJECT_H_
 
 #include <QObject>
+#include <QVariant>
 
 class PreviewCore;
 
@@ -28,6 +29,7 @@ class PreviewWindowObject : public QObject
 
 public:
   PreviewWindowObject(PreviewCore *core);
+  Q_INVOKABLE QVariant findByOID(const QString &id) const;
 
 private:
   PreviewCore *m_core;
