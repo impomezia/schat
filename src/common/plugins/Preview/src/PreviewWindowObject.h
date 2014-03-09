@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QVariant>
 
+class ChatId;
 class PreviewCore;
 
 class PreviewWindowObject : public QObject
@@ -29,7 +30,14 @@ class PreviewWindowObject : public QObject
 
 public:
   PreviewWindowObject(PreviewCore *core);
+  Q_INVOKABLE QVariant findById(const QString &id) const;
   Q_INVOKABLE QVariant findByOID(const QString &id) const;
+
+signals:
+  void changed(const QString &id);
+
+private slots:
+  void onChanged(const ChatId &id);
 
 private:
   PreviewCore *m_core;

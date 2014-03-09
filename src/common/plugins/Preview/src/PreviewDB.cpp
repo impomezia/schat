@@ -64,6 +64,16 @@ ImageRecord *PreviewDB::findById(const ChatId &id)
 }
 
 
+void PreviewDB::save(const ChatId &id, const QUrl &url)
+{
+  QSqlQuery query(QSqlDatabase::database(m_id));
+  query.prepare(LS("INSERT INTO images (id, url) VALUES (:id, :url);"));
+  query.bindValue(LS(":id"),  id.toString());
+  query.bindValue(LS(":url"), url.toString());
+  query.exec();
+}
+
+
 void PreviewDB::create()
 {
   QSqlQuery query(QSqlDatabase::database(m_id));
@@ -73,7 +83,7 @@ void PreviewDB::create()
     "CREATE TABLE IF NOT EXISTS images ( "
     "  id         TEXT    PRIMARY KEY,"
     "  url        TEXT    NOT NULL,"
-    "  format     TEXT    NOT NULL,"
+    "  format     TEXT,"
     "  width      INTEGER DEFAULT ( 0 ),"
     "  height     INTEGER DEFAULT ( 0 ),"
     "  size       INTEGER DEFAULT ( 0 ),"

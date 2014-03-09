@@ -33,13 +33,19 @@ class PreviewStorage : public QObject
 public:
   PreviewStorage(QObject *parent = 0);
   ~PreviewStorage();
+  PreviewItem *findById(const ChatId &id) const;
   QList<ChatId> findByOID(const ChatId &id) const;
   void add(const ChatId &messageId, const QList<QUrl> &urls);
+
+signals:
+  void changed(const ChatId &id);
 
 private slots:
   void onFinished(DownloadItem item);
 
 private:
+  void downloadError(PreviewItem *item);
+
   PreviewDB *m_db;
   QMap<ChatId, PreviewItem*> m_items;
   QMap<ChatId, QList<ChatId> > m_messages;

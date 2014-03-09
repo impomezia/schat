@@ -41,6 +41,12 @@ PreviewStorage::~PreviewStorage()
 }
 
 
+PreviewItem *PreviewStorage::findById(const ChatId &id) const
+{
+  return m_items.value(id);
+}
+
+
 QList<ChatId> PreviewStorage::findByOID(const ChatId &id) const
 {
   return m_messages.value(id);
@@ -82,8 +88,15 @@ void PreviewStorage::onFinished(DownloadItem item)
   if (!i)
     return;
 
-  if (item->error()) {
-    i->setState(PreviewItem::Error);
-    return;
-  }
+  if (item->error())
+    return downloadError(i);
+}
+
+
+void PreviewStorage::downloadError(PreviewItem *item)
+{
+  item->setState(PreviewItem::Error);
+  m_db->save(item->id(), item->url());
+
+  emit changed(item->id());
 }

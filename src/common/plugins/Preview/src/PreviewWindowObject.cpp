@@ -16,13 +16,31 @@
  */
 
 #include "PreviewCore.h"
+#include "PreviewItem.h"
 #include "PreviewStorage.h"
 #include "PreviewWindowObject.h"
+#include "sglobal.h"
 
 PreviewWindowObject::PreviewWindowObject(PreviewCore *core)
   : QObject(core)
   , m_core(core)
 {
+  connect(core->storage(), SIGNAL(changed(ChatId)), SLOT(onChanged(ChatId)));
+}
+
+
+QVariant PreviewWindowObject::findById(const QString &id) const
+{
+  PreviewItem *item = m_core->storage()->findById(id);
+  if (!item)
+    return QVariant();
+
+  QVariantMap map;
+  map.insert(LS("id"),    item->id().toString());
+  map.insert(LS("state"), item->state());
+  map.insert(LS("url"),   item->url());
+
+  return map;
 }
 
 
@@ -42,4 +60,10 @@ QVariant PreviewWindowObject::findByOID(const QString &id) const
   }
 
   return out;
+}
+
+
+void PreviewWindowObject::onChanged(const ChatId &id)
+{
+  emit changed(id.toString());
 }
