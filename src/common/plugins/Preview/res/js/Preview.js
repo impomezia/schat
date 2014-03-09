@@ -24,6 +24,11 @@
       elem.setAttribute('class', 'img-thumbnail img-thumbnail-spinner');
       return;
     }
+
+    if (item.state === 1) {
+      elem.setAttribute('class', 'img-thumbnail');
+      elem.setAttribute('style', 'background-image:url("' + item.thumb + '")');
+    }
   }
 
 

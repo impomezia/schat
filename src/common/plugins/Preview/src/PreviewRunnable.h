@@ -15,42 +15,34 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PREVIEWSTORAGE_H_
-#define PREVIEWSTORAGE_H_
+#ifndef PREVIEWRUNNABLE_H_
+#define PREVIEWRUNNABLE_H_
 
 #include <QObject>
+#include <QRunnable>
 
 #include "id/ChatId.h"
-#include "interfaces/IDownloadItem.h"
 
-class PreviewDB;
-class PreviewItem;
+class QFile;
 struct ImageRecord;
 
-class PreviewStorage : public QObject
+class PreviewRunnable : public QObject, public QRunnable
 {
   Q_OBJECT
 
 public:
-  PreviewStorage(QObject *parent = 0);
-  ~PreviewStorage();
-  PreviewItem *findById(const ChatId &id) const;
-  QList<ChatId> findByOID(const ChatId &id) const;
-  void add(const ChatId &messageId, const QList<QUrl> &urls);
+  PreviewRunnable(const QString &id);
+  void run() Q_DECL_OVERRIDE;
 
 signals:
-  void changed(const ChatId &id);
-
-private slots:
-  void onFinished(const ImageRecord &record);
-  void onFinished(DownloadItem item);
+  void finished(const ImageRecord &record);
 
 private:
-  void downloadError(PreviewItem *item);
+  QString prepare(const QString &type, const QString &format) const;
 
-  PreviewDB *m_db;
-  QMap<ChatId, PreviewItem*> m_items;
-  QMap<ChatId, QList<ChatId> > m_messages;
+  const QString m_id;
+  const QString m_path;
+  const QString m_source;
 };
 
-#endif // PREVIEWSTORAGE_H
+#endif // PREVIEWRUNNABLE_H_

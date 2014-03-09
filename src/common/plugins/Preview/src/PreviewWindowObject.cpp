@@ -15,6 +15,7 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Path.h"
 #include "PreviewCore.h"
 #include "PreviewItem.h"
 #include "PreviewStorage.h"
@@ -39,6 +40,10 @@ QVariant PreviewWindowObject::findById(const QString &id) const
   map.insert(LS("id"),    item->id().toString());
   map.insert(LS("state"), item->state());
   map.insert(LS("url"),   item->url());
+
+  if (item->state() == PreviewItem::Ready) {
+    map.insert(LS("thumb"), QUrl::fromLocalFile(QString(LS("%1/images/t/%2/%3.png")).arg(Path::cache(), id.left(2), id)));
+  }
 
   return map;
 }

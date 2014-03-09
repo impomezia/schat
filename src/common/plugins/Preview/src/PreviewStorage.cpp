@@ -16,18 +16,22 @@
  */
 
 #include <QDir>
+#include <QThreadPool>
 
-#include "PreviewDB.h"
-#include "PreviewStorage.h"
-#include "Path.h"
-#include "sglobal.h"
-#include "PreviewItem.h"
 #include "ChatCore.h"
 #include "NetworkAccess.h"
+#include "Path.h"
+#include "PreviewDB.h"
+#include "PreviewItem.h"
+#include "PreviewRunnable.h"
+#include "PreviewStorage.h"
+#include "sglobal.h"
 
 PreviewStorage::PreviewStorage(QObject *parent) :
   QObject(parent)
 {
+  qRegisterMetaType<ImageRecord>("ImageRecord");
+
   m_db = new PreviewDB(this);
   m_db->open(Path::cache() + LS("/preview.sqlite"));
 
@@ -82,6 +86,17 @@ void PreviewStorage::add(const ChatId &messageId, const QList<QUrl> &urls)
 }
 
 
+void PreviewStorage::onFinished(const ImageRecord &record)
+{
+  PreviewItem *item = m_items.value(record.id);
+  if (!item)
+    return;
+
+  item->setState(PreviewItem::Ready);
+  emit changed(item->id());
+}
+
+
 void PreviewStorage::onFinished(DownloadItem item)
 {
   PreviewItem *i = m_items.value(ChatId(item->url().toEncoded(), ChatId::NormalizedId));
@@ -90,6 +105,13 @@ void PreviewStorage::onFinished(DownloadItem item)
 
   if (item->error())
     return downloadError(i);
+
+  PreviewRunnable *task = new PreviewRunnable(i->id().toString());
+  connect(task, SIGNAL(finished(ImageRecord)), SLOT(onFinished(ImageRecord)));
+
+  QThreadPool::globalInstance()->start(task);
+
+  qDebug() << "----------------------------------------------------------" << i->url();
 }
 
 

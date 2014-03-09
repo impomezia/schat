@@ -27,6 +27,7 @@ HEADERS  = \
    src/PreviewDB.h \
    src/PreviewFilter.h \
    src/PreviewItem.h \
+   src/PreviewRunnable.h \
    src/PreviewStorage.h \
    src/PreviewWindowObject.h \
 
@@ -37,6 +38,7 @@ SOURCES  = \
    src/PreviewDB.cpp \
    src/PreviewFilter.cpp \
    src/PreviewItem.cpp \
+   src/PreviewRunnable.cpp \
    src/PreviewStorage.cpp \
    src/PreviewWindowObject.cpp \
 
