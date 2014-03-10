@@ -1,6 +1,5 @@
-/* $Id: english.nsh 3274 2012-11-17 19:06:18Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -45,6 +44,8 @@ ${L} sec_Profile            "Profile"
 ${L} desc_Profile           "Adds support for additional profile fields"
 ${L} sec_Popup              "Popup"
 ${L} desc_Popup             "Adds support for popup notifications"
+${L} sec_Preview            "Preview"
+${L} desc_Preview           "Image Preview"
 ${L} sec_Proxy              "Proxy"
 ${L} desc_Proxy             "Adds support for connections via HTTP and SOCKS5 proxy"
 ${L} sec_Console            "Console"

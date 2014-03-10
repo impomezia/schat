@@ -15,33 +15,39 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+#include "ChatCore.h"
+#include "id/ChatId.h"
+#include "Path.h"
+#include "PreviewChatView.h"
+#include "PreviewCore.h"
+#include "PreviewFilter.h"
+#include "PreviewStorage.h"
+#include "PreviewWindowObject.h"
+#include "sglobal.h"
+#include "text/TokenFilter.h"
+#include "Translation.h"
 
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
-
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
-
-
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+PreviewCore::PreviewCore(QObject *parent)
+  : ChatPlugin(parent)
 {
-  TokenFilter() {}
+  ChatCore::translation()->addOther(LS("preview"));
 
-public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
+  TokenFilter::add(LS("channel"), new PreviewFilter(this));
 
-private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
-};
+  m_storage = new PreviewStorage(this);
+  m_windowObject = new PreviewWindowObject(this);
+}
 
 
-#endif /* TOKENFILTER_H_ */
+void PreviewCore::add(const ChatId &id, const QList<QUrl> &urls)
+{
+  SLOG_DEBUG(id.toBase32() << urls);
+
+  m_storage->add(id, urls);
+}
+
+
+void PreviewCore::chatReady()
+{
+  new PreviewChatView(this);
+}

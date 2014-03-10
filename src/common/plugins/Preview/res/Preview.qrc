@@ -1,0 +1,11 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="css/Preview/Preview.css">css/Preview.css</file>
+  <file alias="images/Preview/error.png">images/font-awesome/fa-exclamation-triangle.png</file>
+  <file alias="images/Preview/spinner.gif">images/spinner.gif</file>
+  <file alias="js/Preview/Preview.js">js/Preview.js</file>
+  <file>translations/preview_en.qm</file>
+  <file>translations/preview_ru.qm</file>
+  <file>translations/preview_uk.qm</file>
+</qresource>
+</RCC>

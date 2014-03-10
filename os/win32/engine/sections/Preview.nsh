@@ -15,33 +15,19 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+${Name} Preview
+${State} 1
 
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
+${Body}
+${Section}
+  SetOutPath "$INSTDIR\plugins"
+  File "${SCHAT_SOURCE}\plugins\Preview.dll"
+${SectionEnd}
+${BodyEnd}
 
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
+${Uninstall}
+  Delete "$INSTDIR\plugins\Preview.dll"
 
-
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
-{
-  TokenFilter() {}
-
-public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
-
-private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
-};
-
-
-#endif /* TOKENFILTER_H_ */
+  RMDir "$INSTDIR\doc"
+  RMDir "$INSTDIR\plugins"
+${UninstallEnd}

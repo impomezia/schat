@@ -15,33 +15,31 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+#ifndef PREVIEWCORE_H_
+#define PREVIEWCORE_H_
 
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
+#include <QObject>
 
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
+#include "plugins/ChatPlugin.h"
 
+class ChatId;
+class PreviewStorage;
+class PreviewWindowObject;
 
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+class PreviewCore : public ChatPlugin
 {
-  TokenFilter() {}
+  Q_OBJECT
 
 public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
+  PreviewCore(QObject *parent);
+  inline PreviewStorage *storage() const           { return m_storage; }
+  inline PreviewWindowObject *windowObject() const { return m_windowObject; }
+  void add(const ChatId &id, const QList<QUrl> &urls);
+  void chatReady() Q_DECL_OVERRIDE;
 
 private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
+  PreviewStorage *m_storage;
+  PreviewWindowObject *m_windowObject;
 };
 
-
-#endif /* TOKENFILTER_H_ */
+#endif // PREVIEWCORE_H_

@@ -15,33 +15,46 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+#ifndef PREVIEWDB_H_
+#define PREVIEWDB_H_
 
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
+#include <QObject>
+#include <QUrl>
 
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
+#include "id/ChatId.h"
 
+class PreviewItem;
 
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+struct ImageRecord
 {
-  TokenFilter() {}
+  inline ImageRecord() : flags(0), width(0), height(0), size(0) {}
 
-public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
-
-private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
+  ChatId id;
+  QUrl url;
+  QString format;
+  int flags;
+  int width;
+  int height;
+  int size;
 };
 
 
-#endif /* TOKENFILTER_H_ */
+class PreviewDB : public QObject
+{
+  Q_OBJECT
+
+public:
+  PreviewDB(QObject *parent = 0);
+  bool open(const QString &path);
+  ImageRecord findById(const ChatId &id);
+  void save(const ChatId &id, const QUrl &url);
+  void save(PreviewItem *item);
+
+private:
+  void create();
+  void version();
+
+  const QString m_id;
+};
+
+#endif // PREVIEWDB_H_

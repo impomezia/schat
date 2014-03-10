@@ -15,33 +15,25 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
-
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
+#ifndef PREVIEWFILTER_H_
+#define PREVIEWFILTER_H_
 
 #include "interfaces/ITokenFilter.h"
-#include "schat.h"
 
+class PreviewCore;
 
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+class PreviewFilter : public ITokenFilter
 {
-  TokenFilter() {}
-
 public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
+  PreviewFilter(PreviewCore *core);
+  bool filter(QList<HtmlToken> &tokens, const ChatId &id) const Q_DECL_OVERRIDE;
+  inline int weight() const Q_DECL_OVERRIDE { return 900; }
 
 private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
+  bool isProbablyImage(const QUrl &url) const;
+
+  PreviewCore *m_core;
+  QStringList m_formats;
 };
 
-
-#endif /* TOKENFILTER_H_ */
+#endif // PREVIEWFILTER_H_

@@ -15,33 +15,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+#include <QtPlugin>
 
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
+#include "PreviewPlugin.h"
+#include "src/PreviewCore.h"
 
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
-
-
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+ChatPlugin *PreviewPlugin::create()
 {
-  TokenFilter() {}
+  m_plugin = new PreviewCore(this);
+  return m_plugin;
+}
 
-public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
-
-private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
-};
-
-
-#endif /* TOKENFILTER_H_ */
+Q_EXPORT_PLUGIN2(Preview, PreviewPlugin);

@@ -32,6 +32,7 @@ SUBDIRS += \
     Profile \
     Channels \
     Popup \
+    Preview \
     Emoticons \
     Idle \
     SendFile \

@@ -1,6 +1,5 @@
-/* $Id: ChannelMessage.cpp 3751 2013-07-13 03:03:07Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -67,7 +66,7 @@ ChannelMessage::ChannelMessage(MessagePacket packet)
     m_data.insert(kText, QString(LS("<span class='message-removed' data-tr='message-removed'>%1</span> <i class='message-trash'></i>")).arg(WebBridge::i()->translate("message-removed")));
   }
   else
-    m_data.insert(kText, TokenFilter::filter(LS("channel"), packet->text()));
+    m_data.insert(kText, TokenFilter::filter(LS("channel"), packet->text(), 0, packet->id()));
 
   if (!packet->oid.isNull()) {
     m_data.insert(kOID, QString(ChatId::toBase32(packet->oid.byteArray())));

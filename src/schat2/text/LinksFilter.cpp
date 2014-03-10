@@ -1,6 +1,5 @@
-/* $Id: LinksFilter.cpp 3650 2013-04-21 00:21:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,7 +19,6 @@
 #include "sglobal.h"
 
 LinksFilter::LinksFilter()
-  : AbstractFilter(200)
 {
   m_scheme += LS("http://");
   m_scheme += LS("https://");
@@ -29,9 +27,9 @@ LinksFilter::LinksFilter()
 }
 
 
-bool LinksFilter::filter(QList<HtmlToken> &tokens, int options) const
+bool LinksFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   QList<HtmlToken> out;
 

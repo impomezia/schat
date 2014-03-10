@@ -15,33 +15,40 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+#ifndef PREVIEWSTORAGE_H_
+#define PREVIEWSTORAGE_H_
 
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
+#include <QObject>
 
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
+#include "id/ChatId.h"
+#include "interfaces/IDownloadItem.h"
 
+class PreviewDB;
+class PreviewItem;
+struct ImageRecord;
 
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+class PreviewStorage : public QObject
 {
-  TokenFilter() {}
+  Q_OBJECT
 
 public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
+  PreviewStorage(QObject *parent = 0);
+  ~PreviewStorage();
+  PreviewItem *findById(const ChatId &id) const;
+  QList<ChatId> findByOID(const ChatId &id) const;
+  void add(const ChatId &messageId, const QList<QUrl> &urls);
+
+signals:
+  void changed(const ChatId &id);
+
+private slots:
+  void onFinished(const ImageRecord &record);
+  void onFinished(DownloadItem item);
 
 private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
+  PreviewDB *m_db;
+  QMap<ChatId, PreviewItem*> m_items;
+  QMap<ChatId, QList<ChatId> > m_messages;
 };
 
-
-#endif /* TOKENFILTER_H_ */
+#endif // PREVIEWSTORAGE_H

@@ -15,33 +15,34 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+#ifndef PREVIEWRUNNABLE_H_
+#define PREVIEWRUNNABLE_H_
 
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
+#include <QObject>
+#include <QRunnable>
 
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
+#include "id/ChatId.h"
 
+class QFile;
+struct ImageRecord;
 
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+class PreviewRunnable : public QObject, public QRunnable
 {
-  TokenFilter() {}
+  Q_OBJECT
 
 public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
+  PreviewRunnable(const QString &id);
+  void run() Q_DECL_OVERRIDE;
+
+signals:
+  void finished(const ImageRecord &record);
 
 private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
+  QString prepare(const QString &type, const QString &format) const;
+
+  const QString m_id;
+  const QString m_path;
+  const QString m_source;
 };
 
-
-#endif /* TOKENFILTER_H_ */
+#endif // PREVIEWRUNNABLE_H_

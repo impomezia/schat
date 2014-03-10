@@ -15,33 +15,32 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+#ifndef PREVIEWWINDOWOBJECT_H_
+#define PREVIEWWINDOWOBJECT_H_
 
-#include <QMap>
-#include <QStringList>
+#include <QObject>
 #include <QVariant>
-#include <QSharedPointer>
 
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
+class ChatId;
+class PreviewCore;
 
-
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+class PreviewWindowObject : public QObject
 {
-  TokenFilter() {}
+  Q_OBJECT
 
 public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
+  PreviewWindowObject(PreviewCore *core);
+  Q_INVOKABLE QVariant findById(const QString &id) const;
+  Q_INVOKABLE QVariant findByOID(const QString &id) const;
+
+signals:
+  void changed(const QString &id);
+
+private slots:
+  void onChanged(const ChatId &id);
 
 private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
+  PreviewCore *m_core;
 };
 
-
-#endif /* TOKENFILTER_H_ */
+#endif // PREVIEWWINDOWOBJECT_H

@@ -15,33 +15,32 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOKENFILTER_H_
-#define TOKENFILTER_H_
+#ifndef PREVIEWPLUGIN_H_
+#define PREVIEWPLUGIN_H_
 
-#include <QMap>
-#include <QStringList>
-#include <QVariant>
-#include <QSharedPointer>
+#include "ChatApi.h"
+#include "CoreApi.h"
 
-#include "interfaces/ITokenFilter.h"
-#include "schat.h"
-
-
-typedef QSharedPointer<ITokenFilter> FilterPtr;
-
-
-class SCHAT_CORE_EXPORT TokenFilter
+class PreviewPlugin : public QObject, CoreApi, ChatApi
 {
-  TokenFilter() {}
+  Q_OBJECT
+  Q_INTERFACES(CoreApi ChatApi)
+  Q_PLUGIN_METADATA(IID "me.schat.client.Preview")
 
 public:
-  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
-  static void add(const QString &type, ITokenFilter *filter);
-  static void clear();
+  QVariantMap header() const Q_DECL_OVERRIDE
+  {
+    QVariantMap out        = CoreApi::header();
+    out[CORE_API_ID]       = "Preview";
+    out[CORE_API_NAME]     = "Preview";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Preview";
+    out[CORE_API_DESC]     = "Image Preview";
 
-private:
-  static QMap<QString, QMap<int, FilterPtr> > m_filters; ///< Доступные фильтры.
+    return out;
+  }
+
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
-
-#endif /* TOKENFILTER_H_ */
+#endif // PREVIEWPLUGIN_H_

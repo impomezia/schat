@@ -21,6 +21,7 @@
 !define History
 !define Profile
 !define Popup
+!define Preview
 !define Proxy
 !define Emoticons
 !define SendFile
