@@ -23,11 +23,11 @@
 QString PreviewItem::m_path;
 
 PreviewItem::PreviewItem(const QUrl &url)
-  : m_url(url)
-  , m_flags(0)
+  : m_flags(0)
   , m_height(0)
   , m_size(0)
   , m_width(0)
+  , m_url(url)
   , m_state(Downloading)
 {
   m_id.init(url.toEncoded(), ChatId::NormalizedId);

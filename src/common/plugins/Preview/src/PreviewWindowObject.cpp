@@ -15,6 +15,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QUrl>
+
 #include "Path.h"
 #include "PreviewCore.h"
 #include "PreviewItem.h"
