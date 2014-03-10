@@ -1,6 +1,5 @@
-/* $Id: Core.nsh 3555 2013-03-04 23:55:58Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -45,6 +44,9 @@ ${Section}
   File "${SCHAT_SOURCE}\translations\ru.png"
   File "${SCHAT_SOURCE}\translations\uk.png"
 
+  SetOutPath "$INSTDIR\plugins"
+  File "${SCHAT_SOURCE}\plugins\Http.dll"
+
   WriteRegStr HKCU "${SCHAT_REGKEY}" "" $INSTDIR
   WriteUninstaller "$INSTDIR\uninstall.exe"
   WriteINIStr "$INSTDIR\schat2.init" "General" "Portable" true
@@ -70,10 +72,12 @@ ${Uninstall}
   Delete "$INSTDIR\translations\en.png"
   Delete "$INSTDIR\translations\ru.png"
   Delete "$INSTDIR\translations\uk.png"
+  Delete "$INSTDIR\plugins\Http.dll"
 
   RMDir "$INSTDIR\doc"
   RMDir "$INSTDIR\sounds"
   RMDir "$INSTDIR\translations"
+  RMDir "$INSTDIR\plugins"
 
   DeleteRegKey HKCU "${SCHAT_REGKEY}"
 ${UninstallEnd}

@@ -1,6 +1,5 @@
-/* $Id: TokenFilter.cpp 3650 2013-04-21 00:21:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,20 +20,20 @@
 
 QMap<QString, QMap<int, FilterPtr> > TokenFilter::m_filters;
 
-QString TokenFilter::filter(const QString &type, const QString &text, int options)
+QString TokenFilter::filter(const QString &type, const QString &text, int options, const ChatId &id)
 {
   QList<HtmlToken> tokens = HtmlFilter(options).tokenize(text);
-  QMap<int, FilterPtr> filters = m_filters.value(type);
+  const QMap<int, FilterPtr> &filters = m_filters[type];
 
   foreach (FilterPtr filter, filters) {
-    filter->filter(tokens);
+    filter->filter(tokens, id);
   }
 
   return HtmlFilter::build(tokens);
 }
 
 
-void TokenFilter::add(const QString &type, AbstractFilter *filter)
+void TokenFilter::add(const QString &type, ITokenFilter *filter)
 {
   m_filters[type][filter->weight()] = FilterPtr(filter);
 }

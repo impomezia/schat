@@ -59,6 +59,7 @@ HEADERS = \
     hooks/UserMenuImpl.h \
     interfaces/IChannelMenu.h \
     interfaces/IChatViewHook.h \
+    interfaces/ITokenFilter.h \
     messages/AlertMessage.h \
     messages/ChannelMessage.h \
     messages/Message.h \

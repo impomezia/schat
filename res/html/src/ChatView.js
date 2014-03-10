@@ -262,15 +262,23 @@ var Messages = {
         var container = document.getElementById(path[1]);
         if (container !== null) {
           try {
-            var block = container.firstChild;
-            block.classList.add('removed');
-            block.children[2].innerHTML = '<span class="message-removed" data-tr="message-removed">' + Utils.tr('message-removed') + '</span> <i class="message-trash"></i>';
+            Messages[(container.getAttribute('data-remover') || 'generic') + 'Remover'](container);
+
+            alignChat();
           }
-          catch (e) { console.log(e); }
+          catch (e) { console.error(e); }
         }
       }
     }
   },
+
+
+  genericRemover: function(container) {
+    var block = container.firstChild;
+    block.classList.add('removed');
+    block.children[2].innerHTML = '<span class="message-removed" data-tr="message-removed">' + Utils.tr('message-removed') + '</span> <i class="message-trash"></i>';
+  },
+
 
   /*
    * Установка идентификатора сообщения.
@@ -380,7 +388,7 @@ var Messages = {
       Messages[func](json);
     }
     catch (e) {
-      console.log(e);
+      console.error(e);
     }
   },
 
@@ -390,7 +398,7 @@ var Messages = {
     if (!messages.length)
       return;
 
-    var self     = Messages;
+    var that     = Messages;
     var scroll   = Settings.scroll;
     var scrollTo = Settings.scrollTo;
 
@@ -398,21 +406,21 @@ var Messages = {
     Settings.scrollTo = null;
 
     for (var i = 0; i < messages.length; i++)
-      self.addMessage(messages[i]);
+      that.addMessage(messages[i]);
 
-    for (i = 0; i < self.added.length; i++) {
-      for (var j = 0; j < self.onAdd.length; j++)
-        self.onAdd[j](self.added[i]);
+    for (i = 0; i < that.added.length; i++) {
+      for (var j = 0; j < that.onAdd.length; j++)
+        that.onAdd[j](that.added[i]);
     }
 
-    for (i = 0; i < self.onBulkAdd.length; i++) {
-      self.onBulkAdd[i](self.added);
+    for (i = 0; i < that.onBulkAdd.length; i++) {
+      that.onBulkAdd[i](that.added);
     }
 
     Settings.scroll = scroll;
 
-    if (self.added.length) {
-      self.added.length = 0;
+    if (that.added.length) {
+      that.added.length = 0;
     }
     else if (Settings.scrollTo === null)
       Settings.scrollTo = scrollTo;
@@ -429,7 +437,7 @@ var Messages = {
    */
   addRawMessage: function (block, day)
   {
-    document.getElementById('Chat').appendChild(block);
+    window.Chat.appendChild(block);
     Messages.add(block.id);
   },
 
@@ -812,17 +820,15 @@ var Modal = {
 
 
 $(document).ready(function() {
-  //$.fx.off = true;
+  window.Chat = document.getElementById('Chat');
 
-  $(window).resize(function() {
-    alignChat();
-  });
+  window.addEventListener('resize', alignChat);
 
-  $("#page-switcher-start").on("click", function(event){
+  document.getElementById('page-switcher-start').addEventListener('click', function() {
     Pages.setPage(0);
   });
 
-  $("#page-switcher-end").on("click", function(event){
+  document.getElementById('page-switcher-end').addEventListener('click', function() {
     Pages.setPage(1);
   });
 
@@ -849,7 +855,7 @@ function alignChat() {
   var windowHeight = window.innerHeight;
 
   if (windowHeight > 0) {
-    var contentElement = document.getElementById('Chat');
+    var contentElement = window.Chat;
     var contentHeight = contentElement.offsetHeight;
     if (windowHeight - contentHeight > 0) {
       contentElement.style.position = 'relative';

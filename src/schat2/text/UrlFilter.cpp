@@ -1,6 +1,5 @@
-/* $Id: UrlFilter.cpp 3650 2013-04-21 00:21:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,15 +23,9 @@
 #include "sglobal.h"
 #include "text/UrlFilter.h"
 
-UrlFilter::UrlFilter()
-  : AbstractFilter(100)
+bool UrlFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-}
-
-
-bool UrlFilter::filter(QList<HtmlToken> &tokens, int options) const
-{
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   QString name;
 

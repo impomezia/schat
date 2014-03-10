@@ -1,6 +1,5 @@
-/* $Id: EmoticonsFilter.cpp 3708 2013-06-23 23:40:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,16 +24,15 @@
 #include "sglobal.h"
 
 EmoticonsFilter::EmoticonsFilter(Emoticons *emoticons)
-  : AbstractFilter(1000)
-  , m_emoticons(emoticons)
+  : m_emoticons(emoticons)
   , m_count(1)
 {
 }
 
 
-bool EmoticonsFilter::filter(QList<HtmlToken> &tokens, int options) const
+bool EmoticonsFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   m_count = 1;
   QList<HtmlToken> out;
@@ -121,16 +119,9 @@ void EmoticonsFilter::parse(QList<HtmlToken> &tokens, const QString &text, int p
 }
 
 
-EmoticonsInputFilter::EmoticonsInputFilter()
-  : AbstractFilter(50)
-  , m_delete(false)
+bool EmoticonsInputFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
-}
-
-
-bool EmoticonsInputFilter::filter(QList<HtmlToken> &tokens, int options) const
-{
-  Q_UNUSED(options)
+  Q_UNUSED(id)
 
   QList<HtmlToken> out;
   m_delete = false;
