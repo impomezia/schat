@@ -17,6 +17,8 @@
 
 #include <QUrl>
 
+#include "ChatCore.h"
+#include "ChatSettings.h"
 #include "Path.h"
 #include "PreviewCore.h"
 #include "PreviewItem.h"
@@ -46,7 +48,7 @@ QVariant PreviewWindowObject::findById(const QString &id) const
   if (item->state() == PreviewItem::Ready) {
     map.insert(LS("thumb"),  QUrl::fromLocalFile(item->fileName(PreviewItem::Thumbnail)));
     map.insert(LS("orig"),   QUrl::fromLocalFile(item->fileName(PreviewItem::Original)));
-    map.insert(LS("flags"),  item->flags());
+    map.insert(LS("flags"),  ChatCore::settings()->value(PreviewCore::kAnimation).toBool() ? item->flags() : 0);
     map.insert(LS("width"),  item->width());
     map.insert(LS("height"), item->height());
   }
