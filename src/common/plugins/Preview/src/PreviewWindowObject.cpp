@@ -55,9 +55,6 @@ QVariant PreviewWindowObject::findById(const QString &id) const
 
 QVariant PreviewWindowObject::findByOID(const QString &id) const
 {
-  if (id.size() != ObjectId::kEncodedSize)
-    return QVariant();
-
   const QList<ChatId> ids = m_core->storage()->findByOID(id);
   if (ids.isEmpty())
     return QVariant();

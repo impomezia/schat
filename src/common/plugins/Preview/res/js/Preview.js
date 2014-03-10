@@ -13,8 +13,6 @@
     if (typeof item === 'string')
       item = PreviewPlugin.findById(item);
 
-    console.log(item);
-
     if (item === null || item.state === 2) {
       elem.setAttribute('class', 'img-thumbnail img-thumbnail-error');
       return;
@@ -71,6 +69,8 @@
     if (container === null)
       return;
 
+    container.setAttribute('data-remover', 'preview');
+
     var block = document.createElement('div');
     block.setAttribute('class', 'thumbnail-block');
 
@@ -95,6 +95,15 @@
 
     container.firstChild.appendChild(block);
   }
+
+
+  Messages.previewRemover = function(container) {
+    Messages.genericRemover(container);
+
+    var block = container.firstChild;
+    block.removeChild(block.children[3]);
+  };
+
 
   Messages.onAdd.push(onAdd);
 
