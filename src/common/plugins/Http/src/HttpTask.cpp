@@ -35,7 +35,8 @@
 
 
 HttpTaskState::HttpTaskState(const QUrl &url, const QString &fileName, const QVariantMap &options)
-  : m_file(0)
+  : redirects(0)
+  , m_file(0)
   , m_url(url)
 {
   Q_UNUSED(options)
@@ -54,7 +55,7 @@ HttpTaskState::~HttpTaskState()
 
 bool HttpTaskState::read(QNetworkReply *reply)
 {
-  if (m_file) {
+  if (m_file && reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
     if (!m_file->isOpen() && !m_file->open(QFile::WriteOnly))
       return false;
 
@@ -88,20 +89,9 @@ HttpTask::~HttpTask()
 
 void HttpTask::download(const QUrl &url, const QString &fileName, const QVariantMap &options)
 {
-  QNetworkRequest request(url);
-  request.setRawHeader("User-Agent", QString(LS("Mozilla/5.0 (%1) Qt/%2 AppleWebKit/%3 Simple Chat/%4"))
-      .arg(OsInfo::json().value(LS("os")).toString())
-      .arg(qVersion())
-      .arg(qWebKitVersion())
-      .arg(QCoreApplication::applicationVersion()).toLatin1());
-
   m_states.insert(url, new HttpTaskState(url, fileName, options));
 
-  QNetworkReply *reply = m_net->get(request);
-
-  connect(reply, SIGNAL(readyRead()), SLOT(onReadyRead()));
-  connect(reply, SIGNAL(finished()), SLOT(onFinished()));
-  connect(reply, SIGNAL(downloadProgress(qint64,qint64)), SLOT(onDownloadProgress(qint64,qint64)));
+  get(url);
 }
 
 
@@ -143,8 +133,21 @@ void HttpTask::onFinished()
     return;
 
   state->finish(reply);
-  emit finished(state->url(), HttpError::create(reply));
 
+  HttpError *error = HttpError::create(reply);
+  if (error && (error->status() == 301 || error->status() == 302) && state->redirects < 5) {
+    const QUrl url = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
+
+    state->redirects++;
+    m_states.insert(url, state);
+
+    get(url);
+    return;
+  }
+
+  emit finished(state->url(), error);
+
+  m_states.remove(state->url());
   m_states.remove(reply->url());
   delete state;
   reply->deleteLater();
@@ -170,6 +173,25 @@ void HttpTask::onReadyRead()
 
   if (reply->bytesAvailable())
     emit readyRead(state->url(), reply->readAll());
+}
+
+
+QNetworkReply *HttpTask::get(const QUrl &url)
+{
+  QNetworkRequest request(url);
+  request.setRawHeader("User-Agent", QString(LS("Mozilla/5.0 (%1) Qt/%2 AppleWebKit/%3 Simple Chat/%4"))
+      .arg(OsInfo::json().value(LS("os")).toString())
+      .arg(qVersion())
+      .arg(qWebKitVersion())
+      .arg(QCoreApplication::applicationVersion()).toLatin1());
+
+  QNetworkReply *reply = m_net->get(request);
+
+  connect(reply, SIGNAL(readyRead()), SLOT(onReadyRead()));
+  connect(reply, SIGNAL(finished()), SLOT(onFinished()));
+  connect(reply, SIGNAL(downloadProgress(qint64,qint64)), SLOT(onDownloadProgress(qint64,qint64)));
+
+  return reply;
 }
 
 

@@ -107,6 +107,8 @@ void PreviewStorage::onFinished(DownloadItem item)
   if (item->error()) {
     i->setState(PreviewItem::Error);
     m_db->save(i);
+
+    emit changed(i->id());
     return;
   }
 

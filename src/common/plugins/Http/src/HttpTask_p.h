@@ -32,6 +32,8 @@ public:
   inline QUrl url() const { return m_url; }
   void finish(QNetworkReply *reply);
 
+  int redirects;
+
 private:
   QFile *m_file;
   QUrl m_url;

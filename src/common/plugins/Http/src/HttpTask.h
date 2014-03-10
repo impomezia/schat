@@ -28,6 +28,7 @@
 
 class HttpTaskState;
 class INetworkError;
+class QNetworkReply;
 
 class HttpTask : public QObject
 {
@@ -51,6 +52,8 @@ private slots:
   void onReadyRead();
 
 private:
+  QNetworkReply *get(const QUrl &url);
+
   QMap<QUrl, HttpTaskState*> m_states;
   QNetworkAccessManager *m_net;
 };
