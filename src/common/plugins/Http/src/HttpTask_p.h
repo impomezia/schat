@@ -39,6 +39,7 @@ private:
   QFile *m_file;
   qint64 m_limit;
   qint64 m_size;
+  QStringList m_mimes;
   QUrl m_url;
 };
 

@@ -42,6 +42,7 @@ HttpTaskState::HttpTaskState(const QUrl &url, const QString &fileName, const QVa
   , m_url(url)
 {
   m_limit = options.value(LS("limit")).toLongLong();
+  m_mimes = options.value(LS("mimes")).toStringList();
 
   if (!fileName.isEmpty())
     m_file = new QFile(fileName);
@@ -57,7 +58,8 @@ HttpTaskState::~HttpTaskState()
 
 bool HttpTaskState::read(QNetworkReply *reply)
 {
-  const int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+  if (m_size == 0 && !m_mimes.isEmpty() && !m_mimes.contains(reply->header(QNetworkRequest::ContentTypeHeader).toString()))
+    return false;
 
   if (m_limit) {
     if (m_size + reply->bytesAvailable() > m_limit)
@@ -69,7 +71,7 @@ bool HttpTaskState::read(QNetworkReply *reply)
 
   m_size += reply->bytesAvailable();
 
-  if (m_file && status == 200) {
+  if (m_file && reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
     if (!m_file->isOpen() && !m_file->open(QFile::WriteOnly))
       return false;
 

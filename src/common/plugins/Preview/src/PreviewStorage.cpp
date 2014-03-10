@@ -34,6 +34,11 @@ PreviewStorage::PreviewStorage(QObject *parent) :
 {
   qRegisterMetaType<ImageRecord>("ImageRecord");
 
+  m_mimes.append(LS("image/bmp"));
+  m_mimes.append(LS("image/gif"));
+  m_mimes.append(LS("image/jpeg"));
+  m_mimes.append(LS("image/png"));
+
   m_db = new PreviewDB(this);
   m_db->open(Path::cache() + LS("/preview.sqlite"));
 
@@ -81,6 +86,7 @@ void PreviewStorage::add(const ChatId &messageId, const QList<QUrl> &urls)
     if (item->state() == PreviewItem::Downloading) {
       QVariantMap options;
       options.insert(LS("limit"), ChatCore::settings()->value(PreviewCore::kMaxSize));
+      options.insert(LS("mimes"), m_mimes);
 
       item->setDownloadItem(ChatCore::networkAccess()->download(item->url(), QDir::tempPath() + LS("/") + id.toString(), options));
     }

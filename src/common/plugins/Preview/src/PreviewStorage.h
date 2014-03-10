@@ -49,6 +49,7 @@ private:
   PreviewDB *m_db;
   QMap<ChatId, PreviewItem*> m_items;
   QMap<ChatId, QList<ChatId> > m_messages;
+  QStringList m_mimes;
 };
 
 #endif // PREVIEWSTORAGE_H
