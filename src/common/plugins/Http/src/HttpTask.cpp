@@ -15,11 +15,12 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QNetworkRequest>
 #include <QCoreApplication>
+#include <QFile>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QFile>
+#include <QNetworkRequest>
+#include <QStringList>
 
 #if QT_VERSION >= 0x050000
 # include <QWebPage>
