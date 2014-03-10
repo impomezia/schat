@@ -19,6 +19,7 @@
 #define PREVIEWSTORAGE_H_
 
 #include <QObject>
+#include <QStringList>
 
 #include "id/ChatId.h"
 #include "interfaces/IDownloadItem.h"
