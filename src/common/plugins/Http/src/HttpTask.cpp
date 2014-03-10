@@ -35,11 +35,13 @@
 
 
 HttpTaskState::HttpTaskState(const QUrl &url, const QString &fileName, const QVariantMap &options)
-  : redirects(0)
+  : m_redirects(0)
   , m_file(0)
+  , m_limit(0)
+  , m_size(0)
   , m_url(url)
 {
-  Q_UNUSED(options)
+  m_limit = options.value(LS("limit")).toLongLong();
 
   if (!fileName.isEmpty())
     m_file = new QFile(fileName);
@@ -55,7 +57,19 @@ HttpTaskState::~HttpTaskState()
 
 bool HttpTaskState::read(QNetworkReply *reply)
 {
-  if (m_file && reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
+  const int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+  if (m_limit) {
+    if (m_size + reply->bytesAvailable() > m_limit)
+      return false;
+
+    if (m_size == 0 && reply->header(QNetworkRequest::ContentLengthHeader).toLongLong() > m_limit)
+      return false;
+  }
+
+  m_size += reply->bytesAvailable();
+
+  if (m_file && status == 200) {
     if (!m_file->isOpen() && !m_file->open(QFile::WriteOnly))
       return false;
 
@@ -71,6 +85,13 @@ bool HttpTaskState::read(QNetworkReply *reply)
 void HttpTaskState::finish(QNetworkReply *reply)
 {
   Q_UNUSED(reply)
+}
+
+
+void HttpTaskState::redirect()
+{
+  m_size = 0;
+  ++m_redirects;
 }
 
 
@@ -135,10 +156,10 @@ void HttpTask::onFinished()
   state->finish(reply);
 
   HttpError *error = HttpError::create(reply);
-  if (error && (error->status() == 301 || error->status() == 302) && state->redirects < 5) {
+  if (error && (error->status() == 301 || error->status() == 302) && state->redirects() < 5) {
     const QUrl url = reply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
 
-    state->redirects++;
+    state->redirect();
     m_states.insert(url, state);
 
     get(url);

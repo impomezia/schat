@@ -19,8 +19,10 @@
 #include <QThreadPool>
 
 #include "ChatCore.h"
+#include "ChatSettings.h"
 #include "NetworkAccess.h"
 #include "Path.h"
+#include "PreviewCore.h"
 #include "PreviewDB.h"
 #include "PreviewItem.h"
 #include "PreviewRunnable.h"
@@ -77,7 +79,10 @@ void PreviewStorage::add(const ChatId &messageId, const QList<QUrl> &urls)
 
     item->setRecord(m_db->findById(id));
     if (item->state() == PreviewItem::Downloading) {
-      item->setDownloadItem(ChatCore::networkAccess()->download(item->url(), QDir::tempPath() + LS("/") + id.toString()));
+      QVariantMap options;
+      options.insert(LS("limit"), ChatCore::settings()->value(PreviewCore::kMaxSize));
+
+      item->setDownloadItem(ChatCore::networkAccess()->download(item->url(), QDir::tempPath() + LS("/") + id.toString(), options));
     }
   }
 

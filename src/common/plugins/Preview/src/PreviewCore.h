@@ -19,6 +19,7 @@
 #define PREVIEWCORE_H_
 
 #include <QObject>
+#include <QUrl>
 
 #include "plugins/ChatPlugin.h"
 
@@ -31,6 +32,9 @@ class PreviewCore : public ChatPlugin
   Q_OBJECT
 
 public:
+  static const QString kAnimation;
+  static const QString kMaxSize;
+
   PreviewCore(QObject *parent);
   inline PreviewStorage *storage() const           { return m_storage; }
   inline PreviewWindowObject *windowObject() const { return m_windowObject; }

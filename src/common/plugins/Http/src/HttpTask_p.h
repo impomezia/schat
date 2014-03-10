@@ -29,13 +29,16 @@ public:
   HttpTaskState(const QUrl &url, const QString &fileName, const QVariantMap &options);
   ~HttpTaskState();
   bool read(QNetworkReply *reply);
-  inline QUrl url() const { return m_url; }
+  inline int redirects() const { return m_redirects; }
+  inline QUrl url() const      { return m_url; }
   void finish(QNetworkReply *reply);
-
-  int redirects;
+  void redirect();
 
 private:
+  int m_redirects;
   QFile *m_file;
+  qint64 m_limit;
+  qint64 m_size;
   QUrl m_url;
 };
 

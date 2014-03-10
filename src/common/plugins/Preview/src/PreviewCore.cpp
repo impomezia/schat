@@ -16,6 +16,7 @@
  */
 
 #include "ChatCore.h"
+#include "ChatSettings.h"
 #include "id/ChatId.h"
 #include "Path.h"
 #include "PreviewChatView.h"
@@ -27,9 +28,15 @@
 #include "text/TokenFilter.h"
 #include "Translation.h"
 
+const QString PreviewCore::kAnimation = LS("Preview/Animation");
+const QString PreviewCore::kMaxSize   = LS("Preview/MaxSize");
+
 PreviewCore::PreviewCore(QObject *parent)
   : ChatPlugin(parent)
 {
+  ChatCore::settings()->setDefault(kAnimation, true);
+  ChatCore::settings()->setDefault(kMaxSize,   1024 * 1024 * 5);
+
   ChatCore::translation()->addOther(LS("preview"));
 
   TokenFilter::add(LS("channel"), new PreviewFilter(this));
