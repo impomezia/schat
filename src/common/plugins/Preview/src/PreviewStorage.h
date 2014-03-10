@@ -46,8 +46,6 @@ private slots:
   void onFinished(DownloadItem item);
 
 private:
-  void downloadError(PreviewItem *item);
-
   PreviewDB *m_db;
   QMap<ChatId, PreviewItem*> m_items;
   QMap<ChatId, QList<ChatId> > m_messages;

@@ -21,6 +21,7 @@
 
 #include "Path.h"
 #include "PreviewDB.h"
+#include "PreviewItem.h"
 #include "PreviewRunnable.h"
 #include "sglobal.h"
 
@@ -28,7 +29,7 @@ PreviewRunnable::PreviewRunnable(const QString &id)
   : QObject()
   , QRunnable()
   , m_id(id)
-  , m_path(Path::cache() + LS("/images"))
+  , m_path(PreviewItem::path())
   , m_source(QDir::tempPath() + LC('/') + id)
 {
 }
@@ -52,8 +53,10 @@ void PreviewRunnable::run()
   }
 
   const QString format = reader.format();
-  const QImage image   = reader.read();
+  if (reader.loopCount() != 0)
+    record.flags |= PreviewItem::Animated;
 
+  const QImage image   = reader.read();
   file.rename(prepare(LS("o"), format));
 
   QImage thumb;

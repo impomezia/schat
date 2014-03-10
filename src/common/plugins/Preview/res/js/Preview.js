@@ -27,7 +27,14 @@
 
     if (item.state === 1) {
       elem.setAttribute('class', 'img-thumbnail');
-      elem.setAttribute('style', 'background-image:url("' + item.thumb + '")');
+
+      if (item.flags & 1) {
+        elem.style.backgroundImage = 'url("' + item.orig + '")';
+        elem.style.backgroundSize  = (item.width > 90 ? 90 : item.width) + 'px ' + (item.height > 90 ? 90 : item.height) + 'px';
+      }
+      else {
+        elem.style.backgroundImage = 'url("' + item.thumb + '")';
+      }
     }
   }
 

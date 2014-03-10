@@ -32,22 +32,44 @@ public:
     Error
   };
 
+  enum Flags {
+    NoFlags,
+    Animated
+  };
+
+  enum FileType {
+    Original,
+    Thumbnail
+  };
+
   PreviewItem(const QUrl &url);
-  ~PreviewItem();
-  inline const ChatId &id() const    { return m_id; }
-  inline const QUrl &url() const     { return m_url; }
-  inline ImageRecord *record() const { return m_record; }
-  inline State state() const         { return m_state; }
-  inline void setState(State state)  { m_state = state; }
+  inline const ChatId &id() const          { return m_id; }
+  inline const QString &format()           { return m_format; }
+  inline const QUrl &url() const           { return m_url; }
+  inline int flags() const                 { return m_flags; }
+  inline int height() const                { return m_height; }
+  inline int size() const                  { return m_size; }
+  inline int width() const                 { return m_width; }
+  inline State state() const               { return m_state; }
+  inline void setState(State state)        { m_state = state; }
+  QString fileName(FileType type) const;
   void setDownloadItem(DownloadItem item);
-  void setRecord(ImageRecord *record);
+  void setRecord(const ImageRecord &record);
+
+  static QString path();
 
 private:
   ChatId m_id;
-  QWeakPointer<IDownloadItem> m_item;
-  ImageRecord *m_record;
+  int m_flags;
+  int m_height;
+  int m_size;
+  int m_width;
+  QString m_format;
   QUrl m_url;
+  QWeakPointer<IDownloadItem> m_item;
   State m_state;
+
+  static QString m_path;
 };
 
 #endif // PREVIEWITEM_H_

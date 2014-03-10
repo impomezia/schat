@@ -42,7 +42,11 @@ QVariant PreviewWindowObject::findById(const QString &id) const
   map.insert(LS("url"),   item->url());
 
   if (item->state() == PreviewItem::Ready) {
-    map.insert(LS("thumb"), QUrl::fromLocalFile(QString(LS("%1/images/t/%2/%3.png")).arg(Path::cache(), id.left(2), id)));
+    map.insert(LS("thumb"),  QUrl::fromLocalFile(item->fileName(PreviewItem::Thumbnail)));
+    map.insert(LS("orig"),   QUrl::fromLocalFile(item->fileName(PreviewItem::Original)));
+    map.insert(LS("flags"),  item->flags());
+    map.insert(LS("width"),  item->width());
+    map.insert(LS("height"), item->height());
   }
 
   return map;

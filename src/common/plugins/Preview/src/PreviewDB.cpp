@@ -20,6 +20,7 @@
 #include <QVariant>
 
 #include "PreviewDB.h"
+#include "PreviewItem.h"
 #include "sglobal.h"
 
 PreviewDB::PreviewDB(QObject *parent) :
@@ -41,24 +42,25 @@ bool PreviewDB::open(const QString &path)
 }
 
 
-ImageRecord *PreviewDB::findById(const ChatId &id)
+ImageRecord PreviewDB::findById(const ChatId &id)
 {
   QSqlQuery query(QSqlDatabase::database(m_id));
-  query.prepare(LS("SELECT url, format, width, height, size, name FROM images WHERE id = :id;"));
+  query.prepare(LS("SELECT url, format, flags, width, height, size FROM images WHERE id = :id;"));
   query.bindValue(LS(":id"), id.toString());
   query.exec();
 
-  if (!query.first())
-    return 0;
+  ImageRecord record;
 
-  ImageRecord *record = new ImageRecord();
-  record->id     = id;
-  record->url    = query.value(0).toUrl();
-  record->format = query.value(1).toString();
-  record->width  = query.value(2).toInt();
-  record->height = query.value(3).toInt();
-  record->size   = query.value(4).toInt();
-  record->name   = query.value(5).toString();
+  if (!query.first())
+    return record;
+
+  record.id     = id;
+  record.url    = query.value(0).toUrl();
+  record.format = query.value(1).toString();
+  record.flags  = query.value(2).toInt();
+  record.width  = query.value(3).toInt();
+  record.height = query.value(4).toInt();
+  record.size   = query.value(5).toInt();
 
   return record;
 }
@@ -74,6 +76,24 @@ void PreviewDB::save(const ChatId &id, const QUrl &url)
 }
 
 
+void PreviewDB::save(PreviewItem *item)
+{
+  if (item->state() == PreviewItem::Error)
+    return save(item->id(), item->url());
+
+  QSqlQuery query(QSqlDatabase::database(m_id));
+  query.prepare(LS("INSERT INTO images (id, url, format, flags, width, height, size) VALUES (:id, :url, :format, :flags, :width, :height, :size);"));
+  query.bindValue(LS(":id"),     item->id().toString());
+  query.bindValue(LS(":url"),    item->url().toString());
+  query.bindValue(LS(":format"), item->format());
+  query.bindValue(LS(":flags"),  item->flags());
+  query.bindValue(LS(":width"),  item->width());
+  query.bindValue(LS(":height"), item->height());
+  query.bindValue(LS(":size"),   item->size());
+  query.exec();
+}
+
+
 void PreviewDB::create()
 {
   QSqlQuery query(QSqlDatabase::database(m_id));
@@ -84,10 +104,10 @@ void PreviewDB::create()
     "  id         TEXT    PRIMARY KEY,"
     "  url        TEXT    NOT NULL,"
     "  format     TEXT,"
+    "  flags      INTEGER DEFAULT ( 0 ),"
     "  width      INTEGER DEFAULT ( 0 ),"
     "  height     INTEGER DEFAULT ( 0 ),"
     "  size       INTEGER DEFAULT ( 0 ),"
-    "  name       TEXT,"
     "  data       BLOB"
     ");"
   ));

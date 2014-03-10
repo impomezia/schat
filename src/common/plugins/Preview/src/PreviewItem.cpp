@@ -15,22 +15,36 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "Path.h"
 #include "PreviewDB.h"
 #include "PreviewItem.h"
+#include "sglobal.h"
+
+QString PreviewItem::m_path;
 
 PreviewItem::PreviewItem(const QUrl &url)
-  : m_record(0)
-  , m_url(url)
+  : m_url(url)
+  , m_flags(0)
+  , m_height(0)
+  , m_size(0)
+  , m_width(0)
   , m_state(Downloading)
 {
   m_id.init(url.toEncoded(), ChatId::NormalizedId);
 }
 
 
-PreviewItem::~PreviewItem()
+QString PreviewItem::fileName(FileType type) const
 {
-  if (m_record)
-    delete m_record;
+  const QString id = m_id.toString();
+
+  if (type == Original)
+    return QString(LS("%1/o/%2/%3.%4")).arg(path(), id.left(2), id, m_format);
+
+  if (type == Thumbnail)
+    return QString(LS("%1/t/%2/%3.png")).arg(path(), id.left(2), id);
+
+  return QString();
 }
 
 
@@ -41,20 +55,29 @@ void PreviewItem::setDownloadItem(DownloadItem item)
 }
 
 
-void PreviewItem::setRecord(ImageRecord *record)
+void PreviewItem::setRecord(const ImageRecord &record)
 {
-  if (m_record)
-    delete m_record;
+  if (record.id.isNull())
+    return setState(Downloading);
 
-  m_record = record;
+  if (record.width && record.height) {
+    m_flags  = record.flags;
+    m_height = record.height;
+    m_size   = record.size;
+    m_width  = record.width;
+    m_format = record.format;
 
-  if (!m_record) {
-    m_state = Downloading;
+    return setState(Ready);
   }
-  else if (record->width && record->height && record->size) {
-    m_state = Ready;
-  }
-  else {
-    m_state = Error;
-  }
+
+  setState(Error);
+}
+
+
+QString PreviewItem::path()
+{
+  if (m_path.isEmpty())
+    m_path = Path::cache() + LS("/images");
+
+  return m_path;
 }

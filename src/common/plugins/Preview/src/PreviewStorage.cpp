@@ -92,7 +92,8 @@ void PreviewStorage::onFinished(const ImageRecord &record)
   if (!item)
     return;
 
-  item->setState(PreviewItem::Ready);
+  item->setRecord(record);
+  m_db->save(item);
   emit changed(item->id());
 }
 
@@ -103,22 +104,14 @@ void PreviewStorage::onFinished(DownloadItem item)
   if (!i)
     return;
 
-  if (item->error())
-    return downloadError(i);
+  if (item->error()) {
+    i->setState(PreviewItem::Error);
+    m_db->save(i);
+    return;
+  }
 
   PreviewRunnable *task = new PreviewRunnable(i->id().toString());
   connect(task, SIGNAL(finished(ImageRecord)), SLOT(onFinished(ImageRecord)));
 
   QThreadPool::globalInstance()->start(task);
-
-  qDebug() << "----------------------------------------------------------" << i->url();
-}
-
-
-void PreviewStorage::downloadError(PreviewItem *item)
-{
-  item->setState(PreviewItem::Error);
-  m_db->save(item->id(), item->url());
-
-  emit changed(item->id());
 }
