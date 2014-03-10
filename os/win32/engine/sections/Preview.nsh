@@ -15,42 +15,19 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-!ifndef mod
-  !define mod "!insertmacro SCHAT_MOD "
-!endif
-!ifmacrondef SCHAT_MOD
-  !macro SCHAT_MOD _NAME
-    !ifdef ${_NAME} | SCHAT_UNINSTALL
-      !include "engine\sections\${_NAME}.nsh"
-    !endif
-  !macroend
-!endif
+${Name} Preview
+${State} 1
 
-${mod} Core
-${mod} Qt
+${Body}
+${Section}
+  SetOutPath "$INSTDIR\plugins"
+  File "${SCHAT_SOURCE}\plugins\Preview.dll"
+${SectionEnd}
+${BodyEnd}
 
-!ifdef SCHAT_SECTIONS
-  !if ${SCHAT_PLUGINS_GRP} == 1
-    SectionGroup "$(STR1005)" GroupPlugins
-  !endif
-!endif
-${mod} Cache
-${mod} History
-${mod} Profile
-${mod} Popup
-${mod} Preview
-${mod} Proxy
-${mod} Emoticons
-${mod} SendFile
-${mod} SpellChecker
-${mod} Idle
-${mod} Update
-${mod} Console
-${mod} Channels
-${mod} YouTube
-${mod} RawFeeds
-!ifdef SCHAT_SECTIONS
-  !if ${SCHAT_PLUGINS_GRP} == 1
-    SectionGroupEnd
-  !endif
-!endif
+${Uninstall}
+  Delete "$INSTDIR\plugins\Preview.dll"
+
+  RMDir "$INSTDIR\doc"
+  RMDir "$INSTDIR\plugins"
+${UninstallEnd}
