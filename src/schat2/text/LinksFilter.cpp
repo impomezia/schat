@@ -51,6 +51,10 @@ QString LinksFilter::url(const QString &text, int index, int &last) const
   last = text.indexOf(LC(' '), index);
   QString url;
   last == -1 ? url = text.mid(index) : url = text.mid(index, last - index);
+
+  if (url.endsWith(LS("&nbsp;")))
+    return url.mid(0, url.size() - 6);
+
   return url;
 }
 
