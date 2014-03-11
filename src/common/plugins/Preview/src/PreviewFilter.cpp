@@ -36,14 +36,30 @@ PreviewFilter::PreviewFilter(PreviewCore *core)
 bool PreviewFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
   QList<QUrl> urls;
+  bool remove = false;
 
-  foreach (const HtmlToken &token, tokens) {
+  for (int i = 0; i < tokens.size(); ++i) {
+    HtmlToken &token = tokens[i];
+
+    if (remove) {
+      if (token.type == HtmlToken::Text && token.parent == LS("a"))
+        token.text = QString();
+
+      if (token.type == HtmlToken::EndTag && token.text == LS("</a>"))
+        remove = false;
+    }
+
     if (token.type != HtmlToken::StartTag || token.tag != LS("a"))
       continue;
 
-    const QUrl url(HtmlATag(token).url);
-    if (isProbablyImage(url))
-      urls.append(url);
+    HtmlATag tag(token);
+
+    if (!isProbablyImage(tag.url))
+      continue;
+
+    urls.append(tag.url);
+    token.text = QString(LS("<a href=\"%1\" class=\"img-thumbnail img-thumbnail-spinner\" title=\"%1\">")).arg(tag.url);
+    remove = true;
   }
 
   if (!urls.isEmpty())
