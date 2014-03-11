@@ -7,11 +7,9 @@
   <file alias="css/PluginsView.css">html/css/PluginsView.min.css</file>
   <file alias="css/server.css">html/css/server.min.css</file>
   <file alias="css/user.css">html/css/user.min.css</file>
-  <file alias="images/add.png">images/font-awesome/fa-plus.png</file>
-  <file alias="images/add-gray.png">images/font-awesome/fa-plus.png</file>
   <file alias="images/add-small.png">images/diagona/10/103.png</file>
   <file alias="images/away-small.png">images/diagona/10/087.png</file>
-  <file alias="images/balloon.png">images/fugue/balloon.png</file>
+  <file alias="images/balloon.png">images/font-awesome/fa-comment.png</file>
   <file alias="images/br-next.png">images/wireframe/br_next.png</file>
   <file alias="images/br-prev.png">images/wireframe/br_prev.png</file>
   <file alias="images/channel.png">images/font-awesome/fa-comments.png</file>
@@ -27,24 +25,21 @@
   <file alias="images/exclamation-red.png">images/fugue/exclamation-red.png</file>
   <file alias="images/ffc-small.png">images/diagona/10/036.png</file>
   <file alias="images/globe.png">images/font-awesome/fa-globe.png</file>
-  <file alias="images/information.png">images/fugue/information.png</file>
-  <file alias="images/information-balloon.png">images/fugue/information-balloon.png</file>
-  <file alias="images/key.png">images/diagona/065.png</file>
+  <file alias="images/information.png">images/font-awesome/fa-info-circle.png</file>
   <file alias="images/locale.png">images/fugue/locale-alternate.png</file>
   <file alias="images/main-tab-menu.png">images/fugue/applications-stack.png</file>
   <file alias="images/message-active.png">images/diagona/003.png</file>
-  <file alias="images/network-error.png">images/fugue/network-status-busy.png</file>
-  <file alias="images/offline.png">images/fugue/network-status-offline.png</file>
+  <file alias="images/network-error.png">images/fugue/status-busy.png</file>
+  <file alias="images/offline.png">images/fugue/status-offline.png</file>
   <file alias="images/ok.png">images/diagona/102.png</file>
-  <file alias="images/online.png">images/fugue/network-status.png</file>
+  <file alias="images/online.png">images/fugue/status.png</file>
   <file alias="images/pin.png">images/font-awesome/fa-thumb-tack.png</file>
   <file alias="images/plug.png">images/fugue/plug.png</file>
   <file alias="images/plug-disconnect.png">images/fugue/plug-disconnect.png</file>
   <file alias="images/plugin32.png">images/plugin@2x.png</file>
   <file alias="images/prohibition.png">images/font-awesome/fa-ban.png</file>
   <file alias="images/providers.png">www/img/providers.png</file>
-  <file alias="images/reload.png">images/fugue/arrow-circle-315.png</file>
-  <file alias="images/remove.png">images/font-awesome/fa-times.png</file>
+  <file alias="images/reload.png">images/font-awesome/fa-repeat.png</file>
   <file alias="images/secure.png">images/font-awesome/fa-lock.png</file>
   <file alias="images/send.png">images/oxygen/go-jump-locationbar.png</file>
   <file alias="images/settings.png">images/diagona/086.png</file>
@@ -99,6 +94,7 @@
   <file>html/Plugins.html</file>
   <file>html/Server.html</file>
   <file>html/User.html</file>
+  <file>images/add.png</file>
   <file>images/bell.png</file>
   <file>images/close.png</file>
   <file>images/close-hover.png</file>
@@ -110,6 +106,7 @@
   <file>images/gear.png</file>
   <file>images/icons/48x48/schat2.png</file>
   <file>images/icons/96x96/schat2.png</file>
+  <file>images/key.png</file>
   <file>images/minus-small.png</file>
   <file>images/os.png</file>
   <file>images/play.png</file>
@@ -119,6 +116,7 @@
   <file>images/progress.gif</file>
   <file>images/progress-pink.gif</file>
   <file>images/quit.png</file>
+  <file>images/remove.png</file>
   <file>images/schat16.png</file>
   <file>images/schat16-ny.png</file>
   <file>images/search.png</file>

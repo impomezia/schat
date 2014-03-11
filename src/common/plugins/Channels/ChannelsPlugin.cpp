@@ -46,6 +46,8 @@
 #include "ui/TabsToolBar.h"
 #include "ui/TabWidget.h"
 
+const QString ChannelsPluginImpl::kIgnoring = QLatin1String("Channels/Ignoring");
+
 class ChannelsTr : public Tr
 {
   Q_DECLARE_TR_FUNCTIONS(ChannelsTr)
@@ -103,7 +105,7 @@ ChannelsPluginImpl::ChannelsPluginImpl(QObject *parent)
   new ChannelsFeedListener(this);
 
   ChatCore::translation()->addOther(LS("channels"));
-  ChatCore::settings()->setDefault(SETTINGS_CHANNELS_IGNORING, false);
+  ChatCore::settings()->setDefault(kIgnoring, false);
 }
 
 

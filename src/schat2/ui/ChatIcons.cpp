@@ -172,7 +172,6 @@ void ChatIcons::init()
   m_icons[Remove]         = LS("remove");
   m_icons[Profile]        = LS("profile");
   m_icons[OK]             = LS("ok");
-  m_icons[InfoBalloon]    = LS("information-balloon");
   m_icons[Information]    = LS("information");
   m_icons[EditClear]      = LS("edit-clear");
   m_icons[EditCopy]       = LS("edit-copy");
