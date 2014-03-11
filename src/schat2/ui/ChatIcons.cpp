@@ -180,7 +180,6 @@ void ChatIcons::init()
   m_icons[EditPaste]      = LS("edit-paste");
   m_icons[EditSelectAll]  = LS("edit-select-all");
   m_icons[Balloon]        = LS("balloon");
-  m_icons[Slash]          = LS("slash");
   m_icons[TopicEdit]      = LS("topic-edit");
   m_icons[Key]            = LS("key");
   m_icons[ExclamationRed] = LS("exclamation-red");

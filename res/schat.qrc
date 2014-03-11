@@ -17,7 +17,7 @@
   <file alias="images/channel.png">images/font-awesome/fa-comments.png</file>
   <file alias="images/channels.png">images/font-awesome/fa-list-ul.png</file>
   <file alias="images/clock.png">images/font-awesome/fa-clock-o.png</file>
-  <file alias="images/computer.png">images/fugue/computer.png</file>
+  <file alias="images/computer.png">images/font-awesome/fa-desktop.png</file>
   <file alias="images/dnd-small.png">images/fugue/cross-circle-small.png</file>
   <file alias="images/edit-clear.png">images/font-awesome/fa-eraser.png</file>
   <file alias="images/edit-copy.png">images/font-awesome/fa-files-o.png</file>
@@ -41,15 +41,14 @@
   <file alias="images/plug.png">images/fugue/plug.png</file>
   <file alias="images/plug-disconnect.png">images/fugue/plug-disconnect.png</file>
   <file alias="images/plugin32.png">images/plugin@2x.png</file>
-  <file alias="images/prohibition.png">images/fugue/prohibition.png</file>
+  <file alias="images/prohibition.png">images/font-awesome/fa-ban.png</file>
   <file alias="images/providers.png">www/img/providers.png</file>
   <file alias="images/reload.png">images/fugue/arrow-circle-315.png</file>
   <file alias="images/remove.png">images/font-awesome/fa-times.png</file>
   <file alias="images/secure.png">images/font-awesome/fa-lock.png</file>
   <file alias="images/send.png">images/oxygen/go-jump-locationbar.png</file>
   <file alias="images/settings.png">images/diagona/086.png</file>
-  <file alias="images/sign-out.png">images/essen/sign-out.png</file>
-  <file alias="images/slash.png">images/fugue/slash.png</file>
+  <file alias="images/sign-out.png">images/font-awesome/fa-sign-out.png</file>
   <file alias="images/sound.png">images/human_o2/kmixdocked.png</file>
   <file alias="images/sound_mute.png">images/human_o2/kmixdocked_mute.png</file>
   <file alias="images/status.png">images/fugue/status.png</file>

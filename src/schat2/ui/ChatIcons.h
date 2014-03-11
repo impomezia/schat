@@ -64,7 +64,6 @@ public:
     EditPaste          = 0x4570, ///< "Ep"
     EditSelectAll      = 0x4553, ///< "ES"
     Balloon            = 0x4261, ///< "Ba"
-    Slash              = 0x536C, ///< "Sl"
     TopicEdit          = 0x5445, ///< "TE"
     Key                = 0x4B65, ///< "Ke"
     ExclamationRed     = 0x4552, ///< "ER"
