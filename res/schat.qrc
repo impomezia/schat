@@ -10,13 +10,11 @@
   <file alias="images/add.png">images/font-awesome/fa-plus.png</file>
   <file alias="images/add-gray.png">images/font-awesome/fa-plus.png</file>
   <file alias="images/add-small.png">images/diagona/10/103.png</file>
-  <file alias="images/arrow-right.png">images/silk/resultset_next.png</file>
   <file alias="images/away-small.png">images/diagona/10/087.png</file>
   <file alias="images/balloon.png">images/fugue/balloon.png</file>
   <file alias="images/br-next.png">images/wireframe/br_next.png</file>
   <file alias="images/br-prev.png">images/wireframe/br_prev.png</file>
   <file alias="images/channel.png">images/font-awesome/fa-comments.png</file>
-  <file alias="images/channel-alert.png">images/diagona/029.png</file>
   <file alias="images/channels.png">images/font-awesome/fa-list-ul.png</file>
   <file alias="images/clock.png">images/font-awesome/fa-clock-o.png</file>
   <file alias="images/computer.png">images/fugue/computer.png</file>
@@ -26,11 +24,7 @@
   <file alias="images/edit-cut.png">images/font-awesome/fa-scissors.png</file>
   <file alias="images/edit-paste.png">images/font-awesome/fa-clipboard.png</file>
   <file alias="images/edit-select-all.png">images/oxygen/edit-select-all.png</file>
-  <file alias="images/exclamation.png">images/fugue/exclamation.png</file>
-  <file alias="images/exclamation-circle.png">images/fugue/exclamation-circle.png</file>
   <file alias="images/exclamation-red.png">images/fugue/exclamation-red.png</file>
-  <file alias="images/exclamation-red-frame.png">images/fugue/exclamation-red-frame.png</file>
-  <file alias="images/external-small.png">images/fugue/external-small.png</file>
   <file alias="images/ffc-small.png">images/diagona/10/036.png</file>
   <file alias="images/globe.png">images/font-awesome/fa-globe.png</file>
   <file alias="images/information.png">images/fugue/information.png</file>
@@ -43,7 +37,6 @@
   <file alias="images/offline.png">images/fugue/network-status-offline.png</file>
   <file alias="images/ok.png">images/diagona/102.png</file>
   <file alias="images/online.png">images/fugue/network-status.png</file>
-  <file alias="images/password.png">images/fugue/ui-text-field-password.png</file>
   <file alias="images/pin.png">images/font-awesome/fa-thumb-tack.png</file>
   <file alias="images/plug.png">images/fugue/plug.png</file>
   <file alias="images/plug-disconnect.png">images/fugue/plug-disconnect.png</file>
@@ -55,9 +48,7 @@
   <file alias="images/secure.png">images/font-awesome/fa-lock.png</file>
   <file alias="images/send.png">images/oxygen/go-jump-locationbar.png</file>
   <file alias="images/settings.png">images/diagona/086.png</file>
-  <file alias="images/sign-in.png">images/essen/sign-in.png</file>
   <file alias="images/sign-out.png">images/essen/sign-out.png</file>
-  <file alias="images/sign-up.png">images/essen/sign-up.png</file>
   <file alias="images/slash.png">images/fugue/slash.png</file>
   <file alias="images/sound.png">images/human_o2/kmixdocked.png</file>
   <file alias="images/sound_mute.png">images/human_o2/kmixdocked_mute.png</file>
@@ -86,7 +77,6 @@
   <file alias="images/user-nude-female.png">images/fugue/user-nude-female.png</file>
   <file alias="images/user-red.png">images/fugue/user-red.png</file>
   <file alias="images/user-red-female.png">images/fugue/user-red-female.png</file>
-  <file alias="images/users.png">images/fugue/users.png</file>
   <file alias="images/user-thief.png">images/fugue/user-thief-baldie.png</file>
   <file alias="images/user-thief-female.png">images/fugue/user-thief-female.png</file>
   <file alias="images/user-unknown.png">images/fugue/user-silhouette-question.png</file>

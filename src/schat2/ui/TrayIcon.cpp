@@ -201,7 +201,7 @@ void TrayIcon::startAlert()
     return;
   }
 
-  setIcon(AlertsPixmap::icon(QIcon(LS(":/images/message-active.png")), ChatAlerts::total()));
+  setIcon(AlertsPixmap::icon(SCHAT_ICON(MessageActive), ChatAlerts::total()));
 
   if (!m_timer->isActive())
     m_timer->start(666, this);

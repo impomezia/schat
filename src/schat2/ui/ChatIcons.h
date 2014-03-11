@@ -32,7 +32,6 @@ public:
   /// Иконки.
   enum IconName {
     Channel            = 0x4368, ///< "Ch"
-    ChannelAlert       = 0x4341, ///< "CA"
     Gear               = 0x4765, ///< "Ge"
     MainTabMenu        = 0x4D54, ///< "MT"
     NetworkError       = 0x4E45, ///< "NE"
@@ -45,7 +44,6 @@ public:
     Settings           = 0x5374, ///< "St"
     Sound              = 0x536F, ///< "So"
     SoundMute          = 0x534D, ///< "SM"
-    Users              = 0x5573, ///< "Us"
     SmallLogo          = 0x534C, ///< "SL"
     SmallLogoNY        = 0x4C4E, ///< "LN"
     TextBold           = 0x5442, ///< "TB"
@@ -69,13 +67,8 @@ public:
     Slash              = 0x536C, ///< "Sl"
     TopicEdit          = 0x5445, ///< "TE"
     Key                = 0x4B65, ///< "Ke"
-    Exclamation        = 0x4578, ///< "Ex"
     ExclamationRed     = 0x4552, ///< "ER"
-    ArrowRight         = 0x4152, ///< "AR"
-    SignIn             = 0x5349, ///< "SI"
     SignOut            = 0x534F, ///< "SO"
-    SignUp             = 0x5355, ///< "SU"
-    Password           = 0x5073, ///< "Ps"
     Locale             = 0x4C6F, ///< "Lo"
     Computer           = 0x4370, ///< "Cp"
     Reload             = 0x526C, ///< "Rl"
@@ -85,7 +78,8 @@ public:
     Prohibition        = 0x5068, ///< "Ph"
     Clock              = 0x436B, ///< "Ck"
     Channels           = 0x4348, ///< "CH"
-    Times              = 0x5469  ///< "Ti"
+    Times              = 0x5469, ///< "Ti"
+    MessageActive      = 0x4D41  ///< "MA"
   };
 
   /// Опции получения иконки канала.

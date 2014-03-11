@@ -148,7 +148,6 @@ QString ChatIcons::overlay(int status)
 void ChatIcons::init()
 {
   m_icons[Channel]        = LS("channel");
-  m_icons[ChannelAlert]   = LS("channel-alert");
   m_icons[Gear]           = LS("gear");
   m_icons[MainTabMenu]    = LS("main-tab-menu");
   m_icons[NetworkError]   = LS("network-error");
@@ -161,7 +160,6 @@ void ChatIcons::init()
   m_icons[Settings]       = LS("settings");
   m_icons[Sound]          = LS("sound");
   m_icons[SoundMute]      = LS("sound_mute");
-  m_icons[Users]          = LS("users");
   m_icons[SmallLogo]      = LS("schat16");
   m_icons[SmallLogoNY]    = LS("schat16-ny");
   m_icons[TextBold]       = LS("text-bold");
@@ -185,13 +183,8 @@ void ChatIcons::init()
   m_icons[Slash]          = LS("slash");
   m_icons[TopicEdit]      = LS("topic-edit");
   m_icons[Key]            = LS("key");
-  m_icons[Exclamation]    = LS("exclamation");
   m_icons[ExclamationRed] = LS("exclamation-red");
-  m_icons[ArrowRight]     = LS("arrow-right");
-  m_icons[SignIn]         = LS("sign-in");
   m_icons[SignOut]        = LS("sign-out");
-  m_icons[SignUp]         = LS("sign-up");
-  m_icons[Password]       = LS("password");
   m_icons[Locale]         = LS("locale");
   m_icons[Computer]       = LS("computer");
   m_icons[Reload]         = LS("reload");
@@ -202,4 +195,5 @@ void ChatIcons::init()
   m_icons[Clock]          = LS("clock");
   m_icons[Channels]       = LS("channels");
   m_icons[Times]          = LS("times");
+  m_icons[MessageActive]  = LS("message-active");
 }
