@@ -69,31 +69,27 @@
     if (container === null)
       return;
 
-    container.setAttribute('data-remover', 'preview');
+    var thumbs = container.getElementsByClassName('img-thumbnail img-thumbnail-spinner');
+    if (thumbs.length != images.length)
+      return;
 
-    var block = document.createElement('div');
-    block.setAttribute('class', 'thumbnail-block');
+    var queue = [];
 
     for (var i = 0; i < images.length; ++i) {
       id = images[i];
 
-      var a = document.createElement('a');
-
+      var a    = thumbs[i];
       var item = PreviewPlugin.findById(id);
-      if (item !== null) {
-        a.setAttribute('href',  item.url);
-        a.setAttribute('title', item.url);
-      }
-
-      update(item, a);
 
       cache[id] = cache[id] || [];
       cache[id].push(a);
 
-      block.appendChild(a);
+      queue.push({item: item, elem: a});
     }
 
-    container.firstChild.appendChild(block);
+    for (i = 0; i < queue.length; ++i) {
+      update(queue[i].item, queue[i].elem);
+    }
   }
 
 

@@ -409,8 +409,12 @@ var Messages = {
       that.addMessage(messages[i]);
 
     for (i = 0; i < that.added.length; i++) {
-      for (var j = 0; j < that.onAdd.length; j++)
-        that.onAdd[j](that.added[i]);
+      for (var j = 0; j < that.onAdd.length; j++) {
+        try {
+          that.onAdd[j](that.added[i]);
+        }
+        catch (e) { console.log(e); }
+      }
     }
 
     for (i = 0; i < that.onBulkAdd.length; i++) {
