@@ -2,7 +2,7 @@
 <qresource prefix="/">
   <file alias="css/flags.css">res/css/flags.min.css</file>
   <file alias="images/flags.png">res/images/flags.png</file>
-  <file alias="images/Profile/icon.png">res/images/oxygen/contact.png</file>
+  <file alias="images/Profile/icon.png">../../../../res/images/profile@2x.png</file>
   <file alias="js/Profile/Profile.js">res/js/Profile.min.js</file>
   <file alias="json/Profile/countries_en.json">res/json/countries_en.json</file>
   <file alias="json/Profile/countries_ru.json">res/json/countries_ru.json</file>

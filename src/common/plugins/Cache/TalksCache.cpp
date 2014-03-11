@@ -114,7 +114,7 @@ void TalksCache::start()
 
   TabsToolBar *toolBar = TabWidget::i()->toolBar();
   m_menu = new QMenu(tr("Recent"), toolBar);
-  m_menu->setIcon(QIcon(LS(":/images/Cache/clock.png")));
+  m_menu->setIcon(SCHAT_ICON(Clock));
   m_clear = new QAction(this);
   m_clear->setText(tr("Clear"));
   m_clear->setIcon(SCHAT_ICON(EditClear));

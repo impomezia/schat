@@ -1,0 +1,16 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="css/Console/bootstrap.css">css/bootstrap.min.css</file>
+  <file alias="css/Console/console.css">css/console.min.css</file>
+  <file alias="html/Console/home.html">html/home.html</file>
+  <file alias="html/Console/index.html">html/index.html</file>
+  <file alias="html/Console/login.html">html/login.html</file>
+  <file alias="html/Console/password.html">html/password.html</file>
+  <file alias="images/Console/icon.png">images/font-awesome/fa-terminal@2x.png</file>
+  <file alias="images/Console/terminal.png">images/font-awesome/fa-terminal.png</file>
+  <file alias="js/Console/console.js">js/console.min.js</file>
+  <file>translations/console_en.qm</file>
+  <file>translations/console_ru.qm</file>
+  <file>translations/console_uk.qm</file>
+</qresource>
+</RCC>
