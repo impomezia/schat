@@ -72,8 +72,7 @@ void PreviewStorage::add(const ChatId &messageId, const QList<QUrl> &urls)
     PreviewItem *item = new PreviewItem(url);
     const ChatId &id  = item->id();
 
-    if (!ids.contains(id))
-      ids.append(id);
+    ids.append(id);
 
     if (m_items.contains(id)) {
       delete item;
