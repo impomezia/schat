@@ -77,7 +77,10 @@ public:
     Clock              = 0x436B, ///< "Ck"
     Channels           = 0x4348, ///< "CH"
     Times              = 0x5469, ///< "Ti"
-    MessageActive      = 0x4D41  ///< "MA"
+    MessageActive      = 0x4D41, ///< "MA"
+    Eye                = 0x4579, ///< "Ey"
+    Link               = 0x4C69, ///< "Li"
+    About              = 0x4162  ///< "Ab"
   };
 
   /// Опции получения иконки канала.

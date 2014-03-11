@@ -50,8 +50,8 @@ TrayIcon::TrayIcon(QObject *parent)
   m_menu->addMenu(StatusMenu::i());
   m_menu->addSeparator();
 
-  m_settings = m_menu->addAction(SCHAT_ICON(Settings), tr("Preferences..."));
-  m_about    = m_menu->addAction(SCHAT_ICON(SmallLogo), tr("About..."));
+  m_settings = m_menu->addAction(SCHAT_ICON(Gear),  tr("Preferences..."));
+  m_about    = m_menu->addAction(SCHAT_ICON(About), tr("About..."));
   m_menu->addSeparator();
   m_quit     = m_menu->addAction(SCHAT_ICON(Quit), tr("Quit"));
 

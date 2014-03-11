@@ -23,6 +23,7 @@
   <file alias="images/edit-paste.png">images/font-awesome/fa-clipboard.png</file>
   <file alias="images/edit-select-all.png">images/oxygen/edit-select-all.png</file>
   <file alias="images/exclamation-red.png">images/fugue/exclamation-red.png</file>
+  <file alias="images/eye.png">images/font-awesome/fa-eye.png</file>
   <file alias="images/ffc-small.png">images/diagona/10/036.png</file>
   <file alias="images/globe.png">images/font-awesome/fa-globe.png</file>
   <file alias="images/information.png">images/font-awesome/fa-info-circle.png</file>
@@ -94,6 +95,7 @@
   <file>html/Plugins.html</file>
   <file>html/Server.html</file>
   <file>html/User.html</file>
+  <file>images/about.png</file>
   <file>images/add.png</file>
   <file>images/bell.png</file>
   <file>images/close.png</file>
@@ -107,6 +109,7 @@
   <file>images/icons/48x48/schat2.png</file>
   <file>images/icons/96x96/schat2.png</file>
   <file>images/key.png</file>
+  <file>images/link.png</file>
   <file>images/minus-small.png</file>
   <file>images/os.png</file>
   <file>images/play.png</file>

@@ -116,6 +116,8 @@ QIcon ChatIcons::icon(const QString &file, const QString &overlay)
 
 QIcon ChatIcons::icon(int name)
 {
+  Q_ASSERT(m_icons.contains(name));
+
   if (m_cache.contains(name))
     return m_cache[name];
 
@@ -194,4 +196,7 @@ void ChatIcons::init()
   m_icons[Channels]       = LS("channels");
   m_icons[Times]          = LS("times");
   m_icons[MessageActive]  = LS("message-active");
+  m_icons[Eye]            = LS("eye");
+  m_icons[Link]           = LS("link");
+  m_icons[About]          = LS("about");
 }

@@ -232,7 +232,7 @@ void ChatView::contextMenu(QMenu *menu, const QWebHitTestResult &result)
     ChannelMenu::bind(menu, ChatClient::channels()->get(m_id), IChannelMenu::ChatViewScope);
 
   menu->addSeparator();
-  QMenu *display = menu->addMenu(SCHAT_ICON(Gear), tr("Display"));
+  QMenu *display = menu->addMenu(SCHAT_ICON(Eye), tr("Display"));
   display->addAction(m_seconds);
   display->addAction(m_service);
   developerMenu(display);

@@ -19,6 +19,7 @@
 #include <QMenu>
 
 #include "ChatNotify.h"
+#include "sglobal.h"
 #include "ui/ChatIcons.h"
 #include "ui/MainToolBar.h"
 #include "ui/SoundButton.h"
@@ -29,8 +30,8 @@ MainToolBar::MainToolBar(QWidget *parent)
   setIconSize(QSize(16, 16));
 
   m_menu     = new QMenu(this);
-  m_settings = m_menu->addAction(SCHAT_ICON(Settings), tr("Preferences..."));
-  m_about    = m_menu->addAction(SCHAT_ICON(SmallLogo), tr("About..."));
+  m_settings = m_menu->addAction(SCHAT_ICON(Gear),  tr("Preferences..."));
+  m_about    = m_menu->addAction(SCHAT_ICON(About), tr("About..."));
   m_menu->addSeparator();
   m_quit     = m_menu->addAction(SCHAT_ICON(Quit), tr("Quit"));
 
@@ -40,6 +41,7 @@ MainToolBar::MainToolBar(QWidget *parent)
   m_button->setAutoRaise(true);
   m_button->setPopupMode(QToolButton::InstantPopup);
   m_button->setMenu(m_menu);
+  m_button->setStyleSheet(LS("QToolButton::menu-indicator {image:none}"));
 
   m_sound = new SoundButton(this);
 
