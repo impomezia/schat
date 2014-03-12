@@ -95,6 +95,7 @@ VIAddVersionKey  "ProductVersion"   "${SCHAT_VERSION}"
 
 !insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "Russian"
+!insertmacro MUI_LANGUAGE "Ukrainian"
 
 
 /*
