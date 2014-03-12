@@ -1,6 +1,5 @@
-/* $Id: TabsToolBar.h 3225 2012-10-27 08:36:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2011 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by

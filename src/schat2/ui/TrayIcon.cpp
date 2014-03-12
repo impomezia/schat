@@ -44,7 +44,12 @@ TrayIcon::TrayIcon(QObject *parent)
 
   m_menu = new QMenu();
   m_timer = new QBasicTimer();
-  m_show = m_menu->addAction(SCHAT_ICON(SmallLogo), tr("Show..."));
+  m_show = m_menu->addAction(SCHAT_ICON(About), tr("Show Simple Chat"));
+
+  QFont font = m_show->font();
+  font.setBold(true);
+  m_show->setFont(font);
+
   m_menu->addSeparator();
 
   m_menu->addMenu(StatusMenu::i());

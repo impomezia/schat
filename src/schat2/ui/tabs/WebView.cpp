@@ -142,7 +142,6 @@ void WebView::setIcons()
   pageAction(QWebPage::Copy)->setIcon(SCHAT_ICON(EditCopy));
   pageAction(QWebPage::CopyLinkToClipboard)->setIcon(SCHAT_ICON(Link));
   pageAction(QWebPage::Paste)->setIcon(SCHAT_ICON(EditPaste));
-  pageAction(QWebPage::SelectAll)->setIcon(SCHAT_ICON(EditSelectAll));
 }
 
 
