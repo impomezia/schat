@@ -190,6 +190,20 @@ void UserView::contextMenuEvent(QContextMenuEvent *event)
 }
 
 
+void UserView::keyPressEvent(QKeyEvent *event)
+{
+  if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+    const QModelIndex index = m_model->mapToSource(currentIndex());
+    if (!index.isValid())
+      return;
+
+    ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_source->itemFromIndex(index))->user(), event->modifiers() == Qt::ControlModifier ? LS("insert") : LS("open")));
+  }
+  else
+    QListView::keyPressEvent(event);
+}
+
+
 void UserView::mouseReleaseEvent(QMouseEvent *event)
 {
   QModelIndex index = m_model->mapToSource(indexAt(event->pos()));

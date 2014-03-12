@@ -52,8 +52,9 @@ private slots:
   void onSettingsChanged(const QString &key, const QVariant &value);
 
 protected:
-  void contextMenuEvent(QContextMenuEvent *event);
-  void mouseReleaseEvent(QMouseEvent *event);
+  void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
+  void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+  void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
   void addTab(const QModelIndex &index);

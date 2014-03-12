@@ -35,7 +35,8 @@ void UserSortFilterModel::setOfflineUsers(bool offline)
 
 bool UserSortFilterModel::filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const
 {
-  qDebug() << source_column << source_parent;
+  Q_UNUSED(source_column)
+  Q_UNUSED(source_parent)
 
   return true;
 }
@@ -46,14 +47,9 @@ bool UserSortFilterModel::filterAcceptsRow(int source_row, const QModelIndex &so
   if (m_offlineUsers)
     return true;
 
-/*  qDebug() << "-------------------------------------" << source_row << source_parent << sourceModel()->index(source_row, filterKeyColumn(), source_parent)*/
   const QModelIndex index = sourceModel()->index(source_row, filterKeyColumn(), source_parent);
   if (!index.isValid())
     return true;
-
-
-
-//  qDebug() << index << index.data(UserItem::SortRole) << index.data(UserItem::StatusRole);
 
   return index.data(UserItem::StatusRole).toInt() != Status::Offline;
 }
