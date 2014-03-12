@@ -59,7 +59,7 @@ void ChannelMenuImpl::bind(QMenu *menu, ClientChannel channel, Scope scope)
   }
 
   if (!active || (active && page != 1)) {
-    m_info = new QAction(SCHAT_ICON(InfoBalloon), tr("Information..."), this);
+    m_info = new QAction(SCHAT_ICON(Information), tr("Information..."), this);
     m_info->setData(ChatUrls::toUrl(channel, LS("info")));
     menu->addAction(m_info);
   }

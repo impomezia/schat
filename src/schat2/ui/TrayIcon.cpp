@@ -44,14 +44,19 @@ TrayIcon::TrayIcon(QObject *parent)
 
   m_menu = new QMenu();
   m_timer = new QBasicTimer();
-  m_show = m_menu->addAction(SCHAT_ICON(SmallLogo), tr("Show..."));
+  m_show = m_menu->addAction(SCHAT_ICON(About), tr("Show Simple Chat"));
+
+  QFont font = m_show->font();
+  font.setBold(true);
+  m_show->setFont(font);
+
   m_menu->addSeparator();
 
   m_menu->addMenu(StatusMenu::i());
   m_menu->addSeparator();
 
-  m_settings = m_menu->addAction(SCHAT_ICON(Settings), tr("Preferences..."));
-  m_about    = m_menu->addAction(SCHAT_ICON(SmallLogo), tr("About..."));
+  m_settings = m_menu->addAction(SCHAT_ICON(Gear),  tr("Preferences..."));
+  m_about    = m_menu->addAction(SCHAT_ICON(About), tr("About..."));
   m_menu->addSeparator();
   m_quit     = m_menu->addAction(SCHAT_ICON(Quit), tr("Quit"));
 
@@ -201,7 +206,7 @@ void TrayIcon::startAlert()
     return;
   }
 
-  setIcon(AlertsPixmap::icon(QIcon(LS(":/images/message-active.png")), ChatAlerts::total()));
+  setIcon(AlertsPixmap::icon(SCHAT_ICON(MessageActive), ChatAlerts::total()));
 
   if (!m_timer->isActive())
     m_timer->start(666, this);

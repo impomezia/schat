@@ -828,13 +828,19 @@ $(document).ready(function() {
 
   window.addEventListener('resize', alignChat);
 
-  document.getElementById('page-switcher-start').addEventListener('click', function() {
-    Pages.setPage(0);
-  });
+  var switcher = document.getElementById('page-switcher-start');
+  if (switcher !== null) {
+    switcher.addEventListener('click', function() {
+      Pages.setPage(0);
+    });
+  }
 
-  document.getElementById('page-switcher-end').addEventListener('click', function() {
-    Pages.setPage(1);
-  });
+  switcher = document.getElementById('page-switcher-end');
+  if (switcher !== null) {
+    switcher.addEventListener('click', function() {
+      Pages.setPage(1);
+    });
+  }
 
   var jsfiles = ChatView.jsfiles();
   if (jsfiles.length === 0) {

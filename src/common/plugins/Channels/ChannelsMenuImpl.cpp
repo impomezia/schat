@@ -90,7 +90,7 @@ void ChannelsMenuImpl::bind(QMenu *menu, ClientChannel channel, IChannelMenu::Sc
   if (!m_self)
     invite(menu, channel);
 
-  if (ChatCore::settings()->value(SETTINGS_CHANNELS_IGNORING).toBool() && !m_self) {
+  if (ChatCore::settings()->value(ChannelsPluginImpl::kIgnoring).toBool() && !m_self) {
     if (!m_permissions)
       menu->addSeparator();
 
@@ -170,7 +170,7 @@ void ChannelsMenuImpl::invite(QMenu *menu, ClientChannel user)
   if (list.isEmpty())
     return;
 
-  m_invite = menu->addMenu(ChatIcons::icon(ChatIcons::icon(user, ChatIcons::NoOptions), LS(":/images/add-small.png")), tr("Invite to"));
+  m_invite = menu->addMenu(SCHAT_ICON(Add), tr("Invite to"));
   foreach (const ClientChannel &channel, list) {
     m_invite->addAction(SCHAT_ICON(Channel), channel->name())->setData(QVariantList() << user->id() << channel->id());
   }

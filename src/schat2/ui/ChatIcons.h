@@ -32,7 +32,6 @@ public:
   /// Иконки.
   enum IconName {
     Channel            = 0x4368, ///< "Ch"
-    ChannelAlert       = 0x4341, ///< "CA"
     Gear               = 0x4765, ///< "Ge"
     MainTabMenu        = 0x4D54, ///< "MT"
     NetworkError       = 0x4E45, ///< "NE"
@@ -45,7 +44,6 @@ public:
     Settings           = 0x5374, ///< "St"
     Sound              = 0x536F, ///< "So"
     SoundMute          = 0x534D, ///< "SM"
-    Users              = 0x5573, ///< "Us"
     SmallLogo          = 0x534C, ///< "SL"
     SmallLogoNY        = 0x4C4E, ///< "LN"
     TextBold           = 0x5442, ///< "TB"
@@ -58,7 +56,6 @@ public:
     Remove             = 0x5265, ///< "Re"
     Profile            = 0x5072, ///< "Pr"
     OK                 = 0x4F4B, ///< "OK"
-    InfoBalloon        = 0x4942, ///< "IB"
     Information        = 0x4932, ///< "I2"
     EditClear          = 0x436C, ///< "Cl"
     EditCopy           = 0x4543, ///< "EC"
@@ -66,16 +63,10 @@ public:
     EditPaste          = 0x4570, ///< "Ep"
     EditSelectAll      = 0x4553, ///< "ES"
     Balloon            = 0x4261, ///< "Ba"
-    Slash              = 0x536C, ///< "Sl"
     TopicEdit          = 0x5445, ///< "TE"
     Key                = 0x4B65, ///< "Ke"
-    Exclamation        = 0x4578, ///< "Ex"
     ExclamationRed     = 0x4552, ///< "ER"
-    ArrowRight         = 0x4152, ///< "AR"
-    SignIn             = 0x5349, ///< "SI"
     SignOut            = 0x534F, ///< "SO"
-    SignUp             = 0x5355, ///< "SU"
-    Password           = 0x5073, ///< "Ps"
     Locale             = 0x4C6F, ///< "Lo"
     Computer           = 0x4370, ///< "Cp"
     Reload             = 0x526C, ///< "Rl"
@@ -85,7 +76,11 @@ public:
     Prohibition        = 0x5068, ///< "Ph"
     Clock              = 0x436B, ///< "Ck"
     Channels           = 0x4348, ///< "CH"
-    Times              = 0x5469  ///< "Ti"
+    Times              = 0x5469, ///< "Ti"
+    MessageActive      = 0x4D41, ///< "MA"
+    Eye                = 0x4579, ///< "Ey"
+    Link               = 0x4C69, ///< "Li"
+    About              = 0x4162  ///< "Ab"
   };
 
   /// Опции получения иконки канала.

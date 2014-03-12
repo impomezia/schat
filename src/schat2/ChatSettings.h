@@ -30,7 +30,6 @@ class Notify;
 #define SETTINGS_AUTO_CONNECT            QLatin1String("AutoConnect")
 #define SETTINGS_AUTO_JOIN               QLatin1String("AutoJoin")
 #define SETTINGS_AUTO_SCROLL             QLatin1String("AutoScroll")
-#define SETTINGS_CHANNELS_IGNORING       QLatin1String("Channels/Ignoring")
 #define SETTINGS_DEFAULT_SERVER          QLatin1String("DefaultServer")
 #define SETTINGS_DISPLAY_SECONDS         QLatin1String("Display/Seconds")
 #define SETTINGS_DISPLAY_SERVICE         QLatin1String("Display/Service")

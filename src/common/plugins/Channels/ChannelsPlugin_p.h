@@ -31,6 +31,8 @@ class ChannelsPluginImpl : public ChatPlugin
   Q_OBJECT
 
 public:
+  static const QString kIgnoring;
+
   ChannelsPluginImpl(QObject *parent);
   ~ChannelsPluginImpl();
   static void ignore(const QByteArray &id, bool ignore = true);

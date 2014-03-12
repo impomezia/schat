@@ -1,7 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
   <file alias="images/Cache/icon.png">res/images/farm-fresh/speedometer.png</file>
-  <file alias="images/Cache/clock.png">res/images/fugue/clock-frame.png</file>
   <file alias="translations/cache_ru.qm">res/translations/cache_ru.qm</file>
   <file alias="translations/cache_uk.qm">res/translations/cache_uk.qm</file>
 </qresource>

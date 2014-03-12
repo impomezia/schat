@@ -1,6 +1,5 @@
-/* $Id: WelcomeTab.cpp 3501 2013-02-14 07:16:38Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -93,7 +92,7 @@ WelcomeTab::WelcomeTab(TabWidget *parent)
   scrollLay->setMargin(0);
   scrollLay->addWidget(scroll);
 
-  setIcon(SCHAT_ICON(SmallLogo));
+  setIcon(SCHAT_ICON(About));
   retranslateUi();
 }
 

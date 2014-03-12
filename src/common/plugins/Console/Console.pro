@@ -33,7 +33,7 @@ SOURCES  = \
    ui/ConsoleTab.cpp \
    ui/ConsoleView.cpp \
 
-RESOURCES += Console.qrc
+RESOURCES += res/Console.qrc
 
 TRANSLATIONS += res/translations/console_en.ts
 TRANSLATIONS += res/translations/console_ru.ts
