@@ -82,7 +82,9 @@ Plugins::Plugins(QObject *parent)
 
 Plugins::~Plugins()
 {
-  qDeleteAll(m_plugins);
+  for (unsigned i = m_list.size(); i-- > 0;) {
+    delete m_list[i];
+  }
 }
 
 
