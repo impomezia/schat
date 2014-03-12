@@ -74,6 +74,15 @@ bool UserItem::reload()
 }
 
 
+QVariant UserItem::data(int role) const
+{
+  if (role == StatusRole)
+    return m_user->status().value();
+
+  return QStandardItem::data(role);
+}
+
+
 /*!
  * Вес для сортировки.
  */

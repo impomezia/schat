@@ -28,9 +28,15 @@
 class UserItem : public QStandardItem
 {
 public:
+  enum UserRoles {
+    SortRole = Qt::UserRole + 1,
+    StatusRole
+  };
+
   UserItem(ClientChannel user, ClientChannel channel);
   inline ClientChannel user() { return m_user; }
   bool reload();
+  QVariant data(int role = Qt::UserRole + 1) const Q_DECL_OVERRIDE;
 
 private:
   int weight() const;
@@ -44,4 +50,4 @@ private:
   ClientChannel m_user;    ///< Пользователь.
 };
 
-#endif // USERITEM_H
+#endif // USERITEM_H_

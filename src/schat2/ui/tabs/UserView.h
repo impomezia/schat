@@ -26,6 +26,7 @@
 class ChannelInfo;
 class Notify;
 class UserItem;
+class UserSortFilterModel;
 
 /*!
  * Отображает список пользователей.
@@ -48,6 +49,7 @@ public:
 
 private slots:
   void channel(const ChannelInfo &info);
+  void onSettingsChanged(const QString &key, const QVariant &value);
 
 protected:
   void contextMenuEvent(QContextMenuEvent *event);
@@ -61,7 +63,8 @@ private:
   bool m_sortable;                        ///< true если список пользователей нужно сортировать при добавлении пользователя.
   ClientChannel m_channel;                ///< Канал.
   QMap<QByteArray, UserItem*> m_channels; ///< Таблица для ускоренного поиска пользователей.
-  QStandardItemModel m_model;             ///< Модель для отображения списка пользователей.
+  QStandardItemModel *m_source;           ///< Модель для отображения списка пользователей
+  UserSortFilterModel *m_model;
 };
 
 #endif /* USERVIEW_H_ */

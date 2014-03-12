@@ -21,6 +21,7 @@
 
 #include "ChatCore.h"
 #include "ChatNotify.h"
+#include "ChatSettings.h"
 #include "ChatUrls.h"
 #include "client/ChatClient.h"
 #include "client/ChatClient.h"
@@ -33,6 +34,7 @@
 #include "sglobal.h"
 #include "ui/ChatIcons.h"
 #include "UserItem.h"
+#include "UserSortFilterModel.h"
 #include "UserView.h"
 
 UserView::UserView(ClientChannel channel, QWidget *parent)
@@ -40,7 +42,12 @@ UserView::UserView(ClientChannel channel, QWidget *parent)
   , m_sortable(true)
   , m_channel(channel)
 {
-  setModel(&m_model);
+  m_source = new QStandardItemModel(this);
+  m_model  = new UserSortFilterModel(ChatCore::settings()->value(ChatSettings::kOfflineUsers).toBool(), this);
+  m_model->setSourceModel(m_source);
+  m_model->setSortRole(UserItem::SortRole);
+
+  setModel(m_model);
   setFocusPolicy(Qt::TabFocus);
   setEditTriggers(QListView::NoEditTriggers);
   setSpacing(1);
@@ -57,11 +64,10 @@ UserView::UserView(ClientChannel channel, QWidget *parent)
     setPalette(p);
   }
 
-  m_model.setSortRole(Qt::UserRole + 1);
-
   connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(addTab(QModelIndex)));
   connect(ChatClient::channels(), SIGNAL(channel(ChannelInfo)), SLOT(channel(ChannelInfo)));
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
+  connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(onSettingsChanged(QString,QVariant)));
 }
 
 
@@ -72,6 +78,8 @@ UserView::UserView(ClientChannel channel, QWidget *parent)
  */
 bool UserView::add(ClientChannel user)
 {
+  Q_ASSERT(user);
+
   if (!user)
     return false;
 
@@ -80,8 +88,8 @@ bool UserView::add(ClientChannel user)
 
   UserItem *item = new UserItem(user, m_channel);
 
-  m_model.appendRow(item);
-  m_channels[user->id()] = item;
+  m_source->appendRow(item);
+  m_channels.insert(user->id(), item);
 
   if (m_sortable)
     sort();
@@ -120,7 +128,7 @@ bool UserView::remove(const QByteArray &id)
     return false;
 
   const int status = item->user()->status().value();
-  m_model.removeRow(m_model.indexFromItem(item).row());
+  m_source->removeRow(m_source->indexFromItem(item).row());
   m_channels.remove(id);
 
   return status != Status::Offline;
@@ -130,7 +138,7 @@ bool UserView::remove(const QByteArray &id)
 void UserView::clear()
 {
   m_sortable = true;
-  m_model.clear();
+  m_source->clear();
   m_channels.clear();
 }
 
@@ -140,7 +148,7 @@ void UserView::sort()
   SCHAT_DEBUG_STREAM(this << "sort()");
 
   m_sortable = true;
-  m_model.sort(0);
+  m_model->sort(0);
 }
 
 
@@ -157,16 +165,25 @@ void UserView::channel(const ChannelInfo &info)
 }
 
 
+void UserView::onSettingsChanged(const QString &key, const QVariant &value)
+{
+  if (key == ChatSettings::kOfflineUsers)
+    m_model->setOfflineUsers(value.toBool());
+}
+
+
 void UserView::contextMenuEvent(QContextMenuEvent *event)
 {
-  QModelIndex index = indexAt(event->pos());
+  const QModelIndex index = m_model->mapToSource(indexAt(event->pos()));
+  if (!index.isValid())
+    return QListView::contextMenuEvent(event);
 
-  if (!index.isValid()) {
-    QListView::contextMenuEvent(event);
+  UserItem *item = static_cast<UserItem *>(m_source->itemFromIndex(index));
+  Q_ASSERT(item);
+
+  if (!item)
     return;
-  }
 
-  UserItem *item = static_cast<UserItem *>(m_model.itemFromIndex(index));
   QMenu menu(this);
   ChannelMenu::bind(&menu, item->user(), IChannelMenu::UserViewScope);
   menu.exec(event->globalPos());
@@ -175,10 +192,10 @@ void UserView::contextMenuEvent(QContextMenuEvent *event)
 
 void UserView::mouseReleaseEvent(QMouseEvent *event)
 {
-  QModelIndex index = indexAt(event->pos());
+  QModelIndex index = m_model->mapToSource(indexAt(event->pos()));
 
   if (index.isValid() && event->modifiers() == Qt::ControlModifier && event->button() == Qt::LeftButton) {
-    UserItem *item = static_cast<UserItem *>(m_model.itemFromIndex(index));
+    UserItem *item = static_cast<UserItem *>(m_source->itemFromIndex(index));
     ChatUrls::open(ChatUrls::toUrl(item->user(), LS("insert")));
   }
   else if (event->button() == Qt::LeftButton && !index.isValid()) {
@@ -195,7 +212,7 @@ void UserView::mouseReleaseEvent(QMouseEvent *event)
  */
 void UserView::addTab(const QModelIndex &index)
 {
-  ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_model.itemFromIndex(index))->user(), LS("open")));
+  ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_source->itemFromIndex(index))->user(), LS("open")));
 }
 
 

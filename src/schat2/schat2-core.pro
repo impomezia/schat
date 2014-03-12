@@ -116,6 +116,7 @@ HEADERS = \
     ui/tabs/SettingsTab.h \
     ui/tabs/SettingsTabHook.h \
     ui/tabs/UserItem.h \
+    ui/tabs/UserSortFilterModel.h \
     ui/tabs/UserView.h \
     ui/tabs/WebView.h \
     ui/tabs/WelcomeTab.h \
@@ -208,6 +209,7 @@ SOURCES = \
     ui/tabs/SettingsTab.cpp \
     ui/tabs/SettingsTabHook.cpp \
     ui/tabs/UserItem.cpp \
+    ui/tabs/UserSortFilterModel.cpp \
     ui/tabs/UserView.cpp \
     ui/tabs/WebView.cpp \
     ui/tabs/WelcomeTab.cpp \
