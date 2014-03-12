@@ -18,6 +18,7 @@
 #include <QMenu>
 #include <QMouseEvent>
 #include <QUrl>
+#include <QLabel>
 
 #include "ChatCore.h"
 #include "ChatNotify.h"
@@ -33,6 +34,7 @@
 #include "hooks/ChannelMenu.h"
 #include "sglobal.h"
 #include "ui/ChatIcons.h"
+#include "ui/TabWidget.h"
 #include "UserItem.h"
 #include "UserSortFilterModel.h"
 #include "UserView.h"
@@ -174,19 +176,22 @@ void UserView::onSettingsChanged(const QString &key, const QVariant &value)
 
 void UserView::contextMenuEvent(QContextMenuEvent *event)
 {
-  const QModelIndex index = m_model->mapToSource(indexAt(event->pos()));
-  if (!index.isValid())
-    return QListView::contextMenuEvent(event);
-
-  UserItem *item = static_cast<UserItem *>(m_source->itemFromIndex(index));
-  Q_ASSERT(item);
-
-  if (!item)
-    return;
-
   QMenu menu(this);
-  ChannelMenu::bind(&menu, item->user(), IChannelMenu::UserViewScope);
-  menu.exec(event->globalPos());
+
+  const QModelIndex index = m_model->mapToSource(indexAt(event->pos()));
+  if (index.isValid()) {
+    UserItem *item = static_cast<UserItem *>(m_source->itemFromIndex(index));
+    if (item) {
+      ChannelMenu::bind(&menu, item->user(), IChannelMenu::UserViewScope);
+      menu.addSeparator();
+    }
+  }
+
+  QAction *properties = menu.addAction(SCHAT_ICON(Gear), tr("Properties"));
+
+  if (menu.exec(event->globalPos()) == properties) {
+    TabWidget::showDialog(new QLabel("test", this));
+  }
 }
 
 
