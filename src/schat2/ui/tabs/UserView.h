@@ -1,6 +1,5 @@
-/* $Id: UserView.h 3633 2013-04-12 08:00:10Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,29 +25,7 @@
 
 class ChannelInfo;
 class Notify;
-
-/*!
- * Итем в списке пользователей.
- */
-class UserItem : public QStandardItem
-{
-public:
-  UserItem(ClientChannel user, ClientChannel channel);
-  inline ClientChannel user() { return m_user; }
-  bool reload();
-
-private:
-  int weight() const;
-  QBrush color() const;
-
-  bool m_bold;             ///< Жирный шрифт.
-  bool m_italic;           ///< Курсивный шрифт.
-  bool m_self;             ///< \b true если это собственный итем пользователя.
-  bool m_underline;        ///< Подчёркнутый шрифт.
-  ClientChannel m_channel; ///< Канал.
-  ClientChannel m_user;    ///< Пользователь.
-};
-
+class UserItem;
 
 /*!
  * Отображает список пользователей.

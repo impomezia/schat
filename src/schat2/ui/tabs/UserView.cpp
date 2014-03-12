@@ -30,103 +30,10 @@
 #include "debugstream.h"
 #include "feeds/FeedStrings.h"
 #include "hooks/ChannelMenu.h"
-#include "hooks/MessagesImpl.h"
 #include "sglobal.h"
 #include "ui/ChatIcons.h"
-#include "ui/tabs/UserView.h"
-
-UserItem::UserItem(ClientChannel user, ClientChannel channel)
-  : QStandardItem()
-  , m_bold(false)
-  , m_italic(false)
-  , m_self(false)
-  , m_underline(false)
-  , m_channel(channel)
-  , m_user(user)
-{
-  m_self = ChatClient::id() == user->id();
-
-  reload();
-}
-
-
-/*!
- * Обновление информации.
- */
-bool UserItem::reload()
-{
-  setText(m_user->name());
-  setIcon(ChatIcons::icon(m_user));
-
-  const int acl = ClientFeeds::match(m_channel, m_user);
-  if (acl != -1) {
-    QFont font = this->font();
-
-    if (m_user->status() != Status::Offline) {
-      m_bold      = acl & Acl::Edit || acl & Acl::SpecialWrite;
-      m_italic    = !(acl & Acl::Write) || Hooks::MessagesImpl::isIgnored(m_user);
-      m_underline = acl & Acl::SpecialEdit;
-    }
-    else {
-      m_bold      = false;
-      m_italic    = true;
-      m_underline = false;
-    }
-
-    font.setBold(m_bold);
-    font.setItalic(m_italic);
-    font.setUnderline(m_underline);
-    setFont(font);
-  }
-
-  setForeground(color());
-  setData(QString::number(weight()) + m_user->name().toLower());
-
-  return true;
-}
-
-
-/*!
- * Вес для сортировки.
- */
-int UserItem::weight() const
-{
-  if (m_self)
-    return 0;
-
-  else if (m_user->status() == Status::Offline)
-    return 9;
-
-  else if (m_underline)
-    return 1;
-
-  else if (m_bold)
-    return 2;
-
-  else if (m_italic)
-    return 8;
-
-  else if (m_user->gender().value() == Gender::Bot)
-    return 4;
-
-  else if (m_user->status() == Status::FreeForChat)
-    return 5;
-
-  return 7;
-}
-
-
-/*!
- * Возвращает необходимый цвет текста.
- */
-QBrush UserItem::color() const
-{
-  if (m_user->status() == Status::Offline)
-    return QColor(0x90a4b3);
-
-  return QPalette().brush(QPalette::WindowText);
-}
-
+#include "UserItem.h"
+#include "UserView.h"
 
 UserView::UserView(ClientChannel channel, QWidget *parent)
   : QListView(parent)
