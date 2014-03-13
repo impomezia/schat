@@ -5,7 +5,9 @@
 	<key>CFBundleIconFile</key>
 	<string>schat.icns</string>
 	<key>CFBundleName</key>
-	<string>Simple Chat 2</string>
+	<string>Simple Chat</string>
+	<key>CFBundleDisplayName</key>
+	<string>Simple Chat</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.3.0</string>
 	<key>CFBundlePackageType</key>
@@ -20,5 +22,9 @@
 	<string>me.schat</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2008-2014, Alexander Sedov.</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
 </dict>
 </plist>
