@@ -88,7 +88,7 @@ TrayIcon::~TrayIcon()
 
 void TrayIcon::retranslateUi()
 {
-  m_show->setText(tr("Show..."));
+  m_show->setText(tr("Show Simple Chat"));
   m_settings->setText(tr("Preferences..."));
   m_about->setText(tr("About..."));
   m_quit->setText(tr("Quit"));
