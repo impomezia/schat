@@ -28,6 +28,7 @@ class UserSortFilterModel : public QSortFilterProxyModel
 
 public:
   UserSortFilterModel(bool offlineUsers, QObject *parent = 0);
+  inline void invalidateFilter() { QSortFilterProxyModel::invalidateFilter(); }
   void setOfflineUsers(bool offline);
 
 protected:

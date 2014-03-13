@@ -132,6 +132,7 @@ bool UserView::remove(const QByteArray &id)
   const int status = item->user()->status().value();
   m_source->removeRow(m_source->indexFromItem(item).row());
   m_channels.remove(id);
+  m_model->invalidateFilter();
 
   return status != Status::Offline;
 }
@@ -151,6 +152,7 @@ void UserView::sort()
 
   m_sortable = true;
   m_model->sort(0);
+  m_model->invalidateFilter();
 }
 
 
