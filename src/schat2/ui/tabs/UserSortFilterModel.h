@@ -15,39 +15,27 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DIALOGFRAME_H_
-#define DIALOGFRAME_H_
+#ifndef USERSORTFILTERMODEL_H_
+#define USERSORTFILTERMODEL_H_
 
-#include <QFrame>
+#include <QSortFilterProxyModel>
 
 #include "schat.h"
 
-class QHBoxLayout;
-class QLabel;
-class QVBoxLayout;
-class QToolButton;
-
-class SCHAT_CORE_EXPORT DialogFrame : public QFrame
+class UserSortFilterModel : public QSortFilterProxyModel
 {
   Q_OBJECT
 
 public:
-  DialogFrame(QWidget *parent = 0);
-  ~DialogFrame();
-  QSize sizeHint() const Q_DECL_OVERRIDE;
-  QString title() const;
-  void setTitle(const QString &title);
+  UserSortFilterModel(bool offlineUsers, QObject *parent = 0);
+  void setOfflineUsers(bool offline);
 
 protected:
-  QFrame *line();
-  virtual void retranslateUi() {}
-  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
-  void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+  bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const Q_DECL_OVERRIDE;
+  bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const Q_DECL_OVERRIDE;
 
-  QHBoxLayout *m_headerLayout;
-  QLabel *m_titleLabel;
-  QToolButton *m_closeBtn;
-  QVBoxLayout *m_layout;
+private:
+  bool m_offlineUsers;
 };
 
-#endif // DIALOGFRAME_H_
+#endif // USERSORTFILTERMODEL_H_

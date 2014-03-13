@@ -1,6 +1,5 @@
-/* $Id: ChatSettings.h 3603 2013-03-27 15:19:21Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -54,6 +53,9 @@ class SCHAT_CORE_EXPORT ChatSettings : public Settings
   Q_OBJECT
 
 public:
+  static const QString kUserListKeyboard;
+  static const QString kUserListOffline;
+
   ChatSettings(const QString &fileName, const QString &defaultFile, QObject *parent = 0);
   inline bool isSynced() const { return m_synced; }
   QVariant setDefaultAndRead(const QString &key, const QVariant &value);

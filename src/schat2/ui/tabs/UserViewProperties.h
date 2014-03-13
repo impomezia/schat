@@ -15,39 +15,31 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DIALOGFRAME_H_
-#define DIALOGFRAME_H_
+#ifndef USERVIEWPROPERTIES_H_
+#define USERVIEWPROPERTIES_H_
 
-#include <QFrame>
+#include "ui/tabs/DialogFrame.h"
 
-#include "schat.h"
+class ChatSettings;
+class QCheckBox;
 
-class QHBoxLayout;
-class QLabel;
-class QVBoxLayout;
-class QToolButton;
-
-class SCHAT_CORE_EXPORT DialogFrame : public QFrame
+class UserViewProperties : public DialogFrame
 {
   Q_OBJECT
 
 public:
-  DialogFrame(QWidget *parent = 0);
-  ~DialogFrame();
-  QSize sizeHint() const Q_DECL_OVERRIDE;
-  QString title() const;
-  void setTitle(const QString &title);
+  UserViewProperties(QWidget *parent = 0);
 
 protected:
-  QFrame *line();
-  virtual void retranslateUi() {}
-  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
-  void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+  void retranslateUi() Q_DECL_OVERRIDE;
 
-  QHBoxLayout *m_headerLayout;
-  QLabel *m_titleLabel;
-  QToolButton *m_closeBtn;
-  QVBoxLayout *m_layout;
+private slots:
+  void save();
+
+private:
+  ChatSettings *m_settings;
+  QCheckBox *m_keyboardBtn;
+  QCheckBox *m_offlineBtn;
 };
 
-#endif // DIALOGFRAME_H_
+#endif // USERVIEWPROPERTIES_H_

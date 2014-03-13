@@ -315,6 +315,17 @@ void TabWidget::pin(const QByteArray &id)
 }
 
 
+void TabWidget::showDialog(QWidget *widget)
+{
+  if (!m_self)
+    return;
+
+  ChannelBaseTab *tab = qobject_cast<ChannelBaseTab *>(m_self->currentWidget());
+  if (tab)
+    tab->chatView()->showDialog(widget);
+}
+
+
 void TabWidget::stopAlert()
 {
   ChannelBaseTab *tab = qobject_cast<ChannelBaseTab *>(currentWidget());

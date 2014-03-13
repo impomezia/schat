@@ -21,6 +21,7 @@
 
 #include "ChatCore.h"
 #include "ChatNotify.h"
+#include "ChatSettings.h"
 #include "ChatUrls.h"
 #include "client/ChatClient.h"
 #include "client/ChatClient.h"
@@ -30,111 +31,26 @@
 #include "debugstream.h"
 #include "feeds/FeedStrings.h"
 #include "hooks/ChannelMenu.h"
-#include "hooks/MessagesImpl.h"
 #include "sglobal.h"
 #include "ui/ChatIcons.h"
-#include "ui/tabs/UserView.h"
-
-UserItem::UserItem(ClientChannel user, ClientChannel channel)
-  : QStandardItem()
-  , m_bold(false)
-  , m_italic(false)
-  , m_self(false)
-  , m_underline(false)
-  , m_channel(channel)
-  , m_user(user)
-{
-  m_self = ChatClient::id() == user->id();
-
-  reload();
-}
-
-
-/*!
- * Обновление информации.
- */
-bool UserItem::reload()
-{
-  setText(m_user->name());
-  setIcon(ChatIcons::icon(m_user));
-
-  const int acl = ClientFeeds::match(m_channel, m_user);
-  if (acl != -1) {
-    QFont font = this->font();
-
-    if (m_user->status() != Status::Offline) {
-      m_bold      = acl & Acl::Edit || acl & Acl::SpecialWrite;
-      m_italic    = !(acl & Acl::Write) || Hooks::MessagesImpl::isIgnored(m_user);
-      m_underline = acl & Acl::SpecialEdit;
-    }
-    else {
-      m_bold      = false;
-      m_italic    = true;
-      m_underline = false;
-    }
-
-    font.setBold(m_bold);
-    font.setItalic(m_italic);
-    font.setUnderline(m_underline);
-    setFont(font);
-  }
-
-  setForeground(color());
-  setData(QString::number(weight()) + m_user->name().toLower());
-
-  return true;
-}
-
-
-/*!
- * Вес для сортировки.
- */
-int UserItem::weight() const
-{
-  if (m_self)
-    return 0;
-
-  else if (m_user->status() == Status::Offline)
-    return 9;
-
-  else if (m_underline)
-    return 1;
-
-  else if (m_bold)
-    return 2;
-
-  else if (m_italic)
-    return 8;
-
-  else if (m_user->gender().value() == Gender::Bot)
-    return 4;
-
-  else if (m_user->status() == Status::FreeForChat)
-    return 5;
-
-  return 7;
-}
-
-
-/*!
- * Возвращает необходимый цвет текста.
- */
-QBrush UserItem::color() const
-{
-  if (m_user->status() == Status::Offline)
-    return QColor(0x90a4b3);
-
-  return QPalette().brush(QPalette::WindowText);
-}
-
+#include "ui/TabWidget.h"
+#include "UserItem.h"
+#include "UserSortFilterModel.h"
+#include "UserView.h"
+#include "UserViewProperties.h"
 
 UserView::UserView(ClientChannel channel, QWidget *parent)
   : QListView(parent)
   , m_sortable(true)
   , m_channel(channel)
 {
-  setModel(&m_model);
-  setFocusPolicy(Qt::TabFocus);
+  m_source = new QStandardItemModel(this);
+  m_model  = new UserSortFilterModel(ChatCore::settings()->value(ChatSettings::kUserListOffline).toBool(), this);
+  m_model->setSourceModel(m_source);
+  m_model->setSortRole(UserItem::SortRole);
+
+  setModel(m_model);
+  setFocusPolicy(ChatCore::settings()->value(ChatSettings::kUserListKeyboard).toBool() ? Qt::WheelFocus : Qt::TabFocus);
   setEditTriggers(QListView::NoEditTriggers);
   setSpacing(1);
   setFrameShape(QFrame::NoFrame);
@@ -150,11 +66,10 @@ UserView::UserView(ClientChannel channel, QWidget *parent)
     setPalette(p);
   }
 
-  m_model.setSortRole(Qt::UserRole + 1);
-
   connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(addTab(QModelIndex)));
   connect(ChatClient::channels(), SIGNAL(channel(ChannelInfo)), SLOT(channel(ChannelInfo)));
   connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
+  connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(onSettingsChanged(QString,QVariant)));
 }
 
 
@@ -165,6 +80,8 @@ UserView::UserView(ClientChannel channel, QWidget *parent)
  */
 bool UserView::add(ClientChannel user)
 {
+  Q_ASSERT(user);
+
   if (!user)
     return false;
 
@@ -173,8 +90,8 @@ bool UserView::add(ClientChannel user)
 
   UserItem *item = new UserItem(user, m_channel);
 
-  m_model.appendRow(item);
-  m_channels[user->id()] = item;
+  m_source->appendRow(item);
+  m_channels.insert(user->id(), item);
 
   if (m_sortable)
     sort();
@@ -213,7 +130,7 @@ bool UserView::remove(const QByteArray &id)
     return false;
 
   const int status = item->user()->status().value();
-  m_model.removeRow(m_model.indexFromItem(item).row());
+  m_source->removeRow(m_source->indexFromItem(item).row());
   m_channels.remove(id);
 
   return status != Status::Offline;
@@ -223,7 +140,7 @@ bool UserView::remove(const QByteArray &id)
 void UserView::clear()
 {
   m_sortable = true;
-  m_model.clear();
+  m_source->clear();
   m_channels.clear();
 }
 
@@ -233,7 +150,7 @@ void UserView::sort()
   SCHAT_DEBUG_STREAM(this << "sort()");
 
   m_sortable = true;
-  m_model.sort(0);
+  m_model->sort(0);
 }
 
 
@@ -250,28 +167,75 @@ void UserView::channel(const ChannelInfo &info)
 }
 
 
+void UserView::onSettingsChanged(const QString &key, const QVariant &value)
+{
+  if (key == ChatSettings::kUserListOffline)
+    m_model->setOfflineUsers(value.toBool());
+  else if (key == ChatSettings::kUserListKeyboard)
+    setFocusPolicy(value.toBool() ? Qt::WheelFocus : Qt::TabFocus);
+}
+
+
 void UserView::contextMenuEvent(QContextMenuEvent *event)
 {
-  QModelIndex index = indexAt(event->pos());
+  QMenu menu(this);
 
-  if (!index.isValid()) {
-    QListView::contextMenuEvent(event);
-    return;
+  const QModelIndex index = m_model->mapToSource(indexAt(event->pos()));
+  if (index.isValid()) {
+    UserItem *item = static_cast<UserItem *>(m_source->itemFromIndex(index));
+    if (item) {
+      ChannelMenu::bind(&menu, item->user(), IChannelMenu::UserViewScope);
+      menu.addSeparator();
+    }
   }
 
-  UserItem *item = static_cast<UserItem *>(m_model.itemFromIndex(index));
-  QMenu menu(this);
-  ChannelMenu::bind(&menu, item->user(), IChannelMenu::UserViewScope);
-  menu.exec(event->globalPos());
+  QAction *properties = 0;
+
+  if (!m_dialog)
+    properties = menu.addAction(SCHAT_ICON(Gear), tr("Properties"));
+
+  if (!menu.actions().size())
+    return;
+
+  QAction *result = menu.exec(event->globalPos());
+
+  if (result && properties && result == properties) {
+    m_dialog = new UserViewProperties(this);
+
+    TabWidget::showDialog(m_dialog);
+  }
+}
+
+
+void UserView::focusOutEvent(QFocusEvent *event)
+{
+  QListView::focusOutEvent(event);
+
+  ChatNotify::start(Notify::SetSendFocus);
+}
+
+
+void UserView::keyPressEvent(QKeyEvent *event)
+{
+  if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
+    const QModelIndex index = m_model->mapToSource(currentIndex());
+    if (!index.isValid())
+      return;
+
+    ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_source->itemFromIndex(index))->user(), event->modifiers() == Qt::ControlModifier ? LS("insert") : LS("open")));
+    ChatNotify::start(Notify::SetSendFocus);
+  }
+  else
+    QListView::keyPressEvent(event);
 }
 
 
 void UserView::mouseReleaseEvent(QMouseEvent *event)
 {
-  QModelIndex index = indexAt(event->pos());
+  QModelIndex index = m_model->mapToSource(indexAt(event->pos()));
 
   if (index.isValid() && event->modifiers() == Qt::ControlModifier && event->button() == Qt::LeftButton) {
-    UserItem *item = static_cast<UserItem *>(m_model.itemFromIndex(index));
+    UserItem *item = static_cast<UserItem *>(m_source->itemFromIndex(index));
     ChatUrls::open(ChatUrls::toUrl(item->user(), LS("insert")));
   }
   else if (event->button() == Qt::LeftButton && !index.isValid()) {
@@ -288,7 +252,7 @@ void UserView::mouseReleaseEvent(QMouseEvent *event)
  */
 void UserView::addTab(const QModelIndex &index)
 {
-  ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_model.itemFromIndex(index))->user(), LS("open")));
+  ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_source->itemFromIndex(m_model->mapToSource(index)))->user(), LS("open")));
 }
 
 

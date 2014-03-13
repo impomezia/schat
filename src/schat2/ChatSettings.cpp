@@ -1,6 +1,5 @@
-/* $Id: ChatSettings.cpp 3770 2013-08-17 15:19:27Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,6 +24,10 @@
 #include "client/SimpleClient.h"
 #include "sglobal.h"
 #include "ChatNotify.h"
+
+const QString ChatSettings::kUserListKeyboard = LS("UserList/Keyboard");
+const QString ChatSettings::kUserListOffline  = LS("UserList/Offline");
+
 
 ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, QObject *parent)
   : Settings(fileName, parent)
@@ -54,8 +57,10 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
   setDefault(SETTINGS_LABS_STATIC_TRAY_ALERTS,    false);
   setDefault(SETTINGS_TOOLBAR_ACTIONS,            QStringList());
   setDefault(SETTINGS_TRANSLATION,                LS("auto"));
-  setDefault(SETTINGS_BLUR_EFFECT,                true);
+  setDefault(SETTINGS_BLUR_EFFECT,                false);
   setDefault(SETTINGS_BLUR_RADIUS,                2);
+  setDefault(kUserListKeyboard,                   false);
+  setDefault(kUserListOffline,                    true);
 
   setValue(SETTINGS_AUTO_SCROLL, true);
 }
