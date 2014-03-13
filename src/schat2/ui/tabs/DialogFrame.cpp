@@ -21,6 +21,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 
+#include "ChatNotify.h"
 #include "DialogFrame.h"
 #include "sglobal.h"
 #include "ui/ChatIcons.h"
@@ -63,6 +64,12 @@ DialogFrame::DialogFrame(QWidget *parent)
 # else
   connect(m_closeBtn, SIGNAL(clicked()), SLOT(close()));
 # endif
+}
+
+
+DialogFrame::~DialogFrame()
+{
+  ChatNotify::start(Notify::SetSendFocus);
 }
 
 

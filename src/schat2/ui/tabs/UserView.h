@@ -55,6 +55,7 @@ private slots:
 
 protected:
   void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
+  void focusOutEvent(QFocusEvent *event) Q_DECL_OVERRIDE;
   void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
   void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 

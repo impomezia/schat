@@ -207,6 +207,14 @@ void UserView::contextMenuEvent(QContextMenuEvent *event)
 }
 
 
+void UserView::focusOutEvent(QFocusEvent *event)
+{
+  QListView::focusOutEvent(event);
+
+  ChatNotify::start(Notify::SetSendFocus);
+}
+
+
 void UserView::keyPressEvent(QKeyEvent *event)
 {
   if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) {
@@ -215,6 +223,7 @@ void UserView::keyPressEvent(QKeyEvent *event)
       return;
 
     ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_source->itemFromIndex(index))->user(), event->modifiers() == Qt::ControlModifier ? LS("insert") : LS("open")));
+    ChatNotify::start(Notify::SetSendFocus);
   }
   else
     QListView::keyPressEvent(event);

@@ -33,6 +33,7 @@ class SCHAT_CORE_EXPORT DialogFrame : public QFrame
 
 public:
   DialogFrame(QWidget *parent = 0);
+  ~DialogFrame();
   QSize sizeHint() const Q_DECL_OVERRIDE;
   QString title() const;
   void setTitle(const QString &title);
