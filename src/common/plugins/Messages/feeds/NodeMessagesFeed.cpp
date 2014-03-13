@@ -1,6 +1,5 @@
-/* $Id: NodeMessagesFeed.cpp 3755 2013-07-14 23:11:47Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -303,14 +302,19 @@ int NodeMessagesFeed::permissions(const MessageRecordV2 &record, Channel *user) 
   if (record.sender == ChatId(user->id()) && (flags & SelfEdit) && !timeout)
     return Remove | Modify;
 
-  if (head().channel()->type() != ChatId::ChannelId || !head().channel()->feed(FEED_NAME_ACL)->can(user, Acl::SpecialWrite))
+  if (head().channel()->type() != ChatId::ChannelId)
     return NoPermissions;
 
-  int out = 0;
-  if (flags & ModeratorRemove) out |= Remove;
-  if (flags & ModeratorEdit)   out |= Modify;
+  FeedPtr acl = head().channel()->feed(FEED_NAME_ACL);
+  if (acl->can(user, Acl::SpecialWrite) || acl->can(user, Acl::SpecialEdit)) {
+    int out = 0;
+    if (flags & ModeratorRemove) out |= Remove;
+    if (flags & ModeratorEdit)   out |= Modify;
 
-  return out;
+    return out;
+  }
+
+  return NoPermissions;
 }
 
 

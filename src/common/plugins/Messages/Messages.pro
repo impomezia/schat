@@ -1,6 +1,5 @@
-# $Id: Messages.pro 3040 2012-08-29 08:21:23Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,7 +16,6 @@
 
 SCHAT_DAEMON_LIB = 1
 QT = core network sql
-OTHER_FILES += Messages.json
 
 HEADERS  = \
    feeds/NodeMessagesFeed.h \
