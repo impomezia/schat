@@ -30,6 +30,7 @@ void UserSortFilterModel::setOfflineUsers(bool offline)
   m_offlineUsers = offline;
 
   invalidateFilter();
+  sort(0);
 }
 
 
