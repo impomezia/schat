@@ -18,7 +18,6 @@
 #include <QMenu>
 #include <QMouseEvent>
 #include <QUrl>
-#include <QLabel>
 
 #include "ChatCore.h"
 #include "ChatNotify.h"
@@ -38,6 +37,7 @@
 #include "UserItem.h"
 #include "UserSortFilterModel.h"
 #include "UserView.h"
+#include "UserViewProperties.h"
 
 UserView::UserView(ClientChannel channel, QWidget *parent)
   : QListView(parent)
@@ -45,12 +45,12 @@ UserView::UserView(ClientChannel channel, QWidget *parent)
   , m_channel(channel)
 {
   m_source = new QStandardItemModel(this);
-  m_model  = new UserSortFilterModel(ChatCore::settings()->value(ChatSettings::kOfflineUsers).toBool(), this);
+  m_model  = new UserSortFilterModel(ChatCore::settings()->value(ChatSettings::kUserListOffline).toBool(), this);
   m_model->setSourceModel(m_source);
   m_model->setSortRole(UserItem::SortRole);
 
   setModel(m_model);
-  setFocusPolicy(Qt::TabFocus);
+  setFocusPolicy(ChatCore::settings()->value(ChatSettings::kUserListKeyboard).toBool() ? Qt::WheelFocus : Qt::TabFocus);
   setEditTriggers(QListView::NoEditTriggers);
   setSpacing(1);
   setFrameShape(QFrame::NoFrame);
@@ -169,8 +169,10 @@ void UserView::channel(const ChannelInfo &info)
 
 void UserView::onSettingsChanged(const QString &key, const QVariant &value)
 {
-  if (key == ChatSettings::kOfflineUsers)
+  if (key == ChatSettings::kUserListOffline)
     m_model->setOfflineUsers(value.toBool());
+  else if (key == ChatSettings::kUserListKeyboard)
+    setFocusPolicy(value.toBool() ? Qt::WheelFocus : Qt::TabFocus);
 }
 
 
@@ -187,10 +189,20 @@ void UserView::contextMenuEvent(QContextMenuEvent *event)
     }
   }
 
-  QAction *properties = menu.addAction(SCHAT_ICON(Gear), tr("Properties"));
+  QAction *properties = 0;
 
-  if (menu.exec(event->globalPos()) == properties) {
-    TabWidget::showDialog(new QLabel("test", this));
+  if (!m_dialog)
+    properties = menu.addAction(SCHAT_ICON(Gear), tr("Properties"));
+
+  if (!menu.actions().size())
+    return;
+
+  QAction *result = menu.exec(event->globalPos());
+
+  if (result && properties && result == properties) {
+    m_dialog = new UserViewProperties(this);
+
+    TabWidget::showDialog(m_dialog);
   }
 }
 
@@ -231,7 +243,7 @@ void UserView::mouseReleaseEvent(QMouseEvent *event)
  */
 void UserView::addTab(const QModelIndex &index)
 {
-  ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_source->itemFromIndex(index))->user(), LS("open")));
+  ChatUrls::open(ChatUrls::toUrl(static_cast<UserItem *>(m_source->itemFromIndex(m_model->mapToSource(index)))->user(), LS("open")));
 }
 
 

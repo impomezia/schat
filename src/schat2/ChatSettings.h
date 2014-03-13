@@ -53,7 +53,8 @@ class SCHAT_CORE_EXPORT ChatSettings : public Settings
   Q_OBJECT
 
 public:
-  static const QString kOfflineUsers;
+  static const QString kUserListKeyboard;
+  static const QString kUserListOffline;
 
   ChatSettings(const QString &fileName, const QString &defaultFile, QObject *parent = 0);
   inline bool isSynced() const { return m_synced; }

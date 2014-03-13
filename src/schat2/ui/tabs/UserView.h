@@ -19,6 +19,7 @@
 #define USERVIEW_H_
 
 #include <QListView>
+#include <QPointer>
 #include <QStandardItemModel>
 
 #include "Channel.h"
@@ -27,6 +28,7 @@ class ChannelInfo;
 class Notify;
 class UserItem;
 class UserSortFilterModel;
+class UserViewProperties;
 
 /*!
  * Отображает список пользователей.
@@ -64,6 +66,7 @@ private:
   bool m_sortable;                        ///< true если список пользователей нужно сортировать при добавлении пользователя.
   ClientChannel m_channel;                ///< Канал.
   QMap<QByteArray, UserItem*> m_channels; ///< Таблица для ускоренного поиска пользователей.
+  QPointer<UserViewProperties> m_dialog;
   QStandardItemModel *m_source;           ///< Модель для отображения списка пользователей
   UserSortFilterModel *m_model;
 };

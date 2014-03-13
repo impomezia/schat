@@ -25,7 +25,8 @@
 #include "sglobal.h"
 #include "ChatNotify.h"
 
-const QString ChatSettings::kOfflineUsers = LS("OfflineUsers");
+const QString ChatSettings::kUserListKeyboard = LS("UserList/Keyboard");
+const QString ChatSettings::kUserListOffline  = LS("UserList/Offline");
 
 
 ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, QObject *parent)
@@ -58,7 +59,8 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
   setDefault(SETTINGS_TRANSLATION,                LS("auto"));
   setDefault(SETTINGS_BLUR_EFFECT,                false);
   setDefault(SETTINGS_BLUR_RADIUS,                2);
-  setDefault(kOfflineUsers,                       true);
+  setDefault(kUserListKeyboard,                   false);
+  setDefault(kUserListOffline,                    true);
 
   setValue(SETTINGS_AUTO_SCROLL, true);
 }
