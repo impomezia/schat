@@ -118,6 +118,9 @@
         <Component Id="History.dll" Guid="{B3B5A9E9-620C-43FF-ACDE-9B9A7FF8BF3E}">
           <File Id="History.dll" KeyPath="yes" Source="..\schat2\plugins\History.dll" />
         </Component>
+        <Component Id="Http.dll" Guid="{12721380-A88B-4DF5-B52E-EC98B0EBFCEF}">
+            <File Id="Http.dll" KeyPath="yes" Source="..\schat2\plugins\Http.dll" />
+        </Component>
         <Component Id="Idle.dll" Guid="{C905DEF6-1619-4471-B24B-656EC5559203}">
           <File Id="Idle.dll" KeyPath="yes" Source="..\schat2\plugins\Idle.dll" />
         </Component>
@@ -126,6 +129,9 @@
         </Component>
         <Component Id="Popup.dll" Guid="{3EF3DD8B-ED11-495B-A6E3-BC1D243DDCC6}">
           <File Id="Popup.dll" KeyPath="yes" Source="..\schat2\plugins\Popup.dll" />
+        </Component>
+        <Component Id="Preview.dll" Guid="{725AFD3A-DA7D-4517-ABA7-A710CD74676D}">
+            <File Id="Preview.dll" KeyPath="yes" Source="..\schat2\plugins\Preview.dll" />
         </Component>
         <Component Id="Proxy.dll" Guid="{76BCBEC3-C6B0-4877-A7C4-F141E9F33AF1}">
           <File Id="Proxy.dll" KeyPath="yes" Source="..\schat2\plugins\Proxy.dll" />
@@ -242,6 +248,7 @@
       <ComponentRef Id="schat2_ru.qm" />
       <ComponentRef Id="schat2_uk.qm" />
       <ComponentRef Id="Received.wav" />
+      <ComponentRef Id="Http.dll" />
     </ComponentGroup>
     <ComponentGroup Id="Qt">
       <ComponentRef Id="qt_ru.qm" />
@@ -282,6 +289,9 @@
     <ComponentGroup Id="Popup">
       <ComponentRef Id="Popup.dll" />
       <ComponentRef Id="ChangeLog.Popup.html" />
+    </ComponentGroup>
+    <ComponentGroup Id="Preview">
+        <ComponentRef Id="Preview.dll" />
     </ComponentGroup>
     <ComponentGroup Id="Proxy">
       <ComponentRef Id="Proxy.dll" />
