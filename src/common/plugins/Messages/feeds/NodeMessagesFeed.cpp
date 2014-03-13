@@ -296,7 +296,10 @@ FeedReply NodeMessagesFeed::since(const QVariantMap &json, Channel *user) const
 
 int NodeMessagesFeed::permissions(const MessageRecordV2 &record, Channel *user) const
 {
-  const int flags    = feed(user).value(MESSAGES_FEED_EDITABLE_KEY).toInt();
+  const int flags = feed(user).value(MESSAGES_FEED_EDITABLE_KEY).toInt();
+  if (flags == -1)
+    return Remove | Modify;
+
   const bool timeout = isTimeOut(record.date);
 
   if (record.sender == ChatId(user->id()) && (flags & SelfEdit) && !timeout)
