@@ -247,8 +247,11 @@ int HistoryChatView::permissions(const MessageRecord &record) const
     return NoPermissions;
 
   const QVariantMap data = messages->data();
-  const int flags        = data.value(MESSAGES_FEED_EDITABLE_KEY, DefaultEditFlags).toInt();
-  const bool timeout     = (qAbs(ChatClient::date() - record.date) / 1000) > data.value(MESSAGES_FEED_TIMEOUT_KEY, DefaultTimeOut).toInt();
+  const int flags = data.value(MESSAGES_FEED_EDITABLE_KEY, DefaultEditFlags).toInt();
+  if (flags == -1)
+    return Remove | Modify;
+
+  const bool timeout = (qAbs(ChatClient::date() - record.date) / 1000) > data.value(MESSAGES_FEED_TIMEOUT_KEY, DefaultTimeOut).toInt();
 
   if (record.senderId == ChatClient::id() && (flags & SelfEdit) && !timeout)
     return Remove | Modify;
