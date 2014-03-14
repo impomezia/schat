@@ -1,0 +1,35 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="images/balloon@2x.png">images/font-awesome/fa-comment@2x.png</file>
+  <file alias="images/channel@2x.png">images/font-awesome/fa-comments@2x.png</file>
+  <file alias="images/channels@2x.png">images/font-awesome/fa-list-ul@2x.png</file>
+  <file alias="images/clock@2x.png">images/font-awesome/fa-clock-o@2x.png</file>
+  <file alias="images/computer@2x.png">images/font-awesome/fa-desktop@2x.png</file>
+  <file alias="images/edit-clear@2x.png">images/font-awesome/fa-eraser@2x.png</file>
+  <file alias="images/edit-copy@2x.png">images/font-awesome/fa-files-o@2x.png</file>
+  <file alias="images/edit-cut@2x.png">images/font-awesome/fa-scissors@2x.png</file>
+  <file alias="images/edit-paste@2x.png">images/font-awesome/fa-clipboard@2x.png</file>
+  <file alias="images/eye@2x.png">images/font-awesome/fa-eye@2x.png</file>
+  <file alias="images/globe@2x.png">images/font-awesome/fa-globe@2x.png</file>
+  <file alias="images/information@2x.png">images/font-awesome/fa-info-circle@2x.png</file>
+  <file alias="images/main-tab-menu@2x.png">images/font-awesome/fa-bars@2x.png</file>
+  <file alias="images/pin@2x.png">images/font-awesome/fa-thumb-tack@2x.png</file>
+  <file alias="images/prohibition@2x.png">images/font-awesome/fa-ban@2x.png</file>
+  <file alias="images/providers@2x.png">www/img/providers@2x.png</file>
+  <file alias="images/reload@2x.png">images/font-awesome/fa-repeat@2x.png</file>
+  <file alias="images/secure@2x.png">images/font-awesome/fa-lock@2x.png</file>
+  <file alias="images/sign-out@2x.png">images/font-awesome/fa-sign-out@2x.png</file>
+  <file alias="images/times@2x.png">images/font-awesome/fa-times@2x.png</file>
+  <file>images/about@2x.png</file>
+  <file>images/add@2x.png</file>
+  <file>images/bell@2x.png</file>
+  <file>images/gear@2x.png</file>
+  <file>images/key@2x.png</file>
+  <file>images/link@2x.png</file>
+  <file>images/plugin@2x.png</file>
+  <file>images/quit@2x.png</file>
+  <file>images/remove@2x.png</file>
+  <file>images/settings@2x.png</file>
+  <file>images/sound_mute@2x.png</file>
+</qresource>
+</RCC>

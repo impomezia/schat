@@ -17,6 +17,7 @@
 include(../common/config.pri)
 
 SCHAT_RESOURCES = 1
+mac:SCHAT_RESOURCES_HIDPI = 1
 
 TEMPLATE = lib
 QT = core gui network webkit

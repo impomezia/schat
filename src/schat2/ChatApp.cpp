@@ -54,6 +54,10 @@ ChatApp::ChatApp(int &argc, char **argv)
   palette.setColor(QPalette::Inactive, QPalette::Highlight, palette.color(QPalette::Highlight));
   setPalette(palette);
 
+# if QT_VERSION >= 0x050000 && defined(Q_OS_OSX)
+  setAttribute(Qt::AA_UseHighDpiPixmaps);
+# endif
+
 # if !defined(SCHAT_NO_SINGLEAPP)
   connect(this, SIGNAL(messageReceived(QString)), SLOT(handleMessage(QString)));
 # endif

@@ -56,6 +56,10 @@ contains( SCHAT_RESOURCES, 1 ) {
   RESOURCES += ../../res/$${TARGET}.qrc
 }
 
+contains( SCHAT_RESOURCES_HIDPI, 1 ) {
+  RESOURCES += ../../res/$${TARGET}@2x.qrc
+}
+
 contains( SCHAT_RC_FILE, 1 ) {
   win32:RC_FILE = $${TARGET}.rc
 }
