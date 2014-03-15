@@ -27,7 +27,8 @@
 #include "Translation.h"
 #include "ui/tabs/SettingsTabHook.h"
 
-const QString PopupPluginImpl::kTimeout = LS("Alerts/PopupTimeout");
+const QString PopupPluginImpl::kFullscreen = LS("Popup/Fullscreen");
+const QString PopupPluginImpl::kTimeout    = LS("Popup/Timeout");
 
 PopupPluginImpl::PopupPluginImpl(QObject *parent)
   : ChatPlugin(parent)

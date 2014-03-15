@@ -29,6 +29,7 @@ HEADERS  = \
 
 SOURCES  = \
    PopupManager.cpp \
+   PopupManager_win.cpp \
    PopupPlugin.cpp \
    PopupSettings.cpp \
    PopupWindow.cpp \

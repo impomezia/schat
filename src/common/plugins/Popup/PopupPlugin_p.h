@@ -30,7 +30,8 @@ class PopupPluginImpl : public ChatPlugin
   Q_OBJECT
 
 public:
-  static const QString kTimeout;
+  static const QString kFullscreen; ///< \b true если всплывающие окна будут показываться даже если активно полноэкранное приложение.
+  static const QString kTimeout;    ///< Время в секундах для показа всплывающего окна.
 
   PopupPluginImpl(QObject *parent);
   void chatReady() Q_DECL_OVERRIDE;

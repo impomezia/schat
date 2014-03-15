@@ -22,6 +22,7 @@
 
 #include "schat.h"
 
+class ChatSettings;
 class QCheckBox;
 class QLabel;
 class QSpinBox;
@@ -38,16 +39,18 @@ protected:
 
 private slots:
   void enable(bool enable);
-  void settingsChanged(const QString &key, const QVariant &value);
-  void timeChanged(int time);
+  void onSettingsChanged(const QString &key, const QVariant &value);
+  void save();
 
 private:
   void retranslateUi();
 
-  QCheckBox *m_enable; ///< Настройка "Alerts/Popup".
+  ChatSettings *m_settings;
+  QCheckBox *m_enable;      ///< Настройка "Alerts/Popup".
+  QCheckBox *m_fullscreen;
   QLabel *m_timeHintLabel;
-  QLabel *m_timeLabel; ///< Надпись поясняющая действие опции "Alerts/PopupTimeout".
-  QSpinBox *m_timeBox; ///< Настройка "Alerts/PopupTimeout".
+  QLabel *m_timeLabel;      ///< Надпись поясняющая действие опции "Alerts/PopupTimeout".
+  QSpinBox *m_timeBox;      ///< Настройка "Alerts/PopupTimeout".
 };
 
 #endif /* POPUPSETTINGS_H_ */

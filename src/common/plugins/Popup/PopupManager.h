@@ -20,6 +20,8 @@
 
 #include <QObject>
 
+#include "schat.h"
+
 class Alert;
 class PopupWindow;
 class QBasicTimer;
@@ -33,7 +35,7 @@ public:
   ~PopupManager();
 
 protected:
-  void timerEvent(QTimerEvent *event);
+  void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
   void popup(const Alert &alert);
@@ -41,10 +43,12 @@ private slots:
   void windowDestroyed(QObject *obj);
 
 private:
+  bool isFullscreenAppActive() const;
   QString loadCSS(const QString &baseName);
   void layoutWidgets();
 
   bool m_flashed;                 ///< \b true если активен оранжевый стиль всплывающего окна.
+  bool m_fullscreen;              ///< \b true если всплывающие окна будут показываться даже если активно полноэкранное приложение.
   bool m_stylesLoaded;            ///< \b true если CSS стили загружены.
   int m_timeout;                  ///< Время в секундах после которого всплывающие окна будут автоматически закрыты.
   QBasicTimer *m_timer;           ///< Таймер обслуживающий соединение.

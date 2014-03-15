@@ -29,9 +29,10 @@
 
 PopupSettings::PopupSettings(QWidget *parent)
   : QWidget(parent)
+  , m_settings(ChatCore::settings())
 {
   m_enable = new QCheckBox(this);
-  m_enable->setChecked(ChatCore::settings()->value(ChatSettings::kAlertsPopup).toBool());
+  m_enable->setChecked(m_settings->value(ChatSettings::kAlertsPopup).toBool());
 
   QFont font = m_enable->font();
   font.setBold(true);
@@ -40,15 +41,19 @@ PopupSettings::PopupSettings(QWidget *parent)
   m_timeLabel = new QLabel(this);
   m_timeBox = new QSpinBox(this);
   m_timeBox->setRange(0, 86400);
-  m_timeBox->setValue(ChatCore::settings()->value(PopupPluginImpl::kTimeout).toInt());
+  m_timeBox->setValue(m_settings->value(PopupPluginImpl::kTimeout).toInt());
 
   m_timeHintLabel = new QLabel(this);
   m_timeHintLabel->setEnabled(false);
+
+  m_fullscreen = new QCheckBox(this);
+  m_fullscreen->setChecked(!m_settings->value(PopupPluginImpl::kFullscreen).toBool());
 
   if (!m_enable->isChecked()) {
     m_timeLabel->hide();
     m_timeBox->hide();
     m_timeHintLabel->hide();
+    m_fullscreen->hide();
   }
 
   QGridLayout *mainLay = new QGridLayout(this);
@@ -56,13 +61,16 @@ PopupSettings::PopupSettings(QWidget *parent)
   mainLay->addWidget(m_timeLabel, 1, 0);
   mainLay->addWidget(m_timeBox, 1, 1);
   mainLay->addWidget(m_timeHintLabel, 1, 2);
+  mainLay->addWidget(m_fullscreen, 2, 0, 1, 3);
   mainLay->setColumnStretch(2, 1);
   mainLay->setContentsMargins(10, 16, 0, 0);
 
   retranslateUi();
 
-  connect(m_enable, SIGNAL(clicked(bool)),SLOT(enable(bool)));
-  connect(m_timeBox, SIGNAL(valueChanged(int)),SLOT(timeChanged(int)));
+  connect(m_enable, SIGNAL(clicked(bool)), SLOT(enable(bool)));
+  connect(m_timeBox, SIGNAL(valueChanged(int)), SLOT(save()));
+  connect(m_fullscreen, SIGNAL(clicked()), SLOT(save()));
+  connect(m_settings, SIGNAL(changed(QString,QVariant)), SLOT(onSettingsChanged(QString,QVariant)));
 }
 
 
@@ -80,22 +88,27 @@ void PopupSettings::enable(bool enable)
   m_timeLabel->setVisible(enable);
   m_timeBox->setVisible(enable);
   m_timeHintLabel->setVisible(enable);
-  ChatCore::settings()->setValue(ChatSettings::kAlertsPopup, enable);
+  m_fullscreen->setVisible(enable);
+  m_settings->setValue(ChatSettings::kAlertsPopup, enable);
 }
 
 
-void PopupSettings::settingsChanged(const QString &key, const QVariant &value)
+void PopupSettings::onSettingsChanged(const QString &key, const QVariant &value)
 {
   if (key == ChatSettings::kAlertsPopup)
     m_enable->setChecked(value.toBool());
   else if (key == PopupPluginImpl::kTimeout)
     m_timeBox->setValue(value.toInt());
+  else if (key == PopupPluginImpl::kFullscreen)
+    m_fullscreen->setChecked(!value.toBool());
 }
 
 
-void PopupSettings::timeChanged(int time)
+void PopupSettings::save()
 {
-  ChatCore::settings()->setValue(PopupPluginImpl::kTimeout, time);
+  qDebug() << "m_timeBox->value()" << m_timeBox->value();
+  m_settings->setValue(PopupPluginImpl::kFullscreen, !m_fullscreen->isChecked());
+  m_settings->setValue(PopupPluginImpl::kTimeout,    m_timeBox->value());
 }
 
 
@@ -105,4 +118,5 @@ void PopupSettings::retranslateUi()
   m_timeLabel->setText(tr("Time to display popup window"));
   m_timeBox->setSuffix(tr(" sec"));
   m_timeHintLabel->setText(tr("0 - infinitely"));
+  m_fullscreen->setText(tr("Don't show popups when active fullscreen application"));
 }
