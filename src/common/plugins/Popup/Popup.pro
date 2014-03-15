@@ -29,12 +29,16 @@ HEADERS  = \
 
 SOURCES  = \
    PopupManager.cpp \
-   PopupManager_win.cpp \
    PopupPlugin.cpp \
    PopupSettings.cpp \
    PopupWindow.cpp \
 
 RESOURCES += Popup.qrc
+
+win32 {
+  SOURCES += PopupManager_win.cpp
+  LIBS += -luser32
+}
 
 TRANSLATIONS += res/translations/popup_en.ts
 TRANSLATIONS += res/translations/popup_ru.ts
