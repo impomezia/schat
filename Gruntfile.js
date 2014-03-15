@@ -5,7 +5,6 @@ module.exports = function(grunt) {
     uglify: {
       all: {
         files: {
-          'res/html/js/ChatView.min.js': ['res/html/src/ChatView.js'],
           'res/html/js/PluginsView.min.js': ['res/html/src/PluginsView.js'],
           'res/html/js/server.min.js': ['res/html/src/server.js'],
           'res/html/js/user.min.js': ['res/html/src/user.js'],

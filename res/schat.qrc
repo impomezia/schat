@@ -79,7 +79,6 @@
   <file alias="js/about.js">html/js/about.min.js</file>
   <file alias="js/bootstrap-modal.js">html/js/bootstrap-modal.min.js</file>
   <file alias="js/bootstrap-tooltip.js">html/js/bootstrap-tooltip.min.js</file>
-  <file alias="js/ChatView.js">html/js/ChatView.min.js</file>
   <file alias="js/jquery.js">html/js/jquery.min.js</file>
   <file alias="js/jquery.timeago.en.js">html/js/jquery.timeago.en.min.js</file>
   <file alias="js/jquery.timeago.js">html/js/jquery.timeago.min.js</file>
@@ -129,6 +128,7 @@
   <file>images/spinner-yellow.gif</file>
   <file>images/stop.png</file>
   <file>images/trash.png</file>
+  <file>js/ChatView.js</file>
   <file>translations/en.png</file>
   <file>translations/unknown.png</file>
 </qresource>
