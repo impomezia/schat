@@ -1,6 +1,5 @@
-/* $Id: ChatView.js 3752 2013-07-13 17:30:46Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -280,8 +279,11 @@ var Messages = {
   },
 
 
-  /*
+  /**
    * Установка идентификатора сообщения.
+   *
+   * @param container
+   * @param json
    */
   setMessageId: function(container, json) {
     if (json.hasOwnProperty('OID')) {
@@ -293,8 +295,10 @@ var Messages = {
   },
 
 
-  /*
+  /**
    * Добавление сообщения пользователя.
+   *
+   * @param json
    */
   addChannelMessage: function(json)
   {
@@ -318,10 +322,10 @@ var Messages = {
       return;
     }
 
-    var block = document.createElement('div');
-    Messages.setMessageId(block, json);
-    block.setAttribute('class', 'container ' + json.Type + '-type');
-    block.setAttribute('data-time', json.Date);
+    container = document.createElement('div');
+    Messages.setMessageId(container, json);
+    container.setAttribute('class', 'container ' + json.Type + '-type');
+    container.setAttribute('data-time', json.Date);
 
     var html = '<div class="blocks ';
     html += json.Direction;
@@ -340,9 +344,9 @@ var Messages = {
 
     html += '</div>';
 
-    block.innerHTML = html;
+    container.innerHTML = html;
 
-    Messages.addHintedRawMessage(block, json.Hint);
+    Messages.addHintedRawMessage(container, json.Hint);
 
     if (json.hasOwnProperty('Status') && json.Status == 'undelivered')
       return;
@@ -351,26 +355,31 @@ var Messages = {
   },
 
 
-  /*
+  /**
    * Добавление сырого сообщения, с подсказкой по размещению.
+   *
+   * @param container
+   * @param hint
    */
-  addHintedRawMessage: function(block, hint)
+  addHintedRawMessage: function(container, hint)
   {
     if (hint.Hint == 'before') {
       var before = document.getElementById(hint.Id);
       if (before !== null) {
-        before.parentNode.insertBefore(block, before);
-        Messages.add(block.id);
+        before.parentNode.insertBefore(container, before);
+        Messages.add(container.id);
         return;
       }
     }
 
-    Messages.addRawMessage(block, hint.Day);
+    Messages.addRawMessage(container, hint.Day);
   },
 
 
-  /*
+  /**
    * Добавление сообщения.
+   *
+   * @param json
    */
   addMessage: function(json)
   {
@@ -549,6 +558,8 @@ var Messages = {
       block.firstChild.innerHTML = '<span class="time">' + DateTime.time(date) + '</span><span class="seconds">' + DateTime.seconds(date) + '</span> ';
       container.setAttribute('data-time', json.Date);
       ChatView.setLastMessage(json.Date);
+
+      Messages.addHintedRawMessage(container, json.Hint);
     }
   },
 

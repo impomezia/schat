@@ -1,6 +1,5 @@
-/* $Id: days.js 3684 2013-06-09 21:00:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -42,7 +41,7 @@ Messages.day = function(day) {
 
   var index = Messages.days.indexOf(day);
   if (index == Messages.days.length - 1) {
-    document.getElementById('Chat').appendChild(block);
+    window.Chat.appendChild(block);
   }
   else {
     var before = document.getElementById('day-' + Messages.days[index + 1]);
@@ -51,9 +50,9 @@ Messages.day = function(day) {
 };
 
 
-Messages.addRawMessage = function(block, day) {
-  document.getElementById('day-body-' + day).appendChild(block);
-  Messages.add(block.id);
+Messages.addRawMessage = function(container, day) {
+  document.getElementById('day-body-' + day).appendChild(container);
+  Messages.add(container.id);
 };
 
 
