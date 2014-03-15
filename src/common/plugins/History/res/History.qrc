@@ -1,0 +1,12 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="css/History/History.css">css/History.css</file>
+  <file alias="images/History/book.png">images/icon.png</file>
+  <file alias="images/History/icon.png">images/icon@2x.png</file>
+  <file alias="images/History/up.png">images/wireframe/br_up_icon_16.png</file>
+  <file alias="js/History/days.js">js/days.js</file>
+  <file alias="js/History/History.js">js/History.js</file>
+  <file>translations/history_ru.qm</file>
+  <file>translations/history_uk.qm</file>
+</qresource>
+</RCC>

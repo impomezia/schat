@@ -39,7 +39,7 @@ SOURCES  = \
    HistoryPlugin.cpp \
    ui/HistorySettings.cpp \
 
-RESOURCES += History.qrc
+RESOURCES += res/History.qrc
 
 TRANSLATIONS += res/translations/history_en.ts
 TRANSLATIONS += res/translations/history_ru.ts
