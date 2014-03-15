@@ -30,6 +30,8 @@ class PopupPluginImpl : public ChatPlugin
   Q_OBJECT
 
 public:
+  static const QString kTimeout;
+
   PopupPluginImpl(QObject *parent);
   void chatReady() Q_DECL_OVERRIDE;
 

@@ -109,10 +109,10 @@ ChatAlerts::ChatAlerts(QObject *parent)
 {
   m_self = this;
 
-  m_popup     = m_settings->setDefaultAndRead(LS("Alerts/Popup"),      true).toBool();
-  m_popupDnD  = m_settings->setDefaultAndRead(LS("Alerts/Popup.DnD"),  false).toBool();
-  m_sounds    = m_settings->setDefaultAndRead(LS("Alerts/Sounds"),     true).toBool();
-  m_soundsDnD = m_settings->setDefaultAndRead(LS("Alerts/Sounds.DnD"), false).toBool();
+  m_popup     = m_settings->setDefaultAndRead(ChatSettings::kAlertsPopup, true).toBool();
+  m_popupDnD  = m_settings->setDefaultAndRead(LS("Alerts/Popup.DnD"),     false).toBool();
+  m_sounds    = m_settings->setDefaultAndRead(LS("Alerts/Sounds"),        true).toBool();
+  m_soundsDnD = m_settings->setDefaultAndRead(LS("Alerts/Sounds.DnD"),    false).toBool();
 
   add(new MessageAlertType(LS("public"),    100));
   add(new MessageAlertType(LS("private"),   200));
@@ -369,7 +369,7 @@ void ChatAlerts::settingsChanged(const QString &key, const QVariant &value)
   else if (key == LS("Alerts/Sounds.DnD")) {
     m_soundsDnD = value.toBool();
   }
-  else if (key == LS("Alerts/Popup")) {
+  else if (key == ChatSettings::kAlertsPopup) {
     m_popup = value.toBool();
   }
   else if (key == LS("Alerts/Popup.DnD")) {

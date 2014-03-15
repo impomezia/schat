@@ -1,6 +1,5 @@
-/* $Id: PopupManager.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,6 +26,7 @@
 #include "ChatSettings.h"
 #include "Path.h"
 #include "PopupManager.h"
+#include "PopupPlugin_p.h"
 #include "PopupWindow.h"
 #include "sglobal.h"
 #include "ui/TabWidget.h"
@@ -36,7 +36,7 @@ PopupManager::PopupManager(QObject *parent)
   , m_flashed(true)
   , m_stylesLoaded(false)
 {
-  m_timeout = ChatCore::settings()->setDefaultAndRead(LS("Alerts/PopupTimeout"), 10).toUInt();
+  m_timeout = ChatCore::settings()->setDefaultAndRead(PopupPluginImpl::kTimeout, 10).toUInt();
   m_timer   = new QBasicTimer();
 
   connect(ChatAlerts::i(), SIGNAL(popup(Alert)), SLOT(popup(Alert)));
@@ -86,7 +86,7 @@ void PopupManager::popup(const Alert &alert)
 
 void PopupManager::settingsChanged(const QString &key, const QVariant &value)
 {
-  if (key == LS("Alerts/PopupTimeout"))
+  if (key == PopupPluginImpl::kTimeout)
     m_timeout = value.toUInt();
 }
 

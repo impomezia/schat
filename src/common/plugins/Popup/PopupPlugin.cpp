@@ -27,6 +27,8 @@
 #include "Translation.h"
 #include "ui/tabs/SettingsTabHook.h"
 
+const QString PopupPluginImpl::kTimeout = LS("Alerts/PopupTimeout");
+
 PopupPluginImpl::PopupPluginImpl(QObject *parent)
   : ChatPlugin(parent)
 {
@@ -56,7 +58,4 @@ ChatPlugin *PopupPlugin::create()
   return m_plugin;
 }
 
-
-#if QT_VERSION < 0x050000
-  Q_EXPORT_PLUGIN2(Popup, PopupPlugin);
-#endif
+Q_EXPORT_PLUGIN2(Popup, PopupPlugin);

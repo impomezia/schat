@@ -53,6 +53,7 @@ class SCHAT_CORE_EXPORT ChatSettings : public Settings
   Q_OBJECT
 
 public:
+  static const QString kAlertsPopup;
   static const QString kUserListKeyboard;
   static const QString kUserListOffline;
 

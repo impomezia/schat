@@ -25,6 +25,7 @@
 #include "sglobal.h"
 #include "ChatNotify.h"
 
+const QString ChatSettings::kAlertsPopup      = LS("Alerts/Popup");
 const QString ChatSettings::kUserListKeyboard = LS("UserList/Keyboard");
 const QString ChatSettings::kUserListOffline  = LS("UserList/Offline");
 
