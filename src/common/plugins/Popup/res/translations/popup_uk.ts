@@ -5,18 +5,28 @@
 <context>
     <name>PopupSettings</name>
     <message>
-        <location filename="../../PopupSettings.cpp" line="98"/>
+        <location filename="../../PopupSettings.cpp" line="128"/>
         <source>Popup windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../PopupSettings.cpp" line="99"/>
+        <location filename="../../PopupSettings.cpp" line="129"/>
         <source>Time to display popup window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../PopupSettings.cpp" line="100"/>
+        <location filename="../../PopupSettings.cpp" line="130"/>
         <source> sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../PopupSettings.cpp" line="131"/>
+        <source>0 - infinitely</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../PopupSettings.cpp" line="134"/>
+        <source>Don&apos;t show popups when active fullscreen application</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

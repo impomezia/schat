@@ -5,19 +5,29 @@
 <context>
     <name>PopupSettings</name>
     <message>
-        <location filename="../../PopupSettings.cpp" line="98"/>
+        <location filename="../../PopupSettings.cpp" line="128"/>
         <source>Popup windows</source>
         <translation>Всплывающие окна</translation>
     </message>
     <message>
-        <location filename="../../PopupSettings.cpp" line="99"/>
+        <location filename="../../PopupSettings.cpp" line="129"/>
         <source>Time to display popup window</source>
         <translation>Время отображения всплывающего окна</translation>
     </message>
     <message>
-        <location filename="../../PopupSettings.cpp" line="100"/>
+        <location filename="../../PopupSettings.cpp" line="130"/>
         <source> sec</source>
         <translation> сек</translation>
+    </message>
+    <message>
+        <location filename="../../PopupSettings.cpp" line="131"/>
+        <source>0 - infinitely</source>
+        <translation>0 - бесконечно</translation>
+    </message>
+    <message>
+        <location filename="../../PopupSettings.cpp" line="134"/>
+        <source>Don&apos;t show popups when active fullscreen application</source>
+        <translation>Не показывать всплывающие окна, когда активно полноэкранное приложение</translation>
     </message>
 </context>
 </TS>
