@@ -1,6 +1,5 @@
-# $Id: schat2.pro 3768 2013-08-13 22:46:46Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -58,7 +57,8 @@ win32 {
         SOURCES += qtwin/qtwin.cpp
     }
 
-    SOURCES += ui/ChatWindow_win.cpp
+    HEADERS += ExceptionHandler.h
+    SOURCES += ui/ChatWindow_win.cpp ExceptionHandler.cpp
 }
 
 unix {
