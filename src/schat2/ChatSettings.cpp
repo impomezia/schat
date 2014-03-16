@@ -25,9 +25,13 @@
 #include "sglobal.h"
 #include "ChatNotify.h"
 
-const QString ChatSettings::kAlertsPopup      = LS("Alerts/Popup");
-const QString ChatSettings::kUserListKeyboard = LS("UserList/Keyboard");
-const QString ChatSettings::kUserListOffline  = LS("UserList/Offline");
+const QString ChatSettings::kAlertsPopup        = LS("Alerts/Popup");
+const QString ChatSettings::kProfileDefaultNick = LS("Profile/DefaultNick");
+const QString ChatSettings::kProfileGender      = LS("Profile/Gender");
+const QString ChatSettings::kProfileNick        = LS("Profile/Nick");
+const QString ChatSettings::kProfileStatus      = LS("Profile/Status");
+const QString ChatSettings::kUserListKeyboard   = LS("UserList/Keyboard");
+const QString ChatSettings::kUserListOffline    = LS("UserList/Offline");
 
 
 ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, QObject *parent)
@@ -47,9 +51,9 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
   setLocalDefault(SETTINGS_LABS_DISABLE_UI,       false);
   setLocalDefault(SETTINGS_MAXIMIZED,             false);
   setLocalDefault(SETTINGS_NETWORKS,              QStringList());
-  setLocalDefault(SETTINGS_PROFILE_GENDER,        0);
-  setLocalDefault(SETTINGS_PROFILE_NICK,          Channel::defaultName());
-  setLocalDefault(SETTINGS_PROFILE_STATUS,        1);
+  setLocalDefault(kProfileGender,                 0);
+  setLocalDefault(kProfileNick,                   Channel::defaultName());
+  setLocalDefault(kProfileStatus,                 1);
   setLocalDefault(SETTINGS_WINDOWS_AERO,          true);
 
   setDefault(SETTINGS_AUTO_JOIN,                  true);

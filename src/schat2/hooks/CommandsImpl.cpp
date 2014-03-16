@@ -1,6 +1,5 @@
-/* $Id: CommandsImpl.cpp 3519 2013-02-23 23:21:57Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -110,7 +109,7 @@ bool CommandsImpl::command(const QByteArray &dest, const ClientCmd &cmd)
 
     if (ChatClient::state() != ChatClient::Online) {
       ChatClient::io()->setNick(cmd.body());
-      ChatCore::settings()->setValue(LS("Profile/Nick"), ChatClient::channel()->name());
+      ChatCore::settings()->setValue(ChatSettings::kProfileNick, ChatClient::channel()->name());
       return true;
     }
 
@@ -231,7 +230,7 @@ void CommandsImpl::setGender(const QString &gender, const QString &color)
     return;
 
   ChatClient::channel()->gender() = data.raw();
-  ChatCore::settings()->setValue(SETTINGS_PROFILE_GENDER, data.raw());
+  ChatCore::settings()->setValue(ChatSettings::kProfileGender, data.raw());
 
   if (ChatClient::state() == ChatClient::Online)
     ChatClient::channels()->update();

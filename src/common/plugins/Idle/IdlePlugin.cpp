@@ -94,7 +94,7 @@ void IdlePluginImpl::away(bool away)
 
   int status = Status::AutoAway;
   if (!away)
-    status = ChatCore::settings()->value(LS("Profile/Status")).toInt();
+    status = ChatCore::settings()->value(ChatSettings::kProfileStatus).toInt();
 
   if (status == Status::Offline)
     status = Status::Online;

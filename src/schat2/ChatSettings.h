@@ -39,9 +39,6 @@ class Notify;
 #define SETTINGS_MAXIMIZED               QLatin1String("Maximized")
 #define SETTINGS_NETWORKS                QLatin1String("Networks")
 #define SETTINGS_PINNED_TABS             QLatin1String("PinnedTabs")
-#define SETTINGS_PROFILE_GENDER          QLatin1String("Profile/Gender")
-#define SETTINGS_PROFILE_NICK            QLatin1String("Profile/Nick")
-#define SETTINGS_PROFILE_STATUS          QLatin1String("Profile/Status")
 #define SETTINGS_TOOLBAR_ACTIONS         QLatin1String("ToolBarActions")
 #define SETTINGS_TRANSLATION             QLatin1String("Translation")
 #define SETTINGS_WINDOWS_AERO            QLatin1String("WindowsAero")
@@ -54,6 +51,10 @@ class SCHAT_CORE_EXPORT ChatSettings : public Settings
 
 public:
   static const QString kAlertsPopup;
+  static const QString kProfileDefaultNick;
+  static const QString kProfileGender;
+  static const QString kProfileNick;
+  static const QString kProfileStatus;
   static const QString kUserListKeyboard;
   static const QString kUserListOffline;
 

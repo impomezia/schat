@@ -1,6 +1,5 @@
-/* $Id: ChatHooks.cpp 3664 2013-05-11 18:19:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -51,9 +50,9 @@ bool Networks::openId(const QByteArray &id, bool &matched)
 QByteArray Networks::id() const
 {
   ClientChannel channel = ChatClient::channel();
-  channel->setName(ChatCore::settings()->value("Profile/Nick").toString());
-  channel->gender().setRaw(ChatCore::settings()->value("Profile/Gender").toInt());
-  channel->status().set(ChatCore::settings()->value("Profile/Status").toInt());
+  channel->setName(ChatCore::settings()->value(ChatSettings::kProfileNick).toString());
+  channel->gender().setRaw(ChatCore::settings()->value(ChatSettings::kProfileGender).toInt());
+  channel->status().set(ChatCore::settings()->value(ChatSettings::kProfileStatus).toInt());
 
   Network item = ChatCore::networks()->item(ChatCore::networks()->selected());
   if (!item->isValid())
