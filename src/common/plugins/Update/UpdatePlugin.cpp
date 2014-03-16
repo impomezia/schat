@@ -334,8 +334,7 @@ void UpdatePluginImpl::restart()
 
 void UpdatePluginImpl::start()
 {
-  if (SCHAT_VER_PATH)
-    QFile::remove(Path::cache() + LS("/schat2-") + QApplication::applicationVersion() + LS(".exe"));
+  QFile::remove(Path::cache() + LS("/schat2-") + QApplication::applicationVersion() + LS(".exe"));
 
   connect(BgOperationWidget::i(), SIGNAL(clicked(QString,QMouseEvent*)), SLOT(clicked(QString,QMouseEvent*)));
   connect(ChatClient::i(), SIGNAL(ready()), SLOT(online()));

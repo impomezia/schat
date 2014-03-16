@@ -45,12 +45,11 @@ public:
   void start();
   void stop();
 
-# if defined(Q_OS_WIN)
   static bool selfUpdate();
-# endif
 
 private slots:
   void handleMessage(const QString& message);
+  void onRestartRequest();
   void restart();
 
 private:

@@ -66,8 +66,7 @@ ChatApp::ChatApp(int &argc, char **argv)
 
 ChatApp::~ChatApp()
 {
-  if (m_window)
-    delete m_window;
+  stop();
 }
 
 
@@ -102,10 +101,10 @@ void ChatApp::start()
   const QStringList args = arguments();
   Path::initWithBase(value(CMDLINE_ARG_BASE, args));
 
-  m_core = new ChatCore(this);
+  m_core = new ChatCore();
   if (!ChatCore::settings()->value(SETTINGS_LABS_DISABLE_UI).toBool()) {
     m_window = new ChatWindow();
-    connect(m_window, SIGNAL(restartRequest()), SLOT(restart()));
+    connect(m_window, SIGNAL(restartRequest()), SLOT(onRestartRequest()));
 
     if (args.contains(CMDLINE_ARG_HIDE))
       m_window->hide();
@@ -123,14 +122,14 @@ void ChatApp::stop()
   if (m_core)
     delete m_core;
 
-  m_core = 0;
+  m_core   = 0;
   m_window = 0;
 }
 
 
-#if defined(Q_OS_WIN)
 bool ChatApp::selfUpdate()
 {
+# if defined(Q_OS_WIN)
   if (QString(LS(SCHAT_PLATFORM)).isEmpty() || QFileInfo(applicationFilePath()).baseName() != LS("schat2"))
     return false;
 
@@ -150,17 +149,16 @@ bool ChatApp::selfUpdate()
   if (revision < 1)
     return false;
 
-  if (SCHAT_VER_PATH >= revision)
-    return false;
-
   const QString file = appPath + LS("/.schat2/schat2-") + version + LS(".exe");
   if (!QFile::exists(file))
     return false;
 
   QProcess::startDetached(LC('"') + file + LC('"'), QStringList(LS("-update")), appPath);
   return true;
+# else
+  return false;
+# endif
 }
-#endif
 
 
 void ChatApp::handleMessage(const QString& message)
@@ -180,16 +178,20 @@ void ChatApp::handleMessage(const QString& message)
 }
 
 
+void ChatApp::onRestartRequest()
+{
+  QTimer::singleShot(0, this, SLOT(restart()));
+}
+
+
 void ChatApp::restart()
 {
   stop();
 
-# if defined(Q_OS_WIN)
   if (selfUpdate()) {
     quit();
     return;
   }
-# endif
 
   start();
 }
