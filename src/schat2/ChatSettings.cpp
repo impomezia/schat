@@ -44,6 +44,8 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
     m_settings->setIniCodec("UTF-8");
   }
 
+  setDefault(kProfileDefaultNick, LS("%USER%"));
+
   setLocalDefault(SETTINGS_AUTO_CONNECT,          true);
   setLocalDefault(SETTINGS_AUTO_SCROLL,           true);
   setLocalDefault(SETTINGS_DEFAULT_SERVER,        LS("schat://schat.me"));
@@ -52,7 +54,7 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
   setLocalDefault(SETTINGS_MAXIMIZED,             false);
   setLocalDefault(SETTINGS_NETWORKS,              QStringList());
   setLocalDefault(kProfileGender,                 0);
-  setLocalDefault(kProfileNick,                   Channel::defaultName());
+  setLocalDefault(kProfileNick,                   Channel::defaultName(value(kProfileDefaultNick).toString()));
   setLocalDefault(kProfileStatus,                 1);
   setLocalDefault(SETTINGS_WINDOWS_AERO,          true);
 
