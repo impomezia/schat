@@ -107,7 +107,7 @@ void StatusMenu::onSettingsChanged(const QString &key, const QVariant &value)
 {
   Q_UNUSED(value)
 
-  if (key == LS("Profile/Status") || key == LS("Profile/Gender"))
+  if (key == ChatSettings::kProfileStatus || key == ChatSettings::kProfileGender)
     reload();
 }
 
@@ -173,7 +173,7 @@ void StatusMenu::addStatus(int status)
 void StatusMenu::applyStatus(int status)
 {
   ChatClient::channel()->status() = status;
-  ChatCore::settings()->setValue(LS("Profile/Status"), status);
+  ChatCore::settings()->setValue(ChatSettings::kProfileStatus, status);
 
   if (ChatClient::state() == ChatClient::Online) {
     ChatClient::channels()->update();

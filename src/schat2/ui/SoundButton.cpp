@@ -81,7 +81,7 @@ void SoundButton::onSettingsChanged(const QString &key, const QVariant &value)
 {
   Q_UNUSED(value)
 
-  if (key == LS("Profile/Status") || key == LS("Alerts/Sounds.DnD") || key == LS("Alerts/Sounds"))
+  if (key == ChatSettings::kProfileStatus || key == LS("Alerts/Sounds.DnD") || key == LS("Alerts/Sounds"))
     setMute(ChatAlerts::isMute());
 }
 

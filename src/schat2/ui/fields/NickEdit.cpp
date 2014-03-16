@@ -55,7 +55,7 @@ void NickEdit::editingFinished()
 
   if (ChatClient::state() != ChatClient::Online) {
     ChatClient::io()->setNick(text());
-    ChatCore::settings()->setValue(LS("Profile/Nick"), ChatClient::channel()->name());
+    ChatCore::settings()->setValue(ChatSettings::kProfileNick, ChatClient::channel()->name());
     return;
   }
 
@@ -96,7 +96,7 @@ void NickEdit::notice(const ChannelNotice &notice)
 
 void NickEdit::settingsChanged(const QString &key, const QVariant &value)
 {
-  if (key == LS("Profile/Nick"))
+  if (key == ChatSettings::kProfileNick)
     setText(value.toString());
 }
 

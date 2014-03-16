@@ -1,6 +1,5 @@
-/* $Id: Channel.h 3705 2013-06-23 02:24:46Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -157,6 +156,7 @@ public:
   static bool isValidName(const QString &name);
   static int isCompatibleId(const QByteArray &id);
   static QString defaultName();
+  static QString defaultName(const QString &tpl);
 
   FeedPtr feed(const QString &name, bool create = true, bool save = true);
 

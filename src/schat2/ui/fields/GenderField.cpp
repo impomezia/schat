@@ -80,7 +80,7 @@ GenderField::GenderField(QWidget *parent)
 void GenderField::updateData()
 {
   ChatClient::channel()->gender() = m_channel->gender().raw();
-  ChatCore::settings()->setValue("Profile/Gender", m_channel->gender().raw());
+  ChatCore::settings()->setValue(ChatSettings::kProfileGender, m_channel->gender().raw());
 
   if (ChatClient::state() == ChatClient::Online)
     ChatClient::channels()->update();
@@ -126,7 +126,7 @@ void GenderField::setColor()
 
 void GenderField::settingsChanged(const QString &key, const QVariant &value)
 {
-  if (key == "Profile/Gender") {
+  if (key == ChatSettings::kProfileGender) {
     m_channel->gender().setRaw(value.toInt());
     setState();
   }
