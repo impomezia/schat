@@ -28,4 +28,12 @@ for %%I in (*.exe) do SignTool.exe sign /f %SCHAT_SIGN_FILE% /p %SCHAT_SIGN_PASS
 for %%I in (*.msi) do SignTool.exe sign /f %SCHAT_SIGN_FILE% /p %SCHAT_SIGN_PASSWORD% /t http://timestamp.verisign.com/scripts/timstamp.dll %%~fI
 
 cd ..
+
+cd schat2
+7z a -r0 -mx=7 ../out/schat2-%SCHAT_VERSION%-pdb.7z *.pdb
+
+cd ../schatd2
+7z a -r0 -mx=7 ../out/schatd2-%SCHAT_VERSION%-pdb.7z *.pdb
+
+cd ..
 exit 0
