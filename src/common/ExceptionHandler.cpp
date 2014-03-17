@@ -16,8 +16,10 @@
  */
 
 #include "ExceptionHandler.h"
+#include "version.h"
 
 #include <DbgHelp.h>
+#include <time.h>
 
 typedef BOOL WINAPI MINIDUMPWRITEDUMP(
   IN  HANDLE hProcess,
@@ -29,8 +31,26 @@ typedef BOOL WINAPI MINIDUMPWRITEDUMP(
   IN  PMINIDUMP_CALLBACK_INFORMATION CallbackParam OPTIONAL
 );
 
+static wchar_t fileName[MAX_PATH + 31];
+
 void initExceptionHandler()
 {
+  memset(fileName, 0, sizeof(fileName));
+
+  GetModuleFileNameW(NULL, fileName, sizeof(fileName) - 1);
+  for (int i = lstrlenW(fileName); i >= 0; i--) {
+    if ('.' == fileName[i]) {
+      fileName[i] = 0;
+      break;
+    }
+  }
+
+  lstrcatW(fileName, L"-");
+  lstrcpyW(fileName + lstrlenW(fileName), TEXT(SCHAT_VERSION));
+  lstrcatW(fileName, L"-");
+  lstrcpynW(fileName + lstrlenW(fileName), TEXT(GIT_REVISION), 8);
+  lstrcatW(fileName, L"-");
+
   SetUnhandledExceptionFilter(exceptionFilter);
 }
 
@@ -49,7 +69,14 @@ LONG WINAPI exceptionFilter(EXCEPTION_POINTERS *pExceptionInfo)
 
   MINIDUMP_EXCEPTION_INFORMATION exInfo = { GetCurrentThreadId(), pExceptionInfo, FALSE };
 
-  HANDLE hFile = ::CreateFileA("D:\\schat.dmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_WRITE_THROUGH, NULL);
+  const time_t now = time(0);
+  struct tm timeinfo;
+  gmtime_s(&timeinfo, &now);
+
+  wcsftime(fileName + lstrlenW(fileName), 16, L"%Y%m%d-%H%M%S", &timeinfo);
+  lstrcatW(fileName, L".dmp");
+
+  HANDLE hFile = CreateFileW(fileName, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL | FILE_FLAG_WRITE_THROUGH, NULL);
   if (hFile == INVALID_HANDLE_VALUE)
     return result;
 

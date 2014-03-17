@@ -31,10 +31,8 @@ int main(int argc, char *argv[])
   if (app.isRunning())
     return 0;
 
-# if defined(Q_OS_WIN32)
   if (ChatApp::selfUpdate())
     return 0;
-# endif
 
   app.start();
   return app.exec();
