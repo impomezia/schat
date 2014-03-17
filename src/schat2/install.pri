@@ -117,9 +117,9 @@ win32 {
     qt.files += ../../os/win32/qt.conf
   }
   
-  pdb.files += $${DESTDIR}/schat.pdb
-  pdb.files += $${DESTDIR}/schat-client.pdb
-  pdb.files += $${DESTDIR}/schat2.pdb
+  pdb.files += ../../out/schat.pdb
+  pdb.files += ../../out/schat-client.pdb
+  pdb.files += ../../out/schat2.pdb
   
   qt.path += ../../os/win32/schat2/
   pdb.path += ../../os/win32/schat2/
