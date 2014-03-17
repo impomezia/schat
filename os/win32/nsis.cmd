@@ -6,6 +6,7 @@ cd plugins
 for %%I in (*.dll) do SignTool.exe sign /f %SCHAT_SIGN_FILE% /p %SCHAT_SIGN_PASSWORD% /t http://timestamp.verisign.com/scripts/timstamp.dll %%~fI
 
 cd ../..
+qmake -r
 jom install /NOLOGO
 if ERRORLEVEL 1 exit 1
 
