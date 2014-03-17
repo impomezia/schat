@@ -117,12 +117,13 @@ win32 {
     qt.files += ../../os/win32/qt.conf
   }
   
-  pdb.files += ../../out/schat.pdb
-  pdb.files += ../../out/schat-client.pdb
-  pdb.files += ../../out/schat2.pdb
+  message($${DESTDIR})
+  debug.files += $${DESTDIR}/schat.pdb
+  debug.files += $${DESTDIR}/schat-client.pdb
+  debug.files += $${DESTDIR}/schat2.pdb
   
   qt.path += ../../os/win32/schat2/
-  pdb.path += ../../os/win32/schat2/
+  debug.path += ../../os/win32/schat2/
 
   greaterThan(QT_MAJOR_VERSION, 4) {
     imageformats.files += $$[QT_INSTALL_PREFIX]/plugins/imageformats/qgif.dll
@@ -160,7 +161,7 @@ win32 {
   sounds.path += ../../os/win32/schat2/sounds/
 
   target.path += ../../os/win32/schat2/
-  INSTALLS += target translations qt imageformats sqldrivers bearer doc sounds pdb
+  INSTALLS += target debug translations qt imageformats sqldrivers bearer doc sounds
 
   greaterThan(QT_MAJOR_VERSION, 4) {
     platforms.files += $$[QT_INSTALL_PREFIX]/plugins/platforms/qwindows.dll
