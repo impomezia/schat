@@ -49,25 +49,29 @@ SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB = 1
 
 win32 {
-    greaterThan(QT_MAJOR_VERSION, 4):greaterThan(QT_MINOR_VERSION, 1) {
-        QT += winextras
-    }
-    else {
-        HEADERS += qtwin/qtwin.h
-        SOURCES += qtwin/qtwin.cpp
-    }
+  greaterThan(QT_MAJOR_VERSION, 4):greaterThan(QT_MINOR_VERSION, 1) {
+    QT += winextras
+  }
+  else {
+    HEADERS += qtwin/qtwin.h
+    SOURCES += qtwin/qtwin.cpp
+  }
 
+  SOURCES += ui/ChatWindow_win.cpp
+
+  if (win32-msvc*) {
     HEADERS += ExceptionHandler.h
-    SOURCES += ui/ChatWindow_win.cpp ExceptionHandler.cpp
+    SOURCES += ExceptionHandler.cpp
+  }
 }
 
 unix {
-    macx {
-        SOURCES += ui/ChatWindow_mac.cpp
-    }
-    else {
-        SOURCES += ui/ChatWindow_unix.cpp
-    }
+  macx {
+    SOURCES += ui/ChatWindow_mac.cpp
+  }
+  else {
+    SOURCES += ui/ChatWindow_unix.cpp
+  }
 }
 
 for(LANG, AVAILABLE_LANGS) {

@@ -17,13 +17,13 @@
 
 #include "ChatApp.h"
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
 # include "ExceptionHandler.h"
 #endif
 
 int main(int argc, char *argv[])
 {
-# ifdef Q_OS_WIN
+# if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
   initExceptionHandler();
 # endif
 
