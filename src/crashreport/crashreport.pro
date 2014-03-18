@@ -22,9 +22,11 @@ QT = core network
 TEMPLATE = app
 
 HEADERS = \
+    CrashUpload.h \
 
 SOURCES = \
     crashreport.cpp \
+    CrashUpload.cpp \
 
 include(../common/config.pri)
 include(../common/common.pri)

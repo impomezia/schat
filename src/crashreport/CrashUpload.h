@@ -15,28 +15,29 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QCoreApplication>
-#include <QDir>
+#ifndef CRASHUPLOAD_H_
+#define CRASHUPLOAD_H_
 
-#include "CrashUpload.h"
-#include "sglobal.h"
-#include "version.h"
+#include <QObject>
+#include <QFileInfo>
 
-int main(int argc, char *argv[])
+class QNetworkAccessManager;
+class QNetworkReply;
+
+class CrashUpload : public QObject
 {
-  QCoreApplication app(argc, argv);
-  app.setApplicationName(LS("Crash Report"));
-  app.setApplicationVersion(SCHAT_VERSION);
-  app.setOrganizationName(LS("IMPOMEZIA"));
-  app.setOrganizationDomain(SCHAT_DOMAIN);
+  Q_OBJECT
 
-  QDir dir(app.applicationDirPath());
+public:
+  CrashUpload(const QFileInfoList &files, QObject *parent = 0);
 
-  const QFileInfoList files = dir.entryInfoList(QStringList(LS("*.dmp")), QDir::Files);
-  if (files.isEmpty())
-    return 0;
+private slots:
+  void onFinished(QNetworkReply *reply);
+  void start();
 
-  CrashUpload upload(files);
+private:
+  const QFileInfoList m_files;
+  QNetworkAccessManager *m_net;
+};
 
-  return app.exec();
-}
+#endif // CRASHUPLOAD_H_
