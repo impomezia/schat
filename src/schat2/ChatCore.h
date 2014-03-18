@@ -71,6 +71,7 @@ private slots:
   void open();
 
 private:
+  void crashreport();
   void loadTranslation();
 
   ChatClient *m_client;             ///< Клиент чата.

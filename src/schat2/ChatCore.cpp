@@ -203,6 +203,8 @@ void ChatCore::onReady()
   m_ready = true;
   emit ready();
 
+  crashreport();
+
   QTimer::singleShot(0, this, SLOT(open()));
 }
 
@@ -218,6 +220,13 @@ void ChatCore::open()
 {
   ChatClient::open();
 }
+
+
+#if !defined(Q_CC_MSVC)
+void ChatCore::crashreport()
+{
+}
+#endif
 
 
 /*!
