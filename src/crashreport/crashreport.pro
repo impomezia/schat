@@ -14,21 +14,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-CONFIG   += ordered
-TEMPLATE = subdirs
-SUBDIRS  = \
-    schatd2/schatd.pro \
-    tufao \
-    rest \
-    schatd2 \
-    authd \
-    client \
-    schat2/schat2-core.pro \
-    schat2 \
-    common/plugins \
-    
-win32 {
-  lessThan(QT_MAJOR_VERSION, 5):SUBDIRS += schatd2/schatd2-srv.pro
-  
-  SUBDIRS += crashreport
-}
+include(../common/prefix.pri)
+
+SCHAT_RC_FILE = 1
+
+QT = core network
+TEMPLATE = app
+
+HEADERS = \
+
+SOURCES = \
+    crashreport.cpp \
+
+include(../common/config.pri)
+include(../common/common.pri)
