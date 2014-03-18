@@ -37,27 +37,15 @@ win32 {
   } else {
     qt.files += $$[QT_INSTALL_PREFIX]/bin/zlib.dll
     qt.files += $$[QT_INSTALL_PREFIX]/bin/QtCore4.dll
-    qt.files += $$[QT_INSTALL_PREFIX]/bin/QtCore4.pdb
     qt.files += $$[QT_INSTALL_PREFIX]/bin/QtNetwork4.dll
-    qt.files += $$[QT_INSTALL_PREFIX]/bin/QtNetwork4.pdb
     qt.files += $$[QT_INSTALL_PREFIX]/bin/QtSql4.dll
-    qt.files += $$[QT_INSTALL_PREFIX]/bin/QtSql4.pdb
   }
   qt.path += ../../os/win32/schatd2/
   
-  pdb.files += $${DESTDIR}/schatd.pdb
-  pdb.files += $${DESTDIR}/schat-rest.pdb
-  pdb.files += $${DESTDIR}/schat-tufao.pdb
-  pdb.files += $${DESTDIR}/schat-authd.pdb
-  pdb.files += $${DESTDIR}/schatd2.pdb
-  pdb.files += $${DESTDIR}/schatd2-srv.pdb
-  pdb.path += ../../os/win32/schatd2/ 
-
   greaterThan(QT_MAJOR_VERSION, 4) {
     sqldrivers.files += $$[QT_INSTALL_PREFIX]/plugins/sqldrivers/qsqlite.dll
   } else {
     sqldrivers.files += $$[QT_INSTALL_PREFIX]/plugins/sqldrivers/qsqlite4.dll
-    sqldrivers.files += $$[QT_INSTALL_PREFIX]/plugins/sqldrivers/qsqlite4.pdb
   }
   sqldrivers.path += ../../os/win32/schatd2/plugins/qt/sqldrivers
 
@@ -65,7 +53,7 @@ win32 {
   doc.path += ../../os/win32/schatd2/doc/
 
   target.path += ../../os/win32/schatd2/
-  INSTALLS += target qt sqldrivers doc pdb
+  INSTALLS += target qt sqldrivers doc
 
   greaterThan(QT_MAJOR_VERSION, 4) {
     platforms.files += $$[QT_INSTALL_PREFIX]/plugins/platforms/qwindows.dll
