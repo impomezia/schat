@@ -38,7 +38,7 @@ void initExceptionHandler()
   memset(fileName, 0, sizeof(fileName));
 
   GetModuleFileNameW(NULL, fileName, sizeof(fileName) - 1);
-  for (int i = lstrlenW(fileName); i >= 0; i--) {
+  for (int i = lstrlenW(fileName) - 1; i >= 0; i--) {
     if ('.' == fileName[i]) {
       fileName[i] = 0;
       break;
@@ -82,6 +82,16 @@ LONG WINAPI exceptionFilter(EXCEPTION_POINTERS *pExceptionInfo)
 
   pDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal, &exInfo, NULL, NULL);
   CloseHandle(hFile);
+
+  for (int i = lstrlenW(fileName) - 1; i >= 0; i--) {
+    if ('\\' == fileName[i] || '/' == fileName[i]) {
+      fileName[i] = 0;
+      break;
+    }
+  }
+
+  lstrcatW(fileName, L"\\crashreport.exe");
+  ShellExecuteW(NULL, L"open", fileName, NULL, NULL, SW_SHOWNORMAL);
 
   return EXCEPTION_EXECUTE_HANDLER;
 }

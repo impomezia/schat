@@ -62,6 +62,7 @@ win32 {
   if (win32-msvc*) {
     HEADERS += ExceptionHandler.h
     SOURCES += ExceptionHandler.cpp
+    LIBS += -lshell32
   }
 
   LIBS += -luser32
