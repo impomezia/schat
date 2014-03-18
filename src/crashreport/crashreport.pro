@@ -30,3 +30,6 @@ SOURCES = \
 
 include(../common/config.pri)
 include(../common/common.pri)
+
+target.path += ../../os/win32/schat2
+INSTALLS += target

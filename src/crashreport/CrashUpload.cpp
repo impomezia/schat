@@ -27,6 +27,7 @@
 CrashUpload::CrashUpload(const QFileInfoList &files, QObject *parent)
   : QObject(parent)
   , m_files(files)
+  , m_error(-1)
 {
   m_net = new QNetworkAccessManager(this);
   connect(m_net, SIGNAL(finished(QNetworkReply*)), SLOT(onFinished(QNetworkReply*)));
@@ -35,13 +36,24 @@ CrashUpload::CrashUpload(const QFileInfoList &files, QObject *parent)
 }
 
 
+CrashUpload::~CrashUpload()
+{
+  if (m_error != 0)
+    return;
+
+  foreach (const QFileInfo &info, m_files) {
+    QFile::remove(info.absoluteFilePath());
+  }
+}
+
+
 void CrashUpload::onFinished(QNetworkReply *reply)
 {
-  const int error = reply->error();
+  m_error = reply->error();
 
   reply->deleteLater();
 
-  QCoreApplication::exit(error);
+  QCoreApplication::exit(m_error);
 }
 
 
@@ -51,7 +63,7 @@ void CrashUpload::start()
 
   foreach (const QFileInfo &info, m_files) {
     QHttpPart part;
-    part.setHeader(QNetworkRequest::ContentDispositionHeader, "form-data; name=\"file\"; filename=\"" + info.fileName().toUtf8() + "\"");
+    part.setHeader(QNetworkRequest::ContentDispositionHeader, "form-data; name=\"minidump\"; filename=\"" + info.fileName().toUtf8() + "\"");
 
     QFile *file = new QFile(info.absoluteFilePath(), multiPart);
     if (file->open(QFile::ReadOnly)) {
@@ -60,7 +72,7 @@ void CrashUpload::start()
     }
   }
 
-  QNetworkRequest request(QUrl(LS("http://crashdumps.schat.me/1/upload")));
+  QNetworkRequest request(QUrl(LS("https://crashdumps.schat.me/1/upload")));
 
   QNetworkReply *reply = m_net->post(request, multiPart);
   multiPart->setParent(reply);

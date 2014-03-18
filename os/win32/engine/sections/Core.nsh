@@ -24,6 +24,7 @@ ${Section}
 
   SetOutPath "$INSTDIR"
   File "${SCHAT_SOURCE}\schat2.exe"
+  File "${SCHAT_SOURCE}\crashreport.exe"
   File "${SCHAT_SOURCE}\schat.dll"
   File "${SCHAT_SOURCE}\schat-client.dll"
   File "license.txt"
@@ -58,6 +59,7 @@ ${BodyEnd}
 
 ${Uninstall}
   Delete "$INSTDIR\schat2.exe"
+  Delete "$INSTDIR\crashreport.exe"
   Delete "$INSTDIR\schat.dll"
   Delete "$INSTDIR\schat-client.dll"
   Delete "$INSTDIR\license.txt"

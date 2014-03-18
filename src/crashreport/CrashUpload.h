@@ -30,6 +30,7 @@ class CrashUpload : public QObject
 
 public:
   CrashUpload(const QFileInfoList &files, QObject *parent = 0);
+  ~CrashUpload();
 
 private slots:
   void onFinished(QNetworkReply *reply);
@@ -37,6 +38,7 @@ private slots:
 
 private:
   const QFileInfoList m_files;
+  int m_error;
   QNetworkAccessManager *m_net;
 };
 
