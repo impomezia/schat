@@ -52,6 +52,12 @@ void OsInfo::init()
 # if defined(Q_OS_WIN32)
   m_type = Windows;
   switch (QSysInfo::WindowsVersion) {
+#   if QT_VERSION >= 0x040806
+    case QSysInfo::WV_WINDOWS8_1:
+      os = LS("Windows 8.1");
+      break;
+#   endif
+
 #   if QT_VERSION >= 0x040803
     case QSysInfo::WV_WINDOWS8:
       os = LS("Windows 8");
