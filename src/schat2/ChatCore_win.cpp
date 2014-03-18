@@ -15,25 +15,22 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatApp.h"
+#include <QApplication>
+#include <QDir>
+#include <QProcess>
 
-#if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
-# include "ExceptionHandler.h"
-#endif
+#include "ChatCore.h"
+#include "sglobal.h"
 
-int main(int argc, char *argv[])
+void ChatCore::crashreport()
 {
-# if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
-  initExceptionHandler();
-# endif
+  const QString path = QApplication::applicationDirPath();
 
-  ChatApp app(argc, argv);
-  if (app.isRunning())
-    return 0;
+  QDir dir(path);
 
-  if (ChatApp::selfUpdate())
-    return 0;
+  const QStringList files = dir.entryList(QStringList(LS("*.dmp")), QDir::Files);
+  if (files.isEmpty())
+    return;
 
-  app.start();
-  return app.exec();
+  QProcess::startDetached(LC('"') + path + LS("/crashreport.exe\""), QStringList(), path);
 }

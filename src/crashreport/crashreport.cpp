@@ -15,25 +15,28 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatApp.h"
+#include <QCoreApplication>
+#include <QDir>
 
-#if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
-# include "ExceptionHandler.h"
-#endif
+#include "CrashUpload.h"
+#include "sglobal.h"
+#include "version.h"
 
 int main(int argc, char *argv[])
 {
-# if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
-  initExceptionHandler();
-# endif
+  QCoreApplication app(argc, argv);
+  app.setApplicationName(LS("Crash Report"));
+  app.setApplicationVersion(SCHAT_VERSION);
+  app.setOrganizationName(LS("IMPOMEZIA"));
+  app.setOrganizationDomain(SCHAT_DOMAIN);
 
-  ChatApp app(argc, argv);
-  if (app.isRunning())
+  QDir dir(app.applicationDirPath());
+
+  const QFileInfoList files = dir.entryInfoList(QStringList(LS("*.dmp")), QDir::Files);
+  if (files.isEmpty())
     return 0;
 
-  if (ChatApp::selfUpdate())
-    return 0;
+  CrashUpload upload(files);
 
-  app.start();
   return app.exec();
 }

@@ -15,25 +15,31 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatApp.h"
+#ifndef CRASHUPLOAD_H_
+#define CRASHUPLOAD_H_
 
-#if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
-# include "ExceptionHandler.h"
-#endif
+#include <QObject>
+#include <QFileInfo>
 
-int main(int argc, char *argv[])
+class QNetworkAccessManager;
+class QNetworkReply;
+
+class CrashUpload : public QObject
 {
-# if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
-  initExceptionHandler();
-# endif
+  Q_OBJECT
 
-  ChatApp app(argc, argv);
-  if (app.isRunning())
-    return 0;
+public:
+  CrashUpload(const QFileInfoList &files, QObject *parent = 0);
+  ~CrashUpload();
 
-  if (ChatApp::selfUpdate())
-    return 0;
+private slots:
+  void onFinished(QNetworkReply *reply);
+  void start();
 
-  app.start();
-  return app.exec();
-}
+private:
+  const QFileInfoList m_files;
+  int m_error;
+  QNetworkAccessManager *m_net;
+};
+
+#endif // CRASHUPLOAD_H_

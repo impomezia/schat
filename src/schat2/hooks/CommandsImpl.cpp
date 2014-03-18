@@ -145,6 +145,10 @@ bool CommandsImpl::command(const QByteArray &dest, const ClientCmd &cmd)
     packet->setStatus(Notice::Found);
     ChatClient::io()->send(packet, false);
   }
+  else if (command == LS("crash")) {
+    char *p = 0;
+    *p = 5;
+  }
   else
     return false;
 

@@ -1,6 +1,5 @@
-# $Id: schatd2.pro 3535 2013-02-27 22:42:00Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,25 +14,22 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-SCHAT_RESOURCES   = 0
-SCHAT_RC_FILE     = 1
-SCHAT_SINGLEAPP   = 0
+include(../common/prefix.pri)
 
-QT = core network sql
+SCHAT_RC_FILE = 1
+
+QT = core network
 TEMPLATE = app
-CONFIG += console
 
 HEADERS = \
-    NodeInit.h \
+    CrashUpload.h \
 
 SOURCES = \
-    NodeInit.cpp \
-    schatd2.cpp \
-
-DEFINES += SCHAT_DAEMON
-SCHAT_DAEMON_LIB = 1
+    crashreport.cpp \
+    CrashUpload.cpp \
 
 include(../common/config.pri)
 include(../common/common.pri)
-include(install.pri)
 
+target.path += ../../os/win32/schat2
+INSTALLS += target

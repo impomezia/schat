@@ -15,25 +15,12 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatApp.h"
+#ifndef EXCEPTIONHANDLER_H_
+#define EXCEPTIONHANDLER_H_
 
-#if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
-# include "ExceptionHandler.h"
-#endif
+#include <qt_windows.h>
 
-int main(int argc, char *argv[])
-{
-# if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
-  initExceptionHandler();
-# endif
+extern void initExceptionHandler();
+extern LONG WINAPI exceptionFilter(EXCEPTION_POINTERS *pExceptionInfo);
 
-  ChatApp app(argc, argv);
-  if (app.isRunning())
-    return 0;
-
-  if (ChatApp::selfUpdate())
-    return 0;
-
-  app.start();
-  return app.exec();
-}
+#endif // EXCEPTIONHANDLER_H_

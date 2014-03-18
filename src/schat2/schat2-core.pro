@@ -271,6 +271,10 @@ win32 {
   target.path += ../../os/win32/schat2/
   INSTALLS += target
   LIBS += -lshell32 -luser32
+
+  if (win32-msvc*) {
+    SOURCES += ChatCore_win.cpp
+  }
 }
 
 include(../common/common.pri)

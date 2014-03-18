@@ -1,6 +1,5 @@
-# $Id: src.pro 3311 2012-12-09 19:30:04Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -27,5 +26,9 @@ SUBDIRS  = \
     schat2/schat2-core.pro \
     schat2 \
     common/plugins \
-
-lessThan(QT_MAJOR_VERSION, 5):win32:SUBDIRS += schatd2/schatd2-srv.pro
+    
+win32 {
+  lessThan(QT_MAJOR_VERSION, 5):SUBDIRS += schatd2/schatd2-srv.pro
+  
+  SUBDIRS += crashreport
+}
