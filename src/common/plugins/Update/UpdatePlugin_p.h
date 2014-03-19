@@ -18,11 +18,10 @@
 #ifndef UPDATEPLUGIN_P_H_
 #define UPDATEPLUGIN_P_H_
 
-#include <QFile>
-#include <QNetworkAccessManager>
 #include <QUrl>
 #include <QVariant>
 
+#include "interfaces/IDownloadItem.h"
 #include "plugins/ChatPlugin.h"
 
 class ChatSettings;
@@ -65,8 +64,7 @@ public:
   enum DownloadState {
     Idle,           ///< Нет активной закачки.
     DownloadJSON,   ///< Закачка JSON файла с информацией об обновлении.
-    DownloadUpdate, ///< Закачка файла обновления.
-    Paused          ///< Загрузка остановлена.
+    DownloadUpdate  ///< Закачка файла обновления.
   };
 
   /// Статус проверки обновлений.
@@ -78,6 +76,14 @@ public:
     DownloadError,   ///< Ошибка при скачивании обновления.
     UpdateReady      ///< Обновление скачано и готово к применению.
   };
+
+  static const QString kPrefix;
+  static const QString kUpdateAutoDownload;
+  static const QString kUpdateChannel;
+  static const QString kUpdateReady;
+  static const QString kUpdateRevision;
+  static const QString kUpdateUrl;
+  static const QString kUpdateVersion;
 
   UpdatePluginImpl(QObject *parent);
   ~UpdatePluginImpl();
@@ -99,30 +105,23 @@ protected:
 private slots:
   void clicked(const QString &key, QMouseEvent *event);
   void download();
-  void downloadProgress();
-  void finished();
-  void notify(const Notify &notify);
+  void onDownloadProgress(DownloadItem item, qint64 bytesReceived, qint64 bytesTotal);
+  void onFinished(const QByteArray &hash);
+  void onFinished(DownloadItem item);
   void online();
-  void readyRead();
+  void onNotify(const Notify &notify);
   void restart();
   void start();
-  void startDownload();
 
 private:
-  void checkUpdate();
-  void readJSON();
+  void readJSON(const QByteArray &raw);
   void setDone(Status status);
 
   ChatSettings *m_settings;        ///< Настройки чата.
-  const QString m_prefix;          ///< Префикс настроек.
+  DownloadItem m_item;
   DownloadState m_state;           ///< Состояние закачки.
   QBasicTimer *m_timer;            ///< Таймер периодической проверки.
-  QByteArray m_rawJSON;            ///< Сырые JSON данные.
-  QCryptographicHash *m_sha1;      ///< Класс для проверки SHA1 хеша файла.
-  QFile m_file;                    ///< Файл обновлений.
   qint64 m_lastCheck;              ///< Время последней успешной проверки обновлений.
-  QNetworkAccessManager m_manager; ///< Менеджер доступа к сети.
-  QNetworkReply *m_current;        ///< Текущий ответ за запрос скачивания файла.
   Status m_status;                 ///< Статус проверки обновлений.
   UpdateInfo m_info;               ///< Информация об обновлении.
 };

@@ -77,9 +77,11 @@ void NetworkAccess::addHandler(INetworkHandler *handler)
 
 void NetworkAccess::onDownloadProgress(const QUrl &url, qint64 bytesReceived, qint64 bytesTotal)
 {
-  Q_UNUSED(url)
-  Q_UNUSED(bytesReceived)
-  Q_UNUSED(bytesTotal)
+  DownloadItem item = m_items.value(url);
+  if (!item)
+    return;
+
+  emit downloadProgress(item, bytesReceived, bytesTotal);
 }
 
 

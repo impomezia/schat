@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="images/Update/download.png">images/basic_set/down_16.png</file>
+  <file alias="images/Update/icon.png">images/basic_set/down_32.png</file>
+  <file alias="images/Update/ok.png">images/oxygen/ok.png</file>
+  <file>translations/update_ru.qm</file>
+  <file>translations/update_uk.qm</file>
+</qresource>
+</RCC>

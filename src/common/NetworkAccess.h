@@ -44,6 +44,7 @@ public:
   void onReadyRead(const QUrl &url, const QByteArray &data) Q_DECL_OVERRIDE;
 
 signals:
+  void downloadProgress(DownloadItem item, qint64 bytesReceived, qint64 bytesTotal);
   void finished(DownloadItem item);
   void handlerAdded();
 
