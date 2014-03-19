@@ -17,7 +17,6 @@
 
 #include <QApplication>
 #include <QBasicTimer>
-#include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QFileInfo>
 #include <QLabel>
@@ -26,6 +25,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QProgressBar>
+#include <QThreadPool>
 #include <QTimer>
 #include <QtPlugin>
 #include <QVBoxLayout>
@@ -41,6 +41,7 @@
 #include "ChatSettings.h"
 #include "client/ChatClient.h"
 #include "DateTime.h"
+#include "HashRunnable.h"
 #include "JSON.h"
 #include "NetworkAccess.h"
 #include "Path.h"
@@ -216,19 +217,11 @@ void UpdatePluginImpl::clicked(const QString &key, QMouseEvent *event)
 
   QAction *notes    = menu.addAction(SCHAT_ICON(Globe), tr("Release Notes"));
   QAction *download = 0;
-  QAction *pause    = 0;
-  QAction *resume   = 0;
 
   if (m_state == Idle)
     download = menu.addAction(QIcon(LS(":/images/Update/download.png")), tr("Download"));
 
-  if (m_state == DownloadUpdate)
-    pause = menu.addAction(QIcon(LS(":/images/Update/pause.png")), tr("Pause"));
-
-  if (m_state == Paused)
-    resume = menu.addAction(QIcon(LS(":/images/Update/resume.png")), tr("Resume"));
-
-  QAction *action   = menu.exec(event->globalPos());
+  QAction *action = menu.exec(event->globalPos());
   if (!action)
     return;
 
@@ -243,15 +236,6 @@ void UpdatePluginImpl::clicked(const QString &key, QMouseEvent *event)
     }
     else
       QDesktopServices::openUrl(m_info.page);
-  }
-  else if (action == pause) {
-    m_state = Paused;
-//    m_current->close();
-  }
-  else if (action == resume) {
-    m_state = DownloadUpdate;
-    emit done(m_status);
-//    QTimer::singleShot(0, this, SLOT(startDownload()));
   }
 }
 
@@ -280,6 +264,18 @@ void UpdatePluginImpl::onDownloadProgress(DownloadItem item, qint64 bytesReceive
 }
 
 
+void UpdatePluginImpl::onFinished(const QByteArray &hash)
+{
+  if (!hash.isEmpty() && m_info.hash == hash) {
+    m_settings->setValue(kUpdateVersion,  m_info.version);
+    m_settings->setValue(kUpdateRevision, m_info.revision);
+    setDone(UpdateReady);
+  }
+  else
+    setDone(DownloadError);
+}
+
+
 void UpdatePluginImpl::onFinished(DownloadItem item)
 {
   if (!m_item || m_item != item)
@@ -290,9 +286,10 @@ void UpdatePluginImpl::onFinished(DownloadItem item)
   }
 
   if (m_state == DownloadUpdate) {
-    m_settings->setValue(kUpdateVersion,  m_info.version);
-    m_settings->setValue(kUpdateRevision, m_info.revision);
-    setDone(UpdateReady);
+    HashRunnable *runnable = new HashRunnable(Path::cache() + LS("/schat2-") + m_info.version + LS(".exe"));
+    connect(runnable, SIGNAL(finished(QByteArray)), SLOT(onFinished(QByteArray)));
+
+    ChatCore::pool()->start(runnable);
   }
 }
 

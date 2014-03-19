@@ -21,17 +21,19 @@ QT = core gui webkit
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 HEADERS  = \
+   HashRunnable.h \
    UpdatePlugin.h \
    UpdatePlugin_p.h \
    UpdateSettings.h \
    UpdateWidget.h \
 
 SOURCES  = \
+   HashRunnable.cpp \
    UpdatePlugin.cpp \
    UpdateSettings.cpp \
    UpdateWidget.cpp \
 
-RESOURCES += Update.qrc
+RESOURCES += res/Update.qrc
 
 TRANSLATIONS += res/translations/update_en.ts
 TRANSLATIONS += res/translations/update_ru.ts

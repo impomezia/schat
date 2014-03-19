@@ -64,8 +64,7 @@ public:
   enum DownloadState {
     Idle,           ///< Нет активной закачки.
     DownloadJSON,   ///< Закачка JSON файла с информацией об обновлении.
-    DownloadUpdate, ///< Закачка файла обновления.
-    Paused          ///< Загрузка остановлена.
+    DownloadUpdate  ///< Закачка файла обновления.
   };
 
   /// Статус проверки обновлений.
@@ -107,6 +106,7 @@ private slots:
   void clicked(const QString &key, QMouseEvent *event);
   void download();
   void onDownloadProgress(DownloadItem item, qint64 bytesReceived, qint64 bytesTotal);
+  void onFinished(const QByteArray &hash);
   void onFinished(DownloadItem item);
   void online();
   void onNotify(const Notify &notify);
