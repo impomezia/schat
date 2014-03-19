@@ -22,8 +22,6 @@
 #include <QLabel>
 #include <QMenu>
 #include <QMouseEvent>
-#include <QNetworkReply>
-#include <QNetworkRequest>
 #include <QProgressBar>
 #include <QThreadPool>
 #include <QTimer>
