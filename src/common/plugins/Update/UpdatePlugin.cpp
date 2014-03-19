@@ -43,6 +43,7 @@
 #include "client/ChatClient.h"
 #include "DateTime.h"
 #include "JSON.h"
+#include "NetworkAccess.h"
 #include "Path.h"
 #include "sglobal.h"
 #include "tools/OsInfo.h"
@@ -60,6 +61,14 @@
 
 #define SCHAT_UPDATE_LABEL(x) QString(LS("<a href='#' style='text-decoration:none; color:#216ea7;'>%1</a>")).arg(x)
 #define SCHAT_UPDATE_INTERVAL 24 * 60 * 60 * 1000
+
+const QString UpdatePluginImpl::kPrefix             = LS("Update");
+const QString UpdatePluginImpl::kUpdateAutoDownload = LS("Update/AutoDownload");
+const QString UpdatePluginImpl::kUpdateChannel      = LS("Update/Channel");
+const QString UpdatePluginImpl::kUpdateReady        = LS("Update/Ready");
+const QString UpdatePluginImpl::kUpdateRevision     = LS("Update/Revision");
+const QString UpdatePluginImpl::kUpdateUrl          = LS("Update/Url");
+const QString UpdatePluginImpl::kUpdateVersion      = LS("Update/Version");
 
 UpdateInfo::UpdateInfo(const QUrl &url)
   : revision(0)
@@ -118,24 +127,25 @@ bool UpdateInfo::isValid() const
 UpdatePluginImpl::UpdatePluginImpl(QObject *parent)
   : ChatPlugin(parent)
   , m_settings(ChatCore::settings())
-  , m_prefix(LS("Update"))
   , m_state(Idle)
   , m_lastCheck(0)
   , m_current(0)
   , m_status(Unknown)
 {
-  m_settings->setLocalDefault(m_prefix + LS("/Url"),          LS("https://download.schat.me/schat2/update.json"));
-  m_settings->setLocalDefault(m_prefix + LS("/Channel"),      LS("stable"));
-  m_settings->setLocalDefault(m_prefix + LS("/AutoDownload"), true);
-  m_settings->setLocalDefault(m_prefix + LS("/Ready"),        false);
-  m_settings->setLocalDefault(m_prefix + LS("/Version"),      QString());
-  m_settings->setLocalDefault(m_prefix + LS("/Revision"),     0);
+  m_settings->setLocalDefault(kUpdateUrl,          LS("https://download.schat.me/schat2/update.json"));
+  m_settings->setLocalDefault(kUpdateChannel,      LS("stable"));
+  m_settings->setLocalDefault(kUpdateAutoDownload, true);
+  m_settings->setLocalDefault(kUpdateReady,        false);
+  m_settings->setLocalDefault(kUpdateVersion,      QString());
+  m_settings->setLocalDefault(kUpdateRevision,     0);
 
   ChatCore::translation()->addOther(LS("update"));
 
   m_timer = new QBasicTimer();
   m_timer->start(60 * 60 * 1000, this);
   m_sha1 = new QCryptographicHash(QCryptographicHash::Sha1);
+
+  connect(ChatCore::networkAccess(), SIGNAL(finished(DownloadItem)), SLOT(onFinished(DownloadItem)));
 }
 
 
@@ -177,13 +187,12 @@ void UpdatePluginImpl::check()
     return;
 
   m_state = DownloadJSON;
-  m_rawJSON.clear();
 
-  m_info = UpdateInfo(m_settings->value(m_prefix + LS("/Url")).toString() + LC('?') + QString::number(QDateTime::currentDateTime().toTime_t()));
+  m_info = UpdateInfo(m_settings->value(kUpdateUrl).toString() + LC('?') + QString::number(QDateTime::currentDateTime().toTime_t()));
   if (!m_info.url.isValid())
     return setDone(CheckError);
 
-  QTimer::singleShot(0, this, SLOT(startDownload()));
+  m_item = ChatCore::networkAccess()->download(m_info.url);
 }
 
 
@@ -198,7 +207,7 @@ void UpdatePluginImpl::timerEvent(QTimerEvent *event)
 
 void UpdatePluginImpl::clicked(const QString &key, QMouseEvent *event)
 {
-  if (m_prefix != key || event->button() != Qt::LeftButton)
+  if (kPrefix != key || event->button() != Qt::LeftButton)
     return;
 
   if (m_status == UpdateReady) {
@@ -261,7 +270,7 @@ void UpdatePluginImpl::download()
   if (!m_file.open(QIODevice::WriteOnly))
     return setDone(DownloadError);
 
-  if (BgOperationWidget::lock(m_prefix, SCHAT_UPDATE_LABEL(tr("Downloading update")))) {
+  if (BgOperationWidget::lock(kPrefix, SCHAT_UPDATE_LABEL(tr("Downloading update")))) {
     BgOperationWidget::progress()->setRange(0, m_info.size);
     BgOperationWidget::progress()->setVisible(true);
   }
@@ -272,7 +281,7 @@ void UpdatePluginImpl::download()
 
 void UpdatePluginImpl::downloadProgress()
 {
-  if (m_state != DownloadUpdate || !BgOperationWidget::lock(m_prefix))
+  if (m_state != DownloadUpdate || !BgOperationWidget::lock(kPrefix))
     return;
 
   BgOperationWidget::progress()->setValue(m_file.pos());
@@ -282,9 +291,7 @@ void UpdatePluginImpl::downloadProgress()
 void UpdatePluginImpl::finished()
 {
   if (!m_current->error()) {
-    if (m_state == DownloadJSON)
-      readJSON();
-    else
+    if (m_state == DownloadUpdate)
       checkUpdate();
   }
   else if (m_state != Paused)
@@ -300,6 +307,14 @@ void UpdatePluginImpl::notify(const Notify &notify)
     AboutTab *tab = qobject_cast<AboutTab*>(TabWidget::i()->tab(ABOUT_TAB, TabWidget::NoOptions));
     if (tab)
       tab->layout()->insertWidget(1, new UpdateWidget(this, tab));
+  }
+}
+
+
+void UpdatePluginImpl::onFinished(DownloadItem item)
+{
+  if (m_state == DownloadJSON && m_item && m_item == item) {
+    readJSON(item->data());
   }
 }
 
@@ -321,8 +336,6 @@ void UpdatePluginImpl::readyRead()
     m_sha1->addData(data);
     m_file.write(data);
   }
-  else
-    m_rawJSON.append(m_current->readAll());
 }
 
 
@@ -373,8 +386,8 @@ void UpdatePluginImpl::startDownload()
 void UpdatePluginImpl::checkUpdate()
 {
   if (m_info.hash == m_sha1->result()) {
-    m_settings->setValue(m_prefix + LS("/Version"),  m_info.version);
-    m_settings->setValue(m_prefix + LS("/Revision"), m_info.revision);
+    m_settings->setValue(kUpdateVersion,  m_info.version);
+    m_settings->setValue(kUpdateRevision, m_info.revision);
     setDone(UpdateReady);
   }
   else
@@ -385,14 +398,13 @@ void UpdatePluginImpl::checkUpdate()
 /*!
  * Чтение и проверка JSON данных с информацией об обновлениях.
  */
-void UpdatePluginImpl::readJSON()
+void UpdatePluginImpl::readJSON(const QByteArray &raw)
 {
-  QVariantMap data = JSON::parse(m_rawJSON).toMap();
-  m_rawJSON.clear();
+  const QVariantMap data = JSON::parse(raw).toMap();
   if (data.isEmpty())
     return setDone(CheckError);
 
-  QVariantMap json = data.value(m_settings->value(m_prefix + LS("/Channel")).toString()).toMap();
+  const QVariantMap json = data.value(m_settings->value(kUpdateChannel).toString()).toMap();
   if (json.isEmpty())
     return setDone(CheckError);
 
@@ -407,7 +419,7 @@ void UpdatePluginImpl::readJSON()
 
   setDone(UpdateAvailable);
 
-  if (supportDownload() && m_settings->value(m_prefix + LS("/AutoDownload")).toBool() == true)
+  if (supportDownload() && m_settings->value(kUpdateAutoDownload).toBool() == true)
     QTimer::singleShot(0, this, SLOT(download()));
 }
 
@@ -425,11 +437,11 @@ void UpdatePluginImpl::setDone(Status status)
   if (m_file.isOpen())
     m_file.close();
 
-  m_settings->setValue(m_prefix + LS("/Ready"), status == UpdateReady);
+  m_settings->setValue(kUpdateReady, status == UpdateReady);
 
   emit done(status);
 
-  if (!BgOperationWidget::lock(m_prefix))
+  if (!BgOperationWidget::lock(kPrefix))
     return;
 
   BgOperationWidget::progress()->setVisible(false);
@@ -449,7 +461,7 @@ void UpdatePluginImpl::setDone(Status status)
     return;
   }
 
-  BgOperationWidget::unlock(m_prefix, false);
+  BgOperationWidget::unlock(kPrefix, false);
 }
 
 

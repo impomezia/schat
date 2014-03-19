@@ -23,6 +23,7 @@
 #include <QUrl>
 #include <QVariant>
 
+#include "interfaces/IDownloadItem.h"
 #include "plugins/ChatPlugin.h"
 
 class ChatSettings;
@@ -79,6 +80,14 @@ public:
     UpdateReady      ///< Обновление скачано и готово к применению.
   };
 
+  static const QString kPrefix;
+  static const QString kUpdateAutoDownload;
+  static const QString kUpdateChannel;
+  static const QString kUpdateReady;
+  static const QString kUpdateRevision;
+  static const QString kUpdateUrl;
+  static const QString kUpdateVersion;
+
   UpdatePluginImpl(QObject *parent);
   ~UpdatePluginImpl();
   inline const UpdateInfo &info() const { return m_info; }
@@ -102,6 +111,7 @@ private slots:
   void downloadProgress();
   void finished();
   void notify(const Notify &notify);
+  void onFinished(DownloadItem item);
   void online();
   void readyRead();
   void restart();
@@ -110,14 +120,13 @@ private slots:
 
 private:
   void checkUpdate();
-  void readJSON();
+  void readJSON(const QByteArray &raw);
   void setDone(Status status);
 
   ChatSettings *m_settings;        ///< Настройки чата.
-  const QString m_prefix;          ///< Префикс настроек.
+  DownloadItem m_item;
   DownloadState m_state;           ///< Состояние закачки.
   QBasicTimer *m_timer;            ///< Таймер периодической проверки.
-  QByteArray m_rawJSON;            ///< Сырые JSON данные.
   QCryptographicHash *m_sha1;      ///< Класс для проверки SHA1 хеша файла.
   QFile m_file;                    ///< Файл обновлений.
   qint64 m_lastCheck;              ///< Время последней успешной проверки обновлений.
