@@ -38,7 +38,6 @@
 
 #include "ChatCore.h"
 #include "ChatNotify.h"
-#include "ChatNotify.h"
 #include "ChatSettings.h"
 #include "client/ChatClient.h"
 #include "DateTime.h"
@@ -129,7 +128,6 @@ UpdatePluginImpl::UpdatePluginImpl(QObject *parent)
   , m_settings(ChatCore::settings())
   , m_state(Idle)
   , m_lastCheck(0)
-  , m_current(0)
   , m_status(Unknown)
 {
   m_settings->setLocalDefault(kUpdateUrl,          LS("https://download.schat.me/schat2/update.json"));
@@ -143,9 +141,9 @@ UpdatePluginImpl::UpdatePluginImpl(QObject *parent)
 
   m_timer = new QBasicTimer();
   m_timer->start(60 * 60 * 1000, this);
-  m_sha1 = new QCryptographicHash(QCryptographicHash::Sha1);
 
   connect(ChatCore::networkAccess(), SIGNAL(finished(DownloadItem)), SLOT(onFinished(DownloadItem)));
+  connect(ChatCore::networkAccess(), SIGNAL(downloadProgress(DownloadItem,qint64,qint64)), SLOT(onDownloadProgress(DownloadItem,qint64,qint64)));
 }
 
 
@@ -155,7 +153,6 @@ UpdatePluginImpl::~UpdatePluginImpl()
     m_timer->stop();
 
   delete m_timer;
-  delete m_sha1;
 }
 
 
@@ -249,12 +246,12 @@ void UpdatePluginImpl::clicked(const QString &key, QMouseEvent *event)
   }
   else if (action == pause) {
     m_state = Paused;
-    m_current->close();
+//    m_current->close();
   }
   else if (action == resume) {
     m_state = DownloadUpdate;
     emit done(m_status);
-    QTimer::singleShot(0, this, SLOT(startDownload()));
+//    QTimer::singleShot(0, this, SLOT(startDownload()));
   }
 }
 
@@ -265,56 +262,37 @@ void UpdatePluginImpl::clicked(const QString &key, QMouseEvent *event)
 void UpdatePluginImpl::download()
 {
   m_state = DownloadUpdate;
-  m_sha1->reset();
-  m_file.setFileName(Path::cache() + LS("/schat2-") + m_info.version + LS(".exe"));
-  if (!m_file.open(QIODevice::WriteOnly))
-    return setDone(DownloadError);
 
   if (BgOperationWidget::lock(kPrefix, SCHAT_UPDATE_LABEL(tr("Downloading update")))) {
     BgOperationWidget::progress()->setRange(0, m_info.size);
     BgOperationWidget::progress()->setVisible(true);
   }
 
-  startDownload();
+  m_item = ChatCore::networkAccess()->download(m_info.url, Path::cache() + LS("/schat2-") + m_info.version + LS(".exe"));
 }
 
 
-void UpdatePluginImpl::downloadProgress()
+void UpdatePluginImpl::onDownloadProgress(DownloadItem item, qint64 bytesReceived, qint64 bytesTotal)
 {
-  if (m_state != DownloadUpdate || !BgOperationWidget::lock(kPrefix))
-    return;
+  Q_UNUSED(bytesTotal)
 
-  BgOperationWidget::progress()->setValue(m_file.pos());
-}
-
-
-void UpdatePluginImpl::finished()
-{
-  if (!m_current->error()) {
-    if (m_state == DownloadUpdate)
-      checkUpdate();
-  }
-  else if (m_state != Paused)
-    setDone(m_state == DownloadJSON ? CheckError : DownloadError);
-
-  m_current->deleteLater();
-}
-
-
-void UpdatePluginImpl::notify(const Notify &notify)
-{
-  if (notify.type() == Notify::PageOpen && notify.data() == ABOUT_TAB) {
-    AboutTab *tab = qobject_cast<AboutTab*>(TabWidget::i()->tab(ABOUT_TAB, TabWidget::NoOptions));
-    if (tab)
-      tab->layout()->insertWidget(1, new UpdateWidget(this, tab));
-  }
+  BgOperationWidget::progress()->setValue(bytesReceived);
 }
 
 
 void UpdatePluginImpl::onFinished(DownloadItem item)
 {
-  if (m_state == DownloadJSON && m_item && m_item == item) {
+  if (!m_item || m_item != item)
+    return;
+
+  if (m_state == DownloadJSON) {
     readJSON(item->data());
+  }
+
+  if (m_state == DownloadUpdate) {
+    m_settings->setValue(kUpdateVersion,  m_info.version);
+    m_settings->setValue(kUpdateRevision, m_info.revision);
+    setDone(UpdateReady);
   }
 }
 
@@ -329,12 +307,12 @@ void UpdatePluginImpl::online()
 }
 
 
-void UpdatePluginImpl::readyRead()
+void UpdatePluginImpl::onNotify(const Notify &notify)
 {
-  if (m_state == DownloadUpdate) {
-    QByteArray data = m_current->readAll();
-    m_sha1->addData(data);
-    m_file.write(data);
+  if (notify.type() == Notify::PageOpen && notify.data() == ABOUT_TAB) {
+    AboutTab *tab = qobject_cast<AboutTab*>(TabWidget::i()->tab(ABOUT_TAB, TabWidget::NoOptions));
+    if (tab)
+      tab->layout()->insertWidget(1, new UpdateWidget(this, tab));
   }
 }
 
@@ -351,47 +329,8 @@ void UpdatePluginImpl::start()
 
   connect(BgOperationWidget::i(), SIGNAL(clicked(QString,QMouseEvent*)), SLOT(clicked(QString,QMouseEvent*)));
   connect(ChatClient::i(), SIGNAL(ready()), SLOT(online()));
-  connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(notify(Notify)));
+  connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(onNotify(Notify)));
   check();
-}
-
-
-/*!
- * Загрузка файла.
- */
-void UpdatePluginImpl::startDownload()
-{
-  QNetworkRequest request(m_info.url);
-  request.setRawHeader("Referer", m_info.url.toEncoded());
-  request.setRawHeader("User-Agent", QString(LS("Mozilla/5.0 (%1) Qt/%2 AppleWebKit/%3 Simple Chat/%4"))
-      .arg(OsInfo::json().value(LS("os")).toString())
-      .arg(qVersion())
-      .arg(qWebKitVersion())
-      .arg(QCoreApplication::applicationVersion()).toLatin1());
-
-  qint64 pos = m_file.pos();
-  if (pos)
-    request.setRawHeader("Range", "bytes=" + QByteArray::number(pos) + "-");
-
-  m_current = m_manager.get(request);
-  connect(m_current, SIGNAL(finished()), SLOT(finished()));
-  connect(m_current, SIGNAL(readyRead()), SLOT(readyRead()));
-  connect(m_current, SIGNAL(downloadProgress(qint64,qint64)), SLOT(downloadProgress()));
-}
-
-
-/*!
- * Проверка корректности скачанного файла обновлений, методом проверки SHA1 хэша.
- */
-void UpdatePluginImpl::checkUpdate()
-{
-  if (m_info.hash == m_sha1->result()) {
-    m_settings->setValue(kUpdateVersion,  m_info.version);
-    m_settings->setValue(kUpdateRevision, m_info.revision);
-    setDone(UpdateReady);
-  }
-  else
-    setDone(DownloadError);
 }
 
 
@@ -433,9 +372,6 @@ void UpdatePluginImpl::setDone(Status status)
 {
   m_status = status;
   m_state  = Idle;
-
-  if (m_file.isOpen())
-    m_file.close();
 
   m_settings->setValue(kUpdateReady, status == UpdateReady);
 
