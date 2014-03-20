@@ -23,10 +23,10 @@
 #include <QUrl>
 #include <QVariant>
 
+#include "HttpTask_p.h"
 #include "interfaces/IServiceTask.h"
 #include "schat.h"
 
-class HttpTaskState;
 class INetworkError;
 class QNetworkReply;
 
