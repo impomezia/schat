@@ -36,7 +36,7 @@
 
       elem.addEventListener('click', function(event) {
 
-        if (ChatView.openDialog('preview', item.id))
+        if (ChatView.openDialog('preview', item))
           event.preventDefault();
 
       });

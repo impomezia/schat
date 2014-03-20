@@ -20,6 +20,7 @@
 #include "hooks/ChatViewHooks.h"
 #include "PreviewChatView.h"
 #include "PreviewCore.h"
+#include "PreviewDialog.h"
 #include "PreviewWindowObject.h"
 #include "sglobal.h"
 #include "ui/tabs/ChatView.h"
@@ -40,12 +41,10 @@ PreviewChatView::~PreviewChatView()
 
 bool PreviewChatView::openDialog(ChatView *view, const QString &id, const QVariant &data)
 {
-  Q_UNUSED(view)
-  Q_UNUSED(data)
-
   if (id != LS("preview"))
     return false;
 
+  view->showDialog(new PreviewDialog(data, view));
   return true;
 }
 
