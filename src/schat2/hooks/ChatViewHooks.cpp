@@ -86,6 +86,17 @@ bool ChatViewHooks::dropEvent(ChatView *view, QDropEvent *event)
 }
 
 
+bool ChatViewHooks::openDialog(ChatView *view, const QString &id, const QVariant &data)
+{
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    if (hook->openDialog(view, id, data))
+      return true;
+  }
+
+  return false;
+}
+
+
 void ChatViewHooks::add(ChatView *view)
 {
   Q_ASSERT(m_self && view);

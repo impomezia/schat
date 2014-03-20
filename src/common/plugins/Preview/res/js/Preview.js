@@ -33,6 +33,13 @@
       else {
         elem.style.backgroundImage = 'url("' + item.thumb + '")';
       }
+
+      elem.addEventListener('click', function(event) {
+
+        if (ChatView.openDialog('preview', item.id))
+          event.preventDefault();
+
+      });
     }
   }
 

@@ -44,6 +44,7 @@ public:
   static bool contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result);
   static bool dragEnterEvent(ChatView *view, QDragEnterEvent *event);
   static bool dropEvent(ChatView *view, QDropEvent *event);
+  static bool openDialog(ChatView *view, const QString &id, const QVariant &data);
   static void add(ChatView *view);
   static void add(IChatViewHook *hook);
   static void init(ChatView *view);

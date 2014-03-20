@@ -31,14 +31,15 @@ class IChatViewHook
 public:
   virtual ~IChatViewHook() {}
 
-  virtual bool contextMenu(ChatView *, QMenu * /*menu*/, const QWebHitTestResult & /*result*/) { return false; }
-  virtual bool dragEnterEvent(ChatView *, QDragEnterEvent * /*event*/)                         { return false; }
-  virtual bool dropEvent(ChatView *, QDropEvent * /*event*/)                                   { return false; }
-  virtual void add(ChatView *)                                                                 {}
-  virtual void init(ChatView *)                                                                {}
-  virtual void loadFinished(ChatView *)                                                        {}
-  virtual void remove(ChatView *)                                                              {}
-  virtual void retranslate()                                                                   {}
+  virtual bool contextMenu(ChatView *, QMenu * /*menu*/, const QWebHitTestResult & /*result*/)    { return false; }
+  virtual bool dragEnterEvent(ChatView *, QDragEnterEvent * /*event*/)                            { return false; }
+  virtual bool dropEvent(ChatView *, QDropEvent * /*event*/)                                      { return false; }
+  virtual bool openDialog(ChatView * /*view*/, const QString & /*id*/, const QVariant & /*data*/) { return false; }
+  virtual void add(ChatView *)                                                                    {}
+  virtual void init(ChatView *)                                                                   {}
+  virtual void loadFinished(ChatView *)                                                           {}
+  virtual void remove(ChatView *)                                                                 {}
+  virtual void retranslate()                                                                      {}
 };
 
 #endif // ICHATVIEWHOOK_H_
