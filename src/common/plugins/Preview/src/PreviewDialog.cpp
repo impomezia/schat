@@ -16,6 +16,10 @@
  */
 
 #include <QAction>
+#include <QApplication>
+#include <QClipboard>
+#include <QDesktopServices>
+#include <QLabel>
 #include <QMenu>
 #include <QMovie>
 #include <QTimer>
@@ -42,7 +46,11 @@ PreviewDialog::PreviewDialog(const QVariant &data, QWidget *parent)
   m_view->scene()->setSceneRect(0, 0, map.value(LS("width")).toInt(), map.value(LS("height")).toInt());
   m_view->setAutoZoomFit(!(m_flags & PreviewItem::Animated));
 
+  m_urlLabel = new QLabel(this);
+  m_urlLabel->setOpenExternalLinks(true);
+
   m_layout->addWidget(m_view);
+  m_layout->addWidget(m_urlLabel);
 
   setUrl(map.value(LS("url")).toString());
 
@@ -52,6 +60,8 @@ PreviewDialog::PreviewDialog(const QVariant &data, QWidget *parent)
   createZoom();
 
   m_toolBar->addSeparator();
+  m_copyLink = m_toolBar->addAction(QIcon(LS(":/images/Preview/link.png")), tr("Copy Link"), this, SLOT(copyLink()));
+  m_openLink = m_toolBar->addAction(QIcon(LS(":/images/Preview/globe.png")), tr("Open Link"), this, SLOT(openLink()));
 
   m_headerLayout->insertWidget(0, m_toolBar);
   m_headerLayout->setStretch(1, 1);
@@ -68,6 +78,20 @@ void PreviewDialog::retranslateUi()
   m_zoomOut->setText(tr("Zoom Out"));
   m_zoomOriginal->setText(tr("100%"));
   m_zoomFit->setText(tr("Fit Screen"));
+  m_copyLink->setText(tr("Copy Link"));
+  m_openLink->setText(tr("Open Link"));
+}
+
+
+void PreviewDialog::copyLink()
+{
+  QApplication::clipboard()->setText(m_url.toString());
+}
+
+
+void PreviewDialog::openLink()
+{
+  QDesktopServices::openUrl(m_url);
 }
 
 
@@ -101,5 +125,8 @@ void PreviewDialog::createZoom()
 
 void PreviewDialog::setUrl(const QUrl &url)
 {
-  setTitle(url.path().section(LC('/'), -1));
+  m_urlLabel->setText(QString(LS("<a href='%1' style='text-decoration:none; color:#216ea7;'>%1</a>")).arg(url.toString()));
+  m_urlLabel->setToolTip(url.toString());
+
+  m_url = url;
 }

@@ -2,6 +2,8 @@
 <qresource prefix="/">
   <file alias="css/Preview/Preview.css">css/Preview.css</file>
   <file alias="images/Preview/error.png">images/font-awesome/fa-exclamation-triangle.png</file>
+  <file alias="images/Preview/globe.png">images/font-awesome/fa-globe.png</file>
+  <file alias="images/Preview/link.png">images/link.png</file>
   <file alias="images/Preview/spinner.gif">images/spinner.gif</file>
   <file alias="images/Preview/zoom.png">images/font-awesome/fa-search.png</file>
   <file alias="images/Preview/zoom-in.png">images/font-awesome/fa-search-plus.png</file>

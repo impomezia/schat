@@ -36,6 +36,8 @@ protected:
   void retranslateUi() Q_DECL_OVERRIDE;
 
 private slots:
+  void copyLink();
+  void openLink();
   void start();
 
 private:
@@ -48,10 +50,13 @@ private:
   QAction *m_zoomFit;
   QAction *m_zoomOriginal;
   QAction *m_zoomOut;
+  QLabel *m_urlLabel;
   QString m_fileName;
   QToolBar *m_toolBar;
   QToolButton *m_zoomBtn;
   QUrl m_url;
+  QAction *m_copyLink;
+  QAction *m_openLink;
 };
 
 #endif // PREVIEWDIALOG_H_
