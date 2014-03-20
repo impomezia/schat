@@ -18,6 +18,8 @@
 #ifndef PREVIEWDIALOG_H_
 #define PREVIEWDIALOG_H_
 
+#include <QUrl>
+
 #include "ui/tabs/DialogFrame.h"
 
 class ImageView;
@@ -36,9 +38,13 @@ private slots:
   void start();
 
 private:
+  void setUrl(const QUrl &url);
+
+private:
   ImageView *m_view;
   int m_flags;
   QString m_fileName;
+  QUrl m_url;
 };
 
 #endif // PREVIEWDIALOG_H_

@@ -39,6 +39,8 @@ PreviewDialog::PreviewDialog(const QVariant &data, QWidget *parent)
 
   m_layout->addWidget(m_view);
 
+  setUrl(map.value(LS("url")).toString());
+
   QTimer::singleShot(0, this, SLOT(start()));
 }
 
@@ -54,4 +56,10 @@ void PreviewDialog::start()
     m_view->setMovie(new QMovie(m_fileName));
   else
     m_view->setImage(QImage(m_fileName));
+}
+
+
+void PreviewDialog::setUrl(const QUrl &url)
+{
+  setTitle(url.path().section(LC('/'), -1));
 }
