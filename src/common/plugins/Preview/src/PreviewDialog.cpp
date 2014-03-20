@@ -15,8 +15,12 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QAction>
+#include <QMenu>
 #include <QMovie>
 #include <QTimer>
+#include <QToolBar>
+#include <QToolButton>
 #include <QUrl>
 #include <QVBoxLayout>
 
@@ -25,6 +29,7 @@
 #include "PreviewDialog.h"
 #include "PreviewItem.h"
 #include "sglobal.h"
+#include "ui/ChatIcons.h"
 
 PreviewDialog::PreviewDialog(const QVariant &data, QWidget *parent)
   : DialogFrame(parent)
@@ -41,12 +46,28 @@ PreviewDialog::PreviewDialog(const QVariant &data, QWidget *parent)
 
   setUrl(map.value(LS("url")).toString());
 
+  m_toolBar = new QToolBar(this);
+  m_toolBar->setIconSize(QSize(22, 22));
+
+  createZoom();
+
+  m_toolBar->addSeparator();
+
+  m_headerLayout->insertWidget(0, m_toolBar);
+  m_headerLayout->setStretch(1, 1);
+
+  retranslateUi();
+
   QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
 void PreviewDialog::retranslateUi()
 {
+  m_zoomBtn->setToolTip(tr("Zoom In"));
+  m_zoomOut->setText(tr("Zoom Out"));
+  m_zoomOriginal->setText(tr("100%"));
+  m_zoomFit->setText(tr("Fit Screen"));
 }
 
 
@@ -56,6 +77,25 @@ void PreviewDialog::start()
     m_view->setMovie(new QMovie(m_fileName));
   else
     m_view->setImage(QImage(m_fileName));
+}
+
+
+void PreviewDialog::createZoom()
+{
+  m_zoomBtn = new QToolButton(this);
+  m_zoomBtn->setIcon(QIcon(LS(":/images/Preview/zoom-in.png")));
+  m_zoomBtn->setPopupMode(QToolButton::MenuButtonPopup);
+
+  QMenu *menu = new QMenu(m_zoomBtn);
+  m_zoomBtn->setMenu(menu);
+
+  m_zoomOriginal = menu->addAction(tr("100%"), m_view, SLOT(zoomOriginal()));
+  m_zoomFit = menu->addAction(tr("Fit Screen"), m_view, SLOT(zoomFit()));
+
+  m_toolBar->addWidget(m_zoomBtn);
+  m_zoomOut = m_toolBar->addAction(QIcon(LS(":/images/Preview/zoom-out.png")), tr("Zoom Out"), m_view, SLOT(zoomOut()));
+
+  connect(m_zoomBtn, SIGNAL(clicked()), m_view, SLOT(zoomIn()));
 }
 
 

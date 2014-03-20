@@ -40,6 +40,7 @@ DialogFrame::DialogFrame(QWidget *parent)
   setGraphicsEffect(shadow);
 
   m_titleLabel = new QLabel(this);
+  m_titleLabel->setWordWrap(true);
 
   QFont font = m_titleLabel->font();
   font.setPointSize(font.pointSize() * 1.3);
@@ -54,7 +55,7 @@ DialogFrame::DialogFrame(QWidget *parent)
 
   m_headerLayout = new QHBoxLayout();
   m_headerLayout->addWidget(m_titleLabel);
-  m_headerLayout->addWidget(m_closeBtn);
+  m_headerLayout->addWidget(m_closeBtn, 0, Qt::AlignTop | Qt::AlignRight);
 
   m_layout = new QVBoxLayout(this);
   m_layout->addLayout(m_headerLayout);

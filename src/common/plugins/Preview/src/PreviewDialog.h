@@ -23,6 +23,7 @@
 #include "ui/tabs/DialogFrame.h"
 
 class ImageView;
+class QToolBar;
 
 class PreviewDialog : public DialogFrame
 {
@@ -38,12 +39,18 @@ private slots:
   void start();
 
 private:
+  void createZoom();
   void setUrl(const QUrl &url);
 
 private:
   ImageView *m_view;
   int m_flags;
+  QAction *m_zoomFit;
+  QAction *m_zoomOriginal;
+  QAction *m_zoomOut;
   QString m_fileName;
+  QToolBar *m_toolBar;
+  QToolButton *m_zoomBtn;
   QUrl m_url;
 };
 
