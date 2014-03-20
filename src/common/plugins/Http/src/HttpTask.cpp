@@ -107,13 +107,12 @@ HttpTask::HttpTask(QNetworkAccessManager *net, QObject *parent)
 
 HttpTask::~HttpTask()
 {
-  qDeleteAll(m_states);
 }
 
 
 void HttpTask::download(const QUrl &url, const QString &fileName, const QVariantMap &options)
 {
-  m_states.insert(url, new HttpTaskState(url, fileName, options));
+  m_states.insert(url, TaskState(new HttpTaskState(url, fileName, options)));
 
   get(url);
 }
@@ -133,7 +132,7 @@ void HttpTask::onDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
   if (!reply)
     return;
 
-  HttpTaskState *state = m_states.value(reply->url());
+  TaskState state = m_states.value(reply->url());
   if (!state)
     return;
 
@@ -152,7 +151,7 @@ void HttpTask::onFinished()
   if (!reply)
     return;
 
-  HttpTaskState *state = m_states.value(reply->url());
+  TaskState state = m_states.value(reply->url());
   if (!state)
     return;
 
@@ -173,7 +172,6 @@ void HttpTask::onFinished()
 
   m_states.remove(state->url());
   m_states.remove(reply->url());
-  delete state;
   reply->deleteLater();
 }
 
@@ -189,7 +187,7 @@ void HttpTask::onReadyRead()
   if (!reply)
     return;
 
-  HttpTaskState *state = m_states.value(reply->url());
+  TaskState state = m_states.value(reply->url());
   if (!state || !state->read(reply)) {
     reply->abort();
     return;

@@ -30,6 +30,8 @@ class HttpTaskState;
 class INetworkError;
 class QNetworkReply;
 
+typedef QSharedPointer<HttpTaskState> TaskState;
+
 class HttpTask : public QObject
 {
   Q_OBJECT
@@ -54,7 +56,7 @@ private slots:
 private:
   QNetworkReply *get(const QUrl &url);
 
-  QMap<QUrl, HttpTaskState*> m_states;
+  QMap<QUrl, TaskState> m_states;
   QNetworkAccessManager *m_net;
 };
 
