@@ -32,6 +32,7 @@ public:
   PreviewChatView(PreviewCore *core);
   ~PreviewChatView();
 
+  bool openDialog(ChatView *view, const QString &id, const QVariant &data) Q_DECL_OVERRIDE;
   void init(ChatView *view) Q_DECL_OVERRIDE;
   void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
 

@@ -22,25 +22,31 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 HEADERS  = \
    PreviewPlugin.h \
+   src/ImageView.h \
    src/PreviewChatView.h \
    src/PreviewCore.h \
    src/PreviewDB.h \
+   src/PreviewDialog.h \
    src/PreviewFilter.h \
    src/PreviewItem.h \
    src/PreviewRunnable.h \
    src/PreviewStorage.h \
    src/PreviewWindowObject.h \
+   src/ScaleRunnable.h \
 
 SOURCES  = \
    PreviewPlugin.cpp \
+   src/ImageView.cpp \
    src/PreviewChatView.cpp \
    src/PreviewCore.cpp \
    src/PreviewDB.cpp \
+   src/PreviewDialog.cpp \
    src/PreviewFilter.cpp \
    src/PreviewItem.cpp \
    src/PreviewRunnable.cpp \
    src/PreviewStorage.cpp \
    src/PreviewWindowObject.cpp \
+   src/ScaleRunnable.cpp \
 
 RESOURCES += res/Preview.qrc
 

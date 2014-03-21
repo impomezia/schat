@@ -1039,7 +1039,8 @@ if (typeof ChatView === 'undefined') {
     getId: function()              { return ''; },
     setLastMessage: function(date) {},
     removeDay: function(day)       {},
-    allowFocus: function(allow)    {}
+    allowFocus: function(allow)    {},
+    openDialog: function(id, data) { return false; }
   }
 }
 else {

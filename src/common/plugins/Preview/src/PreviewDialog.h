@@ -15,36 +15,54 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PREVIEWCORE_H_
-#define PREVIEWCORE_H_
+#ifndef PREVIEWDIALOG_H_
+#define PREVIEWDIALOG_H_
 
-#include <QObject>
 #include <QUrl>
 
-#include "plugins/ChatPlugin.h"
+#include "ui/tabs/DialogFrame.h"
 
-class ChatId;
-class PreviewStorage;
-class PreviewWindowObject;
+class ImageView;
+class QToolBar;
 
-class PreviewCore : public ChatPlugin
+class PreviewDialog : public DialogFrame
 {
   Q_OBJECT
 
 public:
-  static const QString kAnimation;
-  static const QString kMaxSize;
-  static const QString kSavePath;
+  PreviewDialog(const QVariant &data, QWidget *parent = 0);
 
-  PreviewCore(QObject *parent);
-  inline PreviewStorage *storage() const           { return m_storage; }
-  inline PreviewWindowObject *windowObject() const { return m_windowObject; }
-  void add(const ChatId &id, const QList<QUrl> &urls);
-  void chatReady() Q_DECL_OVERRIDE;
+protected:
+  void retranslateUi() Q_DECL_OVERRIDE;
+
+private slots:
+  void copy();
+  void copyLink();
+  void openLink();
+  void save();
+  void start();
 
 private:
-  PreviewStorage *m_storage;
-  PreviewWindowObject *m_windowObject;
+  void createZoom();
+  void setUrl(const QUrl &url);
+
+private:
+  ImageView *m_view;
+  int m_flags;
+  QAction *m_copy;
+  QAction *m_copyLink;
+  QAction *m_openLink;
+  QAction *m_save;
+  QAction *m_zoomFit;
+  QAction *m_zoomOriginal;
+  QAction *m_zoomOut;
+  QLabel *m_sizeLabel;
+  QLabel *m_urlLabel;
+  QSize m_size;
+  QString m_fileName;
+  QToolBar *m_toolBar;
+  QToolButton *m_zoomBtn;
+  QUrl m_url;
 };
 
-#endif // PREVIEWCORE_H_
+#endif // PREVIEWDIALOG_H_

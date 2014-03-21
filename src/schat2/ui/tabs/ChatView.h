@@ -1,6 +1,5 @@
-/* $Id: ChatView.h 3749 2013-07-12 20:50:37Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -47,10 +46,11 @@ public:
   void evaluateJavaScript(const QString &js);
   void setId(const QByteArray &id);
 
-  Q_INVOKABLE qint64 lastMessage() const      { return m_lastMessage; }
+  Q_INVOKABLE bool openDialog(const QString &id, const QVariant &data);
+  Q_INVOKABLE inline qint64 lastMessage() const      { return m_lastMessage; }
+  Q_INVOKABLE inline QStringList jsfiles() const     { return m_jsfiles; }
+  Q_INVOKABLE inline void addJS(const QString &file) { if (!m_jsfiles.contains(file)) m_jsfiles.append(file); }
   Q_INVOKABLE QString getId() const;
-  Q_INVOKABLE QStringList jsfiles() const     { return m_jsfiles; }
-  Q_INVOKABLE void addJS(const QString &file) { if (!m_jsfiles.contains(file)) m_jsfiles.append(file); }
   Q_INVOKABLE void allowFocus(bool allow);
   Q_INVOKABLE void loadFinished();
   Q_INVOKABLE void removeDay(const QString &day);

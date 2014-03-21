@@ -15,36 +15,29 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PREVIEWCORE_H_
-#define PREVIEWCORE_H_
+#ifndef SCALERUNNABLE_H_
+#define SCALERUNNABLE_H_
 
 #include <QObject>
-#include <QUrl>
+#include <QImage>
+#include <QRunnable>
 
-#include "plugins/ChatPlugin.h"
+#include "schat.h"
 
-class ChatId;
-class PreviewStorage;
-class PreviewWindowObject;
-
-class PreviewCore : public ChatPlugin
+class ScaleRunnable : public QObject, public QRunnable
 {
   Q_OBJECT
 
 public:
-  static const QString kAnimation;
-  static const QString kMaxSize;
-  static const QString kSavePath;
+  ScaleRunnable(const QImage &image, const QSize &size);
+  void run() Q_DECL_OVERRIDE;
 
-  PreviewCore(QObject *parent);
-  inline PreviewStorage *storage() const           { return m_storage; }
-  inline PreviewWindowObject *windowObject() const { return m_windowObject; }
-  void add(const ChatId &id, const QList<QUrl> &urls);
-  void chatReady() Q_DECL_OVERRIDE;
+signals:
+  void finished(const QImage &image);
 
 private:
-  PreviewStorage *m_storage;
-  PreviewWindowObject *m_windowObject;
+  const QImage m_image;
+  const QSize m_size;
 };
 
-#endif // PREVIEWCORE_H_
+#endif // SCALERUNNABLE_H_

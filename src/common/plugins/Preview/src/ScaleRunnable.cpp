@@ -15,36 +15,17 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PREVIEWCORE_H_
-#define PREVIEWCORE_H_
+#include "ScaleRunnable.h"
 
-#include <QObject>
-#include <QUrl>
-
-#include "plugins/ChatPlugin.h"
-
-class ChatId;
-class PreviewStorage;
-class PreviewWindowObject;
-
-class PreviewCore : public ChatPlugin
+ScaleRunnable::ScaleRunnable(const QImage &image, const QSize &size)
+  : QObject()
+  , m_image(image)
+  , m_size(size)
 {
-  Q_OBJECT
+}
 
-public:
-  static const QString kAnimation;
-  static const QString kMaxSize;
-  static const QString kSavePath;
 
-  PreviewCore(QObject *parent);
-  inline PreviewStorage *storage() const           { return m_storage; }
-  inline PreviewWindowObject *windowObject() const { return m_windowObject; }
-  void add(const ChatId &id, const QList<QUrl> &urls);
-  void chatReady() Q_DECL_OVERRIDE;
-
-private:
-  PreviewStorage *m_storage;
-  PreviewWindowObject *m_windowObject;
-};
-
-#endif // PREVIEWCORE_H_
+void ScaleRunnable::run()
+{
+  emit finished(m_image.scaled(m_size, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}

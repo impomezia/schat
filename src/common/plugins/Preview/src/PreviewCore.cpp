@@ -15,6 +15,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QDesktopServices>
+
 #include "ChatCore.h"
 #include "ChatSettings.h"
 #include "id/ChatId.h"
@@ -30,12 +32,19 @@
 
 const QString PreviewCore::kAnimation = LS("Preview/Animation");
 const QString PreviewCore::kMaxSize   = LS("Preview/MaxSize");
+const QString PreviewCore::kSavePath  = LS("Preview/SavePath");
 
 PreviewCore::PreviewCore(QObject *parent)
   : ChatPlugin(parent)
 {
   ChatCore::settings()->setDefault(kAnimation, true);
   ChatCore::settings()->setDefault(kMaxSize,   1024 * 1024 * 5);
+
+# if QT_VERSION >= 0x050000
+  ChatCore::settings()->setLocalDefault(kSavePath, QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+# else
+  ChatCore::settings()->setLocalDefault(kSavePath, QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+# endif
 
   ChatCore::translation()->addOther(LS("preview"));
 
