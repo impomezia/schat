@@ -95,6 +95,7 @@
     }
 
     for (i = 0; i < queue.length; ++i) {
+      queue[i].elem.innerHTML = '';
       update(queue[i].item, queue[i].elem);
     }
   }
