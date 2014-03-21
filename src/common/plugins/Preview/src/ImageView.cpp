@@ -122,6 +122,14 @@ void ImageView::zoomFit()
 }
 
 
+void ImageView::closeEvent(QCloseEvent *event)
+{
+  reset();
+
+  QGraphicsView::closeEvent(event);
+}
+
+
 void ImageView::keyPressEvent(QKeyEvent *event)
 {
   const int key = event->key();
@@ -182,8 +190,9 @@ void ImageView::wheelEvent(QWheelEvent *event)
 }
 
 
-void ImageView::generateCache() {
-  m_cacheTimer->deleteLater();
+void ImageView::generateCache()
+{
+  delete m_cacheTimer;
   m_cacheTimer = 0;
 
   m_cachedRect      = sceneToViewport(m_item->rect()).intersected(viewport()->rect());
@@ -270,6 +279,7 @@ void ImageView::reset()
     m_item = 0;
 
     m_image = QImage();
+    m_cachedPixmap = QPixmap();
   }
 
   if (m_proxy) {
