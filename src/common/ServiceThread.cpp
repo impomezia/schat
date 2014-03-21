@@ -42,10 +42,13 @@ qint64 ServiceThread::add(IServiceTask *task)
 
   task->setCounter(++m_counter);
 
-  if (isReady())
-    QMetaObject::invokeMethod(m_list, "append", Qt::QueuedConnection, Q_ARG(IServiceTask*, task));
-  else
+  if (!isReady()) {
+    m_mutex.lock();
     m_queue.enqueue(task);
+    m_mutex.unlock();
+  }
+  else
+    QMetaObject::invokeMethod(m_list, "append", Qt::QueuedConnection, Q_ARG(IServiceTask*, task));
 
   return m_counter;
 }
@@ -60,6 +63,13 @@ void ServiceThread::run()
 
   SLOG_DEBUG("elapsed =" << t.elapsed() << "ms");
 
+  m_mutex.lock();
+  if (!m_queue.isEmpty()) {
+    m_list->append(m_queue);
+    m_queue.clear();
+  }
+  m_mutex.unlock();
+
   emit ready();
   exec();
 
@@ -72,10 +82,4 @@ void ServiceThread::run()
 void ServiceThread::onReady()
 {
   m_ready = true;
-
-  if (m_queue.isEmpty())
-    return;
-
-  QMetaObject::invokeMethod(m_list, "append", Qt::QueuedConnection, Q_ARG(QQueue<IServiceTask*>, m_queue));
-  m_queue.clear();
 }

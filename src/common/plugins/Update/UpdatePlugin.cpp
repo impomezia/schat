@@ -189,6 +189,8 @@ void UpdatePluginImpl::check()
     return setDone(CheckError);
 
   m_item = ChatCore::networkAccess()->download(m_info.url);
+  if (!m_item)
+    m_state = Idle;
 }
 
 
@@ -258,7 +260,8 @@ void UpdatePluginImpl::onDownloadProgress(DownloadItem item, qint64 bytesReceive
 {
   Q_UNUSED(bytesTotal)
 
-  BgOperationWidget::progress()->setValue(bytesReceived);
+  if (m_state == DownloadUpdate && m_item == item)
+    BgOperationWidget::progress()->setValue(bytesReceived);
 }
 
 

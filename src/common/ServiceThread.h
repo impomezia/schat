@@ -18,8 +18,9 @@
 #ifndef SERVICETHREAD_H_
 #define SERVICETHREAD_H_
 
-#include <QThread>
+#include <QMutex>
 #include <QQueue>
+#include <QThread>
 
 #include "schat.h"
 
@@ -52,6 +53,7 @@ private slots:
 private:
   bool m_ready;                  ///< true если поток успешно запущен.
   qint64 m_counter;              ///< Счётчик задач.
+  QMutex m_mutex;
   QQueue<IServiceTask*> m_queue; ///< Очередь ожидания запуска потока.
   ServiceList *m_list;           ///< Список сервисных задач.
 };
