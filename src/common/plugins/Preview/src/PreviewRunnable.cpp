@@ -56,8 +56,8 @@ void PreviewRunnable::run()
   if (reader.loopCount() != 0)
     record.flags |= PreviewItem::Animated;
 
-  const QImage image   = reader.read();
-  file.rename(prepare(LS("o"), format));
+  const QImage image = reader.read();
+  rename(file, prepare(LS("o"), format));
 
   QImage thumb;
   if (image.width() > 90 && image.height() > 90)
@@ -95,4 +95,15 @@ QString PreviewRunnable::prepare(const QString &type, const QString &format) con
     QFile::remove(dest);
 
   return dest;
+}
+
+
+void PreviewRunnable::rename(QFile &file, const QString &newName)
+{
+  file.close();
+  if (file.rename(newName))
+    return;
+
+  file.copy(newName);
+  file.remove();
 }

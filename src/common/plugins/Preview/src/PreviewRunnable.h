@@ -39,6 +39,7 @@ signals:
 
 private:
   QString prepare(const QString &type, const QString &format) const;
+  void rename(QFile &file, const QString &newName);
 
   const QString m_id;
   const QString m_path;
