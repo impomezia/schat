@@ -190,7 +190,12 @@ void ImageView::generateCache() {
   m_cachedSceneRect = viewportToScene(m_cachedRect);
   const QRect subRect = m_image.rect().intersected(m_cachedSceneRect);
 
+# if QT_VERSION >= 0x040700
   const uchar* bits = m_image.constBits();
+# else
+  const uchar* bits = m_image.bits();
+# endif
+
   const unsigned int offset = subRect.x() * m_image.depth() / 8 + subRect.y() * m_image.bytesPerLine();
 
   const QImage subImage = QImage(bits + offset, subRect.width(), subRect.height(), m_image.bytesPerLine(), m_image.format());
