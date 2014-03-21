@@ -34,6 +34,7 @@ class PreviewCore : public ChatPlugin
 public:
   static const QString kAnimation;
   static const QString kMaxSize;
+  static const QString kSavePath;
 
   PreviewCore(QObject *parent);
   inline PreviewStorage *storage() const           { return m_storage; }
