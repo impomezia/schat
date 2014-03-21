@@ -22,6 +22,8 @@
 #include <QImage>
 #include <QRunnable>
 
+#include "schat.h"
+
 class ScaleRunnable : public QObject, public QRunnable
 {
   Q_OBJECT

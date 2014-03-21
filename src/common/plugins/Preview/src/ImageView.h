@@ -23,6 +23,8 @@
 #include <QPixmap>
 #include <QRect>
 
+#include "schat.h"
+
 class QTimer;
 class QGraphicsScene;
 
