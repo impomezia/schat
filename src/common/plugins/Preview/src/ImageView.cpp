@@ -58,6 +58,25 @@ ImageView::~ImageView() {
 }
 
 
+void ImageView::reset()
+{
+  if (m_item) {
+    m_scene->removeItem(m_item);
+    delete m_item;
+    m_item = 0;
+
+    m_image = QImage();
+    m_cachedPixmap = QPixmap();
+  }
+
+  if (m_proxy) {
+    m_scene->removeItem(m_proxy);
+    delete m_proxy;
+    m_proxy = 0;
+  }
+}
+
+
 void ImageView::setImage(const QImage &image)
 {
   reset();
@@ -118,15 +137,8 @@ void ImageView::zoomFit()
 
   fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
   m_scaleFactor = transform().m11();
+
   queueGenerateCache();
-}
-
-
-void ImageView::closeEvent(QCloseEvent *event)
-{
-  reset();
-
-  QGraphicsView::closeEvent(event);
 }
 
 
@@ -194,6 +206,9 @@ void ImageView::generateCache()
 {
   delete m_cacheTimer;
   m_cacheTimer = 0;
+
+  if (!m_item)
+    return;
 
   m_cachedRect      = sceneToViewport(m_item->rect()).intersected(viewport()->rect());
   m_cachedSceneRect = viewportToScene(m_cachedRect);
@@ -268,23 +283,4 @@ void ImageView::queueGenerateCache()
   }
 
   m_cacheTimer->start(20);
-}
-
-
-void ImageView::reset()
-{
-  if (m_item) {
-    m_scene->removeItem(m_item);
-    delete m_item;
-    m_item = 0;
-
-    m_image = QImage();
-    m_cachedPixmap = QPixmap();
-  }
-
-  if (m_proxy) {
-    m_scene->removeItem(m_proxy);
-    delete m_proxy;
-    m_proxy = 0;
-  }
 }

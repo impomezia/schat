@@ -33,6 +33,7 @@ public:
   PreviewDialog(const QVariant &data, QWidget *parent = 0);
 
 protected:
+  void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
   void retranslateUi() Q_DECL_OVERRIDE;
 
 private slots:

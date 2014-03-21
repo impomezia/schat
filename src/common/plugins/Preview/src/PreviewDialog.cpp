@@ -111,6 +111,14 @@ void PreviewDialog::retranslateUi()
 }
 
 
+void PreviewDialog::closeEvent(QCloseEvent *event)
+{
+  m_view->reset();
+
+  DialogFrame::closeEvent(event);
+}
+
+
 void PreviewDialog::copy()
 {
   QApplication::clipboard()->setImage(m_view->image());

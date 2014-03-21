@@ -40,6 +40,7 @@ public:
   inline const QImage &image() const     { return m_image; }
   inline double scaleFactor() const      { return m_scaleFactor; }
   inline void setAutoZoomFit(bool value) { m_autoZoomFit = value; }
+  void reset();
   void setImage(const QImage &image);
   void setMovie(QMovie *movie);
 
@@ -51,7 +52,6 @@ public slots:
   void zoomFit();
   
 protected:
-  void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
   void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
   void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
   void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
@@ -65,7 +65,6 @@ private:
   QRect sceneToViewport(const QRectF &rect) const;
   QRect viewportToScene(const QRect &rect) const;
   void queueGenerateCache();
-  void reset();
 
 private:
   bool m_autoZoomFit;
