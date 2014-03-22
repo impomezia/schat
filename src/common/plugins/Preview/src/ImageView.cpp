@@ -224,17 +224,15 @@ void ImageView::generateCache()
 
   const QImage subImage = QImage(bits + offset, subRect.width(), subRect.height(), m_image.bytesPerLine(), m_image.format());
 
-  ScaleRunnable *runnable = new ScaleRunnable(subImage, m_cachedRect.size());
+  ScaleRunnable *runnable = new ScaleRunnable(subImage.copy(), m_cachedRect.size());
   connect(runnable, SIGNAL(finished(QImage)), SLOT(onFinished(QImage)));
 
   QThreadPool::globalInstance()->start(runnable);
 }
 
+
 void ImageView::onFinished(const QImage &image)
 {
-  if (qAbs(m_cachedRect.width() - image.width()) > 2 || qAbs(m_cachedRect.height() - image.height()))
-    return;
-
   m_cachedPixmap = QPixmap::fromImage(image);
 
   viewport()->update();
