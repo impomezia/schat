@@ -19,6 +19,7 @@
 #define BACKDROPWIDGET_H_
 
 #include <QFrame>
+#include <QPointer>
 
 #include "schat.h"
 
@@ -46,7 +47,7 @@ protected:
 private:
   bool m_autoClose;
   QGridLayout *m_layout;
-  QWidget *m_widget;
+  QPointer<QWidget> m_widget;
 };
 
 #endif // BACKDROPWIDGET_H_

@@ -18,6 +18,7 @@
 #ifndef PREVIEWSTORAGE_H_
 #define PREVIEWSTORAGE_H_
 
+#include <QMap>
 #include <QObject>
 #include <QStringList>
 

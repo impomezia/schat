@@ -28,7 +28,6 @@
 BackdropWidget::BackdropWidget(QWidget *parent)
   : QFrame(parent)
   , m_autoClose(true)
-  , m_widget(0)
 {
   m_layout = new QGridLayout(this);
   m_layout->setColumnStretch(0, 1);
@@ -41,6 +40,11 @@ BackdropWidget::BackdropWidget(QWidget *parent)
 void BackdropWidget::setWidget(QWidget *widget)
 {
   Q_ASSERT(widget);
+
+  if (m_widget) {
+    m_layout->removeWidget(m_widget);
+    m_widget->close();
+  }
 
   widget->setParent(this);
   widget->setAutoFillBackground(true);
@@ -55,7 +59,7 @@ void BackdropWidget::setWidget(QWidget *widget)
 bool BackdropWidget::eventFilter(QObject *watched, QEvent *event)
 {
   if (m_widget && m_widget == watched && event->type() == QEvent::Close) {
-    m_widget = 0;
+    m_layout->removeWidget(m_widget);
     close();
 
     emit closed();
