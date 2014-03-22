@@ -29,11 +29,19 @@ HEADERS = \
 SOURCES = \
     NodeInit.cpp \
     schatd2.cpp \
-
+    
 DEFINES += SCHAT_DAEMON
 SCHAT_DAEMON_LIB = 1
 
 include(../common/config.pri)
 include(../common/common.pri)
 include(install.pri)
+
+if (win32-msvc*) {
+  include(../common/prefix.pri)
+  
+  HEADERS += ExceptionHandler.h
+  SOURCES += ExceptionHandler.cpp
+  LIBS += -lshell32
+}
 
