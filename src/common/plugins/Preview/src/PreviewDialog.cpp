@@ -98,7 +98,7 @@ PreviewDialog::PreviewDialog(const QVariant &data, QWidget *parent)
 
 void PreviewDialog::retranslateUi()
 {
-  m_zoomBtn->setToolTip(tr("Zoom In"));
+  m_zoomOut->setText(tr("Zoom In"));
   m_zoomOut->setText(tr("Zoom Out"));
   m_zoomOriginal->setText(tr("100%"));
   m_zoomFit->setText(tr("Fit Screen"));
@@ -162,20 +162,10 @@ void PreviewDialog::start()
 
 void PreviewDialog::createZoom()
 {
-  m_zoomBtn = new QToolButton(this);
-  m_zoomBtn->setIcon(QIcon(LS(":/images/Preview/zoom-in.png")));
-  m_zoomBtn->setPopupMode(QToolButton::MenuButtonPopup);
-
-  QMenu *menu = new QMenu(m_zoomBtn);
-  m_zoomBtn->setMenu(menu);
-
-  m_zoomOriginal = menu->addAction(tr("100%"), m_view, SLOT(zoomOriginal()));
-  m_zoomFit = menu->addAction(tr("Fit Screen"), m_view, SLOT(zoomFit()));
-
-  m_toolBar->addWidget(m_zoomBtn);
-  m_zoomOut = m_toolBar->addAction(QIcon(LS(":/images/Preview/zoom-out.png")), tr("Zoom Out"), m_view, SLOT(zoomOut()));
-
-  connect(m_zoomBtn, SIGNAL(clicked()), m_view, SLOT(zoomIn()));
+  m_zoomIn       = m_toolBar->addAction(QIcon(LS(":/images/Preview/zoom-in.png")), tr("Zoom In"), m_view, SLOT(zoomIn()));
+  m_zoomOut      = m_toolBar->addAction(QIcon(LS(":/images/Preview/zoom-out.png")), tr("Zoom Out"), m_view, SLOT(zoomOut()));
+  m_zoomOriginal = m_toolBar->addAction(QIcon(LS(":/images/Preview/zoom.png")), tr("100%"), m_view, SLOT(zoomOriginal()));
+  m_zoomFit      = m_toolBar->addAction(QIcon(LS(":/images/Preview/zoom-fit.png")), tr("Fit Screen"), m_view, SLOT(zoomFit()));
 }
 
 

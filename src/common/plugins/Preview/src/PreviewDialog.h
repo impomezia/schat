@@ -55,6 +55,7 @@ private:
   QAction *m_openLink;
   QAction *m_save;
   QAction *m_zoomFit;
+  QAction *m_zoomIn;
   QAction *m_zoomOriginal;
   QAction *m_zoomOut;
   QLabel *m_sizeLabel;
@@ -62,7 +63,6 @@ private:
   QSize m_size;
   QString m_fileName;
   QToolBar *m_toolBar;
-  QToolButton *m_zoomBtn;
   QUrl m_url;
 };
 
