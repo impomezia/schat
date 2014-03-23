@@ -1,6 +1,5 @@
-/* $Id: SendFilePlugin.h 3691 2013-06-13 23:56:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,26 +25,23 @@ class SendFilePlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.SendFile" FILE "SendFile.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.SendFile")
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "SendFile";
     out[CORE_API_NAME]     = "Send File";
-    out[CORE_API_VERSION]  = "0.3.0";
-    out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/SendFile";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/SendFile";
     out[CORE_API_DESC]     = "Adds support for file transfer between users";
     out[CORE_API_DESC_RU]  = "Добавляет поддержку передачи файлов между пользователями";
 
     return out;
   }
 
-  ChatPlugin *create();
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* SENDFILEPLUGIN_H_ */

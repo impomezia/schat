@@ -1,6 +1,5 @@
-# $Id: SendFile.pro 3681 2013-06-08 23:46:45Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,7 +17,6 @@
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB = 1
 QT = core network gui webkit sql
-OTHER_FILES += SendFile.json
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
@@ -54,8 +52,6 @@ RESOURCES += SendFile.qrc
 TRANSLATIONS += res/translations/sendfile_en.ts
 TRANSLATIONS += res/translations/sendfile_ru.ts
 TRANSLATIONS += res/translations/sendfile_uk.ts
-CODECFORTR  = UTF-8
-CODECFORSRC = UTF-8
 
 include(../../config.pri)
 include(../plugins.pri)

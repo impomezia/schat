@@ -1,6 +1,5 @@
-# $Id: schat2-core.pro 3726 2013-07-05 01:44:24Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,6 +17,7 @@
 include(../common/config.pri)
 
 SCHAT_RESOURCES = 1
+mac:SCHAT_RESOURCES_HIDPI = 1
 
 TEMPLATE = lib
 QT = core gui network webkit
@@ -58,6 +58,9 @@ HEADERS = \
     hooks/SettingsTabImpl.h \
     hooks/ToolBarActions.h \
     hooks/UserMenuImpl.h \
+    interfaces/IChannelMenu.h \
+    interfaces/IChatViewHook.h \
+    interfaces/ITokenFilter.h \
     messages/AlertMessage.h \
     messages/ChannelMessage.h \
     messages/Message.h \
@@ -102,16 +105,21 @@ HEADERS = \
     ui/TabCreator.h \
     ui/tabs/AboutTab.h \
     ui/tabs/AbstractTab.h \
+    ui/tabs/BackdropWidget.h \
     ui/tabs/ChannelBaseTab.h \
     ui/tabs/ChannelTab.h \
     ui/tabs/ChatView.h \
+    ui/tabs/DialogFrame.h \
     ui/tabs/FindWidget.h \
     ui/tabs/PrivateTab.h \
     ui/tabs/ProgressTab.h \
     ui/tabs/ServerTab.h \
     ui/tabs/SettingsTab.h \
     ui/tabs/SettingsTabHook.h \
+    ui/tabs/UserItem.h \
+    ui/tabs/UserSortFilterModel.h \
     ui/tabs/UserView.h \
+    ui/tabs/UserViewProperties.h \
     ui/tabs/WebView.h \
     ui/tabs/WelcomeTab.h \
     ui/TabsToolBar.h \
@@ -191,16 +199,21 @@ SOURCES = \
     ui/TabBar.cpp \
     ui/tabs/AboutTab.cpp \
     ui/tabs/AbstractTab.cpp \
+    ui/tabs/BackdropWidget.cpp \
     ui/tabs/ChannelBaseTab.cpp \
     ui/tabs/ChannelTab.cpp \
     ui/tabs/ChatView.cpp \
+    ui/tabs/DialogFrame.cpp \
     ui/tabs/FindWidget.cpp \
     ui/tabs/PrivateTab.cpp \
     ui/tabs/ProgressTab.cpp \
     ui/tabs/ServerTab.cpp \
     ui/tabs/SettingsTab.cpp \
     ui/tabs/SettingsTabHook.cpp \
+    ui/tabs/UserItem.cpp \
+    ui/tabs/UserSortFilterModel.cpp \
     ui/tabs/UserView.cpp \
+    ui/tabs/UserViewProperties.cpp \
     ui/tabs/WebView.cpp \
     ui/tabs/WelcomeTab.cpp \
     ui/TabsToolBar.cpp \
@@ -258,6 +271,10 @@ win32 {
   target.path += ../../os/win32/schat2/
   INSTALLS += target
   LIBS += -lshell32 -luser32
+
+  if (win32-msvc*) {
+    SOURCES += ChatCore_win.cpp
+  }
 }
 
 include(../common/common.pri)

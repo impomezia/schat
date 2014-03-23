@@ -1,6 +1,5 @@
-/* $Id: schat.h 2991 2012-08-10 10:41:40Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,6 +37,25 @@
 #  else
 #    define SCHAT_REST_EXPORT Q_DECL_IMPORT
 #  endif
+#endif
+
+#ifndef Q_DECL_OVERRIDE
+#  define Q_DECL_OVERRIDE
+#endif
+
+#define SCHAT_DEBUG_LOG
+
+#ifdef SCHAT_DEBUG_LOG
+#  include <QDebug>
+#  define SLOG_DEBUG(...)    qDebug()    << "[schat]" << Q_FUNC_INFO << __VA_ARGS__
+#  define SLOG_CRITICAL(...) qCritical() << "[schat]" << Q_FUNC_INFO << __VA_ARGS__
+#  define SLOG_WARNING(...)  qWarning()  << "[schat]" << Q_FUNC_INFO << __VA_ARGS__
+#  define SCHAT_DEBUG_CODE(...) __VA_ARGS__
+#else
+#  define SLOG_DEBUG(...)
+#  define SLOG_CRITICAL(...)
+#  define SLOG_WARNING(...)
+#  define SCHAT_DEBUG_CODE(...)
 #endif
 
 #endif /* SCHAT_H_ */

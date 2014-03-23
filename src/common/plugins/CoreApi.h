@@ -1,6 +1,5 @@
-/* $Id: CoreApi.h 3555 2013-03-04 23:55:58Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,6 +24,7 @@
 #include <QStringList>
 #include <QVariant>
 
+#include "schat.h"
 #include "version.h"
 
 #define CORE_API_AUTHOR       QLatin1String("author")
@@ -39,6 +39,7 @@
 #define CORE_API_REQUIRED     QLatin1String("required")
 #define CORE_API_ENABLED      QLatin1String("enabled")
 #define CORE_API_CONFIGURABLE QLatin1String("configurable")
+#define CORE_API_PRIORITY     QLatin1String("priority")
 
 /*!
  * Базовый интерфейс для всех типов плагинов.
@@ -62,11 +63,21 @@ public:
     out[CORE_API_REQUIRED]     = SCHAT_VERSION;      // Версия чата необходимая для работы плагина.
     out[CORE_API_ENABLED]      = true;               // \b true если плагин по умолчанию включен.
     out[CORE_API_CONFIGURABLE] = false;              // \b true если поддерживается дополнительный пользовательский интерфейс настроек.
+    out[CORE_API_PRIORITY]     = 0;                  // Приоритет загрузки, плагины с большим приоритетом загружаются раньше.
 
     return out;
   }
 };
 
-Q_DECLARE_INTERFACE(CoreApi, "me.schat.CoreApi/1.2");
+Q_DECLARE_INTERFACE(CoreApi, "me.schat.CoreApi/1.2")
+
+#if QT_VERSION < 0x050000
+# define Q_PLUGIN_METADATA(...)
+#endif
+
+#if QT_VERSION >= 0x050000 && defined(Q_EXPORT_PLUGIN2)
+# undef Q_EXPORT_PLUGIN2
+# define Q_EXPORT_PLUGIN2(...)
+#endif
 
 #endif /* COREINTERFACE_H_ */

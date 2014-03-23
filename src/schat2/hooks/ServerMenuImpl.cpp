@@ -1,6 +1,5 @@
-/* $Id: ServerMenuImpl.cpp 3280 2012-11-20 17:26:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,21 +19,30 @@
 
 #include "ChatCore.h"
 #include "ChatUrls.h"
+#include "hooks/ChannelMenu.h"
 #include "hooks/ServerMenuImpl.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
 #include "ui/ChatIcons.h"
 
 ServerMenuImpl::ServerMenuImpl(QObject *parent)
-  : ChannelMenu(parent)
+  : QObject(parent)
   , m_alerts(0)
   , m_info(0)
 {
-  add(this);
+  ChannelMenu::add(this);
 }
 
 
-void ServerMenuImpl::bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope scope)
+bool ServerMenuImpl::trigger(QAction *action)
+{
+  Q_UNUSED(action)
+
+  return false;
+}
+
+
+void ServerMenuImpl::bind(QMenu *menu, ClientChannel channel, Scope scope)
 {
   Q_UNUSED(scope)
 
@@ -51,14 +59,14 @@ void ServerMenuImpl::bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope s
   }
 
   if (!active || (active && page != 1)) {
-    m_info = new QAction(SCHAT_ICON(InfoBalloon), tr("Information..."), this);
+    m_info = new QAction(SCHAT_ICON(Information), tr("Information..."), this);
     m_info->setData(ChatUrls::toUrl(channel, LS("info")));
     menu->addAction(m_info);
   }
 }
 
 
-void ServerMenuImpl::cleanupImpl()
+void ServerMenuImpl::cleanup()
 {
   if (m_alerts) delete m_alerts; m_alerts = 0;
   if (m_info) delete m_info; m_info = 0;

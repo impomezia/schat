@@ -1,6 +1,5 @@
-/* $Id: YouTubeChatView.cpp 2682 2012-05-20 09:50:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,18 +15,27 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "hooks/ChatViewHooks.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
 #include "ui/tabs/ChatView.h"
 #include "YouTubeChatView.h"
 
 YouTubeChatView::YouTubeChatView(QObject *parent)
-  : ChatViewHooks(parent)
+  : QObject(parent)
 {
+  ChatViewHooks::add(this);
 }
 
 
-void YouTubeChatView::initImpl(ChatView *view)
+YouTubeChatView::~YouTubeChatView()
+{
+  ChatViewHooks::remove(this);
+}
+
+
+
+void YouTubeChatView::init(ChatView *view)
 {
   if (SimpleID::typeOf(view->id()) == SimpleID::ServerId)
     return;
@@ -36,7 +44,7 @@ void YouTubeChatView::initImpl(ChatView *view)
 }
 
 
-void YouTubeChatView::loadFinishedImpl(ChatView *view)
+void YouTubeChatView::loadFinished(ChatView *view)
 {
   if (SimpleID::typeOf(view->id()) == SimpleID::ServerId)
     return;

@@ -1,6 +1,5 @@
-/* $Id: ChatView.cpp 3749 2013-07-12 20:50:37Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -161,6 +160,12 @@ void ChatView::setId(const QByteArray &id)
 }
 
 
+bool ChatView::openDialog(const QString &id, const QVariant &data)
+{
+  return ChatViewHooks::openDialog(this, id, data);
+}
+
+
 QString ChatView::getId() const
 {
   return SimpleID::encode(id());
@@ -227,12 +232,12 @@ void ChatView::contextMenu(QMenu *menu, const QWebHitTestResult &result)
 
   const QUrl url = result.linkUrl();
   if (url.scheme() == LS("chat") && url.host() == LS("channel"))
-    Hooks::ChannelMenu::bind(menu, ChatUrls::channel(url), Hooks::ChatViewScope);
+    ChannelMenu::bind(menu, ChatUrls::channel(url), IChannelMenu::ChatViewScope);
   else
-    Hooks::ChannelMenu::bind(menu, ChatClient::channels()->get(m_id), Hooks::ChatViewScope);
+    ChannelMenu::bind(menu, ChatClient::channels()->get(m_id), IChannelMenu::ChatViewScope);
 
   menu->addSeparator();
-  QMenu *display = menu->addMenu(SCHAT_ICON(Gear), tr("Display"));
+  QMenu *display = menu->addMenu(SCHAT_ICON(Eye), tr("Display"));
   display->addAction(m_seconds);
   display->addAction(m_service);
   developerMenu(display);

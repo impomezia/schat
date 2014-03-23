@@ -1,6 +1,5 @@
-/* $Id: YouTubeChatView.h 2682 2012-05-20 09:50:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,18 +18,20 @@
 #ifndef YOUTUBECHATVIEW_H_
 #define YOUTUBECHATVIEW_H_
 
-#include "hooks/ChatViewHooks.h"
+#include <QObject>
 
-class YouTubeChatView : public ChatViewHooks
+#include "interfaces/IChatViewHook.h"
+
+class YouTubeChatView : public QObject, public IChatViewHook
 {
   Q_OBJECT
 
 public:
   YouTubeChatView(QObject *parent = 0);
+  ~YouTubeChatView();
 
-protected:
-  void initImpl(ChatView *view);
-  void loadFinishedImpl(ChatView *view);
+  void init(ChatView *view) Q_DECL_OVERRIDE;
+  void loadFinished(ChatView *view) Q_DECL_OVERRIDE;
 };
 
 #endif /* YOUTUBECHATVIEW_H_ */

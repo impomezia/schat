@@ -1,6 +1,5 @@
-/* $Id: PopupPlugin.h 3644 2013-04-17 13:17:34Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,26 +25,23 @@ class PopupPlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.Popup" FILE "Popup.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.Popup")
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Popup";
     out[CORE_API_NAME]     = "Popup";
-    out[CORE_API_VERSION]  = "0.1.5";
-    out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/Popup";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Popup";
     out[CORE_API_DESC]     = "Adds support for popup notifications";
     out[CORE_API_DESC_RU]  = "Добавляет поддержку всплывающих уведомлений";
 
     return out;
   }
 
-  ChatPlugin *create();
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* POPUPPLUGIN_H_ */

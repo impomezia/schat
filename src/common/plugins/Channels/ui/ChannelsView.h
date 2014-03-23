@@ -1,6 +1,5 @@
-/* $Id: ChannelsView.h 3623 2013-04-06 04:12:59Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,12 +31,15 @@ class ChannelsView : public WebView
 public:
   ChannelsView(QWidget *parent = 0);
   Q_INVOKABLE QString toUrl(const QString &id, const QString &name) const;
-  Q_INVOKABLE void create(const QString &id, const QString &name, bool _private);
+  Q_INVOKABLE void addRoom();
   Q_INVOKABLE void join(const QString &name);
 
 signals:
   void feed(const QVariantMap &data);
   void serverRenamed(const QString &name);
+
+public slots:
+  void create(const QString &id, const QString &name, bool _private);
 
 protected:
   void contextMenu(QMenu *menu, const QWebHitTestResult &result);

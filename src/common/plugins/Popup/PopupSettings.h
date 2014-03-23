@@ -1,6 +1,5 @@
-/* $Id: PopupSettings.h 3158 2012-10-12 17:41:07Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,6 +20,9 @@
 
 #include <QWidget>
 
+#include "schat.h"
+
+class ChatSettings;
 class QCheckBox;
 class QLabel;
 class QSpinBox;
@@ -33,19 +35,22 @@ public:
   PopupSettings(QWidget *parent = 0);
 
 protected:
-  void changeEvent(QEvent *event);
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
   void enable(bool enable);
-  void settingsChanged(const QString &key, const QVariant &value);
-  void timeChanged(int time);
+  void onSettingsChanged(const QString &key, const QVariant &value);
+  void save();
 
 private:
   void retranslateUi();
 
-  QCheckBox *m_enable; ///< Настройка "Alerts/Popup".
-  QLabel *m_timeLabel; ///< Надпись поясняющая действие опции "Alerts/PopupTimeout".
-  QSpinBox *m_timeBox; ///< Настройка "Alerts/PopupTimeout".
+  ChatSettings *m_settings;
+  QCheckBox *m_enable;      ///< Настройка "Alerts/Popup".
+  QCheckBox *m_fullscreen;
+  QLabel *m_timeHintLabel;
+  QLabel *m_timeLabel;      ///< Надпись поясняющая действие опции "Alerts/PopupTimeout".
+  QSpinBox *m_timeBox;      ///< Настройка "Alerts/PopupTimeout".
 };
 
 #endif /* POPUPSETTINGS_H_ */

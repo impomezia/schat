@@ -1,6 +1,5 @@
-/* $Id: ChatViewHooks.cpp 3754 2013-07-14 19:50:00Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,9 +15,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QWebHitTestResult>
-
 #include "hooks/ChatViewHooks.h"
+#include "interfaces/IChatViewHook.h"
 #include "ui/tabs/ChatView.h"
 
 ChatViewHooks *ChatViewHooks::m_self = 0;
@@ -28,8 +26,6 @@ ChatViewHooks::ChatViewHooks(QObject *parent)
 {
   if (!m_self)
     m_self = this;
-  else
-    add(this);
 }
 
 
@@ -42,12 +38,16 @@ ChatViewHooks::~ChatViewHooks()
 
 bool ChatViewHooks::contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result)
 {
+  Q_ASSERT(m_self && view && menu);
+
+  if (!m_self)
+    return false;
+
   bool modified = false;
-  if (m_self) {
-    foreach (ChatViewHooks *hook, m_self->m_hooks) {
-      if (hook->onContextMenu(view, menu, result) && !modified)
-        modified = true;
-    }
+
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    if (hook->contextMenu(view, menu, result) && !modified)
+      modified = true;
   }
 
   return modified;
@@ -56,11 +56,14 @@ bool ChatViewHooks::contextMenu(ChatView *view, QMenu *menu, const QWebHitTestRe
 
 bool ChatViewHooks::dragEnterEvent(ChatView *view, QDragEnterEvent *event)
 {
-  if (m_self) {
-    foreach (ChatViewHooks *hook, m_self->m_hooks) {
-      if (hook->onDragEnterEvent(view, event))
-        return true;
-    }
+  Q_ASSERT(m_self && view && event);
+
+  if (!m_self)
+    return false;
+
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    if (hook->dragEnterEvent(view, event))
+      return true;
   }
 
   return false;
@@ -69,112 +72,122 @@ bool ChatViewHooks::dragEnterEvent(ChatView *view, QDragEnterEvent *event)
 
 bool ChatViewHooks::dropEvent(ChatView *view, QDropEvent *event)
 {
-  if (m_self) {
-    foreach (ChatViewHooks *hook, m_self->m_hooks) {
-      if (hook->onDropEvent(view, event))
-        return true;
-    }
+  Q_ASSERT(m_self && view && event);
+
+  if (!m_self)
+    return false;
+
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    if (hook->dropEvent(view, event))
+      return true;
   }
 
   return false;
+}
+
+
+bool ChatViewHooks::openDialog(ChatView *view, const QString &id, const QVariant &data)
+{
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    if (hook->openDialog(view, id, data))
+      return true;
+  }
+
+  return false;
+}
+
+
+void ChatViewHooks::add(ChatView *view)
+{
+  Q_ASSERT(m_self && view);
+
+  if (!m_self)
+    return;
+
+  if (!m_self->m_views.contains(view))
+    m_self->m_views.append(view);
+
+  if (!view->id().isEmpty())
+    m_self->m_map.insert(view->id(), view);
+
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    hook->add(view);
+  }
+
+  emit m_self->addHook(view);
+}
+
+
+void ChatViewHooks::add(IChatViewHook *hook)
+{
+  Q_ASSERT(m_self && hook);
+
+  if (m_self && hook && !m_self->m_hooks.contains(hook))
+    m_self->m_hooks.append(hook);
+}
+
+
+void ChatViewHooks::init(ChatView *view)
+{
+  Q_ASSERT(m_self && view);
+
+  if (!m_self)
+    return;
+
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    hook->init(view);
+  }
+
+  emit m_self->initHook(view);
+}
+
+
+void ChatViewHooks::loadFinished(ChatView *view)
+{
+  Q_ASSERT(m_self && view);
+
+  if (!m_self)
+    return;
+
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    hook->loadFinished(view);
+  }
+
+  emit m_self->loadFinishedHook(view);
+}
+
+
+void ChatViewHooks::remove(ChatView *view)
+{
+  Q_ASSERT(m_self && view);
+
+  if (!m_self)
+    return;
+
+  foreach (IChatViewHook *hook, m_self->m_hooks) {
+    hook->remove(view);
+  }
+
+  emit m_self->removeHook(view);
+  m_self->m_views.removeAll(view);
+  m_self->m_map.remove(view->id());
+}
+
+
+void ChatViewHooks::remove(IChatViewHook *hook)
+{
+  if (m_self)
+    m_self->m_hooks.removeAll(hook);
 }
 
 
 void ChatViewHooks::retranslate()
 {
-  if (m_self) {
-    foreach (ChatViewHooks *hook, m_self->m_hooks)
-      hook->onRetranslate();
-  }
-}
+  Q_ASSERT(m_self);
 
-
-bool ChatViewHooks::onContextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result)
-{
-  Q_UNUSED(view)
-  Q_UNUSED(menu)
-  Q_UNUSED(result)
-
-  return false;
-}
-
-
-bool ChatViewHooks::onDragEnterEvent(ChatView *view, QDragEnterEvent *event)
-{
-  Q_UNUSED(view);
-  Q_UNUSED(event);
-
-  return false;
-}
-
-
-bool ChatViewHooks::onDropEvent(ChatView *view, QDropEvent *event)
-{
-  Q_UNUSED(view);
-  Q_UNUSED(event);
-
-  return false;
-}
-
-
-void ChatViewHooks::addImpl(ChatView *view)
-{
-  if (m_self != this)
+  if (!m_self)
     return;
 
-  if (!m_views.contains(view))
-    m_views.append(view);
-
-  if (!view->id().isEmpty())
-    m_map[view->id()] = view;
-
-  foreach (ChatViewHooks *hook, m_hooks) {
-    hook->addImpl(view);
-  }
-
-  emit addHook(view);
-}
-
-
-void ChatViewHooks::initImpl(ChatView *view)
-{
-  if (m_self != this)
-    return;
-
-  foreach (ChatViewHooks *hook, m_hooks) {
-    hook->initImpl(view);
-  }
-
-  emit initHook(view);
-}
-
-
-/*!
- * Обработка завершения загрузки страницы.
- */
-void ChatViewHooks::loadFinishedImpl(ChatView *view)
-{
-  if (m_self != this)
-    return;
-
-  foreach (ChatViewHooks *hook, m_hooks) {
-    hook->loadFinishedImpl(view);
-  }
-
-  emit loadFinishedHook(view);
-}
-
-
-void ChatViewHooks::removeImpl(ChatView *view)
-{
-  if (m_self != this)
-    return;
-
-  foreach (ChatViewHooks *hook, m_hooks) {
-    hook->removeImpl(view);
-  }
-
-  emit removeHook(view);
-  m_views.removeAll(view);
-  m_map.remove(view->id());
+  foreach (IChatViewHook *hook, m_self->m_hooks)
+    hook->retranslate();
 }

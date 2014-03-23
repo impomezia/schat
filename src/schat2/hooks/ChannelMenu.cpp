@@ -1,6 +1,5 @@
-/* $Id: ChannelMenu.cpp 3280 2012-11-20 17:26:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2011 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,37 +24,52 @@
 #include "hooks/ChannelMenu.h"
 #include "ui/ChatIcons.h"
 
-namespace Hooks
-{
-
 ChannelMenu *ChannelMenu::m_self = 0;
 
 ChannelMenu::ChannelMenu(QObject *parent)
   : QObject(parent)
 {
-  if (!m_self)
-    m_self = this;
+  m_self = this;
 }
 
 
 ChannelMenu::~ChannelMenu()
 {
-  if (m_self == this)
-    m_self = 0;
+  m_self = 0;
 }
 
 
-void ChannelMenu::bind(QMenu *menu, ClientChannel channel, Scope scope)
+void ChannelMenu::add(IChannelMenu *hook)
 {
+  Q_ASSERT(m_self);
+
+  if (!m_self->m_hooks.contains(hook))
+    m_self->m_hooks.append(hook);
+}
+
+
+void ChannelMenu::bind(QMenu *menu, ClientChannel channel, IChannelMenu::Scope scope)
+{
+  Q_ASSERT(m_self);
+
   if (!channel || m_self->m_hooks.isEmpty())
     return;
 
   connect(menu, SIGNAL(triggered(QAction*)), m_self, SLOT(triggered(QAction*)));
   connect(menu, SIGNAL(destroyed(QObject*)), m_self, SLOT(cleanup()));
 
-  foreach (ChannelMenu *hook, m_self->m_hooks) {
-    hook->bindImpl(menu, channel, scope);
+  foreach (IChannelMenu *hook, m_self->m_hooks) {
+    hook->bind(menu, channel, scope);
   }
+}
+
+
+void ChannelMenu::remove(IChannelMenu *hook)
+{
+  if (!m_self)
+    return;
+
+  m_self->m_hooks.removeAll(hook);
 }
 
 
@@ -64,8 +78,8 @@ void ChannelMenu::cleanup()
   if (m_hooks.isEmpty())
     return;
 
-  foreach (ChannelMenu *hook, m_hooks) {
-    hook->cleanupImpl();
+  foreach (IChannelMenu *hook, m_hooks) {
+    hook->cleanup();
   }
 }
 
@@ -77,8 +91,8 @@ void ChannelMenu::triggered(QAction *action)
     return;
   }
 
-  foreach (ChannelMenu *hook, m_hooks) {
-    if (hook->triggerImpl(action))
+  foreach (IChannelMenu *hook, m_hooks) {
+    if (hook->trigger(action))
       return;
   }
 }
@@ -97,7 +111,7 @@ bool ChannelMenu::triggerImpl(QAction *action)
 /*
  * Создание меню.
  */
-void ChannelMenu::bindImpl(QMenu *menu, ClientChannel channel, Scope scope)
+void ChannelMenu::bindImpl(QMenu *menu, ClientChannel channel, IChannelMenu::Scope scope)
 {
   Q_UNUSED(menu)
   Q_UNUSED(channel)
@@ -108,5 +122,3 @@ void ChannelMenu::bindImpl(QMenu *menu, ClientChannel channel, Scope scope)
 void ChannelMenu::cleanupImpl()
 {
 }
-
-} // namespace Hooks

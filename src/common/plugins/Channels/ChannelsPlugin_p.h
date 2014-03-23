@@ -1,6 +1,5 @@
-/* $Id: ChannelsPlugin_p.h 3594 2013-03-24 19:33:28Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,12 +31,15 @@ class ChannelsPluginImpl : public ChatPlugin
   Q_OBJECT
 
 public:
+  static const QString kIgnoring;
+
   ChannelsPluginImpl(QObject *parent);
   ~ChannelsPluginImpl();
   static void ignore(const QByteArray &id, bool ignore = true);
   static void inviteTo(const QByteArray &userId, const QByteArray &channelId);
   static void setAcl(const QByteArray &userId, const QByteArray &channelId, int acl);
   static void show();
+  void chatReady() Q_DECL_OVERRIDE;
 
 private slots:
   inline void list() { show(); }

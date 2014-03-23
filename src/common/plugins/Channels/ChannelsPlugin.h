@@ -1,6 +1,5 @@
-/* $Id: ChannelsPlugin.h 3644 2013-04-17 13:17:34Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,28 +25,25 @@ class ChannelsPlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.ChannelsPlugin" FILE "Channels.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.ChannelsPlugin")
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out            = CoreApi::header();
     out[CORE_API_ID]           = "Channels";
     out[CORE_API_NAME]         = "Channels";
-    out[CORE_API_VERSION]      = "0.4.2";
-    out[CORE_API_SITE]         = "http://wiki.schat.me/Plugin/Channels";
-    out[CORE_API_DESC]         = "Advanced channels support";
-    out[CORE_API_DESC_RU]      = "Расширенная поддержка каналов";
+    out[CORE_API_VERSION]      = "2.3.0";
+    out[CORE_API_SITE]         = "https://wiki.schat.me/Plugin/Channels";
+    out[CORE_API_DESC]         = "Advanced rooms (channels) support";
+    out[CORE_API_DESC_RU]      = "Расширенная поддержка комнат (каналов)";
     out[CORE_API_CONFIGURABLE] = true;
 
     return out;
   }
 
-  ChatPlugin *create();
-  QWidget *settings(QWidget *parent);
+  ChatPlugin *create() Q_DECL_OVERRIDE;
+  QWidget *settings(QWidget *parent) Q_DECL_OVERRIDE;
 };
 
 #endif /* CHANNELSPLUGIN_H_ */

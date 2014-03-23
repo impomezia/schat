@@ -1,6 +1,5 @@
-/* $Id: ListTab.cpp 3501 2013-02-14 07:16:38Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
 
 #include "sglobal.h"
 #include "ui/ChannelsView.h"
+#include "ui/ChatIcons.h"
 #include "ui/ListTab.h"
 
 ListTab::ListTab(TabWidget *parent)
@@ -41,14 +41,14 @@ ListTab::ListTab(TabWidget *parent)
   mainLay->setMargin(0);
   mainLay->setSpacing(0);
 
-  setIcon(QIcon(LS(":/images/Channels/list.png")));
+  setIcon(SCHAT_ICON(Channels));
   retranslateUi();
 }
 
 
 void ListTab::retranslateUi()
 {
-  setText(tr("Channels"));
+  setText(tr("Rooms"));
 }
 
 

@@ -1,6 +1,5 @@
-/* $Id: Channel.cpp 3660 2013-04-30 13:42:18Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,6 +16,7 @@
  */
 
 #include <QDir>
+#include <QHostInfo>
 
 #include "Account.h"
 #include "Channel.h"
@@ -234,6 +234,20 @@ int Channel::isCompatibleId(const QByteArray &id)
 QString Channel::defaultName()
 {
   return QDir::home().dirName();
+}
+
+
+QString Channel::defaultName(const QString &tpl)
+{
+  QString out = tpl;
+
+  if (out.contains(LS("%USER%")))
+    out.replace(LS("%USER%"), QDir::home().dirName());
+
+  if (out.contains(LS("%HOST%")))
+    out.replace(LS("%HOST%"), QHostInfo::localHostName());
+
+  return out;
 }
 
 

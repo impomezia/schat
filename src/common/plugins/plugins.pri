@@ -116,8 +116,11 @@ win32 {
   doc.files += res/doc/*.html
   doc.path += ../../../../os/win32/$${PLUGIN_TARGET}/doc
 
+  pdb.files += $${DESTDIR}/$${TARGET}.pdb
+
   target.path += ../../../../os/win32/$${PLUGIN_TARGET}/plugins
-  INSTALLS += target doc
+  pdb.path += ../../../../os/win32/$${PLUGIN_TARGET}/plugins
+  INSTALLS += target doc pdb
 }
 
 

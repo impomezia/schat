@@ -1,6 +1,5 @@
-/* $Id: server.nsi 3677 2013-06-08 00:17:54Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -92,6 +91,7 @@ Section
   SetOutPath "$INSTDIR"
   File "${SCHAT_SOURCE}\schatd2.exe"
   File "${SCHAT_SOURCE}\schatd2-srv.exe"
+  File "${SCHAT_SOURCE}\..\schat2\crashreport.exe"
   File "${SCHAT_SOURCE}\schatd.dll"
   File "${SCHAT_SOURCE}\schat-authd.exe"
   File "${SCHAT_SOURCE}\schat-tufao.dll"

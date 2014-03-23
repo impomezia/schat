@@ -1,6 +1,5 @@
-# $Id: Channels.pro 3600 2013-03-25 23:11:33Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,7 +17,6 @@
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB = 1
 QT = core gui network webkit
-OTHER_FILES += Channels.json
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
@@ -29,6 +27,7 @@ HEADERS  = \
    ChannelsPlugin.h \
    ChannelsPlugin_p.h \
    ChannelsSettings.h \
+   ui/AddRoomDialog.h \
    ui/ChannelsView.h \
    ui/ListTab.h \
 
@@ -38,6 +37,7 @@ SOURCES  = \
    ChannelsMenuImpl.cpp \
    ChannelsPlugin.cpp \
    ChannelsSettings.cpp \
+   ui/AddRoomDialog.cpp \
    ui/ChannelsView.cpp \
    ui/ListTab.cpp \
 
@@ -46,7 +46,5 @@ RESOURCES += Channels.qrc
 TRANSLATIONS += res/translations/channels_en.ts
 TRANSLATIONS += res/translations/channels_ru.ts
 TRANSLATIONS += res/translations/channels_uk.ts
-CODECFORTR  = UTF-8
-CODECFORSRC = UTF-8
 
 include(../plugins.pri)

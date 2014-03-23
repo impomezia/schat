@@ -5,7 +5,6 @@ module.exports = function(grunt) {
     uglify: {
       all: {
         files: {
-          'res/html/js/ChatView.min.js': ['res/html/src/ChatView.js'],
           'res/html/js/PluginsView.min.js': ['res/html/src/PluginsView.js'],
           'res/html/js/server.min.js': ['res/html/src/server.js'],
           'res/html/js/user.min.js': ['res/html/src/user.js'],
@@ -19,13 +18,10 @@ module.exports = function(grunt) {
           'src/common/plugins/Profile/res/js/Profile.min.js': ['src/common/plugins/Profile/res/src/Profile.js'],
           'src/common/plugins/YouTube/res/js/YouTube.min.js': ['src/common/plugins/YouTube/res/src/YouTube.js'],
           'src/common/plugins/SendFile/res/js/SendFile.min.js': ['src/common/plugins/SendFile/res/src/SendFile.js'],
-          'src/common/plugins/History/res/js/History.min.js': ['src/common/plugins/History/res/src/History.js'],
-          'src/common/plugins/History/res/js/days.min.js': ['src/common/plugins/History/res/src/days.js'],
           'src/common/plugins/Channels/res/js/bootstrap-dropdown.min.js': ['src/common/plugins/Channels/res/src/bootstrap-dropdown.js'],
           'src/common/plugins/Channels/res/js/Channels.min.js': ['src/common/plugins/Channels/res/src/Channels.js'],
           'src/common/plugins/Channels/res/js/ChannelsUser.min.js': ['src/common/plugins/Channels/res/src/ChannelsUser.js'],
           'src/common/plugins/Channels/res/js/ListView.min.js': [
-            'res/html/js/bootstrap-modal.js',
             'res/html/js/jquery.timeago.js',
             'res/html/src/lib/base.js',
             'res/html/src/lib/utils.js',
@@ -35,7 +31,6 @@ module.exports = function(grunt) {
             'res/html/src/lib/ui-modal.js',
             'res/html/src/lib/ui-index.js',
             'src/common/plugins/Channels/res/src/rooms-ui-navbar.js',
-            'src/common/plugins/Channels/res/src/rooms-ui-create.js',
             'src/common/plugins/Channels/res/src/rooms-base.js'
           ],
           'src/common/plugins/Console/res/js/console.min.js': [
@@ -60,7 +55,6 @@ module.exports = function(grunt) {
           'src/common/plugins/Profile/res/css/flags.min.css': ['src/common/plugins/Profile/res/src/flags.css'],
           'src/common/plugins/YouTube/res/css/YouTube.min.css': ['src/common/plugins/YouTube/res/src/YouTube.css'],
           'src/common/plugins/SendFile/res/css/SendFile.min.css': ['src/common/plugins/SendFile/res/src/SendFile.css'],
-          'src/common/plugins/History/res/css/History.min.css': ['src/common/plugins/History/res/src/History.css'],
           'src/common/plugins/Channels/res/css/bootstrap-dropdown.min.css': ['src/common/plugins/Channels/res/src/bootstrap-dropdown.css'],
           'src/common/plugins/Channels/res/css/Channels.min.css': ['src/common/plugins/Channels/res/src/Channels.css'],
           'src/common/plugins/Console/res/css/console.min.css': ['src/common/plugins/Console/res/html/src/console.css'],

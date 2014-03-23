@@ -1,6 +1,5 @@
-/* $Id: NickEdit.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -37,7 +36,7 @@ NickEdit::NickEdit(QWidget *parent)
   setMaxLength(Channel::MaxNameLength);
 
   m_error = new QLabel(this);
-  m_error->setPixmap(QPixmap(LS(":/images/exclamation-red-frame.png")));
+  m_error->setPixmap(QPixmap(LS(":/images/exclamation-red.png")));
   m_error->setVisible(false);
 
   m_spinner = new Spinner(this);
@@ -56,7 +55,7 @@ void NickEdit::editingFinished()
 
   if (ChatClient::state() != ChatClient::Online) {
     ChatClient::io()->setNick(text());
-    ChatCore::settings()->setValue(LS("Profile/Nick"), ChatClient::channel()->name());
+    ChatCore::settings()->setValue(ChatSettings::kProfileNick, ChatClient::channel()->name());
     return;
   }
 
@@ -97,7 +96,7 @@ void NickEdit::notice(const ChannelNotice &notice)
 
 void NickEdit::settingsChanged(const QString &key, const QVariant &value)
 {
-  if (key == LS("Profile/Nick"))
+  if (key == ChatSettings::kProfileNick)
     setText(value.toString());
 }
 

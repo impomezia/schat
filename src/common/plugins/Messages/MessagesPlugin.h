@@ -1,6 +1,5 @@
-/* $Id: MessagesPlugin.h 3756 2013-07-15 15:23:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,10 +25,7 @@ class MessagesPlugin : public QObject, CoreApi, NodeApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi NodeApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.server.Messages" FILE "Messages.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.server.Messages")
 
 public:
   QVariantMap header() const
@@ -37,9 +33,9 @@ public:
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Messages";
     out[CORE_API_NAME]     = "Messages";
-    out[CORE_API_VERSION]  = "0.5.0";
+    out[CORE_API_VERSION]  = "2.3.0";
     out[CORE_API_TYPE]     = "server";
-    out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/Messages";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Messages";
     out[CORE_API_DESC]     = "Server Messages Support";
 
     return out;

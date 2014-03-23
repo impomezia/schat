@@ -1,6 +1,5 @@
-/* $Id: main.cpp 3272 2012-11-16 23:59:04Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,16 +17,22 @@
 
 #include "ChatApp.h"
 
+#if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
+# include "ExceptionHandler.h"
+#endif
+
 int main(int argc, char *argv[])
 {
+# if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
+  initExceptionHandler();
+# endif
+
   ChatApp app(argc, argv);
   if (app.isRunning())
     return 0;
 
-# if defined(Q_OS_WIN32)
   if (ChatApp::selfUpdate())
     return 0;
-# endif
 
   app.start();
   return app.exec();

@@ -1,6 +1,5 @@
-/* $Id: ChannelsMenuImpl.h 3643 2013-04-17 10:50:31Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,19 +18,20 @@
 #ifndef CHANNELSMENUIMPL_H_
 #define CHANNELSMENUIMPL_H_
 
-#include "hooks/ChannelMenu.h"
+#include "interfaces/IChannelMenu.h"
 
-class ChannelsMenuImpl : public Hooks::ChannelMenu
+class ChannelsMenuImpl : public QObject, public IChannelMenu
 {
   Q_OBJECT
 
 public:
   ChannelsMenuImpl(QObject *parent = 0);
+  ~ChannelsMenuImpl();
 
 protected:
-  bool triggerImpl(QAction *action);
-  void bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope scope);
-  void cleanupImpl();
+  bool trigger(QAction *action) Q_DECL_OVERRIDE;
+  void bind(QMenu *menu, ClientChannel channel, Scope scope) Q_DECL_OVERRIDE;
+  void cleanup() Q_DECL_OVERRIDE;
 
 private slots:
   void invite(QAction *action);

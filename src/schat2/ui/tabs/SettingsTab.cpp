@@ -1,6 +1,5 @@
-/* $Id: SettingsTab.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -52,7 +51,7 @@ SettingsTab::SettingsTab(const QUrl &url, TabWidget *parent)
   }
 
   m_contents->setCurrentRow(0);
-  setIcon(SCHAT_ICON(Settings));
+  setIcon(SCHAT_ICON(Gear));
   setText(tr("Preferences"));
 
   connect(m_contents, SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)), this, SLOT(pageChanged(QListWidgetItem*,QListWidgetItem*)));

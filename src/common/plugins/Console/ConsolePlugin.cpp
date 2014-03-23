@@ -1,6 +1,5 @@
-/* $Id: ConsolePlugin.cpp 3775 2013-08-24 03:41:07Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -82,17 +81,21 @@ ConsolePluginImpl::ConsolePluginImpl(QObject *parent)
   , m_console(0)
 {
   m_tr = new ConsoleTr();
-  new ConsoleCmd(this);
 
   ChatCore::translation()->addOther(LS("console"));
-
-  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 
 ConsolePluginImpl::~ConsolePluginImpl()
 {
   delete m_tr;
+}
+
+
+void ConsolePluginImpl::chatReady()
+{
+  new ConsoleCmd(this);
+  QTimer::singleShot(0, this, SLOT(start()));
 }
 
 

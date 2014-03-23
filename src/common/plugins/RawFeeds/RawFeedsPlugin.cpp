@@ -29,6 +29,11 @@ RawFeeds::RawFeeds(QObject *parent)
   : ChatPlugin(parent)
   , m_enabled(false)
 {
+}
+
+
+void RawFeeds::chatReady()
+{
   new Hooks::RawFeedsCmd(this);
   new Hooks::FeedsImpl(this);
 

@@ -81,7 +81,7 @@ ChatWindow::ChatWindow(QWidget *parent)
   m_mainLay->setMargin(0);
 #endif
 
-  setMinimumSize(400, 300);
+  setMinimumSize(200, 200);
   setCentralWidget(m_central);
   stylize();
   restoreGeometry();

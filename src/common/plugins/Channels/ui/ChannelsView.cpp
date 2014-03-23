@@ -1,6 +1,5 @@
-/* $Id: ChannelsView.cpp 3708 2013-06-23 23:40:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,6 +29,7 @@
 #include "hooks/ChannelMenu.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
+#include "ui/AddRoomDialog.h"
 #include "ui/ChannelsView.h"
 #include "ui/tabs/ChatView.h"
 #include "ui/TabWidget.h"
@@ -52,14 +52,17 @@ QString ChannelsView::toUrl(const QString &id, const QString &name) const
 }
 
 
-void ChannelsView::create(const QString &id, const QString &name, bool _private)
+void ChannelsView::addRoom()
 {
-  const QByteArray channelId = SimpleID::decode(id);
-  if (SimpleID::typeOf(channelId) != SimpleID::ChannelId)
-    return;
+  AddRoomDialog *dialog = new AddRoomDialog(this);
 
-  m_channels[channelId] = _private;
-  ChatClient::channels()->join(name);
+# if QT_VERSION >= 0x050000
+  connect(dialog, &AddRoomDialog::create, this, &ChannelsView::create);
+# else
+  connect(dialog, SIGNAL(create(QString,QString,bool)), SLOT(create(QString,QString,bool)));
+# endif
+
+  showDialog(dialog);
 }
 
 
@@ -72,13 +75,24 @@ void ChannelsView::join(const QString &name)
 }
 
 
+void ChannelsView::create(const QString &id, const QString &name, bool _private)
+{
+  const QByteArray channelId = SimpleID::decode(id);
+  if (SimpleID::typeOf(channelId) != SimpleID::ChannelId)
+    return;
+
+  m_channels[channelId] = _private;
+  ChatClient::channels()->join(name);
+}
+
+
 void ChannelsView::contextMenu(QMenu *menu, const QWebHitTestResult &result)
 {
   menu->addSeparator();
 
   const QUrl url = result.linkUrl();
   if (url.scheme() == LS("chat") && url.host() == LS("channel"))
-    Hooks::ChannelMenu::bind(menu, ChatUrls::channel(url), Hooks::ChatViewScope);
+    ChannelMenu::bind(menu, ChatUrls::channel(url), IChannelMenu::ChatViewScope);
 
   menu->addSeparator();
 

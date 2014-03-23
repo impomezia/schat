@@ -1,6 +1,5 @@
-# $Id: History.pro 3726 2013-07-05 01:44:24Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,7 +17,6 @@
 SCHAT_CLIENT_LIB = 1
 SCHAT_CORE_LIB = 1
 QT = core gui network sql webkit
-OTHER_FILES += History.json
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
@@ -41,12 +39,10 @@ SOURCES  = \
    HistoryPlugin.cpp \
    ui/HistorySettings.cpp \
 
-RESOURCES += History.qrc
+RESOURCES += res/History.qrc
 
 TRANSLATIONS += res/translations/history_en.ts
 TRANSLATIONS += res/translations/history_ru.ts
 TRANSLATIONS += res/translations/history_uk.ts
-CODECFORTR  = UTF-8
-CODECFORSRC = UTF-8
 
 include(../plugins.pri)

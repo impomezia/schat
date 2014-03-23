@@ -1,6 +1,5 @@
-/* $Id: UserView.h 3633 2013-04-12 08:00:10Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,35 +19,16 @@
 #define USERVIEW_H_
 
 #include <QListView>
+#include <QPointer>
 #include <QStandardItemModel>
 
 #include "Channel.h"
 
 class ChannelInfo;
 class Notify;
-
-/*!
- * Итем в списке пользователей.
- */
-class UserItem : public QStandardItem
-{
-public:
-  UserItem(ClientChannel user, ClientChannel channel);
-  inline ClientChannel user() { return m_user; }
-  bool reload();
-
-private:
-  int weight() const;
-  QBrush color() const;
-
-  bool m_bold;             ///< Жирный шрифт.
-  bool m_italic;           ///< Курсивный шрифт.
-  bool m_self;             ///< \b true если это собственный итем пользователя.
-  bool m_underline;        ///< Подчёркнутый шрифт.
-  ClientChannel m_channel; ///< Канал.
-  ClientChannel m_user;    ///< Пользователь.
-};
-
+class UserItem;
+class UserSortFilterModel;
+class UserViewProperties;
 
 /*!
  * Отображает список пользователей.
@@ -71,10 +51,13 @@ public:
 
 private slots:
   void channel(const ChannelInfo &info);
+  void onSettingsChanged(const QString &key, const QVariant &value);
 
 protected:
-  void contextMenuEvent(QContextMenuEvent *event);
-  void mouseReleaseEvent(QMouseEvent *event);
+  void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
+  void focusOutEvent(QFocusEvent *event) Q_DECL_OVERRIDE;
+  void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+  void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
   void addTab(const QModelIndex &index);
@@ -84,7 +67,9 @@ private:
   bool m_sortable;                        ///< true если список пользователей нужно сортировать при добавлении пользователя.
   ClientChannel m_channel;                ///< Канал.
   QMap<QByteArray, UserItem*> m_channels; ///< Таблица для ускоренного поиска пользователей.
-  QStandardItemModel m_model;             ///< Модель для отображения списка пользователей.
+  QPointer<UserViewProperties> m_dialog;
+  QStandardItemModel *m_source;           ///< Модель для отображения списка пользователей
+  UserSortFilterModel *m_model;
 };
 
 #endif /* USERVIEW_H_ */

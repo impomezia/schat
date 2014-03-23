@@ -29,7 +29,7 @@ INCLUDEPATH += \
     ../common \
     ../3rdparty \
 
-!win32:VERSION = 2.2.0
+!win32:VERSION = 2.3.0
 
 CONFIG(debug, debug|release) { 
   RCC_DIR = ../../tmp/$${TEMPLATE}/$${TARGET}/debug/rcc
@@ -54,6 +54,10 @@ contains( SCHAT_DEBUG, 1 ) {
 
 contains( SCHAT_RESOURCES, 1 ) {
   RESOURCES += ../../res/$${TARGET}.qrc
+}
+
+contains( SCHAT_RESOURCES_HIDPI, 1 ) {
+  RESOURCES += ../../res/$${TARGET}@2x.qrc
 }
 
 contains( SCHAT_RC_FILE, 1 ) {

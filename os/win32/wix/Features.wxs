@@ -28,6 +28,9 @@
       <Feature Id="Popup" Title="Popup" Description="Adds support for popup notifications" Level="1" AllowAdvertise="no">
         <ComponentGroupRef Id="Popup" />
       </Feature>
+    <Feature Id="Preview" Title="Preview" Description="Image preview" Level="1" AllowAdvertise="no">
+        <ComponentGroupRef Id="Preview" />
+    </Feature>
       <Feature Id="Proxy" Title="Proxy" Description="Adds support for connections via HTTP and SOCKS5 proxy" Level="1" AllowAdvertise="no">
         <ComponentGroupRef Id="Proxy" />
       </Feature>

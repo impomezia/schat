@@ -1,6 +1,5 @@
-/* $Id: Update.rc 3763 2013-08-09 15:05:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,7 +24,7 @@
 #include "../../version.h"
 
 VS_VERSION_INFO VERSIONINFO
-  FILEVERSION 0,3,1,0
+  FILEVERSION 2,3,0,0
   PRODUCTVERSION SCHAT_VERSION_RC
   FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
@@ -43,7 +42,7 @@ VS_VERSION_INFO VERSIONINFO
       BEGIN
         VALUE "CompanyName",      SCHAT_ORGANIZATION
         VALUE "FileDescription",  "Automatically downloads and installs updates"
-        VALUE "FileVersion",      "0.3.1"
+        VALUE "FileVersion",      "2.3.0"
         VALUE "LegalCopyright",   SCHAT_COPYRIGHT
         VALUE "OriginalFilename", "Update.dll"
         VALUE "ProductName",      SCHAT_NAME

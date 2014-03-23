@@ -75,6 +75,7 @@ public:
   static bool isCurrent(AbstractTab *tab);
   static void add(const Message &message, bool create = true);
   static void pin(const QByteArray &id);
+  static void showDialog(QWidget *widget);
   void stopAlert();
 
 signals:
@@ -86,22 +87,21 @@ public slots:
   void closeTab(int index);
 
 protected:
-  bool event(QEvent *event);
-  void changeEvent(QEvent *event);
-  void contextMenuEvent(QContextMenuEvent *event);
-  void keyPressEvent(QKeyEvent *event);
-  void mouseReleaseEvent(QMouseEvent *event);
-  void tabInserted(int index);
-  void tabRemoved(int index);
+  bool event(QEvent *event) Q_DECL_OVERRIDE;
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+  void contextMenuEvent(QContextMenuEvent *event) Q_DECL_OVERRIDE;
+  void keyPressEvent(QKeyEvent *event) Q_DECL_OVERRIDE;
+  void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+  void tabInserted(int index) Q_DECL_OVERRIDE;
+  void tabRemoved(int index) Q_DECL_OVERRIDE;
 
 private slots:
+  void addChannel(const QByteArray &id, const QString &xName = QString());
+  void clientStateChanged(int state, int previousState);
   void currentChanged(int index);
   void notify(const Notify &notify);
+  void onReady();
   void openTab();
-
-  void addChannel(const QByteArray &id, const QString &xName = QString());
-
-  void clientStateChanged(int state, int previousState);
 
 private:
   bool isAutoPin(const QByteArray &id) const;

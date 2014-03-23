@@ -1,6 +1,5 @@
-/* $Id: ChatPlugins.cpp 3408 2013-01-16 12:40:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,6 +27,11 @@ ChatPlugins::ChatPlugins(QObject *parent)
   : Plugins(parent)
 {
   m_type = LS("chat");
+
+  if (!ChatCore::isReady())
+    connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
+  else
+    onReady();
 }
 
 
@@ -39,8 +43,8 @@ void ChatPlugins::init()
   ChatSettings *settings = ChatCore::settings();
   QStringList invalid;
 
-  for (int i = 0; i < m_sorted.size(); ++i) {
-    PluginItem *item = m_plugins.value(m_sorted.at(i));
+  for (int i = 0; i < m_list.size(); ++i) {
+    PluginItem *item = m_list.at(i);
     ChatApi *api = qobject_cast<ChatApi *>(item->plugin());
 
     if (!api || !api->check()) {
@@ -59,16 +63,29 @@ void ChatPlugins::init()
       continue;
     }
 
+    if (ChatCore::isReady())
+      plugin->chatReady();
+
+    SLOG_DEBUG(item->header().value(CORE_API_VERSION).toString() << item->id());
+
     item->setLoaded(true);
     m_chatPlugins.append(plugin);
   }
 
   foreach (const QString &id, invalid) {
-    m_sorted.removeAll(id);
     PluginItem *item = m_plugins.value(id);
     m_plugins.remove(id);
+    m_list.removeAll(item);
 
     if (item)
       delete item;
+  }
+}
+
+
+void ChatPlugins::onReady()
+{
+  foreach (ChatPlugin *plugin, m_chatPlugins) {
+    plugin->chatReady();
   }
 }

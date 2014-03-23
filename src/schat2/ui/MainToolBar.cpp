@@ -1,6 +1,5 @@
-/* $Id: MainToolBar.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,9 +19,10 @@
 #include <QMenu>
 
 #include "ChatNotify.h"
+#include "sglobal.h"
+#include "ui/ChatIcons.h"
 #include "ui/MainToolBar.h"
 #include "ui/SoundButton.h"
-#include "ui/ChatIcons.h"
 
 MainToolBar::MainToolBar(QWidget *parent)
   : QToolBar(parent)
@@ -30,8 +30,8 @@ MainToolBar::MainToolBar(QWidget *parent)
   setIconSize(QSize(16, 16));
 
   m_menu     = new QMenu(this);
-  m_settings = m_menu->addAction(SCHAT_ICON(Settings), tr("Preferences..."));
-  m_about    = m_menu->addAction(SCHAT_ICON(SmallLogo), tr("About..."));
+  m_settings = m_menu->addAction(SCHAT_ICON(Gear),  tr("Preferences..."));
+  m_about    = m_menu->addAction(SCHAT_ICON(About), tr("About..."));
   m_menu->addSeparator();
   m_quit     = m_menu->addAction(SCHAT_ICON(Quit), tr("Quit"));
 
@@ -41,13 +41,22 @@ MainToolBar::MainToolBar(QWidget *parent)
   m_button->setAutoRaise(true);
   m_button->setPopupMode(QToolButton::InstantPopup);
   m_button->setMenu(m_menu);
+  m_button->setStyleSheet(LS("QToolButton::menu-indicator {image:none}"));
 
   m_sound = new SoundButton(this);
 
   addWidget(m_button);
   addWidget(m_sound);
 
+  setReady(false);
+
   connect(m_menu, SIGNAL(triggered(QAction*)), SLOT(triggered(QAction*)));
+}
+
+
+void MainToolBar::setReady(bool ready)
+{
+  m_settings->setEnabled(ready);
 }
 
 

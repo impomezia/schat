@@ -1,6 +1,5 @@
-/* $Id: ChannelsImpl.cpp 2596 2012-05-01 23:38:08Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -50,11 +49,11 @@ void ChannelsImpl::add(ClientChannel channel, const ChannelInfo &info, const QVa
   Q_UNUSED(json)
 
   if (info.id() == ChatClient::id()) {
-    ChatCore::settings()->setValue(LS("Profile/Nick"),   ChatClient::io()->nick());
-    ChatCore::settings()->setValue(LS("Profile/Gender"), channel->gender().raw());
+    ChatCore::settings()->setValue(ChatSettings::kProfileNick,   ChatClient::io()->nick());
+    ChatCore::settings()->setValue(ChatSettings::kProfileGender, channel->gender().raw());
 
     if (channel->status().value() != Status::AutoAway)
-      ChatCore::settings()->setValue(LS("Profile/Status"), channel->status().value());
+      ChatCore::settings()->setValue(ChatSettings::kProfileStatus, channel->status().value());
   }
 
   if (info.id() == ChatClient::serverId() && info.option() & ChannelInfo::Renamed)

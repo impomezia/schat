@@ -1,6 +1,5 @@
-/* $Id: ChannelsSettings.cpp 3574 2013-03-11 23:31:35Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,6 +19,7 @@
 #include <QEvent>
 #include <QVBoxLayout>
 
+#include "ChannelsPlugin_p.h"
 #include "ChannelsSettings.h"
 #include "ChatCore.h"
 #include "ChatSettings.h"
@@ -29,7 +29,7 @@ ChannelsSettings::ChannelsSettings(QWidget *parent)
   : QWidget(parent)
 {
   m_ignoring = new QCheckBox(this);
-  m_ignoring->setChecked(ChatCore::settings()->value(SETTINGS_CHANNELS_IGNORING).toBool());
+  m_ignoring->setChecked(ChatCore::settings()->value(ChannelsPluginImpl::kIgnoring).toBool());
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->addWidget(m_ignoring);
@@ -52,7 +52,7 @@ void ChannelsSettings::changeEvent(QEvent *event)
 
 void ChannelsSettings::ignoring(bool checked)
 {
-  ChatCore::settings()->setValue(SETTINGS_CHANNELS_IGNORING, checked);
+  ChatCore::settings()->setValue(ChannelsPluginImpl::kIgnoring, checked);
 }
 
 

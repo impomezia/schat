@@ -1,6 +1,5 @@
-/* $Id: schatd2.cpp 3732 2013-07-07 18:55:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,6 +29,10 @@
 #include <unistd.h>
 #endif
 
+#if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
+# include "ExceptionHandler.h"
+#endif
+
 int main(int argc, char *argv[])
 {
 # if defined(Q_OS_LINUX)
@@ -40,6 +43,10 @@ int main(int argc, char *argv[])
         daemon(0, 0);
     }
   }
+# endif
+
+# if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
+  initExceptionHandler();
 # endif
 
   QCoreApplication app(argc, argv);

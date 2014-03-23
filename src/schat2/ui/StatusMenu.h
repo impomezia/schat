@@ -1,6 +1,5 @@
-/* $Id: StatusMenu.h 2596 2012-05-01 23:38:08Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -39,19 +38,18 @@ signals:
   void updated();
 
 protected:
-  void changeEvent(QEvent *event);
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
-  void channel(const ChannelInfo &info);
-  void clientStateChanged();
-  void settingsChanged(const QString &key, const QVariant &value);
-  void statusChanged(QAction *action);
+  void onChannel(const ChannelInfo &info);
+  void onReady();
+  void onSettingsChanged(const QString &key, const QVariant &value);
+  void onStatusChanged(QAction *action);
+  void reload();
 
 private:
-  inline void retranslateUi() { reload(); }
   void addStatus(int status);
   void applyStatus(int status);
-  void reload();
 
   QActionGroup *m_group;            ///< Группа для того чтобы можно было выбрать только один статус.
   QHash<int, QAction *> m_statuses; ///< Статусы.

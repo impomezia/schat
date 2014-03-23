@@ -1,6 +1,5 @@
-/* $Id: YouTubePlugin.h 3691 2013-06-13 23:56:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,19 +25,16 @@ class YouTubePlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.YouTube" FILE "YouTube.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.YouTube")
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out            = CoreApi::header();
     out[CORE_API_ID]           = "YouTube";
     out[CORE_API_NAME]         = "YouTube";
-    out[CORE_API_VERSION]      = "0.1.6";
-    out[CORE_API_SITE]         = "http://wiki.schat.me/Plugin/YouTube";
+    out[CORE_API_VERSION]      = "2.3.0";
+    out[CORE_API_SITE]         = "https://wiki.schat.me/Plugin/YouTube";
     out[CORE_API_DESC]         = "Adds support for embedding YouTube videos in messages";
     out[CORE_API_DESC_RU]      = "Добавляет поддержку встраивания видео c YouTube в сообщения";
     out[CORE_API_CONFIGURABLE] = true;
@@ -46,8 +42,8 @@ public:
     return out;
   }
 
-  ChatPlugin *create();
-  QWidget *settings(QWidget *parent);
+  ChatPlugin *create() Q_DECL_OVERRIDE;
+  QWidget *settings(QWidget *parent) Q_DECL_OVERRIDE;
 };
 
 #endif /* YOUTUBEPLUGIN_H_ */

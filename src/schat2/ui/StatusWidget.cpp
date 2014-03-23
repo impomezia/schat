@@ -1,6 +1,5 @@
-/* $Id: StatusWidget.cpp 1976 2011-12-12 18:45:29Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2011 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,15 +17,21 @@
 
 #include <QMouseEvent>
 
+#include "ChatCore.h"
 #include "ui/StatusMenu.h"
 #include "ui/StatusWidget.h"
 
 StatusWidget::StatusWidget(QWidget *parent)
   : QLabel(parent)
 {
-  reload();
+  hide();
 
   connect(StatusMenu::i(), SIGNAL(updated()), SLOT(reload()));
+
+  if (!ChatCore::isReady())
+    connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
+  else
+    onReady();
 }
 
 
@@ -39,6 +44,13 @@ void StatusWidget::mouseReleaseEvent(QMouseEvent *event)
     StatusMenu::i()->exec(event->globalPos());
   else
     QLabel::mouseReleaseEvent(event);
+}
+
+
+void StatusWidget::onReady()
+{
+  reload();
+  show();
 }
 
 

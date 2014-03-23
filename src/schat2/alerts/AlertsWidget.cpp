@@ -1,6 +1,5 @@
-/* $Id: AlertsWidget.cpp 3843 2013-10-27 04:09:43Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -47,7 +46,7 @@ AlertsWidget::AlertsWidget(QWidget *parent)
 
   m_toolBar->addWidget(m_file);
   m_control = m_toolBar->addAction(QIcon(LS(":/images/play.png")), tr("Play"), this, SLOT(play()));
-  m_add     = m_toolBar->addAction(QIcon(LS(":/images/add-gray.png")), tr("Add sounds"), this, SLOT(add()));
+  m_add     = m_toolBar->addAction(SCHAT_ICON(Add), tr("Add sounds"), this, SLOT(add()));
 
   m_popup = new QCheckBox(tr("Show popup window"), this);
   m_tray  = new QCheckBox(tr("Show notification in tray"), this);

@@ -1,6 +1,5 @@
-/* $Id: TabsToolBar.cpp 3225 2012-10-27 08:36:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -40,6 +39,7 @@ TabsToolBar::TabsToolBar(QWidget *parent)
   m_button->setPopupMode(QToolButton::InstantPopup);
   m_button->setToolTip(tr("Menu"));
   m_button->setMenu(m_menu);
+  m_button->setStyleSheet(LS("QToolButton::menu-indicator {image:none}"));
 
   m_talks = new QMenu(tr("Talks"), this);
   m_talks->setIcon(SCHAT_ICON(Channel));

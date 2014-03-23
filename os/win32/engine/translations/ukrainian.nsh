@@ -1,7 +1,5 @@
-/* $Id: ukrainian.nsh 3274 2012-11-17 19:06:18Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
- * Ukrainian translation — Motsyo Gennadi <drool@altlinux.ru>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -10,7 +8,7 @@
  *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
@@ -46,6 +44,8 @@ ${L} sec_Profile            "Profile"
 ${L} desc_Profile           "Плагін Profile"
 ${L} sec_Popup              "Popup"
 ${L} desc_Popup             "Плагін Popup"
+${L} sec_Preview            "Preview"
+${L} desc_Preview           "Плагін Preview"
 ${L} sec_Proxy              "Proxy"
 ${L} sec_Console            "Console"
 ${L} desc_Console           "Плагін Console"

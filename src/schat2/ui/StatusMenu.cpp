@@ -1,6 +1,5 @@
-/* $Id: StatusMenu.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -44,12 +43,12 @@ StatusMenu::StatusMenu(QWidget *parent)
   addSeparator();
   addStatus(Status::Offline);
 
-  reload();
+  connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(onSettingsChanged(QString,QVariant)));
 
-  connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
-  connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(clientStateChanged()));
-  connect(ChatClient::channels(), SIGNAL(channel(ChannelInfo)), SLOT(channel(ChannelInfo)));
-  connect(m_group, SIGNAL(triggered(QAction*)), SLOT(statusChanged(QAction*)));
+  if (!ChatCore::isReady())
+    connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
+  else
+    onReady();
 }
 
 
@@ -78,75 +77,44 @@ QString StatusMenu::statusTitle(int status)
 void StatusMenu::changeEvent(QEvent *event)
 {
   if (event->type() == QEvent::LanguageChange)
-    retranslateUi();
+    reload();
 
   QMenu::changeEvent(event);
 }
 
 
-void StatusMenu::channel(const ChannelInfo &info)
+void StatusMenu::onChannel(const ChannelInfo &info)
 {
   if (ChatClient::id() == info.id())
     reload();
 }
 
 
-void StatusMenu::clientStateChanged()
+void StatusMenu::onReady()
 {
   reload();
+
+  connect(ChatClient::io(), SIGNAL(clientStateChanged(int,int)), SLOT(reload()));
+  connect(ChatClient::channels(), SIGNAL(channel(ChannelInfo)), SLOT(onChannel(ChannelInfo)));
+  connect(m_group, SIGNAL(triggered(QAction*)), SLOT(onStatusChanged(QAction*)));
 }
 
 
 /*!
  * Обработка изменения настроек статуса или пола.
  */
-void StatusMenu::settingsChanged(const QString &key, const QVariant &value)
+void StatusMenu::onSettingsChanged(const QString &key, const QVariant &value)
 {
   Q_UNUSED(value)
 
-  if (key == LS("Profile/Status") || key == LS("Profile/Gender")) {
+  if (key == ChatSettings::kProfileStatus || key == ChatSettings::kProfileGender)
     reload();
-  }
 }
 
 
-void StatusMenu::statusChanged(QAction *action)
+void StatusMenu::onStatusChanged(QAction *action)
 {
   applyStatus(action->data().toInt());
-}
-
-
-void StatusMenu::addStatus(int status)
-{
-  QAction *action = m_group->addAction(QString());
-  action->setData(status);
-  action->setCheckable(true);
-  m_statuses.insert(status, action);
-
-  m_group->addAction(action);
-  addAction(action);
-}
-
-
-/*!
- * Применение статуса.
- */
-void StatusMenu::applyStatus(int status)
-{
-  ChatClient::channel()->status() = status;
-  ChatCore::settings()->setValue(LS("Profile/Status"), status);
-
-  if (ChatClient::state() == ChatClient::Online) {
-    ChatClient::channels()->update();
-
-    if (status == Status::Offline)
-      ChatClient::io()->leave();
-
-    return;
-  }
-
-  if (ChatClient::state() == ChatClient::Offline && status != Status::Offline)
-    ChatClient::open();
 }
 
 
@@ -155,6 +123,11 @@ void StatusMenu::applyStatus(int status)
  */
 void StatusMenu::reload()
 {
+  Q_ASSERT(ChatCore::isReady());
+
+  if (!ChatCore::isReady())
+    return;
+
   ClientChannel channel(new Channel(ChatClient::id(), ChatClient::channel()->name()));
   channel->setSynced(true);
   channel->gender() = ChatClient::channel()->gender().raw();
@@ -179,4 +152,38 @@ void StatusMenu::reload()
   }
 
   emit updated();
+}
+
+
+void StatusMenu::addStatus(int status)
+{
+  QAction *action = m_group->addAction(QString());
+  action->setData(status);
+  action->setCheckable(true);
+  m_statuses.insert(status, action);
+
+  m_group->addAction(action);
+  addAction(action);
+}
+
+
+/*!
+ * Применение статуса.
+ */
+void StatusMenu::applyStatus(int status)
+{
+  ChatClient::channel()->status() = status;
+  ChatCore::settings()->setValue(ChatSettings::kProfileStatus, status);
+
+  if (ChatClient::state() == ChatClient::Online) {
+    ChatClient::channels()->update();
+
+    if (status == Status::Offline)
+      ChatClient::io()->leave();
+
+    return;
+  }
+
+  if (ChatClient::state() == ChatClient::Offline && status != Status::Offline)
+    ChatClient::open();
 }

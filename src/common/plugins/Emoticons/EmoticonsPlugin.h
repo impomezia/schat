@@ -1,6 +1,5 @@
-/* $Id: EmoticonsPlugin.h 3650 2013-04-21 00:21:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,27 +25,24 @@ class EmoticonsPlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.Emoticons" FILE "Emoticons.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.Emoticons")
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Emoticons";
     out[CORE_API_NAME]     = "Emoticons";
-    out[CORE_API_VERSION]  = "0.2.4";
-    out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/Emoticons";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Emoticons";
     out[CORE_API_DESC]     = "Adds support for graphical emoticons";
     out[CORE_API_DESC_RU]  = "Добавляет поддержку графических смайликов";
 
     return out;
   }
 
-  bool check() const;
-  ChatPlugin *create();
+  bool check() const Q_DECL_OVERRIDE;
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* EMOTICONSPLUGIN_H_ */

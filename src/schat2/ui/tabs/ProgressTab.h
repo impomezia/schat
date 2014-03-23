@@ -1,6 +1,5 @@
-/* $Id: ProgressTab.h 3501 2013-02-14 07:16:38Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,7 +33,7 @@ public:
   ProgressTab(TabWidget *parent);
 
 private:
-  void retranslateUi();
+  void retranslateUi() Q_DECL_OVERRIDE;
 
   QProgressIndicator *m_progress;
 };
@@ -44,9 +43,9 @@ class ProgressTabCreator : public TabCreator
 {
 public:
   ProgressTabCreator() : TabCreator() {}
-  AbstractTab *create(const QVariant &data, TabWidget *parent) const;
-  inline QByteArray name() const { return PROGRESS_TAB; }
-  void reload(AbstractTab *tab, const QVariant &data) const;
+  AbstractTab *create(const QVariant &data, TabWidget *parent) const Q_DECL_OVERRIDE;
+  inline QByteArray name() const Q_DECL_OVERRIDE { return PROGRESS_TAB; }
+  void reload(AbstractTab *tab, const QVariant &data) const Q_DECL_OVERRIDE;
 };
 
 #endif /* PROGRESSTAB_H_ */

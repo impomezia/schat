@@ -1,6 +1,5 @@
-/* $Id: setup.nsi 3274 2012-11-17 19:06:18Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
 !define History
 !define Profile
 !define Popup
+!define Preview
 !define Proxy
 !define Emoticons
 !define SendFile

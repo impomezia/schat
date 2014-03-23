@@ -1,7 +1,5 @@
-/* $Id: SpellCheckerPlugin.h 3513 2013-02-21 17:06:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
- * Copyright © 2012 Alexey Ivanov <alexey.ivanes@gmail.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,26 +25,23 @@ class SpellCheckerPlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.SpellChecker" FILE "SpellChecker.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.SpellChecker")
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "SpellChecker";
     out[CORE_API_NAME]     = "Spell Checker";
-    out[CORE_API_VERSION]  = "0.1.4";
-    out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/SpellChecker";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/SpellChecker";
     out[CORE_API_DESC]     = "Automatic spell checking";
     out[CORE_API_DESC_RU]  = "Автоматическая проверка орфографии";
 
     return out;
   }
 
-  ChatPlugin *create();
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* SPELLCHECKERPLUGIN_H_ */

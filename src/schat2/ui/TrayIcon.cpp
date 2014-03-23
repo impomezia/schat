@@ -1,6 +1,5 @@
-/* $Id: TrayIcon.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -45,14 +44,19 @@ TrayIcon::TrayIcon(QObject *parent)
 
   m_menu = new QMenu();
   m_timer = new QBasicTimer();
-  m_show = m_menu->addAction(SCHAT_ICON(SmallLogo), tr("Show..."));
+  m_show = m_menu->addAction(SCHAT_ICON(About), tr("Show Simple Chat"));
+
+  QFont font = m_show->font();
+  font.setBold(true);
+  m_show->setFont(font);
+
   m_menu->addSeparator();
 
   m_menu->addMenu(StatusMenu::i());
   m_menu->addSeparator();
 
-  m_settings = m_menu->addAction(SCHAT_ICON(Settings), tr("Preferences..."));
-  m_about    = m_menu->addAction(SCHAT_ICON(SmallLogo), tr("About..."));
+  m_settings = m_menu->addAction(SCHAT_ICON(Gear),  tr("Preferences..."));
+  m_about    = m_menu->addAction(SCHAT_ICON(About), tr("About..."));
   m_menu->addSeparator();
   m_quit     = m_menu->addAction(SCHAT_ICON(Quit), tr("Quit"));
 
@@ -84,7 +88,7 @@ TrayIcon::~TrayIcon()
 
 void TrayIcon::retranslateUi()
 {
-  m_show->setText(tr("Show..."));
+  m_show->setText(tr("Show Simple Chat"));
   m_settings->setText(tr("Preferences..."));
   m_about->setText(tr("About..."));
   m_quit->setText(tr("Quit"));
@@ -202,7 +206,7 @@ void TrayIcon::startAlert()
     return;
   }
 
-  setIcon(AlertsPixmap::icon(QIcon(LS(":/images/message-active.png")), ChatAlerts::total()));
+  setIcon(AlertsPixmap::icon(SCHAT_ICON(MessageActive), ChatAlerts::total()));
 
   if (!m_timer->isActive())
     m_timer->start(666, this);

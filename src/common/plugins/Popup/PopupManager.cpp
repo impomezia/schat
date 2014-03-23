@@ -1,6 +1,5 @@
-/* $Id: PopupManager.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,6 +26,7 @@
 #include "ChatSettings.h"
 #include "Path.h"
 #include "PopupManager.h"
+#include "PopupPlugin_p.h"
 #include "PopupWindow.h"
 #include "sglobal.h"
 #include "ui/TabWidget.h"
@@ -36,8 +36,9 @@ PopupManager::PopupManager(QObject *parent)
   , m_flashed(true)
   , m_stylesLoaded(false)
 {
-  m_timeout = ChatCore::settings()->setDefaultAndRead(LS("Alerts/PopupTimeout"), 10).toUInt();
-  m_timer   = new QBasicTimer();
+  m_timeout    = ChatCore::settings()->setDefaultAndRead(PopupPluginImpl::kTimeout, 10).toUInt();
+  m_fullscreen = ChatCore::settings()->setDefaultAndRead(PopupPluginImpl::kFullscreen, false).toBool();
+  m_timer      = new QBasicTimer();
 
   connect(ChatAlerts::i(), SIGNAL(popup(Alert)), SLOT(popup(Alert)));
   connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
@@ -65,10 +66,13 @@ void PopupManager::timerEvent(QTimerEvent *event)
 
 void PopupManager::popup(const Alert &alert)
 {
+  if (!m_fullscreen && isFullscreenAppActive())
+    return;
+
   if (!m_stylesLoaded) {
-    m_textCSS = loadCSS(LS("text"));
-    m_windowsCSS = loadCSS(LS("window"));
-    m_flashedCSS = m_windowsCSS + loadCSS(LS("flashed"));
+    m_textCSS      = loadCSS(LS("text"));
+    m_windowsCSS   = loadCSS(LS("window"));
+    m_flashedCSS   = m_windowsCSS + loadCSS(LS("flashed"));
     m_stylesLoaded = true;
   }
 
@@ -86,8 +90,10 @@ void PopupManager::popup(const Alert &alert)
 
 void PopupManager::settingsChanged(const QString &key, const QVariant &value)
 {
-  if (key == LS("Alerts/PopupTimeout"))
+  if (key == PopupPluginImpl::kTimeout)
     m_timeout = value.toUInt();
+  else if (key == PopupPluginImpl::kFullscreen)
+    m_fullscreen = value.toBool();
 }
 
 
@@ -101,6 +107,14 @@ void PopupManager::windowDestroyed(QObject *obj)
     m_flashed = true;
   }
 }
+
+
+#ifndef Q_OS_WIN
+bool PopupManager::isFullscreenAppActive() const
+{
+  return false;
+}
+#endif
 
 
 QString PopupManager::loadCSS(const QString &baseName)

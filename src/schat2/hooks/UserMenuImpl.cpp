@@ -1,6 +1,5 @@
-/* $Id: UserMenuImpl.cpp 3280 2012-11-20 17:26:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,22 +19,31 @@
 
 #include "ChatCore.h"
 #include "ChatUrls.h"
+#include "hooks/ChannelMenu.h"
 #include "hooks/UserMenuImpl.h"
 #include "net/SimpleID.h"
-#include "ui/ChatIcons.h"
 #include "sglobal.h"
+#include "ui/ChatIcons.h"
 
 UserMenuImpl::UserMenuImpl(QObject *parent)
-  : ChannelMenu(parent)
+  : QObject(parent)
   , m_info(0)
   , m_insert(0)
   , m_talk(0)
 {
-  add(this);
+  ChannelMenu::add(this);
 }
 
 
-void UserMenuImpl::bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope scope)
+bool UserMenuImpl::trigger(QAction *action)
+{
+  Q_UNUSED(action)
+
+  return false;
+}
+
+
+void UserMenuImpl::bind(QMenu *menu, ClientChannel channel, Scope scope)
 {
   Q_UNUSED(scope)
 
@@ -63,7 +71,7 @@ void UserMenuImpl::bindImpl(QMenu *menu, ClientChannel channel, Hooks::Scope sco
 }
 
 
-void UserMenuImpl::cleanupImpl()
+void UserMenuImpl::cleanup()
 {
   if (m_insert) delete m_insert; m_insert = 0;
   if (m_talk)   delete m_talk;   m_talk = 0;

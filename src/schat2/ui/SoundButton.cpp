@@ -1,6 +1,5 @@
-/* $Id: SoundButton.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,13 +26,15 @@
 
 SoundButton::SoundButton(QWidget *parent)
   : QToolButton(parent)
-  , m_mute(ChatAlerts::isMute())
 {
   setAutoRaise(true);
-  setMute(m_mute);
+  onReady();
 
-  connect(this, SIGNAL(clicked(bool)), SLOT(clicked()));
-  connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(settingsChanged(QString,QVariant)));
+  connect(this, SIGNAL(clicked(bool)), SLOT(onClicked()));
+  connect(ChatCore::settings(), SIGNAL(changed(QString,QVariant)), SLOT(onSettingsChanged(QString,QVariant)));
+  
+  if (!ChatCore::isReady())
+    connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
 }
 
 
@@ -59,7 +60,7 @@ void SoundButton::changeEvent(QEvent *event)
 }
 
 
-void SoundButton::clicked()
+void SoundButton::onClicked()
 {
   setMute(!m_mute);
 
@@ -70,11 +71,17 @@ void SoundButton::clicked()
 }
 
 
-void SoundButton::settingsChanged(const QString &key, const QVariant &value)
+void SoundButton::onReady()
+{
+  setMute(ChatAlerts::isMute());
+}
+
+
+void SoundButton::onSettingsChanged(const QString &key, const QVariant &value)
 {
   Q_UNUSED(value)
 
-  if (key == LS("Profile/Status") || key == LS("Alerts/Sounds.DnD") || key == LS("Alerts/Sounds"))
+  if (key == ChatSettings::kProfileStatus || key == LS("Alerts/Sounds.DnD") || key == LS("Alerts/Sounds"))
     setMute(ChatAlerts::isMute());
 }
 

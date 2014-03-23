@@ -26,11 +26,13 @@ SUBDIRS += \
     RestApi \
     GeoIP \
     NodeFeedLog \
+    Http \
     Cache \
     History \
     Profile \
     Channels \
     Popup \
+    Preview \
     Emoticons \
     Idle \
     SendFile \

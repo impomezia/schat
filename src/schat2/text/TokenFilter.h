@@ -1,6 +1,5 @@
-/* $Id: TokenFilter.h 3650 2013-04-21 00:21:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,29 +23,11 @@
 #include <QVariant>
 #include <QSharedPointer>
 
+#include "interfaces/ITokenFilter.h"
 #include "schat.h"
-#include "text/HtmlToken.h"
-
-/*!
- * Базовый абстрактный класс фильтрации текста.
- */
-class SCHAT_CORE_EXPORT AbstractFilter
-{
-public:
-  inline AbstractFilter(int weight = 0)
-  : m_weight(weight)
-  {}
-
-  virtual ~AbstractFilter() {}
-  inline int weight() const { return m_weight; }
-  virtual bool filter(QList<HtmlToken> &tokens, int options = 0) const = 0;
-
-private:
-  int m_weight;
-};
 
 
-typedef QSharedPointer<AbstractFilter> FilterPtr;
+typedef QSharedPointer<ITokenFilter> FilterPtr;
 
 
 class SCHAT_CORE_EXPORT TokenFilter
@@ -54,8 +35,8 @@ class SCHAT_CORE_EXPORT TokenFilter
   TokenFilter() {}
 
 public:
-  static QString filter(const QString &type, const QString &text, int options = 0);
-  static void add(const QString &type, AbstractFilter *filter);
+  static QString filter(const QString &type, const QString &text, int options, const ChatId &id = ChatId());
+  static void add(const QString &type, ITokenFilter *filter);
   static void clear();
 
 private:

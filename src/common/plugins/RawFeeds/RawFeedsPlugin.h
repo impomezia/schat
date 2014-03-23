@@ -25,19 +25,16 @@ class RawFeedsPlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.client.RawFeeds" FILE "RawFeeds.json")
-# endif
+  Q_PLUGIN_METADATA(IID "me.schat.client.RawFeeds")
 
 public:
-  QVariantMap header() const
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "RawFeeds";
     out[CORE_API_NAME]     = "Raw Feeds";
-    out[CORE_API_VERSION]  = "0.3.0";
-    out[CORE_API_SITE]     = "http://wiki.schat.me/Plugin/RawFeeds";
+    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/RawFeeds";
     out[CORE_API_DESC]     = "Debug plugin to access the raw data feeds";
     out[CORE_API_DESC_RU]  = "Отладочный плагин для доступа к данным фидов";
     out[CORE_API_ENABLED]  = false;
@@ -45,7 +42,7 @@ public:
     return out;
   }
 
-  ChatPlugin *create();
+  ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* RAWFEEDSPLUGIN_H_ */

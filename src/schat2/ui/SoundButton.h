@@ -1,6 +1,5 @@
-/* $Id: SoundButton.h 3126 2012-09-29 05:04:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,6 +20,8 @@
 
 #include <QToolButton>
 
+#include "schat.h"
+
 class SoundButton : public QToolButton
 {
   Q_OBJECT
@@ -30,11 +31,12 @@ public:
   void setMute(bool mute);
 
 protected:
-  void changeEvent(QEvent *event);
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
-  void clicked();
-  void settingsChanged(const QString &key, const QVariant &value);
+  void onClicked();
+  void onReady();
+  void onSettingsChanged(const QString &key, const QVariant &value);
 
 private:
   void retranslateUi();

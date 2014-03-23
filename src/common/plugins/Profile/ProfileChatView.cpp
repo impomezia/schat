@@ -1,6 +1,5 @@
-/* $Id: ProfileChatView.cpp 2509 2012-04-07 20:43:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,25 +15,33 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "hooks/ChatViewHooks.h"
 #include "net/SimpleID.h"
 #include "ProfileChatView.h"
-#include "ui/tabs/ChatView.h"
 #include "sglobal.h"
+#include "ui/tabs/ChatView.h"
 
 ProfileChatView::ProfileChatView(QObject *parent)
-  : ChatViewHooks(parent)
+  : QObject(parent)
 {
+  ChatViewHooks::add(this);
 }
 
 
-void ProfileChatView::initImpl(ChatView *view)
+ProfileChatView::~ProfileChatView()
+{
+  ChatViewHooks::remove(this);
+}
+
+
+void ProfileChatView::init(ChatView *view)
 {
   if (SimpleID::typeOf(view->id()) == SimpleID::UserId)
     view->addJS(LS("qrc:/js/Profile/Profile.js"));
 }
 
 
-void ProfileChatView::loadFinishedImpl(ChatView *view)
+void ProfileChatView::loadFinished(ChatView *view)
 {
   if (SimpleID::typeOf(view->id()) == SimpleID::UserId)
     view->evaluateJavaScript(LS("Loader.loadCSS('qrc:/css/flags.css');"));

@@ -1,6 +1,5 @@
-/* $Id: ProfilePlugin.cpp 3741 2013-07-09 23:49:56Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -97,9 +96,8 @@ protected:
 ProfilePluginImpl::ProfilePluginImpl(QObject *parent)
   : ChatPlugin(parent)
 {
-  m_tr = new ProfilePluginTr();
+  m_tr      = new ProfilePluginTr();
   m_country = new CountryTr();
-  new ProfileChatView(this);
 
   Profile::addField(LS("country"), 1900);
   Profile::addField(LS("city"),    2000);
@@ -119,6 +117,12 @@ ProfilePluginImpl::~ProfilePluginImpl()
 {
   delete m_tr;
   delete m_country;
+}
+
+
+void ProfilePluginImpl::chatReady()
+{
+  new ProfileChatView(this);
 }
 
 

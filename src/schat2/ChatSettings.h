@@ -1,6 +1,5 @@
-/* $Id: ChatSettings.h 3603 2013-03-27 15:19:21Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,7 +29,6 @@ class Notify;
 #define SETTINGS_AUTO_CONNECT            QLatin1String("AutoConnect")
 #define SETTINGS_AUTO_JOIN               QLatin1String("AutoJoin")
 #define SETTINGS_AUTO_SCROLL             QLatin1String("AutoScroll")
-#define SETTINGS_CHANNELS_IGNORING       QLatin1String("Channels/Ignoring")
 #define SETTINGS_DEFAULT_SERVER          QLatin1String("DefaultServer")
 #define SETTINGS_DISPLAY_SECONDS         QLatin1String("Display/Seconds")
 #define SETTINGS_DISPLAY_SERVICE         QLatin1String("Display/Service")
@@ -41,18 +39,25 @@ class Notify;
 #define SETTINGS_MAXIMIZED               QLatin1String("Maximized")
 #define SETTINGS_NETWORKS                QLatin1String("Networks")
 #define SETTINGS_PINNED_TABS             QLatin1String("PinnedTabs")
-#define SETTINGS_PROFILE_GENDER          QLatin1String("Profile/Gender")
-#define SETTINGS_PROFILE_NICK            QLatin1String("Profile/Nick")
-#define SETTINGS_PROFILE_STATUS          QLatin1String("Profile/Status")
 #define SETTINGS_TOOLBAR_ACTIONS         QLatin1String("ToolBarActions")
 #define SETTINGS_TRANSLATION             QLatin1String("Translation")
 #define SETTINGS_WINDOWS_AERO            QLatin1String("WindowsAero")
+#define SETTINGS_BLUR_EFFECT             QLatin1String("BlurEffect")
+#define SETTINGS_BLUR_RADIUS             QLatin1String("BlurRadius")
 
 class SCHAT_CORE_EXPORT ChatSettings : public Settings
 {
   Q_OBJECT
 
 public:
+  static const QString kAlertsPopup;
+  static const QString kProfileDefaultNick;
+  static const QString kProfileGender;
+  static const QString kProfileNick;
+  static const QString kProfileStatus;
+  static const QString kUserListKeyboard;
+  static const QString kUserListOffline;
+
   ChatSettings(const QString &fileName, const QString &defaultFile, QObject *parent = 0);
   inline bool isSynced() const { return m_synced; }
   QVariant setDefaultAndRead(const QString &key, const QVariant &value);

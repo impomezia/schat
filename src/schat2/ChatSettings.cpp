@@ -1,6 +1,5 @@
-/* $Id: ChatSettings.cpp 3770 2013-08-17 15:19:27Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,6 +25,15 @@
 #include "sglobal.h"
 #include "ChatNotify.h"
 
+const QString ChatSettings::kAlertsPopup        = LS("Alerts/Popup");
+const QString ChatSettings::kProfileDefaultNick = LS("Profile/DefaultNick");
+const QString ChatSettings::kProfileGender      = LS("Profile/Gender");
+const QString ChatSettings::kProfileNick        = LS("Profile/Nick");
+const QString ChatSettings::kProfileStatus      = LS("Profile/Status");
+const QString ChatSettings::kUserListKeyboard   = LS("UserList/Keyboard");
+const QString ChatSettings::kUserListOffline    = LS("UserList/Offline");
+
+
 ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, QObject *parent)
   : Settings(fileName, parent)
   , m_synced(false)
@@ -36,6 +44,8 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
     m_settings->setIniCodec("UTF-8");
   }
 
+  setDefault(kProfileDefaultNick, LS("%USER%"));
+
   setLocalDefault(SETTINGS_AUTO_CONNECT,          true);
   setLocalDefault(SETTINGS_AUTO_SCROLL,           true);
   setLocalDefault(SETTINGS_DEFAULT_SERVER,        LS("schat://schat.me"));
@@ -43,9 +53,9 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
   setLocalDefault(SETTINGS_LABS_DISABLE_UI,       false);
   setLocalDefault(SETTINGS_MAXIMIZED,             false);
   setLocalDefault(SETTINGS_NETWORKS,              QStringList());
-  setLocalDefault(SETTINGS_PROFILE_GENDER,        0);
-  setLocalDefault(SETTINGS_PROFILE_NICK,          Channel::defaultName());
-  setLocalDefault(SETTINGS_PROFILE_STATUS,        1);
+  setLocalDefault(kProfileGender,                 0);
+  setLocalDefault(kProfileNick,                   Channel::defaultName(value(kProfileDefaultNick).toString()));
+  setLocalDefault(kProfileStatus,                 1);
   setLocalDefault(SETTINGS_WINDOWS_AERO,          true);
 
   setDefault(SETTINGS_AUTO_JOIN,                  true);
@@ -54,6 +64,10 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
   setDefault(SETTINGS_LABS_STATIC_TRAY_ALERTS,    false);
   setDefault(SETTINGS_TOOLBAR_ACTIONS,            QStringList());
   setDefault(SETTINGS_TRANSLATION,                LS("auto"));
+  setDefault(SETTINGS_BLUR_EFFECT,                false);
+  setDefault(SETTINGS_BLUR_RADIUS,                2);
+  setDefault(kUserListKeyboard,                   false);
+  setDefault(kUserListOffline,                    true);
 
   setValue(SETTINGS_AUTO_SCROLL, true);
 }
