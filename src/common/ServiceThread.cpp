@@ -82,4 +82,12 @@ void ServiceThread::run()
 void ServiceThread::onReady()
 {
   m_ready = true;
+
+  QMutexLocker locker(&m_mutex);
+
+  if (m_queue.isEmpty())
+    return;
+
+  QMetaObject::invokeMethod(m_list, "append", Qt::QueuedConnection, Q_ARG(QQueue<IServiceTask*>, m_queue));
+  m_queue.clear();
 }
