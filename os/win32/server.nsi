@@ -70,14 +70,14 @@ ReserveFile "contrib\plugins\FindProcDLL.dll"
 
 Function .onInit
   newcheck:
-  FindProcDLL::FindProc "schatd2.exe"
+  FindProcDLL::FindProc "$INSTDIR\schatd2.exe"
   Pop $R0
   ${If} $R0 == 1 
     MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "An instance of ${SCHAT_NAME} is currently running. Exit ${SCHAT_NAME} and then try again." IDRETRY newcheck
     Quit
   ${EndIf}
 
-  FindProcDLL::FindProc "schatd2-srv.exe"
+  FindProcDLL::FindProc "$INSTDIR\schatd2-srv.exe"
   Pop $R0
   ${If} $R0 == 1 
     MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "An instance of ${SCHAT_NAME} is currently running. Exit ${SCHAT_NAME} and then try again." IDRETRY newcheck

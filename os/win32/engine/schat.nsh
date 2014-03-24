@@ -1,6 +1,5 @@
-/* $Id: schat.nsh 3506 2013-02-15 18:02:08Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -140,9 +139,6 @@ Var update
     StrCpy $update true
   ${Else}
     StrCpy $update false
-    !if ${SCHAT_CHECK_RUN} == 1
-     call findRunningChat
-    !endif
   ${EndUnless}
 !macroend
 
@@ -152,52 +148,18 @@ Var update
  */
 !macro KILL_ALL _NAME
  !if ${SCHAT_CHECK_RUN} == 1
-  Push $R0
-  StrCpy $R0 1
-  ${While} $R0 == 1
-    KillProcDLL::KillProc "${_NAME}"
-    Pop $R0
-    Sleep 500
-    FindProcDLL::FindProc "${_NAME}"
-    Pop $R0
-  ${EndWhile}
+  FindProcDLL::FindProc "${_NAME}"
   Pop $R0
- !endif
-!macroend
 
+  ${If} $R0 == 1
+    ExecWait '"${_NAME}" -exit'
 
-/*
-* Выводим `MessageBox` если чат запущен.
-*/
-!macro findRunningChat
-  ${Unless} ${Silent}
-    newcheck:
-    FindProcDLL::FindProc "schat2.exe"
-    Pop $R0
-    ${If} $R0 == 1 
-      MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "$(STR400)" IDRETRY newcheck
-      Quit
-    ${EndIf}
-  ${EndUnless}
-
-  !insertmacro KILL_ALL "schat2.exe"
-!macroend
-
-!macro FIND_RUNNING
- !if ${SCHAT_CHECK_RUN} == 1
-  Function findRunningChat
-    !insertmacro findRunningChat
-  FunctionEnd
- !endif
-!macroend
-
-!macro UN_FIND_RUNNING
- !if ${SCHAT_CHECK_RUN} == 1
- !ifdef Core
-   Function un.findRunningChat
-    !insertmacro findRunningChat
-   FunctionEnd
-  !endif
+    ${While} $R0 == 1
+      FindProcDLL::FindProc "${_NAME}"
+      Pop $R0
+      Sleep 100
+    ${EndWhile}
+  ${EndIf}
  !endif
 !macroend
 
