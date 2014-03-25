@@ -286,6 +286,8 @@ void UpdatePluginImpl::onFinished(DownloadItem item)
     readJSON(item->data());
   }
 
+  m_item = DownloadItem();
+
   if (m_state == DownloadUpdate) {
     HashRunnable *runnable = new HashRunnable(Path::cache() + LS("/schat2-") + m_info.version + LS(".exe"));
     connect(runnable, SIGNAL(finished(QByteArray)), SLOT(onFinished(QByteArray)));

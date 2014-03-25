@@ -29,8 +29,11 @@ class SCHAT_CORE_EXPORT ChatPlugins : public Plugins
 public:
   ChatPlugins(QObject *parent = 0);
 
+public slots:
+  void unload();
+
 protected:
-  void init();
+  void init() Q_DECL_OVERRIDE;
 
 private slots:
   void onReady();
