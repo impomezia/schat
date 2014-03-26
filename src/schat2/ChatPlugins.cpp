@@ -15,10 +15,13 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
+
 #include "ChatCore.h"
 #include "ChatPlugins.h"
 #include "ChatSettings.h"
 #include "plugins/ChatApi.h"
+#include "plugins/ChatPlugin.h"
 #include "plugins/ChatPlugin.h"
 #include "plugins/CoreApi.h"
 #include "sglobal.h"
@@ -32,6 +35,18 @@ ChatPlugins::ChatPlugins(QObject *parent)
     connect(ChatCore::i(), SIGNAL(ready()), SLOT(onReady()));
   else
     onReady();
+
+  connect(QApplication::instance(), SIGNAL(aboutToQuit()), SLOT(unload()));
+}
+
+
+void ChatPlugins::unload()
+{
+  for (unsigned i = m_chatPlugins.size(); i-- > 0;) {
+    m_chatPlugins[i]->deleteLater();
+  }
+
+  m_chatPlugins.clear();
 }
 
 

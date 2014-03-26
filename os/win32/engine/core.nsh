@@ -21,7 +21,6 @@
 !include "engine\default.nsh"
 !include "engine\schat.nsh"
 !include "engine\page-options.nsh"
-!include "engine\update.nsh"
 !include "engine\revision.nsh"
 
 !define SCHAT_META
@@ -48,8 +47,7 @@ VIAddVersionKey  "ProductName"      "${SCHAT_NAME}"
 VIAddVersionKey  "ProductVersion"   "${SCHAT_VERSION}"
 
 !if ${SCHAT_CHECK_RUN} == 1
- ReserveFile "contrib\plugins\FindProcDLL.dll"
- ReserveFile "contrib\plugins\KillProcDLL.dll"
+  ReserveFile "contrib\plugins\FindProcDLL.dll"
 !endif
 
 !if ${SCHAT_FINISH_RUN} == 1
@@ -176,7 +174,6 @@ SectionEnd
  */
 !undef SCHAT_DESC
 !define SCHAT_INIT
-!insertmacro UPDATE_ENGINE_FUNCTIONS
 !insertmacro GetParameters
 !insertmacro GetOptionsS
 !insertmacro GetParent
@@ -198,14 +195,11 @@ FunctionEnd
 !ifdef Core
 Function un.onInit
   !insertmacro MUI_UNGETLANGUAGE
-  !insertmacro UPDATE_ENGINE_INIT
 FunctionEnd
 !endif
 
 !insertmacro OPTIONS_PAGE_FUNC
 !insertmacro INSERT_TRANSLATIONS
-!insertmacro FIND_RUNNING
-!insertmacro UN_FIND_RUNNING
 
 Function updatePre
   ${If} $update == true
