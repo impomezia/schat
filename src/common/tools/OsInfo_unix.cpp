@@ -92,7 +92,7 @@ void OsInfo::init()
   QString os;
   m_type = Linux;
 
-  detectLinux(os);
+  detectLinux(os, m_type);
   if (os.isEmpty()) {
     utsname buf;
     if (uname(&buf) != -1) {
