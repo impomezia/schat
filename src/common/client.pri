@@ -122,9 +122,17 @@ SOURCES += \
     Tr.cpp \
     Translation.cpp \
 
-win32: SOURCES      += Path_win.cpp
-unix:!macx: SOURCES += Path_unix.cpp
-macx: SOURCES       += Path_mac.cpp
+win32 {
+  SOURCES += Path_win.cpp tools/OsInfo_win.cpp
+}
+
+unix:!macx: {
+  SOURCES += Path_unix.cpp tools/OsInfo_unix.cpp
+}
+
+macx: {
+  SOURCES += Path_mac.cpp tools/OsInfo_mac.cpp
+}
 
 win32-msvc*:DEFINES += _CRT_RAND_S
 

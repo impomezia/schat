@@ -15,25 +15,50 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "OsInfo.h"
 #include "sglobal.h"
-#include "tools/OsInfo.h"
 
-int OsInfo::m_type = -1;
-QVariantMap OsInfo::m_json;
-
-int OsInfo::type()
+void OsInfo::init()
 {
-  if (m_type == -1)
-    init();
+  QString os;
+  m_type = Windows;
 
-  return m_type;
-}
+  switch (QSysInfo::WindowsVersion) {
+#   if QT_VERSION >= 0x040806
+    case QSysInfo::WV_WINDOWS8_1:
+      os = LS("8.1");
+      break;
+#   endif
 
+#   if QT_VERSION >= 0x040803
+    case QSysInfo::WV_WINDOWS8:
+      os = LS("8");
+      break;
+#   endif
 
-QVariantMap OsInfo::json()
-{
-  if (m_type == -1)
-    init();
+    case QSysInfo::WV_WINDOWS7:
+      os = LS("7");
+      break;
 
-  return m_json;
+    case QSysInfo::WV_VISTA:
+      os = LS("Vista");
+      break;
+
+    case QSysInfo::WV_2003:
+      os = LS("2003");
+      break;
+
+    case QSysInfo::WV_XP:
+      os = LS("XP");
+      break;
+
+    case QSysInfo::WV_2000:
+      os = LS("2000");
+      break;
+
+    default:
+      break;
+  }
+
+  m_json.insert(LS("os"), os.isEmpty() ? LS("Windows") : LS("Windows ") + os);
 }
