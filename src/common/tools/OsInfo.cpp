@@ -30,6 +30,15 @@ int OsInfo::type()
 }
 
 
+QString OsInfo::os()
+{
+  if (m_type == -1)
+    init();
+
+  return m_json.value(LS("os")).toString();
+}
+
+
 QVariantMap OsInfo::json()
 {
   if (m_type == -1)

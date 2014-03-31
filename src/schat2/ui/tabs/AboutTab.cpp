@@ -25,7 +25,7 @@
 #include <QApplication>
 #include <QWebFrame>
 
-# if QT_VERSION >= 0x050000
+#if QT_VERSION >= 0x050000
 # include <QWebPage>
 #else
 # include <qwebkitversion.h>

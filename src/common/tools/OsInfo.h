@@ -40,6 +40,7 @@ public:
   };
 
   static int type();
+  static QString os();
   static QVariantMap json();
 
 private:
