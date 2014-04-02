@@ -105,7 +105,6 @@ private:
   QPushButton *m_hideButton;
   QPushButton *m_quitButton;
   QString m_appDir;
-  QString m_daemonFile;
   QSystemTrayIcon *m_tray;
   QTimer m_checkTimer;
   QToolButton *m_restartButton;

@@ -38,9 +38,9 @@
  * Конструктор класса DaemonUi.
  */
 DaemonUi::DaemonUi(QWidget *parent)
-  : QDialog(parent)
+  : QDialog(parent, Qt::Tool)
 {
-  setWindowFlags(Qt::Tool);
+  Path::init(LS("schatd2"));
 
   m_settings = new Settings(QApplication::applicationDirPath() + "/schatd.conf", this);
 
@@ -98,8 +98,8 @@ DaemonUi::DaemonUi(QWidget *parent)
   // Надпись вверху окна
   m_aboutLabel = new QLabel(QString(
       "<html><body style='color:#333;margin:6px;'>"
-      "<h4 style='margin-bottom:0px;'>IMPOMEZIA Simple Chat Daemon UI %1</h4>"
-      "<p style='margin-left:16px;margin-top:5px;'>Copyright © 2008 - %2 IMPOMEZIA &lt;<a href='mailto:schat@impomezia.com' style='color:#1a4d82;'>schat@impomezia.com</a>&gt; GPL</p>"
+      "<h4 style='margin-bottom:0px;'>Simple Chat Daemon %1</h4>"
+      "<p style='margin-left:16px;margin-top:5px;'>Copyright © 2008-%2 Alexander Sedov &lt;<a href='mailto:support@schat.me' style='color:#1a4d82;'>support@schat.me</a>&gt;</p>"
       "</body></html>").arg(SCHAT_VERSION).arg(QDateTime::currentDateTime().toString("yyyy")), this);
   m_aboutLabel->setStyleSheet("background:#fff; border:4px solid #fff;");
   m_aboutLabel->setOpenExternalLinks(true);
@@ -121,12 +121,7 @@ DaemonUi::DaemonUi(QWidget *parent)
 
   setWindowIcon(QIcon(":/images/schat16-green.png"));
 
-  m_appDir = qApp->applicationDirPath();
-  #ifdef Q_WS_WIN
-    m_daemonFile = m_appDir + "/schatd.exe";
-  #else
-    m_daemonFile = m_appDir + "/schatd";
-  #endif
+  retranslateUi();
 
   QTimer::singleShot(0, this, SLOT(init()));
 }

@@ -15,7 +15,13 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
+#ifdef SCHAT_NO_SINGLEAPP
+# define QtSingleApplication QApplication
+# include <QApplication>
+#else
+# include "qtsingleapplication/qtsingleapplication.h"
+#endif
+
 #include <QTextCodec>
 #include <QStringList>
 
@@ -33,7 +39,7 @@ int main(int argc, char *argv[])
   initExceptionHandler();
 # endif
 
-  QApplication app(argc, argv);
+  QtSingleApplication app(argc, argv);
 # if QT_VERSION < 0x050000
   QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 # endif
@@ -41,10 +47,35 @@ int main(int argc, char *argv[])
   app.setApplicationVersion(SCHAT_VERSION);
   app.setOrganizationName(LS("IMPOMEZIA"));
   app.setOrganizationDomain(SCHAT_DOMAIN);
+  app.setQuitOnLastWindowClosed(false);
+
+  QStringList args = app.arguments();
+  args.removeFirst();
+
+# ifndef SCHAT_NO_SINGLEAPP
+  if (args.isEmpty() && app.sendMessage(QString()))
+    return 0;
+
+  const QString message = args.join(LS(", "));
+
+  if (args.contains(LS("-exit"))) {
+    app.sendMessage(message);
+    return 0;
+  }
+
+  if (app.sendMessage(message))
+    return 0;
+# endif
 
   DaemonUi ui;
-  ui.show();
+  if (args.contains(LS("-show")))
+    ui.show();
+  else
+    ui.hide();
 
-  const int result = app.exec();
-  return result;
+# ifndef SCHAT_NO_SINGLEAPP
+  QObject::connect(&app, SIGNAL(messageReceived(QString)), &ui, SLOT(handleMessage(QString)));
+# endif
+
+  return app.exec();
 }
