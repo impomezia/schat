@@ -19,20 +19,20 @@
 #define DAEMONUI_H_
 
 #include <QDialog>
+#include <QMap>
 #include <QPointer>
 #include <QSystemTrayIcon>
 #include <QTimer>
 
 class DaemonSettings;
-class LocalClientService;
 class QAction;
+class QGroupBox;
 class QLabel;
 class QMenu;
 class QProcess;
-class QToolButton;
-class Translation;
-class QGroupBox;
+class QToolBar;
 class Settings;
+class Translation;
 
 /*!
  * \brief Диалог управления сервером
@@ -42,6 +42,13 @@ class DaemonUi : public QDialog
   Q_OBJECT
 
 public:
+  enum Actions {
+    StartAction,
+    StopAction,
+    RestartAction,
+    SettingsAction
+  };
+
   DaemonUi(QWidget *parent = 0);
   ~DaemonUi();
 
@@ -84,18 +91,11 @@ private:
   void loadTranslation();
   void retranslateUi();
   void setActionsState(bool start = true, bool stop = true, bool restart = true, bool quit = true, bool settings = true);
+  void setEnabled(Actions action, bool enabled);
   void setLedColor(LedColor color = Red);
   void setStatus(Status status);
   void showUi();
 
-  Settings *m_settings;
-  LocalClientService *m_client;
-  QAction *m_quitAction;
-  QAction *m_quitAllAction;
-  QAction *m_restartAction;
-  QAction *m_settingsAction;
-  QAction *m_startAction;
-  QAction *m_stopAction;
   QGroupBox *m_controlGroup;
   QGroupBox *m_statusGroup;
   QLabel *m_aboutLabel;
@@ -107,12 +107,11 @@ private:
   QString m_appDir;
   QSystemTrayIcon *m_tray;
   QTimer m_checkTimer;
-  QToolButton *m_restartButton;
-  QToolButton *m_settingsButton;
-  QToolButton *m_startButton;
-  QToolButton *m_stopButton;
+  QToolBar *m_toolBar;
+  Settings *m_settings;
   Status m_status;
   Translation *m_translation;
+  QMap<Actions, QList<QAction*> > m_actions;
 };
 
 #endif /*DAEMONUI_H_*/

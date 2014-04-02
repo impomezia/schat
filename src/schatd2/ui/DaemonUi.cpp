@@ -25,14 +25,14 @@
 #include <QMenu>
 #include <QProcess>
 #include <QPushButton>
-#include <QToolButton>
+#include <QToolBar>
 
 #include "DaemonUi.h"
-#include "version.h"
-#include "Translation.h"
-#include "Settings.h"
 #include "Path.h"
+#include "Settings.h"
 #include "sglobal.h"
+#include "Translation.h"
+#include "version.h"
 
 /*!
  * Конструктор класса DaemonUi.
@@ -49,23 +49,19 @@ DaemonUi::DaemonUi(QWidget *parent)
   m_checkTimer.setInterval(5000);
   connect(&m_checkTimer, SIGNAL(timeout()), SLOT(checkStart()));
 
+  m_toolBar = new QToolBar(this);
+  m_toolBar->setIconSize(QSize(22, 22));
+
+  m_menu = new QMenu();
+
   createActions();
   createButtons();
 
-  // Кнопки управления сервером
-  QFrame *line1 = new QFrame(this);
-  line1->setFrameShape(QFrame::VLine);
-  line1->setFrameShadow(QFrame::Sunken);
-
   m_controlGroup = new QGroupBox(this);
   QHBoxLayout *controlGroupLay = new QHBoxLayout(m_controlGroup);
+  controlGroupLay->addWidget(m_toolBar);
   controlGroupLay->setMargin(2);
   controlGroupLay->setSpacing(0);
-  controlGroupLay->addWidget(m_startButton);
-  controlGroupLay->addWidget(m_stopButton);
-  controlGroupLay->addWidget(m_restartButton);
-  controlGroupLay->addWidget(line1);
-  controlGroupLay->addWidget(m_settingsButton);
 
   // Отображение статуса
   m_statusLabel = new QLabel(this);
@@ -134,9 +130,9 @@ DaemonUi::~DaemonUi()
 
 void DaemonUi::handleMessage(const QString& message)
 {
-  QStringList args = message.split(", ");
+  QStringList args = message.split(LS(", "));
 
-  if (args.contains("-exit")) {
+  if (args.contains(LS("-exit"))) {
     QApplication::quit();
     return;
   }
@@ -301,18 +297,18 @@ void DaemonUi::stop()
 
 bool DaemonUi::arguments(const QStringList &args)
 {
-  if (args.contains("-start") && m_startAction->isEnabled()) {
-    start();
-    return true;
-  }
-  else if (args.contains("-stop") && m_stopAction->isEnabled()) {
-    stop();
-    return true;
-  }
-  else if (args.contains("-restart") && m_restartAction->isEnabled()) {
-    restart();
-    return true;
-  }
+//  if (args.contains("-start") && m_startAction->isEnabled()) {
+//    start();
+//    return true;
+//  }
+//  else if (args.contains("-stop") && m_stopAction->isEnabled()) {
+//    stop();
+//    return true;
+//  }
+//  else if (args.contains("-restart") && m_restartAction->isEnabled()) {
+//    restart();
+//    return true;
+//  }
 
   return false;
 }
@@ -323,23 +319,13 @@ bool DaemonUi::arguments(const QStringList &args)
  */
 void DaemonUi::createActions()
 {
-  m_quitAllAction = new QAction(QIcon(":/images/shutdown.png"), "", this);
-  connect(m_quitAllAction, SIGNAL(triggered()), SLOT(exit()));
+  m_actions[StartAction].append(m_menu->addAction(QIcon(":/images/play.png"), tr("Start"), this, SLOT(start())));
+  m_actions[StopAction].append(m_menu->addAction(QIcon(":/images/stop.png"), tr("Stop"), this, SLOT(stop())));
+  m_actions[RestartAction].append(m_menu->addAction(QIcon(":/images/restart.png"), tr("Restart"), this, SLOT(restart())));
+  m_actions[SettingsAction].append(m_menu->addAction(QIcon(":/images/daemonsettings.png"), tr("Settings..."), this, SLOT(settings())));
 
-  m_quitAction = new QAction(QIcon(":/images/exit.png"), "", this);
-  connect(m_quitAction, SIGNAL(triggered()), QApplication::instance(), SLOT(quit()));
-
-  m_restartAction = new QAction(QIcon(":/images/restart.png"), "", this);
-  connect(m_restartAction, SIGNAL(triggered()), SLOT(restart()));
-
-  m_startAction = new QAction(QIcon(":/images/play.png"), "", this);
-  connect(m_startAction, SIGNAL(triggered()), SLOT(start()));
-
-  m_stopAction = new QAction(QIcon(":/images/stop.png"), "", this);
-  connect(m_stopAction, SIGNAL(triggered()), SLOT(stop()));
-
-  m_settingsAction = new QAction(QIcon(":/images/daemonsettings.png"), "", this);
-  connect(m_settingsAction, SIGNAL(triggered()), SLOT(settings()));
+  m_menu->addSeparator();
+  m_menu->addAction(QIcon(LS(":/images/quit.png")), tr("Quit"), QApplication::instance(), SLOT(quit()));
 }
 
 
@@ -351,45 +337,23 @@ void DaemonUi::createButtons()
   m_hideButton = new QPushButton(QIcon(":/images/dialog-ok.png"), "", this);
   connect(m_hideButton, SIGNAL(clicked(bool)), SLOT(hide()));
 
-  m_quitButton = new QPushButton(QIcon(":/images/exit.png"), "", this);
+  m_quitButton = new QPushButton(QIcon(LS(":/images/quit.png")), "", this);
   connect(m_quitButton, SIGNAL(clicked(bool)), QApplication::instance(), SLOT(quit()));
 
-  m_startButton = new QToolButton(this);
-  m_startButton->setAutoRaise(true);
-  m_startButton->setIconSize(QSize(22, 22));
-  m_startButton->setDefaultAction(m_startAction);
+  m_actions[StartAction].append(m_toolBar->addAction(QIcon(":/images/play.png"), tr("Start"), this, SLOT(start())));
+  m_actions[StopAction].append(m_toolBar->addAction(QIcon(":/images/stop.png"), tr("Stop"), this, SLOT(stop())));
+  m_actions[RestartAction].append(m_toolBar->addAction(QIcon(":/images/restart.png"), tr("Restart"), this, SLOT(restart())));
 
-  m_stopButton = new QToolButton(this);
-  m_stopButton->setAutoRaise(true);
-  m_stopButton->setIconSize(QSize(22, 22));
-  m_stopButton->setDefaultAction(m_stopAction);
-
-  m_restartButton = new QToolButton(this);
-  m_restartButton->setAutoRaise(true);
-  m_restartButton->setIconSize(QSize(22, 22));
-  m_restartButton->setDefaultAction(m_restartAction);
-
-  m_settingsButton = new QToolButton(this);
-  m_settingsButton->setAutoRaise(true);
-  m_settingsButton->setIconSize(QSize(22, 22));
-  m_settingsButton->setDefaultAction(m_settingsAction);
+  m_toolBar->addSeparator();
+  m_actions[SettingsAction].append(m_toolBar->addAction(QIcon(":/images/daemonsettings.png"), tr("Settings..."), this, SLOT(settings())));
 }
 
 
 void DaemonUi::createTray()
 {
-  m_menu = new QMenu(this);
-  m_menu->addAction(m_startAction);
-  m_menu->addAction(m_stopAction);
-  m_menu->addAction(m_restartAction);
-  m_menu->addAction(m_settingsAction);
-  m_menu->addSeparator();
-  m_menu->addAction(m_quitAllAction);
-  m_menu->addAction(m_quitAction);
-
   m_tray = new QSystemTrayIcon(this);
   m_tray->setIcon(QIcon(":/images/schat16-gray.png"));
-  m_tray->setToolTip(QString("IMPOMEZIA Simple Chat Daemon UI %1").arg(SCHAT_VERSION));
+  m_tray->setToolTip(QString(LS("Simple Chat Daemon %1")).arg(SCHAT_VERSION));
   m_tray->setContextMenu(m_menu);
 
   connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
@@ -412,13 +376,6 @@ void DaemonUi::retranslateUi()
   m_controlGroup->setTitle(tr("Control"));
   m_statusGroup->setTitle(tr("Status"));
 
-  m_quitAllAction->setText(tr("Quit and stop server"));
-  m_quitAction->setText(tr("Quit"));
-  m_restartAction->setText(tr("Restart"));
-  m_startAction->setText(tr("Start"));
-  m_stopAction->setText(tr("Stop"));
-  m_settingsAction->setText(tr("Settings..."));
-
   m_hideButton->setText(tr("Hide"));
   m_hideButton->setToolTip(tr("Hide the program window"));
   m_quitButton->setToolTip(tr("Quit"));
@@ -429,11 +386,21 @@ void DaemonUi::retranslateUi()
 
 void DaemonUi::setActionsState(bool start, bool stop, bool restart, bool quit, bool settings)
 {
-  m_startAction->setEnabled(start);
-  m_stopAction->setEnabled(stop);
-  m_restartAction->setEnabled(restart);
-  m_quitAllAction->setEnabled(quit);
-  m_settingsAction->setEnabled(settings);
+  Q_UNUSED(quit)
+
+  setEnabled(StartAction, start);
+  setEnabled(StopAction, stop);
+  setEnabled(RestartAction, restart);
+  setEnabled(SettingsAction, settings);
+}
+
+
+void DaemonUi::setEnabled(Actions action, bool enabled)
+{
+  const QList<QAction *> &actions = m_actions[action];
+  foreach (QAction *action, actions) {
+    action->setEnabled(enabled);
+  }
 }
 
 
