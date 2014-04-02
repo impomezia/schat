@@ -1,6 +1,5 @@
-# $Id: schatd2.pro 3535 2013-02-27 22:42:00Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -21,17 +20,31 @@ SCHAT_SINGLEAPP   = 0
 
 QT = core network sql
 TEMPLATE = app
-CONFIG += console
-
-HEADERS = \
-    NodeInit.h \
-
-SOURCES = \
-    NodeInit.cpp \
-    schatd2.cpp \
     
 DEFINES += SCHAT_DAEMON
 SCHAT_DAEMON_LIB = 1
+
+win32 {
+  QT += gui
+
+  greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+  }
+
+  HEADERS = \
+    NodeInit.h \
+    ui/DaemonUi.h \
+
+  SOURCES = \
+    NodeInit.cpp \
+    schatd2-ui.cpp \
+    ui/DaemonUi.cpp \
+    
+}
+else {
+  HEADERS = NodeInit.h
+  SOURCES = NodeInit.cpp schatd2.cpp
+}
 
 include(../common/config.pri)
 include(../common/common.pri)

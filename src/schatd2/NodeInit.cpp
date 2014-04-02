@@ -43,7 +43,7 @@ NodeInit::NodeInit(const QString &app, QObject *parent)
 {
   new FeedsCore(this);
 
-  m_storage = new Storage(app, this);
+  m_storage = new Storage(0, app, this);
   m_core = new Core(this);
   m_plugins = new NodePlugins(this);
 

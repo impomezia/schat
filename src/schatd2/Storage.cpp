@@ -1,6 +1,5 @@
-/* $Id: Storage.cpp 3742 2013-07-10 02:22:58Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -54,8 +53,9 @@ const QString Storage::kLogOutput = QLatin1String("LogOutput");
 #define LOG_N8010 LOG_INFO("N8010", "Core/Storage", "Max open files limit: " << limit.rlim_cur << " " << limit.rlim_max)
 #define LOG_N8011 LOG_ERROR("N8011", "Core/Storage", "Unable to open log file: \"" << logFile << '"')
 
-Storage::Storage(const QString &app, QObject *parent)
+Storage::Storage(Settings *settings, const QString &app, QObject *parent)
   : QObject(parent)
+  , m_settings(settings)
 {
   m_self = this;
   qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()) ^ reinterpret_cast<quintptr>(this));
@@ -67,7 +67,9 @@ Storage::Storage(const QString &app, QObject *parent)
   new Ch(this);
 
   // Инициализация настроек по умолчанию.
-  m_settings = new Settings(etc() + LC('/') + Path::app() + LS(".conf"), this);
+  if (!m_settings)
+    m_settings = new Settings(etc() + LC('/') + Path::app() + LS(".conf"), this);
+
   m_settings->setDefault(STORAGE_CERTIFICATE,    LS(":/server.crt"));
   m_settings->setDefault(STORAGE_LISTEN,         QStringList(LS("0.0.0.0:7667")));
   m_settings->setDefault(STORAGE_MAX_OPEN_FILES, 0);
@@ -85,6 +87,8 @@ Storage::Storage(const QString &app, QObject *parent)
 
 Storage::~Storage()
 {
+  m_self = 0;
+
   qDeleteAll(m_hooks);
   delete m_log;
 }
@@ -116,6 +120,8 @@ void Storage::addFeature(const QString &name)
 
 bool Storage::contains(const QString &key)
 {
+  Q_ASSERT(m_self);
+
   if (m_self->m_cache.contains(key) || m_self->m_keys.contains(key) || DataBase::contains(key))
     return true;
 
@@ -130,6 +136,8 @@ bool Storage::contains(const QString &key)
  */
 int Storage::setValue(const QString &key, const QVariant &value)
 {
+  Q_ASSERT(m_self);
+
   if (m_self->m_cache.value(key) == value)
     return Notice::NotModified;
 
@@ -169,6 +177,8 @@ int Storage::setValue(const QString &key, const QVariant &value)
  */
 QVariant Storage::value(const QString &key, const QVariant &defaultValue)
 {
+  Q_ASSERT(m_self);
+
   if (m_self->m_cache.contains(key))
     return m_self->m_cache.value(key);
 
@@ -195,6 +205,8 @@ QVariant Storage::value(const QString &key, const QVariant &defaultValue)
  */
 void Storage::add(StorageHook *hook)
 {
+  Q_ASSERT(m_self);
+
   if (!hook)
     return;
 

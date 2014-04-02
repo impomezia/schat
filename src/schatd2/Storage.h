@@ -1,6 +1,5 @@
-/* $Id: Storage.h 3720 2013-07-01 21:20:22Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -49,7 +48,7 @@ public:
   static const QString kLogLevel;
   static const QString kLogOutput;
 
-  Storage(const QString &app, QObject *parent = 0);
+  Storage(Settings *settings, const QString &app, QObject *parent = 0);
   ~Storage();
   inline static QByteArray privateId()     { return m_self->m_privateId; }
   inline static QByteArray serverId()      { return m_self->m_id; }
