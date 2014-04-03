@@ -33,21 +33,28 @@
 #include "sglobal.h"
 #include "Translation.h"
 #include "version.h"
+#include "Storage.h"
+#include "cores/Core.h"
+#include "feeds/FeedsCore.h"
+#include "net/NodePool.h"
+#include "NodePlugins.h"
 
 /*!
  * Конструктор класса DaemonUi.
  */
 DaemonUi::DaemonUi(QWidget *parent)
   : QDialog(parent, Qt::Tool)
+  , m_core(0)
+  , m_feeds(0)
+  , m_plugins(0)
+  , m_pool(0)
+  , m_storage(0)
 {
   Path::init(LS("schatd2"));
 
-  m_settings = new Settings(QApplication::applicationDirPath() + "/schatd.conf", this);
+  m_settings = new Settings(Path::data() + LS("/schatd2.conf"), this);
 
   loadTranslation();
-
-  m_checkTimer.setInterval(5000);
-  connect(&m_checkTimer, SIGNAL(timeout()), SLOT(checkStart()));
 
   m_toolBar = new QToolBar(this);
   m_toolBar->setIconSize(QSize(22, 22));
@@ -113,7 +120,7 @@ DaemonUi::DaemonUi(QWidget *parent)
   mainLay->addLayout(bodyLay);
 
   createTray();
-  setStatus(Unknown);
+  setState(Unknown);
 
   setWindowIcon(QIcon(":/images/schat16-green.png"));
 
@@ -133,7 +140,7 @@ void DaemonUi::handleMessage(const QString& message)
   QStringList args = message.split(LS(", "));
 
   if (args.contains(LS("-exit"))) {
-    QApplication::quit();
+    onQuit();
     return;
   }
 
@@ -151,21 +158,17 @@ void DaemonUi::changeEvent(QEvent *event)
 }
 
 
-void DaemonUi::checkStart()
+void DaemonUi::init()
 {
-  if (m_status == Starting || m_status == Restarting)
-    setStatus(Error);
+  QStringList args = QApplication::arguments();
+  args.takeFirst();
+  arguments(args);
+
+  onStart();
 }
 
 
-void DaemonUi::exit()
-{
-  stop();
-  QApplication::quit();
-}
-
-
-void DaemonUi::iconActivated(QSystemTrayIcon::ActivationReason reason)
+void DaemonUi::onIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
   switch (reason) {
     case QSystemTrayIcon::Trigger:
@@ -181,117 +184,41 @@ void DaemonUi::iconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 
 
-void DaemonUi::init()
+void DaemonUi::onListen(const QStringList &hosts)
 {
-//  if (!QFile::exists(m_daemonFile)) {
-//    setStatus(Error);
-//    return;
-//  }
-
-//  m_settings->read();
-//  m_translation->load(m_settings->getString("Translation"));
-//  retranslateUi();
-
-//  #if !defined(SCHAT_NO_STYLE)
-//  QString schatConf;
-//  if (AbstractSettings::isUnixLike()) {
-//    schatConf = SCHAT_UNIX_CONFIG("schat.conf");
-//  }
-//  else {
-//    schatConf = QApplication::applicationDirPath() + "/schat.conf";
-//  }
-
-//  QSettings s(schatConf, QSettings::IniFormat, this);
-//  QApplication::setStyle(s.value("Style", "Plastique").toString());
-//  #endif
-
-//  m_client = new LocalClientService(this);
-//  connect(m_client, SIGNAL(notify(LocalClientService::Reason)), SLOT(notify(LocalClientService::Reason)));
-//  m_client->connectToServer();
-
-//  QStringList args = QApplication::arguments();
-//  args.takeFirst();
-//  arguments(args);
+  setState(hosts.isEmpty() ? Error : Started);
 }
 
 
-/*!
- * Перезапуск сервера.
- */
-void DaemonUi::restart()
+void DaemonUi::onQuit()
 {
-  if (m_status == Started)
-    setStatus(Restarting);
-  else
-    setStatus(Starting);
-
   stop();
-  QTimer::singleShot(1000, this, SLOT(start()));
+  QApplication::quit();
 }
 
 
-void DaemonUi::settings()
+void DaemonUi::onRestart()
+{
+
+}
+
+
+void DaemonUi::onSettings()
 {
   if (isHidden())
     show();
-
-//  if (!m_settingsDialog) {
-//    m_settingsDialog = new DaemonSettingsDialog(this);
-//    m_settingsDialog->show();
-//  }
-
-//  m_settingsDialog->activateWindow();
 }
 
 
-/*!
- * Запуск сервера.
- */
-void DaemonUi::start()
+void DaemonUi::onStart()
 {
-//  #ifndef SCHATD_NO_SERVICE
-//  if (!m_controller->isInstalled()) {
-//    if (!QProcess::startDetached('"' + m_daemonFile + "\" -exec")) {
-//      setStatus(Error);
-//      return;
-//    }
-//  }
-//  else
-//    m_controller->start();
-//  #else
-//  if (!QProcess::startDetached('"' + m_daemonFile + '"')) {
-//    setStatus(Error);
-//    return;
-//  }
-//  #endif
-
-//  if (m_status != Restarting)
-//    setStatus(Starting);
-
-//  m_checkTimer.start();
-//  m_client->connectToServer();
+  setState(Starting);
 }
 
 
-/*!
- * Остановка сервера.
- */
-void DaemonUi::stop()
+void DaemonUi::onStop()
 {
-//  #ifndef SCHATD_NO_SERVICE
-//  if (m_controller->isInstalled()) {
-//    m_client->leave();
-//    m_controller->stop();
-//  }
-//  else
-//    m_client->exit();
-//  #else
-//  m_client->leave();
-//  if (!QProcess::startDetached('"' + m_daemonFile + "\" -terminate")) {
-//    setStatus(Error);
-//    return;
-//  }
-//  #endif
+  setState(Stopping);
 }
 
 
@@ -319,13 +246,13 @@ bool DaemonUi::arguments(const QStringList &args)
  */
 void DaemonUi::createActions()
 {
-  m_actions[StartAction].append(m_menu->addAction(QIcon(":/images/play.png"), tr("Start"), this, SLOT(start())));
-  m_actions[StopAction].append(m_menu->addAction(QIcon(":/images/stop.png"), tr("Stop"), this, SLOT(stop())));
-  m_actions[RestartAction].append(m_menu->addAction(QIcon(":/images/restart.png"), tr("Restart"), this, SLOT(restart())));
-  m_actions[SettingsAction].append(m_menu->addAction(QIcon(":/images/daemonsettings.png"), tr("Settings..."), this, SLOT(settings())));
+  m_actions[StartAction].append(m_menu->addAction(QIcon(":/images/play.png"), tr("Start"), this, SLOT(onStart())));
+  m_actions[StopAction].append(m_menu->addAction(QIcon(":/images/stop.png"), tr("Stop"), this, SLOT(onStop())));
+  m_actions[RestartAction].append(m_menu->addAction(QIcon(":/images/restart.png"), tr("Restart"), this, SLOT(onRestart())));
+  m_actions[SettingsAction].append(m_menu->addAction(QIcon(":/images/daemonsettings.png"), tr("Settings..."), this, SLOT(onSettings())));
 
   m_menu->addSeparator();
-  m_menu->addAction(QIcon(LS(":/images/quit.png")), tr("Quit"), QApplication::instance(), SLOT(quit()));
+  m_menu->addAction(QIcon(LS(":/images/quit.png")), tr("Quit"), this, SLOT(onQuit()));
 }
 
 
@@ -338,14 +265,14 @@ void DaemonUi::createButtons()
   connect(m_hideButton, SIGNAL(clicked(bool)), SLOT(hide()));
 
   m_quitButton = new QPushButton(QIcon(LS(":/images/quit.png")), "", this);
-  connect(m_quitButton, SIGNAL(clicked(bool)), QApplication::instance(), SLOT(quit()));
+  connect(m_quitButton, SIGNAL(clicked(bool)), this, SLOT(onQuit()));
 
-  m_actions[StartAction].append(m_toolBar->addAction(QIcon(":/images/play.png"), tr("Start"), this, SLOT(start())));
-  m_actions[StopAction].append(m_toolBar->addAction(QIcon(":/images/stop.png"), tr("Stop"), this, SLOT(stop())));
-  m_actions[RestartAction].append(m_toolBar->addAction(QIcon(":/images/restart.png"), tr("Restart"), this, SLOT(restart())));
+  m_actions[StartAction].append(m_toolBar->addAction(QIcon(":/images/play.png"), tr("Start"), this, SLOT(onStart())));
+  m_actions[StopAction].append(m_toolBar->addAction(QIcon(":/images/stop.png"), tr("Stop"), this, SLOT(onStop())));
+  m_actions[RestartAction].append(m_toolBar->addAction(QIcon(":/images/restart.png"), tr("Restart"), this, SLOT(onRestart())));
 
   m_toolBar->addSeparator();
-  m_actions[SettingsAction].append(m_toolBar->addAction(QIcon(":/images/daemonsettings.png"), tr("Settings..."), this, SLOT(settings())));
+  m_actions[SettingsAction].append(m_toolBar->addAction(QIcon(":/images/daemonsettings.png"), tr("Settings..."), this, SLOT(onSettings())));
 }
 
 
@@ -356,7 +283,7 @@ void DaemonUi::createTray()
   m_tray->setToolTip(QString(LS("Simple Chat Daemon %1")).arg(SCHAT_VERSION));
   m_tray->setContextMenu(m_menu);
 
-  connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+  connect(m_tray, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), SLOT(onIconActivated(QSystemTrayIcon::ActivationReason)));
   m_tray->show();
 }
 
@@ -379,8 +306,6 @@ void DaemonUi::retranslateUi()
   m_hideButton->setText(tr("Hide"));
   m_hideButton->setToolTip(tr("Hide the program window"));
   m_quitButton->setToolTip(tr("Quit"));
-
-  setStatus(m_status);
 }
 
 
@@ -427,44 +352,51 @@ void DaemonUi::setLedColor(LedColor color)
 }
 
 
-void DaemonUi::setStatus(DaemonUi::Status status)
+void DaemonUi::setState(State state)
 {
-  m_status = status;
-  switch (status) {
+  if (m_state == state)
+    return;
+
+  m_state = state;
+
+  switch (state) {
     case Unknown:
       setActionsState(false, false, false, false, false);
       setLedColor(Yellow);
-      m_statusLabel->setText("<b style='color:#bf8c00';>&nbsp;" + tr("Initialization...") + "</b>");
+      m_statusLabel->setText(LS("<b style='color:#bf8c00';>&nbsp;") + tr("Initialization...") + LS("</b>"));
       break;
 
     case Error:
       setActionsState(false, false, false, false);
       setLedColor();
-      m_statusLabel->setText("<b style='color:#c00;'>&nbsp;" + tr("Error") + "</b>");
+      m_statusLabel->setText(LS("<b style='color:#c00;'>&nbsp;") + tr("Error") + LS("</b>"));
+      stop();
       break;
 
     case Starting:
       setActionsState(false, false, false);
       setLedColor(Yellow);
-      m_statusLabel->setText("<b style='color:#bf8c00';>&nbsp;" + tr("Starting...") + "</b>");
+      m_statusLabel->setText(LS("<b style='color:#bf8c00';>&nbsp;") + tr("Starting...") + LS("</b>"));
+      start();
       break;
 
     case Started:
       setActionsState(false);
       setLedColor(Green);
-      m_statusLabel->setText("<b style='color:#090;'>&nbsp;" + tr("Started successfully") + "</b>");
+      m_statusLabel->setText(LS("<b style='color:#090;'>&nbsp;") + tr("Started successfully") + LS("</b>"));
       break;
 
     case Stopped:
       setActionsState(true, false, true, false);
       setLedColor();
-      m_statusLabel->setText("<b style='color:#c00;'>&nbsp;" + tr("Stopped") + "</b>");
+      m_statusLabel->setText(LS("<b style='color:#c00;'>&nbsp;") + tr("Stopped") + LS("</b>"));
       break;
 
-    case Restarting:
+    case Stopping:
       setActionsState(false, false, false, false);
       setLedColor(Yellow);
-      m_statusLabel->setText("<b style='color:#bf8c00';>&nbsp;" + tr("Restart...") + "</b>");
+      m_statusLabel->setText(LS("<b style='color:#bf8c00';>&nbsp;") + tr("Stopping...") + LS("</b>"));
+      stop();
       break;
 
     default:
@@ -477,4 +409,117 @@ void DaemonUi::showUi()
 {
   show();
   activateWindow();
+}
+
+
+/*!
+ * Запуск сервера.
+ */
+void DaemonUi::start()
+{
+  m_feeds = new FeedsCore(this);
+
+  m_storage = new Storage(m_settings, Path::app(), this);
+  if (m_storage->start()) {
+    m_feeds->deleteLater();
+    m_feeds = 0;
+
+    m_storage->deleteLater();
+    m_storage = 0;
+
+    setState(Error);
+    return;
+  }
+
+  m_core    = new Core(this);
+  m_plugins = new NodePlugins(this);
+  m_plugins->load();
+
+  const QStringList listen = m_settings->value(STORAGE_LISTEN).toStringList();
+  const int workers = m_settings->value(STORAGE_WORKERS).toInt();
+
+  m_pool = new NodePool(listen, workers, m_core);
+  connect(m_pool, SIGNAL(ready(QObject*)), m_core, SLOT(workerReady(QObject*)));
+  connect(m_pool, SIGNAL(listen(QStringList)), SLOT(onListen(QStringList)));
+
+  m_core->start();
+  m_pool->start();
+
+  m_storage->load();
+
+//  #ifndef SCHATD_NO_SERVICE
+//  if (!m_controller->isInstalled()) {
+//    if (!QProcess::startDetached('"' + m_daemonFile + "\" -exec")) {
+//      setStatus(Error);
+//      return;
+//    }
+//  }
+//  else
+//    m_controller->start();
+//  #else
+//  if (!QProcess::startDetached('"' + m_daemonFile + '"')) {
+//    setStatus(Error);
+//    return;
+//  }
+//  #endif
+
+//  if (m_status != Restarting)
+//    setStatus(Starting);
+
+//  m_checkTimer.start();
+//  m_client->connectToServer();
+}
+
+
+/*!
+ * Остановка сервера.
+ */
+void DaemonUi::stop()
+{
+  qDebug() << "stop()";
+
+  if (m_pool) {
+    m_pool->quit();
+    m_pool->wait();
+    delete m_pool;
+    m_pool = 0;
+  }
+
+  if (m_core) {
+    m_core->quit();
+    delete m_core;
+    m_core = 0;
+  }
+
+  if (m_storage) {
+    delete m_storage;
+    m_storage = 0;
+  }
+
+  if (m_plugins) {
+    delete m_plugins;
+    m_plugins = 0;
+  }
+
+  if (m_feeds) {
+    delete m_feeds;
+    m_feeds = 0;
+  }
+
+//  #ifndef SCHATD_NO_SERVICE
+//  if (m_controller->isInstalled()) {
+//    m_client->leave();
+//    m_controller->stop();
+//  }
+//  else
+//    m_client->exit();
+//  #else
+//  m_client->leave();
+//  if (!QProcess::startDetached('"' + m_daemonFile + "\" -terminate")) {
+//    setStatus(Error);
+//    return;
+//  }
+//  #endif
+
+  setState(Stopped);
 }

@@ -1,6 +1,5 @@
-/* $Id: MessagesPlugin_p.h 2267 2012-02-06 18:36:34Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,12 +20,18 @@
 
 #include "plugins/NodePlugin.h"
 
+class NodeMessages;
+
 class NodeMessagesBase : public NodePlugin
 {
   Q_OBJECT
 
 public:
   NodeMessagesBase(QObject *parent);
+  ~NodeMessagesBase();
+
+private:
+  NodeMessages *m_messages;
 };
 
 

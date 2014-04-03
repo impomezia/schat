@@ -38,6 +38,7 @@ class SCHAT_EXPORT DataBase : public QObject
 
 public:
   DataBase(QObject *parent = 0);
+  ~DataBase();
   inline static QThreadPool *pool() { return m_self->m_pool; }
   static int start();
 

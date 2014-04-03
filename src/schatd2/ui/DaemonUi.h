@@ -24,7 +24,11 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
+class Core;
 class DaemonSettings;
+class FeedsCore;
+class NodePlugins;
+class NodePool;
 class QAction;
 class QGroupBox;
 class QLabel;
@@ -32,6 +36,7 @@ class QMenu;
 class QProcess;
 class QToolBar;
 class Settings;
+class Storage;
 class Translation;
 
 /*!
@@ -59,23 +64,23 @@ protected:
   void changeEvent(QEvent *event);
 
 private slots:
-  void checkStart();
-  void exit();
-  void iconActivated(QSystemTrayIcon::ActivationReason reason);
   void init();
-  void restart();
-  void settings();
-  void start();
-  void stop();
+  void onIconActivated(QSystemTrayIcon::ActivationReason reason);
+  void onListen(const QStringList &hosts);
+  void onQuit();
+  void onRestart();
+  void onSettings();
+  void onStart();
+  void onStop();
 
 private:
-  enum Status {
+  enum State {
     Unknown,
     Error,
     Starting,
     Started,
-    Stopped,
-    Restarting
+    Stopping,
+    Stopped
   };
 
   enum LedColor {
@@ -93,9 +98,12 @@ private:
   void setActionsState(bool start = true, bool stop = true, bool restart = true, bool quit = true, bool settings = true);
   void setEnabled(Actions action, bool enabled);
   void setLedColor(LedColor color = Red);
-  void setStatus(Status status);
+  void setState(State status);
   void showUi();
+  void start();
+  void stop();
 
+private:
   QGroupBox *m_controlGroup;
   QGroupBox *m_statusGroup;
   QLabel *m_aboutLabel;
@@ -104,14 +112,18 @@ private:
   QMenu *m_menu;
   QPushButton *m_hideButton;
   QPushButton *m_quitButton;
-  QString m_appDir;
   QSystemTrayIcon *m_tray;
-  QTimer m_checkTimer;
   QToolBar *m_toolBar;
   Settings *m_settings;
-  Status m_status;
+  State m_state;
   Translation *m_translation;
   QMap<Actions, QList<QAction*> > m_actions;
+
+  Core *m_core;
+  FeedsCore *m_feeds;
+  NodePlugins *m_plugins;
+  NodePool *m_pool;
+  Storage *m_storage;
 };
 
 #endif /*DAEMONUI_H_*/

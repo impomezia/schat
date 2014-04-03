@@ -1,6 +1,5 @@
-/* $Id: NodeNoticeReader.cpp 2413 2012-03-14 21:10:31Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,13 +15,11 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDebug>
-
 #include "cores/Core.h"
 #include "NodeNoticeReader.h"
 #include "Storage.h"
 
-QMap<int, QSharedPointer<NodeNoticeReader> > NodeNoticeReader::m_readers;
+QMap<int, NodeNoticeReader*> NodeNoticeReader::m_readers;
 
 NodeNoticeReader::NodeNoticeReader(int type, Core *core)
   : m_core(core)
@@ -30,6 +27,12 @@ NodeNoticeReader::NodeNoticeReader(int type, Core *core)
   , m_storage(Storage::i())
 {
   add(this);
+}
+
+
+NodeNoticeReader::~NodeNoticeReader()
+{
+  m_readers.remove(type());
 }
 
 
@@ -52,7 +55,7 @@ bool NodeNoticeReader::read(int type, PacketReader *reader)
 
 void NodeNoticeReader::accept(ChatChannel user, const AuthResult &result, QList<QByteArray> &packets)
 {
-  foreach (NodeNoticeReaderPtr reader, m_readers) {
+  foreach (NodeNoticeReader *reader, m_readers) {
     reader->acceptImpl(user, result, packets);
   }
 }
@@ -63,7 +66,7 @@ void NodeNoticeReader::accept(ChatChannel user, const AuthResult &result, QList<
  */
 void NodeNoticeReader::add(ChatChannel channel)
 {
-  foreach (NodeNoticeReaderPtr reader, m_readers) {
+  foreach (NodeNoticeReader *reader, m_readers) {
     reader->addImpl(channel);
   }
 }
@@ -71,13 +74,15 @@ void NodeNoticeReader::add(ChatChannel channel)
 
 void NodeNoticeReader::add(NodeNoticeReader *reader)
 {
-  m_readers[reader->type()] = NodeNoticeReaderPtr(reader);
+  Q_ASSERT(reader);
+
+  m_readers.insert(reader->type(), reader);
 }
 
 
 void NodeNoticeReader::release(ChatChannel channel, quint64 socket)
 {
-  foreach (NodeNoticeReaderPtr reader, m_readers) {
+  foreach (NodeNoticeReader *reader, m_readers) {
     reader->releaseImpl(channel, socket);
   }
 }

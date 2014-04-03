@@ -193,6 +193,14 @@ DataBase::DataBase(QObject *parent)
 }
 
 
+DataBase::~DataBase()
+{
+  m_self = 0;
+
+  QSqlDatabase::removeDatabase(QSqlDatabase::database().connectionName());
+}
+
+
 int DataBase::start()
 {
   QSqlDatabase db = QSqlDatabase::addDatabase(LS("QSQLITE"));
