@@ -36,7 +36,6 @@ class SCHAT_EXPORT NodePool : public QThread
 
 public:
   NodePool(const QStringList &listen, int workers, QObject *core);
-  ~NodePool();
 
 signals:
   void listen(const QStringList &hosts);

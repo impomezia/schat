@@ -37,20 +37,6 @@ NodePool::NodePool(const QStringList &listen, int workers, QObject *core)
 }
 
 
-NodePool::~NodePool()
-{
-  foreach (TcpServer *server, m_servers) {
-    server->deleteLater();
-  }
-
-  foreach (NodeWorker *worker, m_workers) {
-    worker->quit();
-    worker->wait();
-    delete worker;
-  }
-}
-
-
 void NodePool::run()
 {
   for (int i = 0; i < m_count; ++i) {
@@ -75,6 +61,16 @@ void NodePool::run()
 
   emit listen(hosts);
   exec();
+
+  foreach (TcpServer *server, m_servers) {
+    delete server;
+  }
+
+  foreach (NodeWorker *worker, m_workers) {
+    worker->quit();
+    worker->wait();
+    delete worker;
+  }
 }
 
 
