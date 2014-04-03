@@ -40,7 +40,7 @@ win32 {
     schatd2-ui.cpp \
     ui/DaemonUi.cpp \
  
-  SCHAT_RESOURCES = 0
+  SCHAT_RESOURCES = 1
   SCHAT_SINGLEAPP = 1
 }
 else {

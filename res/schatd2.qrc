@@ -1,0 +1,19 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+  <file alias="images/restart.png">images/font-awesome/fa-repeat.png</file>
+  <file alias="images/restart-big.png">images/font-awesome/fa-repeat-big.png</file>
+  <file alias="images/start.png">images/font-awesome/fa-play.png</file>
+  <file alias="images/start-big.png">images/font-awesome/fa-play-big.png</file>
+  <file alias="images/stop.png">images/font-awesome/fa-stop.png</file>
+  <file alias="images/stop-big.png">images/font-awesome/fa-stop-big.png</file>
+  <file>images/gear.png</file>
+  <file>images/gear-big.png</file>
+  <file>images/led/green.png</file>
+  <file>images/led/red.png</file>
+  <file>images/led/yellow.png</file>
+  <file>images/quit.png</file>
+  <file>images/schat16-gray.png</file>
+  <file>images/schat16-green.png</file>
+  <file>images/schat16-yellow.png</file>
+</qresource>
+</RCC>

@@ -285,10 +285,10 @@ bool DaemonUi::arguments(const QStringList &args)
  */
 void DaemonUi::createActions()
 {
-  m_actions[StartAction].append(m_menu->addAction(QIcon(":/images/play.png"), tr("Start"), this, SLOT(onStart())));
+  m_actions[StartAction].append(m_menu->addAction(QIcon(":/images/start.png"), tr("Start"), this, SLOT(onStart())));
   m_actions[StopAction].append(m_menu->addAction(QIcon(":/images/stop.png"), tr("Stop"), this, SLOT(onStop())));
   m_actions[RestartAction].append(m_menu->addAction(QIcon(":/images/restart.png"), tr("Restart"), this, SLOT(onRestart())));
-  m_actions[SettingsAction].append(m_menu->addAction(QIcon(":/images/daemonsettings.png"), tr("Settings..."), this, SLOT(onSettings())));
+  m_actions[SettingsAction].append(m_menu->addAction(QIcon(":/images/gear.png"), tr("Settings..."), this, SLOT(onSettings())));
 
   m_menu->addSeparator();
   m_menu->addAction(QIcon(LS(":/images/quit.png")), tr("Quit"), this, SLOT(onQuit()));
@@ -306,12 +306,12 @@ void DaemonUi::createButtons()
   m_quitButton = new QPushButton(QIcon(LS(":/images/quit.png")), "", this);
   connect(m_quitButton, SIGNAL(clicked(bool)), this, SLOT(onQuit()));
 
-  m_actions[StartAction].append(m_toolBar->addAction(QIcon(":/images/play.png"), tr("Start"), this, SLOT(onStart())));
-  m_actions[StopAction].append(m_toolBar->addAction(QIcon(":/images/stop.png"), tr("Stop"), this, SLOT(onStop())));
-  m_actions[RestartAction].append(m_toolBar->addAction(QIcon(":/images/restart.png"), tr("Restart"), this, SLOT(onRestart())));
+  m_actions[StartAction].append(m_toolBar->addAction(QIcon(":/images/start-big.png"), tr("Start"), this, SLOT(onStart())));
+  m_actions[StopAction].append(m_toolBar->addAction(QIcon(":/images/stop-big.png"), tr("Stop"), this, SLOT(onStop())));
+  m_actions[RestartAction].append(m_toolBar->addAction(QIcon(":/images/restart-big.png"), tr("Restart"), this, SLOT(onRestart())));
 
   m_toolBar->addSeparator();
-  m_actions[SettingsAction].append(m_toolBar->addAction(QIcon(":/images/daemonsettings.png"), tr("Settings..."), this, SLOT(onSettings())));
+  m_actions[SettingsAction].append(m_toolBar->addAction(QIcon(":/images/gear-big.png"), tr("Settings..."), this, SLOT(onSettings())));
 }
 
 
@@ -340,7 +340,7 @@ void DaemonUi::retranslateUi()
 {
   setWindowTitle(tr("Server control"));
   m_controlGroup->setTitle(tr("Control"));
-  m_statusGroup->setTitle(tr("Status"));
+  m_statusGroup->setTitle(tr("State"));
 
   m_hideButton->setText(tr("Hide"));
   m_hideButton->setToolTip(tr("Hide the program window"));
@@ -374,15 +374,15 @@ void DaemonUi::setLedColor(LedColor color)
   QString icon;
 
   if (color == Green) {
-    img = ":/images/led/greenled.png";
+    img = ":/images/led/green.png";
     icon = ":/images/schat16-green.png";
   }
   else if (color == Yellow) {
-    img = ":/images/led/yellowled.png";
+    img = ":/images/led/yellow.png";
     icon = ":/images/schat16-yellow.png";
   }
   else {
-    img = ":/images/led/redled.png";
+    img = ":/images/led/red.png";
     icon = ":/images/schat16-gray.png";
   }
 
