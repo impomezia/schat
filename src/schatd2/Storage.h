@@ -81,6 +81,7 @@ private:
   QMap<QString, StorageHook *> m_keys; ///< Ключи значений хранилища обрабатываемые хуками.
   ServerData *m_serverData;            ///< Информация о сервере.
   Settings *m_settings;                ///< Настройки сервера.
+  static bool m_sslReady;              ///< \b true если SSL был инициализирован.
   static QStringList m_features;       ///< Список дополнительных API.
   static Storage *m_self;              ///< Указатель на себя.
 };

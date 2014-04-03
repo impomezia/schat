@@ -199,7 +199,8 @@ void DaemonUi::onQuit()
 
 void DaemonUi::onRestart()
 {
-
+  onStop();
+  onStart();
 }
 
 
@@ -222,8 +223,46 @@ void DaemonUi::onStop()
 }
 
 
+/*!
+ * Запуск сервера.
+ */
+void DaemonUi::start()
+{
+  m_feeds = new FeedsCore(this);
+
+  m_storage = new Storage(m_settings, Path::app(), this);
+  if (m_storage->start()) {
+    m_feeds->deleteLater();
+    m_feeds = 0;
+
+    m_storage->deleteLater();
+    m_storage = 0;
+
+    setState(Error);
+    return;
+  }
+
+  m_core    = new Core(this);
+  m_plugins = new NodePlugins(this);
+  m_plugins->load();
+
+  const QStringList listen = m_settings->value(STORAGE_LISTEN).toStringList();
+  const int workers = m_settings->value(STORAGE_WORKERS).toInt();
+
+  m_pool = new NodePool(listen, workers, m_core);
+  connect(m_pool, SIGNAL(ready(QObject*)), m_core, SLOT(workerReady(QObject*)));
+  connect(m_pool, SIGNAL(listen(QStringList)), SLOT(onListen(QStringList)));
+
+  m_core->start();
+  m_pool->start();
+
+  m_storage->load();
+}
+
+
 bool DaemonUi::arguments(const QStringList &args)
 {
+  Q_UNUSED(args);
 //  if (args.contains("-start") && m_startAction->isEnabled()) {
 //    start();
 //    return true;
@@ -377,7 +416,7 @@ void DaemonUi::setState(State state)
       setActionsState(false, false, false);
       setLedColor(Yellow);
       m_statusLabel->setText(LS("<b style='color:#bf8c00';>&nbsp;") + tr("Starting...") + LS("</b>"));
-      start();
+      QTimer::singleShot(25, this, SLOT(start()));
       break;
 
     case Started:
@@ -413,71 +452,10 @@ void DaemonUi::showUi()
 
 
 /*!
- * Запуск сервера.
- */
-void DaemonUi::start()
-{
-  m_feeds = new FeedsCore(this);
-
-  m_storage = new Storage(m_settings, Path::app(), this);
-  if (m_storage->start()) {
-    m_feeds->deleteLater();
-    m_feeds = 0;
-
-    m_storage->deleteLater();
-    m_storage = 0;
-
-    setState(Error);
-    return;
-  }
-
-  m_core    = new Core(this);
-  m_plugins = new NodePlugins(this);
-  m_plugins->load();
-
-  const QStringList listen = m_settings->value(STORAGE_LISTEN).toStringList();
-  const int workers = m_settings->value(STORAGE_WORKERS).toInt();
-
-  m_pool = new NodePool(listen, workers, m_core);
-  connect(m_pool, SIGNAL(ready(QObject*)), m_core, SLOT(workerReady(QObject*)));
-  connect(m_pool, SIGNAL(listen(QStringList)), SLOT(onListen(QStringList)));
-
-  m_core->start();
-  m_pool->start();
-
-  m_storage->load();
-
-//  #ifndef SCHATD_NO_SERVICE
-//  if (!m_controller->isInstalled()) {
-//    if (!QProcess::startDetached('"' + m_daemonFile + "\" -exec")) {
-//      setStatus(Error);
-//      return;
-//    }
-//  }
-//  else
-//    m_controller->start();
-//  #else
-//  if (!QProcess::startDetached('"' + m_daemonFile + '"')) {
-//    setStatus(Error);
-//    return;
-//  }
-//  #endif
-
-//  if (m_status != Restarting)
-//    setStatus(Starting);
-
-//  m_checkTimer.start();
-//  m_client->connectToServer();
-}
-
-
-/*!
  * Остановка сервера.
  */
 void DaemonUi::stop()
 {
-  qDebug() << "stop()";
-
   if (m_pool) {
     m_pool->quit();
     m_pool->wait();

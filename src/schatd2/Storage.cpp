@@ -43,6 +43,7 @@
 #include "Storage.h"
 #include "StorageHook.h"
 
+bool Storage::m_sslReady = false;
 QStringList Storage::m_features;
 Storage *Storage::m_self = 0;
 
@@ -247,7 +248,10 @@ int Storage::start()
     LOG_N8011
   }
 
-  setDefaultSslConf();
+  if (!m_sslReady) {
+    setDefaultSslConf();
+    m_sslReady = true;
+  }
 
 # if defined(Q_OS_UNIX)
   setMaxOpenFiles(m_settings->value(STORAGE_MAX_OPEN_FILES).toInt());

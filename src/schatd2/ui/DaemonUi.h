@@ -72,6 +72,7 @@ private slots:
   void onSettings();
   void onStart();
   void onStop();
+  void start();
 
 private:
   enum State {
@@ -100,7 +101,6 @@ private:
   void setLedColor(LedColor color = Red);
   void setState(State status);
   void showUi();
-  void start();
   void stop();
 
 private:
