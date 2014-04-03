@@ -34,11 +34,15 @@ win32 {
   HEADERS = \
     NodeInit.h \
     ui/DaemonUi.h \
+    qtsingleapplication/qtsingleapplication.h \
+    qtsingleapplication/qtlocalpeer.h \
 
   SOURCES = \
     NodeInit.cpp \
     schatd2-ui.cpp \
     ui/DaemonUi.cpp \
+    qtsingleapplication/qtsingleapplication.cpp \
+    qtsingleapplication/qtlocalpeer.cpp \
  
   SCHAT_RESOURCES = 1
   SCHAT_SINGLEAPP = 1
@@ -59,12 +63,3 @@ if (win32-msvc*) {
   SOURCES += ExceptionHandler.cpp
   LIBS += -lshell32
 }
-
-contains( SCHAT_SINGLE_APP, 1 ) {
-  HEADERS += qtsingleapplication/qtsingleapplication.h qtsingleapplication/qtlocalpeer.h
-  SOURCES += qtsingleapplication/qtsingleapplication.cpp qtsingleapplication/qtlocalpeer.cpp
-}
-else {
-  DEFINES += SCHAT_NO_SINGLEAPP
-}
-
