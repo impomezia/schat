@@ -1,6 +1,5 @@
-/* $Id: NodeFeeds.cpp 3769 2013-08-16 22:34:45Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -54,8 +53,10 @@ bool NodeFeeds::read(PacketReader *reader)
     return false;
 
   m_channel = Ch::channel(reader->dest(), SimpleID::typeOf(reader->dest()));
-  if (!m_channel)
+  if (!m_channel) {
+    m_user = ChatChannel();
     return false;
+  }
 
   FeedNotice packet(m_type, reader);
   m_packet = &packet;
@@ -77,6 +78,8 @@ bool NodeFeeds::read(PacketReader *reader)
   m_event->status = status;
   FeedEvents::start(m_event);
 
+  m_user    = ChatChannel();
+  m_channel = ChatChannel();
   return false;
 }
 
