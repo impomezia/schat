@@ -35,6 +35,7 @@ class QLabel;
 class QMenu;
 class QProcess;
 class QToolBar;
+class QToolButton;
 class Settings;
 class Storage;
 class Translation;
@@ -72,6 +73,7 @@ private slots:
   void onSettings();
   void onStart();
   void onStop();
+  void openSite();
   void start();
 
 private:
@@ -109,15 +111,16 @@ private:
   QLabel *m_aboutLabel;
   QLabel *m_ledLabel;
   QLabel *m_statusLabel;
+  QMap<Actions, QList<QAction*> > m_actions;
   QMenu *m_menu;
   QPushButton *m_hideButton;
   QPushButton *m_quitButton;
   QSystemTrayIcon *m_tray;
   QToolBar *m_toolBar;
+  QToolButton *m_siteBtn;
   Settings *m_settings;
   State m_state;
   Translation *m_translation;
-  QMap<Actions, QList<QAction*> > m_actions;
 
   Core *m_core;
   FeedsCore *m_feeds;

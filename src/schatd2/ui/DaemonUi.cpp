@@ -17,6 +17,7 @@
 
 #include <QApplication>
 #include <QDateTime>
+#include <QDesktopServices>
 #include <QDir>
 #include <QFrame>
 #include <QGroupBox>
@@ -26,6 +27,8 @@
 #include <QProcess>
 #include <QPushButton>
 #include <QToolBar>
+#include <QToolButton>
+#include <QUrl>
 
 #include "DaemonUi.h"
 #include "Path.h"
@@ -86,8 +89,17 @@ DaemonUi::DaemonUi(QWidget *parent)
   controlLay->addWidget(m_controlGroup);
   controlLay->addWidget(m_statusGroup);
 
+  m_siteBtn = new QToolButton(this);
+  m_siteBtn->setStyleSheet(LS("QToolButton{color:#0066cc;background:none;border:none} QToolButton:hover{text-decoration:underline}"));
+  m_siteBtn->setText("schat.me");
+  m_siteBtn->setFocusPolicy(Qt::NoFocus);
+  m_siteBtn->setCursor(Qt::PointingHandCursor);
+  m_siteBtn->setIcon(QIcon(":/images/globe-blue.png"));
+  m_siteBtn->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+
   // Кнопки внизу окна
   QHBoxLayout *bottomLay = new QHBoxLayout;
+  bottomLay->addWidget(m_siteBtn);
   bottomLay->addStretch();
   bottomLay->addWidget(m_hideButton);
   bottomLay->addWidget(m_quitButton);
@@ -103,7 +115,7 @@ DaemonUi::DaemonUi(QWidget *parent)
   m_aboutLabel = new QLabel(QString(
       "<html><body style='color:#333;margin:6px;'>"
       "<h4 style='margin-bottom:0px;'>Simple Chat Daemon %1</h4>"
-      "<p style='margin-left:16px;margin-top:5px;'>Copyright © 2008-%2 Alexander Sedov &lt;<a href='mailto:support@schat.me' style='color:#1a4d82;'>support@schat.me</a>&gt;</p>"
+      "<p style='margin-left:16px;margin-top:5px;'>Copyright © 2008-%2 Alexander Sedov &lt;<a href='mailto:support@schat.me' style='color:#0066cc;'>support@schat.me</a>&gt;</p>"
       "</body></html>").arg(SCHAT_VERSION).arg(QDateTime::currentDateTime().toString("yyyy")), this);
   m_aboutLabel->setStyleSheet("background:#fff; border:4px solid #fff;");
   m_aboutLabel->setOpenExternalLinks(true);
@@ -128,6 +140,8 @@ DaemonUi::DaemonUi(QWidget *parent)
   retranslateUi();
 
   QTimer::singleShot(0, this, SLOT(init()));
+
+  connect(m_siteBtn, SIGNAL(clicked()), SLOT(openSite()));
 }
 
 
@@ -221,6 +235,12 @@ void DaemonUi::onStart()
 void DaemonUi::onStop()
 {
   setState(Stopping);
+}
+
+
+void DaemonUi::openSite()
+{
+  QDesktopServices::openUrl(QUrl("https://schat.me"));
 }
 
 
