@@ -68,10 +68,10 @@ int main(int argc, char *argv[])
 # endif
 
   DaemonUi ui;
-  if (args.contains(LS("-show")))
-    ui.show();
-  else
+  if (args.contains(LS("-hide")))
     ui.hide();
+  else
+    ui.show();
 
 # ifndef SCHAT_NO_SINGLEAPP
   QObject::connect(&app, SIGNAL(messageReceived(QString)), &ui, SLOT(handleMessage(QString)));

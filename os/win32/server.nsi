@@ -50,9 +50,11 @@ VIAddVersionKey  "ProductVersion"   "${SCHAT_VERSION}"
 ReserveFile "contrib\plugins\FindProcDLL.dll"
 
 !define MUI_ABORTWARNING
-!define MUI_COMPONENTSPAGE_SMALLDESC
+!define MUI_COMPONENTSPAGE_NODESC
+!define MUI_FINISHPAGE_RUN             "$INSTDIR\schatd2.exe"
 !define MUI_FINISHPAGE_LINK            "${SCHAT_WEB_SITE}"
 !define MUI_FINISHPAGE_LINK_LOCATION   "${SCHAT_WEB_SITE}"
+!define MUI_WELCOMEFINISHPAGE_BITMAP   "contrib\wizard.bmp"
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP         "contrib\header.bmp"
 !define MUI_HEADERIMAGE_RIGHT
@@ -60,8 +62,10 @@ ReserveFile "contrib\plugins\FindProcDLL.dll"
 !define MUI_UNICON                     "contrib\install.ico"
 
 !insertmacro MUI_PAGE_LICENSE "license.txt"
+!insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
 
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
@@ -70,12 +74,6 @@ ReserveFile "contrib\plugins\FindProcDLL.dll"
 
 Function .onInit
   newcheck:
-  FindProcDLL::FindProc "$INSTDIR\schatd2.exe"
-  Pop $R0
-  ${If} $R0 == 1 
-    MessageBox MB_RETRYCANCEL|MB_ICONEXCLAMATION "An instance of ${SCHAT_NAME} is currently running. Exit ${SCHAT_NAME} and then try again." IDRETRY newcheck
-    Quit
-  ${EndIf}
 
   FindProcDLL::FindProc "$INSTDIR\schatd2-srv.exe"
   Pop $R0
@@ -86,12 +84,35 @@ Function .onInit
 FunctionEnd
 
 
-Section
+!macro KILL_ALL _NAME
+ !if ${SCHAT_CHECK_RUN} == 1
+  FindProcDLL::FindProc "${_NAME}"
+  Pop $R0
+
+  ${If} $R0 == 1
+    ExecWait '"${_NAME}" -exit'
+
+    ${While} $R0 == 1
+      FindProcDLL::FindProc "${_NAME}"
+      Pop $R0
+      Sleep 100
+    ${EndWhile}
+  ${EndIf}
+ !endif
+!macroend
+
+
+Section "Core Components"
+  SectionIn RO
+  
+  !insertmacro KILL_ALL "$INSTDIR\schatd2.exe"
 
   SetOutPath "$INSTDIR"
   File "${SCHAT_SOURCE}\schatd2.exe"
   File "${SCHAT_SOURCE}\schatd2-srv.exe"
   File "${SCHAT_SOURCE}\..\schat2\crashreport.exe"
+  File "${SCHAT_SOURCE}\..\schat2\QtGui4.dll"
+  File "${SCHAT_SOURCE}\..\schat2\libpng15.dll"
   File "${SCHAT_SOURCE}\schatd.dll"
   File "${SCHAT_SOURCE}\schat-authd.exe"
   File "${SCHAT_SOURCE}\schat-tufao.dll"
@@ -168,6 +189,22 @@ Section
   WriteINIStr "$INSTDIR\schat-authd.init" "General" "Portable" true
 SectionEnd
 
+
+Section "Desktop Shortcut"
+  CreateShortCut "$DESKTOP\${SCHAT_NAME}.lnk" "$INSTDIR\schatd2.exe" "" "" "" "" "" "${SCHAT_NAME} ${SCHAT_VERSION}"
+SectionEnd
+
+
+!define SCHAT_PROGRAMGROUP "$SMPROGRAMS\Simple Chat 2"
+
+Section "Start Menu Shortcut"
+    IfFileExists    "${SCHAT_PROGRAMGROUP}\*.*" +1
+    CreateDirectory "${SCHAT_PROGRAMGROUP}"
+
+    CreateShortCut  "${SCHAT_PROGRAMGROUP}\${SCHAT_NAME}.lnk" "$INSTDIR\schatd2.exe" "" "" "" "" "" "${SCHAT_NAME} ${SCHAT_VERSION}"
+SectionEnd
+
+
 Section "Uninstall"
 
   Delete "$INSTDIR\msvcp100.dll"
@@ -175,6 +212,8 @@ Section "Uninstall"
 
   Delete "$INSTDIR\libeay32.dll"
   Delete "$INSTDIR\QtCore4.dll"
+  Delete "$INSTDIR\QtGui4.dll"
+  Delete "$INSTDIR\libpng15.dll"
   Delete "$INSTDIR\QtNetwork4.dll"
   Delete "$INSTDIR\QtSql4.dll"
   Delete "$INSTDIR\ssleay32.dll"
@@ -186,6 +225,7 @@ Section "Uninstall"
 
   Delete "$INSTDIR\schatd2.exe"
   Delete "$INSTDIR\schatd2-srv.exe"
+  Delete "$INSTDIR\crashreport.exe"
   Delete "$INSTDIR\schat-authd.exe"
   Delete "$INSTDIR\schatd.dll"
   Delete "$INSTDIR\schat-tufao.dll"
@@ -222,6 +262,7 @@ Section "Uninstall"
   Delete "$INSTDIR\www\js\html5.js"
   Delete "$INSTDIR\www\js\jquery-1.8.2.min.js"
   Delete "$INSTDIR\www\js\jquery-1.9.1.min.js"
+  Delete "$INSTDIR\www\js\jquery.min.js"
   Delete "$INSTDIR\www\js\main.js"
   Delete "$INSTDIR\www\js\result.js"
   Delete "$INSTDIR\www\receiver.html"

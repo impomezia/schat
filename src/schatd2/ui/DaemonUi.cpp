@@ -58,6 +58,7 @@ DaemonUi::DaemonUi(QWidget *parent)
 
   m_toolBar = new QToolBar(this);
   m_toolBar->setIconSize(QSize(22, 22));
+  m_toolBar->setStyleSheet(LS("QToolBar{margin:0px;border:0px;}"));
 
   m_menu = new QMenu();
 
