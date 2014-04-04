@@ -38,11 +38,16 @@ SettingsPage::SettingsPage(Settings *settings, QWidget *parent)
   m_autoRun = new QCheckBox(this);
   m_autoRun->setChecked(isAutoRun());
 
+  m_consoleBtn = new QCheckBox();
+  m_consoleBtn->setChecked(m_settings->value(LS("Plugins/NodeConsole")).toBool());
+
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->addWidget(m_autoRun);
+  layout->addWidget(m_consoleBtn);
   layout->addStretch();
 
   connect(m_autoRun, SIGNAL(clicked(bool)), SLOT(onAutoRunClicked(bool)));
+  connect(m_consoleBtn, SIGNAL(clicked()), SLOT(save()));
 
   retranslateUi();
 }
@@ -61,9 +66,15 @@ void SettingsPage::onAutoRunClicked(bool checked)
 {
   QSettings reg(LS("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
   if (checked)
-    reg.setValue(kApp, QDir::toNativeSeparators(QApplication::applicationFilePath()));
+    reg.setValue(kApp, QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS("-hide"));
   else
     reg.remove(kApp);
+}
+
+
+void SettingsPage::save()
+{
+  m_settings->setValue(LS("Plugins/NodeConsole"), m_consoleBtn->isChecked());
 }
 
 
@@ -81,4 +92,5 @@ bool SettingsPage::isAutoRun() const
 void SettingsPage::retranslateUi()
 {
   m_autoRun->setText(tr("Run at Windows start up"));
+  m_consoleBtn->setText(tr("Enable remote console (restart required)"));
 }

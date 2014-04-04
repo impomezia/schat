@@ -41,12 +41,14 @@ protected:
 
 private slots:
   void onAutoRunClicked(bool checked);
+  void save();
 
 private:
   bool isAutoRun() const;
   void retranslateUi();
 
   QCheckBox *m_autoRun;
+  QCheckBox *m_consoleBtn;
   Settings *m_settings;
 };
 
