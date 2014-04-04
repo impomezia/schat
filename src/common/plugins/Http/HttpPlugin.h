@@ -33,10 +33,11 @@ public:
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Http";
     out[CORE_API_NAME]     = "Http";
-    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_VERSION]  = "2.3.2";
     out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Http";
     out[CORE_API_DESC]     = "Service plugin for downloading files";
     out[CORE_API_PRIORITY] = 100;
+    out[CORE_API_HIDDEN]   = true;
 
     return out;
   }

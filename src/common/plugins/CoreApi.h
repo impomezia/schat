@@ -40,6 +40,7 @@
 #define CORE_API_ENABLED      QLatin1String("enabled")
 #define CORE_API_CONFIGURABLE QLatin1String("configurable")
 #define CORE_API_PRIORITY     QLatin1String("priority")
+#define CORE_API_HIDDEN       QLatin1String("hidden")
 
 /*!
  * Базовый интерфейс для всех типов плагинов.
@@ -64,6 +65,7 @@ public:
     out[CORE_API_ENABLED]      = true;               // \b true если плагин по умолчанию включен.
     out[CORE_API_CONFIGURABLE] = false;              // \b true если поддерживается дополнительный пользовательский интерфейс настроек.
     out[CORE_API_PRIORITY]     = 0;                  // Приоритет загрузки, плагины с большим приоритетом загружаются раньше.
+    out[CORE_API_HIDDEN]       = false;              // \b true если плагин должен быть скрыт из списка плагинов.
 
     return out;
   }
