@@ -51,7 +51,7 @@
 <context>
     <name>AlertsPage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="134"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="159"/>
         <source>Notifications</source>
         <translation>Уведомления</translation>
     </message>
@@ -126,7 +126,7 @@
 <context>
     <name>BackdropWidget</name>
     <message>
-        <location filename="../../src/schat2/ui/tabs/BackdropWidget.cpp" line="76"/>
+        <location filename="../../src/schat2/ui/tabs/BackdropWidget.cpp" line="80"/>
         <source>Blur Effect</source>
         <translation>Эффект размытия</translation>
     </message>
@@ -170,37 +170,37 @@
 <context>
     <name>ChatView</name>
     <message>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="235"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="240"/>
         <source>Display</source>
         <translation>Отображать</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="280"/>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="464"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="285"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="469"/>
         <source>Autoscroll</source>
         <translation>Автопрокрутка</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="281"/>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="467"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="286"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="472"/>
         <source>Clear</source>
         <translation>Очистить</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="282"/>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="468"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="287"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="473"/>
         <source>Reload</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="283"/>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="470"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="288"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="475"/>
         <source>Seconds</source>
         <translation>Секунды</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="284"/>
-        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="473"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="289"/>
+        <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="478"/>
         <source>Service messages</source>
         <translation>Сервисные сообщения</translation>
     </message>
@@ -224,8 +224,8 @@
 <context>
     <name>DialogFrame</name>
     <message>
-        <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="53"/>
-        <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="111"/>
+        <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="54"/>
+        <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="112"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -311,7 +311,7 @@
 <context>
     <name>Hooks::CommandsImpl</name>
     <message>
-        <location filename="../../src/schat2/hooks/CommandsImpl.cpp" line="163"/>
+        <location filename="../../src/schat2/hooks/CommandsImpl.cpp" line="181"/>
         <source>Latency time: &lt;b style=&apos;color:#%1&apos;&gt;%2 ms&lt;/b&gt;</source>
         <translation>Время задержки: &lt;b style=&apos;color:#%1&apos;&gt;%2 мс&lt;/b&gt;</translation>
     </message>
@@ -376,7 +376,7 @@
 <context>
     <name>LocalePage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="163"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="188"/>
         <source>Language</source>
         <translation>Язык</translation>
     </message>
@@ -433,7 +433,7 @@
 <context>
     <name>NetworkPage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="102"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="133"/>
         <source>Network</source>
         <translation>Сеть</translation>
     </message>
@@ -525,19 +525,24 @@
 <context>
     <name>ProfilePage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="65"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="99"/>
         <source>Profile</source>
         <translation>Профиль</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="68"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="102"/>
         <source>Nick:</source>
         <translation>Ник:</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="69"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="103"/>
         <source>Gender:</source>
         <translation>Пол:</translation>
+    </message>
+    <message>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="108"/>
+        <source>Run at Windows start up</source>
+        <translation>Запускать при загрузке Windows</translation>
     </message>
 </context>
 <context>
@@ -919,7 +924,7 @@
 <context>
     <name>UserView</name>
     <message>
-        <location filename="../../src/schat2/ui/tabs/UserView.cpp" line="195"/>
+        <location filename="../../src/schat2/ui/tabs/UserView.cpp" line="197"/>
         <source>Properties</source>
         <translation>Свойства</translation>
     </message>
