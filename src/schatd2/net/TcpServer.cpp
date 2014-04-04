@@ -1,6 +1,5 @@
-/* $Id: TcpServer.cpp 2137 2012-01-12 14:05:41Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,9 +15,6 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDebug>
-#include <QThread>
-
 #include "net/TcpServer.h"
 
 TcpServer::TcpServer(QObject *parent)
@@ -29,15 +25,15 @@ TcpServer::TcpServer(QObject *parent)
 
 bool TcpServer::listen(const QString &host)
 {
-  int index = host.lastIndexOf(QLatin1String(":"));
+  const int index = host.lastIndexOf(QLatin1String(":"));
   if (index == -1)
     return false;
 
-  QHostAddress address = QHostAddress(host.left(index));
+  const QHostAddress address = QHostAddress(host.left(index));
   if (address.isNull())
     return false;
 
-  quint16 port = host.mid(index + 1).toUInt();
+  const quint16 port = host.mid(index + 1).toUInt();
   if (!port)
     return false;
 

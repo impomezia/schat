@@ -15,38 +15,39 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtPlugin>
+#include <QApplication>
+#include <QCheckBox>
+#include <QLabel>
+#include <QVBoxLayout>
 
-#include "cores/Core.h"
-#include "feeds/NodeFeedStorage.h"
-#include "GenericCh.h"
-#include "GenericNodePlugin.h"
-#include "GenericNodePlugin_p.h"
-#include "NodeChannels.h"
-#include "NodeFeeds.h"
+#include "AboutPage.h"
+#include "Settings.h"
 #include "sglobal.h"
+#include "version.h"
 
-GenericNode::GenericNode(QObject *parent)
-  : NodePlugin(parent)
+AboutPage::AboutPage(Settings *settings, QWidget *parent)
+  : QWidget(parent)
+  , m_settings(settings)
 {
-  new NodeChannels(Core::i());
-  m_feeds = new NodeFeeds(Core::i());
-  new GenericCh(this);
-  new NodeFeedStorage(this);
+
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->addWidget(new QLabel(QString("<h2>%1 %2</h2>").arg(qApp->applicationName(), qApp->applicationVersion()), this));
+  layout->addWidget(new QLabel(QString(SCHAT_COPYRIGHT).replace("(C)", "©"), this));
+  layout->addStretch();
+
+  retranslateUi();
 }
 
 
-GenericNode::~GenericNode()
+void AboutPage::changeEvent(QEvent *event)
 {
-  delete m_feeds;
+  if (event->type() == QEvent::LanguageChange)
+    retranslateUi();
+
+  QWidget::changeEvent(event);
 }
 
 
-NodePlugin *GenericNodePlugin::create()
+void AboutPage::retranslateUi()
 {
-  m_plugin = new GenericNode(this);
-  return m_plugin;
 }
-
-
-Q_EXPORT_PLUGIN2(GenericNode, GenericNodePlugin);

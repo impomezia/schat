@@ -1,6 +1,5 @@
-/* $Id: GenericNodePlugin_p.h 3470 2013-02-06 09:57:57Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,12 +20,18 @@
 
 #include "plugins/NodePlugin.h"
 
+class NodeFeeds;
+
 class GenericNode : public NodePlugin
 {
   Q_OBJECT
 
 public:
   GenericNode(QObject *parent);
+  ~GenericNode();
+
+private:
+  NodeFeeds *m_feeds;
 };
 
 #endif /* GENERICNODEPLUGIN_P_H_ */

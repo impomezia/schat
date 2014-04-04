@@ -1,6 +1,5 @@
-/* $Id: MessagesPlugin.cpp 3420 2013-01-19 05:23:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,11 +30,17 @@ NodeMessagesBase::NodeMessagesBase(QObject *parent)
   : NodePlugin(parent)
 {
   new NodeMessagesDB(this);
-  new NodeMessages(Core::i());
+  m_messages = new NodeMessages(Core::i());
   new MessagesCh(this);
   FeedStorage::add(new NodeMessagesFeedCreator());
 
   NodeMessagesDB::open();
+}
+
+
+NodeMessagesBase::~NodeMessagesBase()
+{
+  delete m_messages;
 }
 
 
@@ -45,6 +50,4 @@ NodePlugin *MessagesPlugin::create()
   return m_plugin;
 }
 
-#if QT_VERSION < 0x050000
-  Q_EXPORT_PLUGIN2(Messages, MessagesPlugin);
-#endif
+Q_EXPORT_PLUGIN2(Messages, MessagesPlugin);

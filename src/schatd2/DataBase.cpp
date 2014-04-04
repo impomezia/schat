@@ -1,6 +1,5 @@
-/* $Id: DataBase.cpp 3742 2013-07-10 02:22:58Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -190,6 +189,14 @@ DataBase::DataBase(QObject *parent)
   m_self = this;
   m_pool = new QThreadPool(this);
   m_pool->setMaxThreadCount(1);
+}
+
+
+DataBase::~DataBase()
+{
+  m_self = 0;
+
+  QSqlDatabase::removeDatabase(QSqlDatabase::database().connectionName());
 }
 
 

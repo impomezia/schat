@@ -15,26 +15,37 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TCPSERVER_H_
-#define TCPSERVER_H_
+#ifndef SETTINGSDIALOG_H_
+#define SETTINGSDIALOG_H_
 
-#include <QTcpServer>
+#include <QDialog>
 
 #include "schat.h"
 
-class SCHAT_EXPORT TcpServer : public QTcpServer
+class QStackedWidget;
+class QToolButton;
+class Settings;
+
+class SettingsDialog : public QDialog
 {
   Q_OBJECT
 
 public:
-  TcpServer(QObject *parent = 0);
-  bool listen(const QString &host);
-
-signals:
-  void newConnection(int socketDescriptor);
+  SettingsDialog(Settings *settings, QWidget * parent = 0);
 
 protected:
-  void incomingConnection(int socketDescriptor);
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
+
+private slots:
+  void tooglePage();
+
+private:
+  QToolButton *addBtn(const QIcon &icon, const QString &text);
+  void retranslateUi();
+
+  QStackedWidget *m_pages;
+  QToolButton *m_aboutBtn;
+  QToolButton *m_settingsBtn;
 };
 
-#endif /* TCPSERVER_H_ */
+#endif /* SETTINGSDIALOG_H_ */
