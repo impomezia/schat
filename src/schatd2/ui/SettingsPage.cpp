@@ -66,7 +66,7 @@ void SettingsPage::onAutoRunClicked(bool checked)
 {
   QSettings reg(LS("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
   if (checked)
-    reg.setValue(kApp, QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS("-hide"));
+    reg.setValue(kApp, QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS(" -hide"));
   else
     reg.remove(kApp);
 }
@@ -85,7 +85,7 @@ bool SettingsPage::isAutoRun() const
   if (value.isEmpty())
     return false;
 
-  return QApplication::applicationFilePath() == QDir::fromNativeSeparators(value);
+  return QApplication::applicationFilePath() + LS(" -hide") == QDir::fromNativeSeparators(value);
 }
 
 
