@@ -30,17 +30,18 @@
 #include <QToolButton>
 #include <QUrl>
 
-#include "DaemonUi.h"
-#include "Path.h"
-#include "Settings.h"
-#include "sglobal.h"
-#include "Translation.h"
-#include "version.h"
-#include "Storage.h"
 #include "cores/Core.h"
+#include "DaemonUi.h"
 #include "feeds/FeedsCore.h"
 #include "net/NodePool.h"
 #include "NodePlugins.h"
+#include "Path.h"
+#include "Settings.h"
+#include "SettingsDialog.h"
+#include "sglobal.h"
+#include "Storage.h"
+#include "Translation.h"
+#include "version.h"
 
 /*!
  * Конструктор класса DaemonUi.
@@ -223,6 +224,14 @@ void DaemonUi::onSettings()
 {
   if (isHidden())
     show();
+
+  if (!m_dialog) {
+    m_dialog = new SettingsDialog(m_settings, this);
+  }
+
+  m_dialog->show();
+  m_dialog->raise();
+  m_dialog->activateWindow();
 }
 
 

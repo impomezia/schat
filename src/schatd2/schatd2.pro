@@ -33,14 +33,20 @@ win32 {
 
   HEADERS = \
     NodeInit.h \
+    ui/AboutPage.h \
     ui/DaemonUi.h \
+    ui/SettingsDialog.h \
+    ui/SettingsPage.h \
     qtsingleapplication/qtsingleapplication.h \
     qtsingleapplication/qtlocalpeer.h \
 
   SOURCES = \
     NodeInit.cpp \
     schatd2-ui.cpp \
+    ui/AboutPage.cpp \
     ui/DaemonUi.cpp \
+    ui/SettingsDialog.cpp \
+    ui/SettingsPage.cpp \
     qtsingleapplication/qtsingleapplication.cpp \
     qtsingleapplication/qtlocalpeer.cpp \
  

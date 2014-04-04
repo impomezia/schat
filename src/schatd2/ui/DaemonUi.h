@@ -37,6 +37,7 @@ class QProcess;
 class QToolBar;
 class QToolButton;
 class Settings;
+class SettingsDialog;
 class Storage;
 class Translation;
 
@@ -113,6 +114,7 @@ private:
   QLabel *m_statusLabel;
   QMap<Actions, QList<QAction*> > m_actions;
   QMenu *m_menu;
+  QPointer<SettingsDialog> m_dialog;
   QPushButton *m_hideButton;
   QPushButton *m_quitButton;
   QSystemTrayIcon *m_tray;

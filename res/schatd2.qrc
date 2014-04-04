@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
+  <file alias="images/32/gear.png">images/gear@2x.png</file>
   <file alias="images/restart.png">images/font-awesome/fa-repeat.png</file>
   <file alias="images/restart-big.png">images/font-awesome/fa-repeat-big.png</file>
   <file alias="images/start.png">images/font-awesome/fa-play.png</file>
