@@ -1,6 +1,5 @@
-/* $Id: SettingsTabHook.cpp 3112 2012-09-21 21:58:55Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -48,6 +47,11 @@ void SettingsPage::setupLayout()
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->addLayout(m_mainLayout);
   layout->addStretch();
+
+  QMargins margins = layout->contentsMargins();
+  margins.setBottom(0);
+
+  layout->setContentsMargins(margins);
 }
 
 
