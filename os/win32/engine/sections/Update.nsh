@@ -22,7 +22,7 @@ ${State} 1
 ${Body}
 ${Section}
   SetOutPath "$INSTDIR\plugins"
-  File "${SCHAT_SOURCE}\plugins\Update.dll"
+  File "/oname=$INSTDIR\plugins\Update2.dll" "${SCHAT_SOURCE}\plugins\Update.dll"
 
   SetOutPath "$INSTDIR\doc"
   File "${SCHAT_SOURCE}\doc\ChangeLog.Update.html"
@@ -32,6 +32,7 @@ ${BodyEnd}
 ${Uninstall}
   Delete "$INSTDIR\doc\ChangeLog.Update.html"
   Delete "$INSTDIR\plugins\Update.dll"
+  Delete "$INSTDIR\plugins\Update2.dll"
 
   RMDir "$INSTDIR\doc"
   RMDir "$INSTDIR\plugins"
