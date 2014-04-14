@@ -1,6 +1,5 @@
-/* $Id: SendFileDB.h 2783 2012-06-19 09:11:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,6 +28,7 @@ class SendFileDB : public QObject
 
 public:
   SendFileDB(QObject *parent = 0);
+  ~SendFileDB();
   bool open(const QByteArray &id, const QString &dir);
   inline const QString& id() const { return m_id; }
   void close();

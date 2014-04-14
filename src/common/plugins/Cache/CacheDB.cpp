@@ -142,7 +142,11 @@ CacheDB::CacheDB(QObject *parent)
 CacheDB::~CacheDB()
 {
   m_self = 0;
-  m_id.clear();
+
+  if (!m_id.isEmpty()) {
+    QSqlDatabase::removeDatabase(m_id);
+    m_id.clear();
+  }
 }
 
 

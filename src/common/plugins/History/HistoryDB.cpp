@@ -44,6 +44,11 @@ HistoryDB::HistoryDB(QObject *parent)
 HistoryDB::~HistoryDB()
 {
   m_self = 0;
+
+  if (!m_id.isEmpty()) {
+    QSqlDatabase::removeDatabase(m_id);
+    m_id.clear();
+  }
 }
 
 
