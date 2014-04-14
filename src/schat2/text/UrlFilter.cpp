@@ -28,11 +28,13 @@ bool UrlFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
   Q_UNUSED(id)
 
   QString name;
+  bool modified;
 
   for (int i = 0; i < tokens.size(); ++i) {
     const HtmlToken &token = tokens.at(i);
     if (token.type == HtmlToken::StartTag && token.tag == LS("a")) {
       HtmlATag tag(tokens.at(i));
+      modified = false;
 
       if (tag.url.startsWith(LS("chat://channel/"))) {
         tag.classes = LS("nick");
@@ -44,12 +46,21 @@ bool UrlFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
           tag.classes += LS(" color-") + Gender::colorToString(user->gender().color());
         }
 
-        tokens[i].text = tag.toText();
+        modified = true;
       }
-      else if (tag.title.isEmpty()) {
+
+      if (QUrl(tag.url).scheme() == LS("javascript")) {
+        tag.url  = QString();
+        modified = true;
+      }
+
+      if (tag.title.isEmpty()) {
         tag.title = tag.url;
-        tokens[i].text = tag.toText();
+        modified  = true;
       }
+
+      if (modified)
+        tokens[i].text = tag.toText();
     }
     else if (token.type == HtmlToken::Text && !name.isEmpty()) {
       tokens[i].text = Qt::escape(name);
