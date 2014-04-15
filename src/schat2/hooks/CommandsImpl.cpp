@@ -15,6 +15,8 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
+
 #include "ChatCore.h"
 #include "ChatNotify.h"
 #include "ChatSettings.h"
@@ -27,9 +29,17 @@
 #include "DateTime.h"
 #include "hooks/CommandsImpl.h"
 #include "messages/AlertMessage.h"
+#include "messages/AlertMessage.h"
 #include "QtEscape.h"
 #include "sglobal.h"
+#include "tools/OsInfo.h"
 #include "ui/StatusMenu.h"
+
+#if QT_VERSION >= 0x050000
+# include <QWebPage>
+#else
+# include <qwebkitversion.h>
+#endif
 
 namespace Hooks
 {
@@ -145,9 +155,14 @@ bool CommandsImpl::command(const QByteArray &dest, const ClientCmd &cmd)
     packet->setStatus(Notice::Found);
     ChatClient::io()->send(packet, false);
   }
-  else if (command == LS("crash")) {
-    char *p = 0;
-    *p = 5;
+  else if (command == LS("version") || command == LS("ver")) {
+    AlertMessage::show(QString(LS("<b>%1-%2</b>, Qt %3, WebKit %4, %5"))
+                       .arg(QApplication::applicationVersion())
+                       .arg(QString(GIT_REVISION).left(7))
+                       .arg(qVersion())
+                       .arg(qWebKitVersion())
+                       .arg(OsInfo::os())
+                       , ALERT_MESSAGE_INFO);
   }
   else
     return false;

@@ -45,6 +45,7 @@ class PreviewDB : public QObject
 
 public:
   PreviewDB(QObject *parent = 0);
+  ~PreviewDB();
   bool open(const QString &path);
   ImageRecord findById(const ChatId &id);
   void save(const ChatId &id, const QUrl &url);

@@ -1,6 +1,5 @@
-/* $Id: HistoryDB.cpp 3755 2013-07-14 23:11:47Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -39,6 +38,17 @@ HistoryDB::HistoryDB(QObject *parent)
   : QObject(parent)
 {
   m_self = this;
+}
+
+
+HistoryDB::~HistoryDB()
+{
+  m_self = 0;
+
+  if (!m_id.isEmpty()) {
+    QSqlDatabase::removeDatabase(m_id);
+    m_id.clear();
+  }
 }
 
 
@@ -151,7 +161,9 @@ QString HistoryDB::tag(const QByteArray &channelId)
 
 void HistoryDB::add(const QByteArray &channelId, const QStringList &messages)
 {
-  if (messages.isEmpty())
+  Q_ASSERT(m_self);
+
+  if (messages.isEmpty() || !m_self)
     return;
 
   history::AddLast *task = new history::AddLast(channelId, messages);
@@ -163,6 +175,11 @@ void HistoryDB::add(const QByteArray &channelId, const QStringList &messages)
 
 void HistoryDB::add(MessagePacket packet)
 {
+  Q_ASSERT(m_self);
+
+  if (!m_self)
+    return;
+
   history::AddMessage *task = new history::AddMessage(packet);
   m_self->m_tasks.append(task);
   if (m_self->m_tasks.size() == 1)

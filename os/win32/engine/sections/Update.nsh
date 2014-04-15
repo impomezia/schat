@@ -1,6 +1,5 @@
-/* $Id: Update.nsh 2574 2012-04-26 16:57:52Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright © 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -9,7 +8,7 @@
  *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
@@ -22,7 +21,8 @@ ${State} 1
 ${Body}
 ${Section}
   SetOutPath "$INSTDIR\plugins"
-  File "${SCHAT_SOURCE}\plugins\Update.dll"
+  File "/oname=$INSTDIR\plugins\Update2.dll" "${SCHAT_SOURCE}\plugins\Update.dll"
+  Delete "$INSTDIR\plugins\Update.dll"
 
   SetOutPath "$INSTDIR\doc"
   File "${SCHAT_SOURCE}\doc\ChangeLog.Update.html"
@@ -32,6 +32,7 @@ ${BodyEnd}
 ${Uninstall}
   Delete "$INSTDIR\doc\ChangeLog.Update.html"
   Delete "$INSTDIR\plugins\Update.dll"
+  Delete "$INSTDIR\plugins\Update2.dll"
 
   RMDir "$INSTDIR\doc"
   RMDir "$INSTDIR\plugins"

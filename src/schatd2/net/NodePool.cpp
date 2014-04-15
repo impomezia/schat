@@ -1,6 +1,5 @@
-/* $Id: NodePool.cpp 3698 2013-06-17 13:41:51Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,8 +14,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include <QDebug>
 
 #include <QCoreApplication>
 
@@ -40,24 +37,6 @@ NodePool::NodePool(const QStringList &listen, int workers, QObject *core)
 }
 
 
-NodePool::~NodePool()
-{
-  foreach (TcpServer *server, m_servers) {
-    server->close();
-    delete server;
-  }
-
-  foreach (NodeWorker *worker, m_workers) {
-    worker->quit();
-  }
-
-  foreach (NodeWorker *worker, m_workers) {
-    worker->wait();
-    delete worker;
-  }
-}
-
-
 void NodePool::run()
 {
   for (int i = 0; i < m_count; ++i) {
@@ -68,14 +47,30 @@ void NodePool::run()
     worker->start();
   }
 
-  foreach (QString host, m_listen) {
+  QStringList hosts;
+
+  foreach (const QString &host, m_listen) {
     TcpServer *server = new TcpServer;
     m_servers.append(server);
     connect(server, SIGNAL(newConnection(int)), SLOT(newConnection(int)), Qt::DirectConnection);
-    server->listen(host);
+
+    if (server->listen(host)) {
+      hosts.append(host);
+    }
   }
 
+  emit listen(hosts);
   exec();
+
+  foreach (TcpServer *server, m_servers) {
+    delete server;
+  }
+
+  foreach (NodeWorker *worker, m_workers) {
+    worker->quit();
+    worker->wait();
+    delete worker;
+  }
 }
 
 

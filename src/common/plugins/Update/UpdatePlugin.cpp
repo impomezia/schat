@@ -62,6 +62,7 @@
 
 const QString UpdatePluginImpl::kPrefix             = LS("Update");
 const QString UpdatePluginImpl::kUpdateAutoDownload = LS("Update/AutoDownload");
+const QString UpdatePluginImpl::kUpdateAutoRemove   = LS("Update/AutoRemove");
 const QString UpdatePluginImpl::kUpdateChannel      = LS("Update/Channel");
 const QString UpdatePluginImpl::kUpdateReady        = LS("Update/Ready");
 const QString UpdatePluginImpl::kUpdateRevision     = LS("Update/Revision");
@@ -92,7 +93,7 @@ UpdateInfo::UpdateInfo(const QVariantMap &data)
   page     = data.value(LS("page")).toString();
 
   if (notes.isEmpty())
-    notes = LS("http://wiki.schat.me/Simple_Chat_") + version;
+    notes = LS("https://wiki.schat.me/Simple_Chat_") + version;
 
   if (page.isEmpty())
     page = url.toString();
@@ -132,6 +133,7 @@ UpdatePluginImpl::UpdatePluginImpl(QObject *parent)
   m_settings->setLocalDefault(kUpdateUrl,          LS("https://download.schat.me/schat2/update.json"));
   m_settings->setLocalDefault(kUpdateChannel,      LS("stable"));
   m_settings->setLocalDefault(kUpdateAutoDownload, true);
+  m_settings->setLocalDefault(kUpdateAutoRemove,   true);
   m_settings->setLocalDefault(kUpdateReady,        false);
   m_settings->setLocalDefault(kUpdateVersion,      QString());
   m_settings->setLocalDefault(kUpdateRevision,     0);
@@ -325,7 +327,8 @@ void UpdatePluginImpl::restart()
 
 void UpdatePluginImpl::start()
 {
-  QFile::remove(Path::cache() + LS("/schat2-") + QApplication::applicationVersion() + LS(".exe"));
+  if (m_settings->value(kUpdateAutoRemove).toBool())
+    QFile::remove(Path::cache() + LS("/schat2-") + QApplication::applicationVersion() + LS(".exe"));
 
   connect(BgOperationWidget::i(), SIGNAL(clicked(QString,QMouseEvent*)), SLOT(clicked(QString,QMouseEvent*)));
   connect(ChatClient::i(), SIGNAL(ready()), SLOT(online()));

@@ -30,6 +30,12 @@ PreviewDB::PreviewDB(QObject *parent) :
 }
 
 
+PreviewDB::~PreviewDB()
+{
+  QSqlDatabase::removeDatabase(m_id);
+}
+
+
 bool PreviewDB::open(const QString &path)
 {
   QSqlDatabase db = QSqlDatabase::addDatabase(LS("QSQLITE"), m_id);

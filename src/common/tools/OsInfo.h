@@ -1,6 +1,5 @@
-/* $Id: OsInfo.h 3663 2013-05-10 13:19:09Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -41,15 +40,12 @@ public:
   };
 
   static int type();
+  static QString os();
   static QVariantMap json();
 
 private:
-  OsInfo() {}
+  inline OsInfo() {}
   static void init();
-
-# if defined(Q_OS_LINUX)
-  static void detectLinux(QString &name);
-# endif
 
   static int m_type;         ///< Тип операционной системы.
   static QVariantMap m_json; ///< JSON данные.

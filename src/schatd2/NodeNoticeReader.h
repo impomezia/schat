@@ -1,6 +1,5 @@
-/* $Id: NodeNoticeReader.h 2112 2012-01-07 07:00:49Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,7 +19,6 @@
 #define NODENOTICEREADER_H_
 
 #include <QMap>
-#include <QSharedPointer>
 
 #include "ServerChannel.h"
 
@@ -33,7 +31,7 @@ class SCHAT_EXPORT NodeNoticeReader
 {
 public:
   NodeNoticeReader(int type, Core *core);
-  virtual ~NodeNoticeReader() {}
+  virtual ~NodeNoticeReader();
 
   inline int type() const { return m_type; }
 
@@ -53,9 +51,7 @@ protected:
   int m_type;         ///< Тип поддерживаемых пакетов.
   Storage *m_storage; ///< Хранилище данных.
 
-  static QMap<int, QSharedPointer<NodeNoticeReader> > m_readers;
+  static QMap<int, NodeNoticeReader*> m_readers;
 };
-
-typedef QSharedPointer<NodeNoticeReader> NodeNoticeReaderPtr;
 
 #endif /* NODENOTICEREADER_H_ */

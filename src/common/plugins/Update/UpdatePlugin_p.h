@@ -79,6 +79,7 @@ public:
 
   static const QString kPrefix;
   static const QString kUpdateAutoDownload;
+  static const QString kUpdateAutoRemove;
   static const QString kUpdateChannel;
   static const QString kUpdateReady;
   static const QString kUpdateRevision;

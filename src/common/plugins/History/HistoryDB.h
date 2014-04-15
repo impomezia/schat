@@ -1,6 +1,5 @@
-/* $Id: HistoryDB.h 3755 2013-07-14 23:11:47Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -36,6 +35,7 @@ class HistoryDB : public QObject
 
 public:
   HistoryDB(QObject *parent = 0);
+  ~HistoryDB();
 
   inline static QString id() { return m_id; }
   static bool open(const QByteArray &id, const QString &dir);

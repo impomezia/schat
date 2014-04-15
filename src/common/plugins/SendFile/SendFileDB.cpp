@@ -1,6 +1,5 @@
-/* $Id: SendFileDB.cpp 2792 2012-06-24 15:42:54Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,6 +27,13 @@
 SendFileDB::SendFileDB(QObject *parent)
   : QObject(parent)
 {
+}
+
+
+SendFileDB::~SendFileDB()
+{
+  if (!m_id.isEmpty())
+    QSqlDatabase::removeDatabase(m_id);
 }
 
 

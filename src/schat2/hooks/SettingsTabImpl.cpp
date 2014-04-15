@@ -1,6 +1,5 @@
-/* $Id: SettingsTabImpl.cpp 3115 2012-09-23 03:45:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +15,12 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QLabel>
+#include <QApplication>
+#include <QCheckBox>
+#include <QDir>
 #include <QHBoxLayout>
+#include <QLabel>
+#include <QSettings>
 #include <QToolButton>
 
 #include "alerts/AlertsWidget.h"
@@ -32,6 +35,7 @@
 
 ProfilePage::ProfilePage(QWidget *parent)
   : SettingsPage(SCHAT_ICON(Profile), LS("profile"), parent)
+  , m_autoRunBtn(0)
 {
   m_profileLabel = new QLabel(this);
   m_nickLabel = new QLabel(this);
@@ -56,7 +60,37 @@ ProfilePage::ProfilePage(QWidget *parent)
   m_mainLayout->addWidget(m_layout);
 
   setupLayout();
+
+# ifdef Q_OS_WIN
+  m_autoRunBtn = new QCheckBox(this);
+  m_autoRunBtn->setChecked(isAutoRun());
+  static_cast<QVBoxLayout*>(layout())->addWidget(m_autoRunBtn);
+
+  connect(m_autoRunBtn, SIGNAL(clicked(bool)), SLOT(onAutoRunClicked(bool)));
+# endif
+
   retranslateUi();
+}
+
+
+void ProfilePage::onAutoRunClicked(bool checked)
+{
+  QSettings reg(LS("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
+  if (checked)
+    reg.setValue(QApplication::applicationName(), QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS(" -hide"));
+  else
+    reg.remove(QApplication::applicationName());
+}
+
+
+bool ProfilePage::isAutoRun() const
+{
+  QSettings reg(LS("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
+  const QString value = reg.value(QApplication::applicationName(), QString()).toString();
+  if (value.isEmpty())
+    return false;
+
+  return QApplication::applicationFilePath() + LS(" -hide") == QDir::fromNativeSeparators(value);
 }
 
 
@@ -69,12 +103,9 @@ void ProfilePage::retranslateUi()
   m_genderLabel->setText(tr("Gender:"));
 
   m_layout->retranslateUi();
-}
 
-
-SettingsPage* ProfilePageCreator::page(QWidget *parent)
-{
-  return new ProfilePage(parent);
+  if (m_autoRunBtn)
+    m_autoRunBtn->setText(tr("Run at Windows start up"));
 }
 
 
@@ -101,12 +132,6 @@ void NetworkPage::retranslateUi()
 {
   m_name = tr("Network");
   m_networkLabel->setText(LS("<b>") + m_name + LS("</b>"));
-}
-
-
-SettingsPage* NetworkPageCreator::page(QWidget *parent)
-{
-  return new NetworkPage(parent);
 }
 
 
@@ -162,10 +187,4 @@ void LocalePage::retranslateUi()
 {
   m_name = tr("Language");
   m_localeLabel->setText(LS("<b>") + m_name + LS("</b>"));
-}
-
-
-SettingsPage* LocalePageCreator::page(QWidget *parent)
-{
-  return new LocalePage(parent);
 }

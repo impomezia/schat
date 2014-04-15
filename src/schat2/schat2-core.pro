@@ -278,3 +278,4 @@ win32 {
 }
 
 include(../common/common.pri)
+include(../common/prefix.pri)

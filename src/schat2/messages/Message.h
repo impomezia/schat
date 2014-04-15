@@ -1,6 +1,5 @@
-/* $Id: Message.h 3749 2013-07-12 20:50:37Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -44,9 +43,9 @@ public:
   virtual ~Message() {}
 
   inline const QByteArray& tab() const      { return m_tab; }
-  inline const QVariantMap& data() const    { return m_data; };
+  inline const QVariantMap& data() const    { return m_data; }
   inline QString id() const                 { return m_data.value(kId).toString(); }
-  inline QVariantMap& data()                { return m_data; };
+  inline QVariantMap& data()                { return m_data; }
   inline virtual bool isValid() const       { return true; }
   inline void setTab(const QByteArray &tab) { m_tab = tab; }
   static QByteArray detectTab(const QByteArray &sender, const QByteArray &dest);

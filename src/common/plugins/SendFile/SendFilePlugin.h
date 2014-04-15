@@ -33,7 +33,7 @@ public:
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "SendFile";
     out[CORE_API_NAME]     = "Send File";
-    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_VERSION]  = "2.3.2";
     out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/SendFile";
     out[CORE_API_DESC]     = "Adds support for file transfer between users";
     out[CORE_API_DESC_RU]  = "Добавляет поддержку передачи файлов между пользователями";

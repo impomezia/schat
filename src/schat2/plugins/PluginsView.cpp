@@ -1,6 +1,5 @@
-/* $Id: PluginsView.cpp 3408 2013-01-16 12:40:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -77,6 +76,9 @@ QVariantList PluginsView::list() const
   foreach (PluginItem *item, ChatCore::plugins()->list()) {
     QVariantMap data;
     const QVariantMap &header = item->header();
+
+    if (header.value(CORE_API_HIDDEN).toBool())
+      continue;
 
     data[LS("id")]      = item->id();
     data[LS("icon")]    = LS("qrc") + item->icon();

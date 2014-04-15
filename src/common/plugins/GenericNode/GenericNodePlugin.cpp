@@ -1,6 +1,5 @@
-/* $Id: GenericNodePlugin.cpp 3470 2013-02-06 09:57:57Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,9 +30,15 @@ GenericNode::GenericNode(QObject *parent)
   : NodePlugin(parent)
 {
   new NodeChannels(Core::i());
-  new NodeFeeds(Core::i());
+  m_feeds = new NodeFeeds(Core::i());
   new GenericCh(this);
   new NodeFeedStorage(this);
+}
+
+
+GenericNode::~GenericNode()
+{
+  delete m_feeds;
 }
 
 
@@ -44,6 +49,4 @@ NodePlugin *GenericNodePlugin::create()
 }
 
 
-#if QT_VERSION < 0x050000
-  Q_EXPORT_PLUGIN2(GenericNode, GenericNodePlugin);
-#endif
+Q_EXPORT_PLUGIN2(GenericNode, GenericNodePlugin);

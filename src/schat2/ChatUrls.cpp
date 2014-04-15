@@ -1,6 +1,5 @@
-/* $Id: ChatUrls.cpp 3708 2013-06-23 23:40:16Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -147,8 +146,7 @@ QUrl ChatUrls::fromLocalFile(const QString &localFile)
  */
 QUrl ChatUrls::toUrl(ClientChannel channel, const QString &action)
 {
-  QUrl out(LS("chat://channel"));
-  out.setPath(SimpleID::encode(channel->id()) + (action.isEmpty() ? QString() : "/" + action));
+  QUrl url(LS("chat://channel/") + SimpleID::encode(channel->id()) + (action.isEmpty() ? QString() : "/" + action));
 
   QList<QPair<QString, QString> > queries;
   queries.append(QPair<QString, QString>(LS("name"),   ChatId::toBase32(channel->name().toUtf8())));
@@ -157,12 +155,12 @@ QUrl ChatUrls::toUrl(ClientChannel channel, const QString &action)
 # if QT_VERSION >= 0x050000
   QUrlQuery query;
   query.setQueryItems(queries);
-  out.setQuery(query);
+  url.setQuery(query);
 # else
-  out.setQueryItems(queries);
+  url.setQueryItems(queries);
 # endif
 
-  return out;
+  return url;
 }
 
 

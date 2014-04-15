@@ -1,6 +1,5 @@
-/* $Id: CacheDB.cpp 3578 2013-03-14 08:20:25Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -143,7 +142,11 @@ CacheDB::CacheDB(QObject *parent)
 CacheDB::~CacheDB()
 {
   m_self = 0;
-  m_id.clear();
+
+  if (!m_id.isEmpty()) {
+    QSqlDatabase::removeDatabase(m_id);
+    m_id.clear();
+  }
 }
 
 
@@ -192,6 +195,11 @@ ClientChannel CacheDB::channel(const QByteArray &id, bool feeds)
  */
 qint64 CacheDB::key(const QByteArray &id)
 {
+  Q_ASSERT(m_self);
+
+  if (!m_self)
+    return -1;
+
   m_self->m_mutex.lock();
   qint64 key = m_self->m_cache.value(id);
   m_self->m_mutex.unlock();
@@ -220,6 +228,11 @@ qint64 CacheDB::key(const QByteArray &id)
  */
 void CacheDB::add(ClientChannel channel)
 {
+  Q_ASSERT(m_self);
+
+  if (!m_self)
+    return;
+
   AddChannelTask *task = new AddChannelTask(channel);
   m_self->m_tasks.append(task);
   if (m_self->m_tasks.size() == 1)
@@ -229,6 +242,11 @@ void CacheDB::add(ClientChannel channel)
 
 void CacheDB::add(FeedPtr feed)
 {
+  Q_ASSERT(m_self);
+
+  if (!m_self)
+    return;
+
   AddFeedTask *task = new AddFeedTask(feed, feed->head());
   m_self->m_tasks.append(task);
   if (m_self->m_tasks.size() == 1)
@@ -322,9 +340,13 @@ qint64 CacheDB::V3()
  */
 void CacheDB::close()
 {
+  Q_ASSERT(m_self);
+
   QSqlDatabase::removeDatabase(m_id);
   m_id.clear();
-  m_self->m_cache.clear();
+
+  if (m_self)
+    m_self->m_cache.clear();
 }
 
 
@@ -361,7 +383,9 @@ void CacheDB::create()
 
 void CacheDB::setKey(const QByteArray &id, qint64 key)
 {
-  if (key <= 0)
+  Q_ASSERT(m_self);
+
+  if (key <= 0 || !m_self)
     return;
 
   QMutexLocker locker(&m_self->m_mutex);

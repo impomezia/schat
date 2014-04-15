@@ -1,6 +1,5 @@
-/* $Id: SettingsTabImpl.h 3115 2012-09-23 03:45:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,6 +26,7 @@ class LanguageField;
 class NetworkWidget;
 class NickEdit;
 class ProfileLayout;
+class QCheckBox;
 class QLabel;
 
 /*!
@@ -39,12 +39,17 @@ class ProfilePage : public SettingsPage
 public:
   ProfilePage(QWidget *parent = 0);
 
+private slots:
+  void onAutoRunClicked(bool checked);
+
 private:
-  void retranslateUi();
+  bool isAutoRun() const;
+  void retranslateUi() Q_DECL_OVERRIDE;
 
   GenderField *m_genderField;
   NickEdit *m_nickEdit;
   ProfileLayout *m_layout;    ///< Виджет для размещения полей профиля.
+  QCheckBox *m_autoRunBtn;
   QLabel *m_genderLabel;
   QLabel *m_nickLabel;
   QLabel *m_profileLabel;
@@ -54,11 +59,8 @@ private:
 class ProfilePageCreator : public SettingsPageCreator
 {
 public:
-  ProfilePageCreator()
-  : SettingsPageCreator(1000)
-  {}
-
-  SettingsPage* page(QWidget *parent = 0);
+  inline ProfilePageCreator() : SettingsPageCreator(1000)        {}
+  inline SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new ProfilePage(parent); }
 };
 
 
@@ -73,7 +75,7 @@ public:
   NetworkPage(QWidget *parent = 0);
 
 private:
-  void retranslateUi();
+  void retranslateUi() Q_DECL_OVERRIDE;
 
   NetworkWidget *m_network;
   QLabel *m_networkLabel;
@@ -83,11 +85,8 @@ private:
 class NetworkPageCreator : public SettingsPageCreator
 {
 public:
-  NetworkPageCreator()
-  : SettingsPageCreator(2000)
-  {}
-
-  SettingsPage* page(QWidget *parent = 0);
+  inline NetworkPageCreator() : SettingsPageCreator(2000)        {}
+  inline SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new NetworkPage(parent); }
 };
 
 
@@ -102,7 +101,7 @@ public:
   AlertsPage(QWidget *parent = 0);
 
 private:
-  void retranslateUi();
+  void retranslateUi() Q_DECL_OVERRIDE;
 
   AlertsWidget *m_alertsWidget;
   QLabel *m_label;
@@ -112,8 +111,8 @@ private:
 class AlertsPageCreator : public SettingsPageCreator
 {
 public:
-  inline AlertsPageCreator() : SettingsPageCreator(2100) {}
-  inline SettingsPage* page(QWidget *parent = 0)         { return new AlertsPage(parent); }
+  inline AlertsPageCreator() : SettingsPageCreator(2100)         {}
+  inline SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new AlertsPage(parent); }
 };
 
 
@@ -128,7 +127,7 @@ public:
   LocalePage(QWidget *parent = 0);
 
 private:
-  void retranslateUi();
+  void retranslateUi() Q_DECL_OVERRIDE;
 
   LanguageField *m_language; ///< Виджет выбора языка.
   QLabel *m_localeLabel;
@@ -138,11 +137,8 @@ private:
 class LocalePageCreator : public SettingsPageCreator
 {
 public:
-  LocalePageCreator()
-  : SettingsPageCreator(10000)
-  {}
-
-  SettingsPage* page(QWidget *parent = 0);
+  inline LocalePageCreator() : SettingsPageCreator(10000)        {}
+  inline SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new LocalePage(parent); }
 };
 
 #endif /* SETTINGSTABIMPL_H_ */
