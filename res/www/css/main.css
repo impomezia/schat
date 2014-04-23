@@ -47,8 +47,12 @@
   background-position: -144px 0;
 }
 
+.provider-simpleid {
+  background-position: -160px 0;
+}
+
 .icon-spinner {
-  background-image: url("../img/spinner.gif");
+  background-image: url(../img/spinner.gif);
 }
 
 .provider {

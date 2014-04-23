@@ -1,6 +1,5 @@
-/* $Id: ChatView.css 3756 2013-07-15 15:23:36Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -521,6 +520,10 @@ hr {
 
 .provider-stackoverflow {
   background-position: -144px 0;
+}
+
+.provider-simpleid {
+  background-position: -160px 0;
 }
 
 #easyTooltip {
