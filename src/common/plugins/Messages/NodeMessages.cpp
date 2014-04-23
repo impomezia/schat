@@ -44,11 +44,11 @@ NodeMessages::NodeMessages(Core *core)
 bool NodeMessages::read(PacketReader *reader)
 {
   if (ChatId(reader->sender()).type() != ChatId::UserId)
-    return false;
+    return cleanup();
 
   m_sender = Ch::channel(reader->sender(), ChatId::UserId);
   if (!m_sender)
-    return false;
+    return cleanup();
 
   MessageNotice packet(m_type, reader);
   m_packet          = &packet;
@@ -58,7 +58,7 @@ bool NodeMessages::read(PacketReader *reader)
   if (event->status != Notice::OK) {
     reject(event->status);
     FeedEvents::start(event);
-    return false;
+    return cleanup();
   }
 
   if (packet.direction() == Notice::Internal) {
@@ -67,7 +67,7 @@ bool NodeMessages::read(PacketReader *reader)
 
     Core::i()->route(m_dest);
     delete event;
-    return false;
+    return cleanup();
   }
 
   FeedPtr feed  = m_dest->feed(FEED_NAME_MESSAGES, true, false);
@@ -90,6 +90,15 @@ bool NodeMessages::read(PacketReader *reader)
 
   FeedStorage::save(feed, m_packet->date());
   FeedEvents::start(event);
+  return cleanup();
+}
+
+
+bool NodeMessages::cleanup()
+{
+  m_sender = ChatChannel();
+  m_dest   = ChatChannel();
+
   return false;
 }
 

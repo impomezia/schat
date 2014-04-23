@@ -35,9 +35,10 @@ public:
   NodeMessages(Core *core);
 
 protected:
-  bool read(PacketReader *reader);
+  bool read(PacketReader *reader) Q_DECL_OVERRIDE;
 
 private:
+  bool cleanup();
   FeedEvent *createEvent();
   int filter();
   void pong(qint64 date);

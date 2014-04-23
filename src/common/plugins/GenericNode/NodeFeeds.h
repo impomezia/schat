@@ -30,7 +30,7 @@ public:
   NodeFeeds(Core *core);
 
 protected:
-  bool read(PacketReader *reader);
+  bool read(PacketReader *reader) Q_DECL_OVERRIDE;
 
 private:
   class CheckResult
@@ -45,6 +45,7 @@ private:
   };
 
 private:
+  bool cleanup();
   FeedReply add();
   FeedReply del(const CheckResult &result);
   FeedReply post(CheckResult &result);
