@@ -35,10 +35,10 @@ public:
   NodeChannels(Core *core);
 
 protected:
-  bool read(PacketReader *reader);
-  void acceptImpl(ChatChannel user, const AuthResult & /*result*/, QList<QByteArray> &packets);
-  void addImpl(ChatChannel user);
-  void releaseImpl(ChatChannel user, quint64 socket);
+  bool read(PacketReader *reader) Q_DECL_OVERRIDE;
+  void acceptImpl(ChatChannel user, const AuthResult & /*result*/, QList<QByteArray> &packets) Q_DECL_OVERRIDE;
+  void addImpl(ChatChannel user) Q_DECL_OVERRIDE;
+  void releaseImpl(ChatChannel user, quint64 socket) Q_DECL_OVERRIDE;
 
 private slots:
   void join();
