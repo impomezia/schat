@@ -15,15 +15,20 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "handlers/ProvidersHandler.h"
-#include "handlers/StateHandler.h"
-#include "oauth2/facebook/FacebookAuth.h"
-#include "oauth2/github/GithubAuth.h"
-#include "oauth2/google/GoogleAuth.h"
-#include "oauth2/live/LiveAuth.h"
-#include "oauth2/mail_ru/MailRuAuth.h"
-#include "oauth2/odnoklassniki/OdnoklassnikiAuth.h"
-#include "oauth2/vkontakte/VkontakteAuth.h"
-#include "oauth2/yandex/YandexAuth.h"
-#include "oauth2/stackoverflow/StackOverflowAuth.h"
-#include "oauth2/simpleid/SimpleIdAuth.h"
+#include <QUrl>
+
+#include "sglobal.h"
+#include "SimpleIdAuthData.h"
+
+SimpleIdAuthData::SimpleIdAuthData()
+  : OAuthData("simpleid")
+{
+  name = "SimpleID";
+  htmlName = name;
+}
+
+
+QByteArray SimpleIdAuthData::toUrl(const QByteArray &state) const
+{
+  return "https://id.schat.me/oauth/authorize?client_id=" + id + "&response_type=code&redirect_uri=" + QUrl::toPercentEncoding(redirect) + "&state=" + state;
+}

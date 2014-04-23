@@ -15,15 +15,32 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "handlers/ProvidersHandler.h"
-#include "handlers/StateHandler.h"
-#include "oauth2/facebook/FacebookAuth.h"
-#include "oauth2/github/GithubAuth.h"
-#include "oauth2/google/GoogleAuth.h"
-#include "oauth2/live/LiveAuth.h"
-#include "oauth2/mail_ru/MailRuAuth.h"
-#include "oauth2/odnoklassniki/OdnoklassnikiAuth.h"
-#include "oauth2/vkontakte/VkontakteAuth.h"
-#include "oauth2/yandex/YandexAuth.h"
-#include "oauth2/stackoverflow/StackOverflowAuth.h"
-#include "oauth2/simpleid/SimpleIdAuth.h"
+#ifndef SIMPLEIDAUTH_H_
+#define SIMPLEIDAUTH_H_
+
+#include "oauth2/OAuthHandler.h"
+
+class SimpleIdAuth : public OAuthHandler
+{
+  Q_OBJECT
+
+public:
+  SimpleIdAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent = 0);
+
+private slots:
+  void dataReady();
+  void tokenReady();
+
+private:
+  void getToken() Q_DECL_OVERRIDE;
+};
+
+
+class SimpleIdAuthCreator : public HandlerCreator
+{
+public:
+  SimpleIdAuthCreator() : HandlerCreator() {}
+  bool serve(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent) Q_DECL_OVERRIDE;
+};
+
+#endif // SIMPLEIDAUTH_H_
