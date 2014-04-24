@@ -17,6 +17,13 @@
 
 #include <QNetworkReply>
 
+#include "AuthCore.h"
+#include "AuthState.h"
+#include "id/ChatId.h"
+#include "JSON.h"
+#include "net/SimpleID.h"
+#include "NodeLog.h"
+#include "oauth2/OAuthData.h"
 #include "sglobal.h"
 #include "SimpleIdAuth.h"
 #include "UrlQuery.h"
@@ -30,17 +37,56 @@ SimpleIdAuth::SimpleIdAuth(const QUrl &url, const QString &path, Tufao::HttpServ
 void SimpleIdAuth::dataReady()
 {
   OAUTH_PREPARE_REPLY
+
+  const QVariantMap data = JSON::parse(raw).toMap();
+  const QByteArray uid   = data.value(LS("id")).toByteArray();
+  if (uid.isEmpty())
+    return setError("invalid_uid");
+
+  User user;
+  user.link  = data.value(LS("link")).toString();
+  user.name  = data.value(LS("name")).toString();
+  user.email = data.value(LS("email")).toString();
+  user.site  = data.value(LS("site")).toString();
+
+  const QByteArray id = SimpleID::encode(SimpleID::make("simpleid:" + uid, SimpleID::UserId));
+  AuthCore::state()->add(new AuthStateData(m_state, "simpleid", id, data, user));
+
+  log(NodeLog::InfoLevel, "Data is successfully received, id:" + id + ", uid:" + uid);
 }
 
 
 void SimpleIdAuth::tokenReady()
 {
   OAUTH_PREPARE_REPLY
+
+  const QVariantMap data = JSON::parse(raw).toMap();
+  const QByteArray token = data.value(LS("access_token")).toByteArray();
+  if (token.isEmpty())
+    return setError("token_error: " + data.value(LS("error")).toByteArray());
+
+  log(NodeLog::InfoLevel, "Token is successfully received");
+
+  QNetworkRequest request(QUrl(LS("https://id.schat.me/api/user")));
+  request.setRawHeader("Authorization", "Bearer " + token);
+  QNetworkReply *reply = m_manager->get(request);
+  connect(reply, SIGNAL(finished()), SLOT(dataReady()));
 }
 
 
 void SimpleIdAuth::getToken()
 {
+  QNetworkRequest request(QUrl(LS("https://id.schat.me/oauth/access_token")));
+  request.setHeader(QNetworkRequest::ContentTypeHeader, LS("application/x-www-form-urlencoded"));
+
+  QByteArray body = "code=" + m_code;
+  body += "&client_id="     + m_provider->id;
+  body += "&client_secret=" + m_provider->secret;
+  body += "&redirect_uri="  + m_provider->redirect;
+  body += "&grant_type=authorization_code";
+
+  QNetworkReply *reply = m_manager->post(request, body);
+  connect(reply, SIGNAL(finished()), SLOT(tokenReady()));
 }
 
 
