@@ -1,6 +1,5 @@
-/* $Id: OAuthHandler.h 3771 2013-08-19 22:53:21Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
 #include <QUrl>
 
 #include "HandlerCreator.h"
+#include "schat.h"
 
 class OAuthData;
 class QNetworkAccessManager;
