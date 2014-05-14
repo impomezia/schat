@@ -27,8 +27,6 @@
 #include "plugins/CoreApi.h"
 #include "tools/Ver.h"
 
-class CoreApi;
-
 /*!
  * Загружает плагин и хранит о нём информацию.
  */
