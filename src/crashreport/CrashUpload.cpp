@@ -15,11 +15,12 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCoreApplication>
+#include <QDir>
 #include <QHttpMultiPart>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QTimer>
-#include <QCoreApplication>
 
 #include "CrashUpload.h"
 #include "sglobal.h"
@@ -71,6 +72,11 @@ void CrashUpload::start()
       multiPart->append(part);
     }
   }
+
+  QHttpPart path;
+  path.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant("form-data; name=\"path\""));
+  path.setBody(QDir::toNativeSeparators(QCoreApplication::applicationDirPath()).toUtf8());
+  multiPart->append(path);
 
   QNetworkRequest request(QUrl(LS("https://crashdumps.schat.me/1/upload")));
 
