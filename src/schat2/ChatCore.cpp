@@ -122,6 +122,8 @@ ChatCore::ChatCore(QObject *parent)
 
 ChatCore::~ChatCore()
 {
+  QThreadPool::globalInstance()->waitForDone();
+
   TokenFilter::clear();
   ProfileFieldFactory::clear();
 

@@ -78,9 +78,9 @@ void PreviewRunnable::run()
   record.height = image.height();
   record.format = format;
 
-  emit finished(record);
-
   SLOG_DEBUG(t.elapsed() << "ms" << image.size());
+
+  emit finished(record);
 }
 
 

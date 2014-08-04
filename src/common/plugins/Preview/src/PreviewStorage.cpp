@@ -49,6 +49,7 @@ PreviewStorage::PreviewStorage(QObject *parent) :
 PreviewStorage::~PreviewStorage()
 {
   qDeleteAll(m_items);
+  QThreadPool::globalInstance()->waitForDone();
 }
 
 
