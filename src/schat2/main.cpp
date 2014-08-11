@@ -15,7 +15,10 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QProcess>
+
 #include "ChatApp.h"
+#include "sglobal.h"
 
 #if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
 # include "ExceptionHandler.h"
@@ -27,13 +30,25 @@ int main(int argc, char *argv[])
   initExceptionHandler();
 # endif
 
-  ChatApp app(argc, argv);
-  if (app.isRunning())
-    return 0;
+  int ret = 0;
+  QString appPath;
 
-  if (ChatApp::selfUpdate())
-    return 0;
+  {
+    ChatApp app(argc, argv);
+    if (app.isRunning())
+      return 0;
 
-  app.start();
-  return app.exec();
+    if (ChatApp::selfUpdate())
+      return 0;
+
+    appPath = app.applicationFilePath();
+    app.start();
+    ret = app.exec();
+  }
+
+  if (ChatApp::restartRequired) {
+    QProcess::startDetached(LC('"') + appPath + LC('"'));
+  }
+
+  return ret;
 }

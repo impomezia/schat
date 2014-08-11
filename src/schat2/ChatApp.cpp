@@ -31,11 +31,15 @@
 #include "ui/ChatWindow.h"
 #include "version.h"
 
+bool ChatApp::restartRequired = false;
+
 ChatApp::ChatApp(int &argc, char **argv)
   : QtSingleApplication(argc, argv)
   , m_core(0)
   , m_window(0)
 {
+  restartRequired = false;
+
   setApplicationName(SCHAT_NAME);
   setApplicationVersion(SCHAT_VERSION);
   setOrganizationName(LS("IMPOMEZIA"));
@@ -186,14 +190,11 @@ void ChatApp::onRestartRequest()
 
 void ChatApp::restart()
 {
+  restartRequired = true;
+
   stop();
-
-  if (selfUpdate()) {
-    quit();
-    return;
-  }
-
-  start();
+  selfUpdate();
+  quit();
 }
 
 
