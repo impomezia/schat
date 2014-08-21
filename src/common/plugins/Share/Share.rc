@@ -41,10 +41,10 @@ VS_VERSION_INFO VERSIONINFO
       BLOCK "040904B0"
       BEGIN
         VALUE "CompanyName",      SCHAT_ORGANIZATION
-        VALUE "FileDescription",  "Image Preview"
+        VALUE "FileDescription",  "Image Share"
         VALUE "FileVersion",      "2.3.3"
         VALUE "LegalCopyright",   SCHAT_COPYRIGHT
-        VALUE "OriginalFilename", "Preview.dll"
+        VALUE "OriginalFilename", "Share.dll"
         VALUE "ProductName",      SCHAT_NAME
         VALUE "ProductVersion",   SCHAT_VERSION
       END

@@ -15,32 +15,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PREVIEWPLUGIN_H_
-#define PREVIEWPLUGIN_H_
+#include <QtPlugin>
 
-#include "ChatApi.h"
-#include "CoreApi.h"
+#include "SharePlugin.h"
+#include "src/ShareCore.h"
 
-class PreviewPlugin : public QObject, CoreApi, ChatApi
+ChatPlugin *SharePlugin::create()
 {
-  Q_OBJECT
-  Q_INTERFACES(CoreApi ChatApi)
-  Q_PLUGIN_METADATA(IID "me.schat.client.Preview")
+  m_plugin = new ShareCore(this);
+  return m_plugin;
+}
 
-public:
-  QVariantMap header() const Q_DECL_OVERRIDE
-  {
-    QVariantMap out        = CoreApi::header();
-    out[CORE_API_ID]       = "Preview";
-    out[CORE_API_NAME]     = "Preview";
-    out[CORE_API_VERSION]  = "2.3.3";
-    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Preview";
-    out[CORE_API_DESC]     = "Image Preview";
-
-    return out;
-  }
-
-  ChatPlugin *create() Q_DECL_OVERRIDE;
-};
-
-#endif // PREVIEWPLUGIN_H_
+Q_EXPORT_PLUGIN2(Share, SharePlugin);

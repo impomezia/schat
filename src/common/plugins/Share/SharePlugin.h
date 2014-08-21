@@ -15,27 +15,27 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PREVIEWPLUGIN_H_
-#define PREVIEWPLUGIN_H_
+#ifndef SHAREPLUGIN_H_
+#define SHAREPLUGIN_H_
 
 #include "ChatApi.h"
 #include "CoreApi.h"
 
-class PreviewPlugin : public QObject, CoreApi, ChatApi
+class SharePlugin : public QObject, CoreApi, ChatApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi ChatApi)
-  Q_PLUGIN_METADATA(IID "me.schat.client.Preview")
+  Q_PLUGIN_METADATA(IID "me.schat.client.Share")
 
 public:
   QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
-    out[CORE_API_ID]       = "Preview";
-    out[CORE_API_NAME]     = "Preview";
+    out[CORE_API_ID]       = "Share";
+    out[CORE_API_NAME]     = "Share";
     out[CORE_API_VERSION]  = "2.3.3";
-    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Preview";
-    out[CORE_API_DESC]     = "Image Preview";
+    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Share";
+    out[CORE_API_DESC]     = "Image Share";
 
     return out;
   }
@@ -43,4 +43,4 @@ public:
   ChatPlugin *create() Q_DECL_OVERRIDE;
 };
 
-#endif // PREVIEWPLUGIN_H_
+#endif // SHAREPLUGIN_H_
