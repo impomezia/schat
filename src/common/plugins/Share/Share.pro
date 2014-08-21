@@ -22,11 +22,19 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
 HEADERS  = \
    SharePlugin.h \
+   src/ShareButton.h \
    src/ShareCore.h \
+   src/ShareDnD.h \
+   src/ShareWebWidget.h \
+   src/ShareWidget.h \
 
 SOURCES  = \
    SharePlugin.cpp \
+   src/ShareButton.cpp \
    src/ShareCore.cpp \
+   src/ShareDnD.cpp \
+   src/ShareWebWidget.cpp \
+   src/ShareWidget.cpp \
 
 RESOURCES += res/Share.qrc
 

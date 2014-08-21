@@ -15,21 +15,37 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
+#ifndef SHAREWEBWIDGET_H_
+#define SHAREWEBWIDGET_H_
 
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+#include <QFrame>
+#include <QUrl>
+
+class QToolButton;
+class SLineEdit;
+
+class ShareWebWidget : public QFrame
 {
-  ChatCore::translation()->addOther(LS("share"));
-}
+  Q_OBJECT
 
+public:
+  ShareWebWidget(QWidget *parent = 0);
 
-void ShareCore::chatReady()
-{
-  SendWidget::add(new ShareAction());
-}
+signals:
+  void upload(const QList<QUrl> &urls, bool local);
+
+protected:
+  void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+
+private slots:
+  void apply();
+  void onTextChanged(const QString &text);
+
+private:
+  bool isValid(const QUrl &url) const;
+
+  QToolButton *m_addBtn;
+  SLineEdit *m_urlEdit;
+};
+
+#endif /* SHAREWEBWIDGET_H_ */

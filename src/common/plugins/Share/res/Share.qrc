@@ -1,5 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
+  <file alias="images/Share/button.png">images/button.png</file>
+  <file alias="images/Share/folder-open.png">images/font-awesome/fa-folder-open.png</file>
   <file alias="images/Share/icon.png">images/icon.png</file>
 </qresource>
 </RCC>

@@ -1,5 +1,4 @@
-/* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,21 +14,24 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
+#ifndef SHAREDND_H_
+#define SHAREDND_H_
 
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+#include <QStringList>
+#include <QUrl>
+
+class QMimeData;
+
+class ShareDnD
 {
-  ChatCore::translation()->addOther(LS("share"));
-}
+  ShareDnD() {}
 
+public:
+  static QList<QUrl> getFiles(const QMimeData *data, qint64 maxSize, int maxImages);
+  static QList<QUrl> getUrls(const QMimeData *data, int maxImages);
 
-void ShareCore::chatReady()
-{
-  SendWidget::add(new ShareAction());
-}
+private:
+  static bool addUrl(QList<QUrl> &urls, const QUrl &url);
+};
+
+#endif /* SHAREDND_H_ */
