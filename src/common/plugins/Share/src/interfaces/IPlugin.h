@@ -1,5 +1,4 @@
-/* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,27 +14,32 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
-#include "interfaces/IPlugin.h"
+#ifndef IPLUGIN_H_
+#define IPLUGIN_H_
 
-IMPORT_PLUGIN(NoneProvider)
-IMPORT_PLUGIN(RupProvider)
-IMPORT_PLUGIN(ImgurProvider)
-IMPORT_PLUGIN(GeekpicProvider)
+#include <QtPlugin>
 
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+class IPlugin
 {
-  ChatCore::translation()->addOther(LS("share"));
-}
+public:
+  virtual ~IPlugin() {}
+};
 
+Q_DECLARE_INTERFACE(IPlugin, "io.rup.IPlugin/1.0")
 
-void ShareCore::chatReady()
-{
-  SendWidget::add(new ShareAction());
-}
+#if QT_VERSION < 0x050000
+# define Q_PLUGIN_METADATA(...)
+#endif
+
+#if QT_VERSION >= 0x050000 && defined(Q_EXPORT_PLUGIN2)
+# undef Q_EXPORT_PLUGIN2
+# define Q_EXPORT_PLUGIN2(...)
+#endif
+
+#if QT_VERSION >= 0x050000
+# define IMPORT_PLUGIN(name) Q_IMPORT_PLUGIN(name##Plugin)
+#else
+# define IMPORT_PLUGIN(name) Q_IMPORT_PLUGIN(name)
+#endif
+
+#endif // IPLUGIN_H_

@@ -20,8 +20,19 @@ QT = core network gui webkit
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets webkitwidgets
 
+DEPENDPATH += \
+    src \
+
+INCLUDEPATH += \
+    src \
+
 HEADERS  = \
    SharePlugin.h \
+   src/data/ImageItem.h \
+   src/data/Thumbnail.h \
+   src/data/UploadItem.h \
+   src/uploaders/Uploader.h \
+   src/uploaders/UploadResult.h \
    src/ShareButton.h \
    src/ShareCore.h \
    src/ShareDnD.h \
@@ -30,6 +41,10 @@ HEADERS  = \
 
 SOURCES  = \
    SharePlugin.cpp \
+   src/data/ImageItem.cpp \
+   src/data/UploadItem.cpp \
+   src/uploaders/Uploader.cpp \
+   src/uploaders/UploadResult.cpp \
    src/ShareButton.cpp \
    src/ShareCore.cpp \
    src/ShareDnD.cpp \
@@ -41,5 +56,10 @@ RESOURCES += res/Share.qrc
 TRANSLATIONS += res/translations/share_en.ts
 TRANSLATIONS += res/translations/share_ru.ts
 TRANSLATIONS += res/translations/share_uk.ts
+
+LIBS += -lNoneProviderPlugin
+LIBS += -lRupProviderPlugin
+LIBS += -lImgurProviderPlugin
+LIBS += -lGeekpicProviderPlugin
 
 include(../plugins.pri)

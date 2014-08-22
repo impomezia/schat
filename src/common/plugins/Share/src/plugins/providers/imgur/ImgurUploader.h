@@ -1,5 +1,4 @@
-/* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,27 +14,21 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
-#include "interfaces/IPlugin.h"
+#ifndef UPLOADERIMGUR_H_
+#define UPLOADERIMGUR_H_
 
-IMPORT_PLUGIN(NoneProvider)
-IMPORT_PLUGIN(RupProvider)
-IMPORT_PLUGIN(ImgurProvider)
-IMPORT_PLUGIN(GeekpicProvider)
+#include "uploaders/Uploader.h"
 
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+class ImgurUploader : public Uploader
 {
-  ChatCore::translation()->addOther(LS("share"));
-}
+  Q_OBJECT
 
+public:
+  ImgurUploader(QObject *parent = 0);
+  virtual void upload(QNetworkAccessManager *net, UploadItemPtr item, const QVariant &data) override;
 
-void ShareCore::chatReady()
-{
-  SendWidget::add(new ShareAction());
-}
+protected:
+  virtual void read(UploadResult &result, QNetworkReply *reply) override;
+};
+
+#endif /* UPLOADERIMGUR_H_ */

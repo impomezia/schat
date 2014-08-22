@@ -36,6 +36,7 @@ SUBDIRS += \
     Emoticons \
     Idle \
     SendFile \
+    Share/src/plugins \
     Share \
     SpellChecker \
     Proxy \

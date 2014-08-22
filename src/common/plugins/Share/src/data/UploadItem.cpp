@@ -1,5 +1,4 @@
-/* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,27 +14,43 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
+#include <QtEndian>
+#include <QDebug>
+
+#include "data/UploadItem.h"
+#include "DateTime.h"
 #include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
-#include "interfaces/IPlugin.h"
 
-IMPORT_PLUGIN(NoneProvider)
-IMPORT_PLUGIN(RupProvider)
-IMPORT_PLUGIN(ImgurProvider)
-IMPORT_PLUGIN(GeekpicProvider)
-
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+UploadItem::UploadItem(int mode)
+  : m_mode(mode)
+  , m_date(0)
 {
-  ChatCore::translation()->addOther(LS("share"));
 }
 
 
-void ShareCore::chatReady()
+UploadItem::~UploadItem()
 {
-  SendWidget::add(new ShareAction());
+  qDebug() << "~UploadItem" << this;
+}
+
+
+bool UploadItem::isNull() const
+{
+  return (m_date == 0 || m_id.isNull());
+}
+
+
+QString UploadItem::toString() const
+{
+  int type;
+  qToBigEndian(this->type(), (uchar*)&type);
+
+  return QString(LS("%1/%2/%3")).arg(QString::fromLatin1((char*)&type, sizeof(int))).arg(QString(ChatId::toBase32(m_id.oid().byteArray()))).arg(mode());
+}
+
+
+void UploadItem::init()
+{
+  m_id.init(ObjectId::gen());
+  m_date = DateTime::utc();
 }

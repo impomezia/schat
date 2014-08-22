@@ -1,5 +1,4 @@
-/* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,27 +14,13 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
-#include "interfaces/IPlugin.h"
+#include <QNetworkReply>
 
-IMPORT_PLUGIN(NoneProvider)
-IMPORT_PLUGIN(RupProvider)
-IMPORT_PLUGIN(ImgurProvider)
-IMPORT_PLUGIN(GeekpicProvider)
+#include "uploaders/UploadResult.h"
 
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+UploadResult::UploadResult(QNetworkReply *reply)
+  : id(reply->property("id").toByteArray())
+  , error(reply->error())
+  , status(reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt())
 {
-  ChatCore::translation()->addOther(LS("share"));
-}
-
-
-void ShareCore::chatReady()
-{
-  SendWidget::add(new ShareAction());
 }

@@ -1,6 +1,5 @@
-/* $Id: Settings.h 3003 2012-08-14 12:24:34Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,20 +21,22 @@
 #include <QMap>
 #include <QSettings>
 
+#include "interfaces/ISettings.h"
 #include "schat.h"
 
 /*!
  * Базовый класс настроек.
  */
-class SCHAT_EXPORT Settings : public QSettings
+class SCHAT_EXPORT Settings : public QSettings, public ISettings
 {
   Q_OBJECT
 
 public:
   Settings(const QString &fileName, QObject *parent = 0);
-  QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const;
-  void setDefault(const QString &key, const QVariant &value);
-  void setValue(const QString &key, const QVariant &value, bool notify = true);
+  QVariant defaultValue(const QString &key) const Q_DECL_OVERRIDE;
+  QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const Q_DECL_OVERRIDE;
+  void setDefault(const QString &key, const QVariant &value) Q_DECL_OVERRIDE;
+  void setValue(const QString &key, const QVariant &value, bool notify = true) Q_DECL_OVERRIDE;
 
 signals:
   void changed(const QString &key, const QVariant &value);

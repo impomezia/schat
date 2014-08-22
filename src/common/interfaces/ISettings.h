@@ -1,5 +1,4 @@
-/* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,27 +14,20 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
-#include "interfaces/IPlugin.h"
+#ifndef ISETTINGS_H_
+#define ISETTINGS_H_
 
-IMPORT_PLUGIN(NoneProvider)
-IMPORT_PLUGIN(RupProvider)
-IMPORT_PLUGIN(ImgurProvider)
-IMPORT_PLUGIN(GeekpicProvider)
+#include <QVariant>
 
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+class ISettings
 {
-  ChatCore::translation()->addOther(LS("share"));
-}
+public:
+  virtual ~ISettings() {}
 
+  virtual QVariant defaultValue(const QString &key) const = 0;
+  virtual QVariant value(const QString &key, const QVariant &defaultValue = QVariant()) const = 0;
+  virtual void setDefault(const QString &key, const QVariant &value) = 0;
+  virtual void setValue(const QString &key, const QVariant &value, bool notify = true) = 0;
+};
 
-void ShareCore::chatReady()
-{
-  SendWidget::add(new ShareAction());
-}
+#endif // ISETTINGS_H_

@@ -1,5 +1,4 @@
-/* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,27 +14,15 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
-#include "interfaces/IPlugin.h"
+#ifndef THUMBNAIL_H_
+#define THUMBNAIL_H_
 
-IMPORT_PLUGIN(NoneProvider)
-IMPORT_PLUGIN(RupProvider)
-IMPORT_PLUGIN(ImgurProvider)
-IMPORT_PLUGIN(GeekpicProvider)
+#include <QImage>
 
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+struct Thumbnail
 {
-  ChatCore::translation()->addOther(LS("share"));
-}
+  QImage image;
+  QByteArray raw;
+};
 
-
-void ShareCore::chatReady()
-{
-  SendWidget::add(new ShareAction());
-}
+#endif /* THUMBNAIL_H_ */
