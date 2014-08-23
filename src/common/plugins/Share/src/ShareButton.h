@@ -31,14 +31,13 @@ class ShareButton : public QToolButton
   Q_OBJECT
 
 public:
-  ShareButton(QWidget *parent = 0);
+  ShareButton(ShareCore *core, QWidget *parent = 0);
   bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 protected:
   void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
-  void addFromDisk();
   void addFromWeb();
   void menuAboutToHide();
   void menuAboutToShow();
@@ -55,6 +54,7 @@ private:
 
   int m_mode;
   QMenu *m_menu;
+  ShareCore *m_core;
 };
 
 

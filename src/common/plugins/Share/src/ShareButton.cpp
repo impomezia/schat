@@ -22,19 +22,20 @@
 #include <QTimer>
 #include <QWidgetAction>
 #include <QUrl>
-#include <QDebug>
 
 #include "ChatCore.h"
 #include "ChatSettings.h"
 #include "sglobal.h"
 #include "ShareButton.h"
+#include "ShareCore.h"
 #include "ShareWebWidget.h"
 #include "ShareWidget.h"
 #include "ui/TabWidget.h"
 
-ShareButton::ShareButton(QWidget *parent)
+ShareButton::ShareButton(ShareCore *core, QWidget *parent)
   : QToolButton(parent)
   , m_mode(DefaultMode)
+  , m_core(core)
 {
   m_menu = new QMenu(this);
   m_menu->installEventFilter(this);
@@ -58,7 +59,7 @@ bool ShareButton::eventFilter(QObject *watched, QEvent *event)
       return true;
   }
 
-  return QToolButton::eventFilter( watched, event );
+  return QToolButton::eventFilter(watched, event);
 }
 
 
@@ -68,27 +69,6 @@ void ShareButton::changeEvent(QEvent *event)
     retranslateUi();
 
   QToolButton::changeEvent(event);
-}
-
-
-/*!
- * Показ диалога выбора локальных файлов.
- */
-void ShareButton::addFromDisk()
-{
-  const QString key       = LS("SendFile/SendDir");
-  const QStringList files = QFileDialog::getOpenFileNames(TabWidget::i(), tr("Open images"), getDir(key), tr("Images (*.jpg *.jpeg *.png *.gif *.JPG *.PNG)"));
-  if (files.isEmpty())
-    return;
-
-  QList<QUrl> urls;
-  urls.reserve(files.size());
-
-  foreach (const QString &name, files)
-    urls.append(QUrl::fromLocalFile(name));
-
-//  if (m_share->upload(ChatCore::currentId(), urls, true))
-//    ChatCore::settings()->setValue(key, QFileInfo(files.first()).absolutePath());
 }
 
 
@@ -115,7 +95,7 @@ void ShareButton::menuAboutToShow()
 
   if (m_mode == DefaultMode) {
     widget = new ShareWidget(this);
-    connect(widget, SIGNAL(addFromDisk()), SLOT(addFromDisk()));
+    connect(widget, SIGNAL(addFromDisk()), m_core, SLOT(openFile()));
     connect(widget, SIGNAL(addFromWeb()), SLOT(addFromWeb()));
   }
   else {
@@ -184,7 +164,7 @@ QString ShareAction::title() const
 
 QWidget* ShareAction::createWidget(QWidget *parent) const
 {
-  ShareButton *button = new ShareButton(parent);
+  ShareButton *button = new ShareButton(m_core, parent);
   button->setIcon(m_icon);
   return button;
 }
