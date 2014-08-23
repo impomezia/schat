@@ -15,8 +15,12 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QPluginLoader>
+
 #include "ChatCore.h"
+#include "ChatSettings.h"
 #include "interfaces/IPlugin.h"
+#include "Providers.h"
 #include "sglobal.h"
 #include "ShareButton.h"
 #include "ShareChatView.h"
@@ -29,10 +33,15 @@ IMPORT_PLUGIN(RupProvider)
 IMPORT_PLUGIN(ImgurProvider)
 IMPORT_PLUGIN(GeekpicProvider)
 
+const QString ShareCore::kProvider = LS("Share/Provider");
+
 ShareCore::ShareCore(QObject *parent)
   : ChatPlugin(parent)
+  , m_settings(ChatCore::settings())
 {
   ChatCore::translation()->addOther(LS("share"));
+
+  initProviders();
 }
 
 
@@ -41,4 +50,34 @@ void ShareCore::chatReady()
   new ShareChatView(this);
 
   SendWidget::add(new ShareAction(this));
+}
+
+
+QObjectList ShareCore::getPlugins(const char *className) const
+{
+  QObjectList out;
+  QObjectList instances = QPluginLoader::staticInstances();
+
+  foreach (QObject *object, instances) {
+    if (object->inherits(className))
+      out.append(object);
+  }
+
+  return out;
+}
+
+
+void ShareCore::initProviders()
+{
+  m_providers = new Providers(this);
+  QObjectList providers = getPlugins("IProvider");
+  for (int i = 0; i < providers.size(); ++i) {
+    IProvider *provider = qobject_cast<IProvider*>(providers.at(i));
+
+    provider->init(m_settings);
+    m_providers->add(provider);
+  }
+
+  m_settings->setDefault(kProvider, LS("rup"));
+  m_providers->setCurrentId(m_settings->value(kProvider).toString());
 }

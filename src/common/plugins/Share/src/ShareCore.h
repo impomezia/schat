@@ -23,13 +23,26 @@
 
 #include "plugins/ChatPlugin.h"
 
+class ChatSettings;
+class Providers;
+
 class ShareCore : public ChatPlugin
 {
   Q_OBJECT
 
 public:
+  static const QString kProvider;
+
   ShareCore(QObject *parent);
+  inline Providers *providers() const { return m_providers; }
   void chatReady() Q_DECL_OVERRIDE;
+
+private:
+  QObjectList getPlugins(const char *className) const;
+  void initProviders();
+
+  ChatSettings *m_settings; ///< Настройки.
+  Providers *m_providers;   ///< Доступные провайдеры.
 };
 
 #endif // PREVIEWCORE_H_
