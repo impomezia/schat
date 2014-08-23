@@ -24,6 +24,7 @@
 #include "client/ClientChannels.h"
 #include "hooks/ChatViewHooks.h"
 #include "Path.h"
+#include "Providers.h"
 #include "sglobal.h"
 #include "ShareChatView.h"
 #include "ShareCore.h"
@@ -46,13 +47,37 @@ ShareChatView::~ShareChatView()
 
 bool ShareChatView::dragEnterEvent(ChatView *view, QDragEnterEvent *event)
 {
-  return false;
+  m_id.init(view->id());
+  if (!event->mimeData()->hasUrls() || !isAcceptable())
+    return false;
+
+  IProvider *provider = m_core->providers()->current();
+
+  if (ShareDnD::getFiles(event->mimeData(), provider->maxSize(), provider->maxImages()).isEmpty() && ShareDnD::getUrls(event->mimeData(), provider->maxImages()).isEmpty())
+    return false;
+
+  event->acceptProposedAction();
+  return true;
 }
 
 
 bool ShareChatView::dropEvent(ChatView *view, QDropEvent *event)
 {
-  return false;
+  m_id.init(view->id());
+  if (!event->mimeData()->hasUrls() || !isAcceptable())
+    return false;
+
+  IProvider *provider = m_core->providers()->current();
+  if (!provider)
+    return false;
+
+  const QList<QUrl> urls = ShareDnD::getFiles(event->mimeData(), provider->maxSize(), provider->maxImages());
+  if (urls.isEmpty())
+    return false;
+
+  event->acceptProposedAction();
+  m_core->openFile(urls.first().toLocalFile());
+  return true;
 }
 
 

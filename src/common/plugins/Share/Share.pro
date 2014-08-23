@@ -28,30 +28,36 @@ INCLUDEPATH += \
 
 HEADERS  = \
    SharePlugin.h \
+   src/data/ImageCrop.h \
    src/data/ImageItem.h \
    src/data/Thumbnail.h \
    src/data/UploadItem.h \
    src/uploaders/Uploader.h \
    src/uploaders/UploadResult.h \
+   src/tasks/SaveTask.h \
    src/Providers.h \
    src/ShareButton.h \
    src/ShareChatView.h \
    src/ShareCore.h \
    src/ShareDnD.h \
+   src/ShareNet.h \
    src/ShareWebWidget.h \
    src/ShareWidget.h \
 
 SOURCES  = \
    SharePlugin.cpp \
+   src/data/ImageCrop.cpp \
    src/data/ImageItem.cpp \
    src/data/UploadItem.cpp \
    src/uploaders/Uploader.cpp \
    src/uploaders/UploadResult.cpp \
+   src/tasks/SaveTask.cpp \
    src/Providers.cpp \
    src/ShareButton.cpp \
    src/ShareChatView.cpp \
    src/ShareCore.cpp \
    src/ShareDnD.cpp \
+   src/ShareNet.cpp \
    src/ShareWebWidget.cpp \
    src/ShareWidget.cpp \
 

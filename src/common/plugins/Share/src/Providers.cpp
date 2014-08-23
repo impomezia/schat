@@ -33,6 +33,24 @@ Providers::~Providers()
 }
 
 
+IProvider *Providers::current() const
+{
+  IProvider *provider = m_map.value(currentId());
+  Q_ASSERT(provider);
+
+  return provider;
+}
+
+
+IProvider *Providers::get(const QString &id) const
+{
+  IProvider *provider = m_map.value(id);
+  Q_ASSERT(provider);
+
+  return provider;
+}
+
+
 void Providers::add(IProvider *provider)
 {
   Q_ASSERT(provider);

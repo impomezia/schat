@@ -35,8 +35,8 @@ public:
   ~Providers();
   inline const QString& currentId() const        { return m_currentId; }
   inline const QStringList& list() const         { return m_list; }
-  inline IProvider *current() const              { return m_map.value(currentId()); }
-  inline IProvider *get(const QString &id) const { return m_map.value(id); }
+  IProvider *current() const;
+  IProvider *get(const QString &id) const;
   void add(IProvider *provider);
   void create(QMap<QString, Uploader*> &map, QObject *parent = 0);
   void setCurrentId(const QString &id);

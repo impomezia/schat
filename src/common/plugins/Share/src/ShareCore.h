@@ -21,28 +21,55 @@
 #include <QObject>
 #include <QUrl>
 
+#include "data/UploadItem.h"
 #include "plugins/ChatPlugin.h"
 
 class ChatSettings;
 class Providers;
+class QRunnable;
+class ShareNet;
+class UploadResult;
 
 class ShareCore : public ChatPlugin
 {
   Q_OBJECT
 
 public:
+  static const QString kCaptureMouse;
+  static const QString kEditor;
+  static const QString kLastOpenDir;
+  static const QString kLastSaveDir;
   static const QString kProvider;
+  static const QString kSaveCopy;
+  static const QString kSaveCopyIn;
 
   ShareCore(QObject *parent);
   inline Providers *providers() const { return m_providers; }
   void chatReady() Q_DECL_OVERRIDE;
 
+public slots:
+  void add(QRunnable *task);
+  void openFile();
+  void openFile(const QString &fileName);
+
+private slots:
+  void onEditingFinished(UploadItemPtr item);
+  void onImageSaved(const ChatId &id, const QByteArray &body, const Thumbnail &thumbnail);
+  void onTaskReady(qint64 counter, QObject *object);
+  void onUploadFinished(const UploadResult &result);
+  void onUploadProgress(const ChatId &id, int percent);
+  void startTasks();
+
 private:
   QObjectList getPlugins(const char *className) const;
   void initProviders();
 
-  ChatSettings *m_settings; ///< Настройки.
-  Providers *m_providers;   ///< Доступные провайдеры.
+  ChatSettings *m_settings;              ///< Настройки.
+  int m_netId;
+  Providers *m_providers;                ///< Доступные провайдеры.
+  QList<QRunnable*> m_tasks;             ///< Задачи для выполнения в отдельном потоке.
+  QMap<ChatId, UploadItemPtr> m_pending;
+  ShareNet *m_net;
 };
 
 #endif // PREVIEWCORE_H_
