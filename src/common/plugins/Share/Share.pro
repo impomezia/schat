@@ -34,6 +34,7 @@ HEADERS  = \
    src/uploaders/Uploader.h \
    src/uploaders/UploadResult.h \
    src/ShareButton.h \
+   src/ShareChatView.h \
    src/ShareCore.h \
    src/ShareDnD.h \
    src/ShareWebWidget.h \
@@ -46,6 +47,7 @@ SOURCES  = \
    src/uploaders/Uploader.cpp \
    src/uploaders/UploadResult.cpp \
    src/ShareButton.cpp \
+   src/ShareChatView.cpp \
    src/ShareCore.cpp \
    src/ShareDnD.cpp \
    src/ShareWebWidget.cpp \

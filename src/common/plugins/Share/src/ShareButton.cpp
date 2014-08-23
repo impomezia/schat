@@ -159,9 +159,10 @@ void ShareButton::retranslateUi()
 }
 
 
-ShareAction::ShareAction()
+ShareAction::ShareAction(ShareCore *core)
   : ToolBarActionCreator(1150, LS("share"), WidgetType | AutoShow | AutoDelete)
   , m_icon(LS(":/images/Share/button.png"))
+  , m_core(core)
 {
 }
 

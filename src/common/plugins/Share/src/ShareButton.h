@@ -24,7 +24,7 @@
 
 #include "ui/ToolBarAction.h"
 
-class Share;
+class ShareCore;
 
 class ShareButton : public QToolButton
 {
@@ -63,7 +63,7 @@ class ShareAction : public ToolBarActionCreator
   Q_DECLARE_TR_FUNCTIONS(ShareAction)
 
 public:
-  ShareAction();
+  ShareAction(ShareCore *core);
   bool isVisible(const QString &type, const QByteArray &id) Q_DECL_OVERRIDE;
   QIcon icon() const Q_DECL_OVERRIDE { return m_icon; }
   QString title() const Q_DECL_OVERRIDE;
@@ -71,6 +71,7 @@ public:
 
 private:
   QIcon m_icon;
+  ShareCore *m_core;
 };
 
 #endif /* SHAREBUTTON_H_ */

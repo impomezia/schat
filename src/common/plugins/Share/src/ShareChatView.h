@@ -15,30 +15,34 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ChatCore.h"
-#include "interfaces/IPlugin.h"
-#include "sglobal.h"
-#include "ShareButton.h"
-#include "ShareChatView.h"
-#include "ShareCore.h"
-#include "Translation.h"
-#include "ui/SendWidget.h"
+#ifndef SHARECHATVIEW_H_
+#define SHARECHATVIEW_H_
 
-IMPORT_PLUGIN(NoneProvider)
-IMPORT_PLUGIN(RupProvider)
-IMPORT_PLUGIN(ImgurProvider)
-IMPORT_PLUGIN(GeekpicProvider)
+#include <QUrl>
+#include <QStringList>
 
-ShareCore::ShareCore(QObject *parent)
-  : ChatPlugin(parent)
+#include "id/ChatId.h"
+#include "interfaces/IChatViewHook.h"
+
+class ShareCore;
+
+class ShareChatView : public QObject, public IChatViewHook
 {
-  ChatCore::translation()->addOther(LS("share"));
-}
+  Q_OBJECT
 
+public:
+  ShareChatView(ShareCore *core);
+  ~ShareChatView();
 
-void ShareCore::chatReady()
-{
-  new ShareChatView(this);
+protected:
+  bool dragEnterEvent(ChatView *view, QDragEnterEvent *event) Q_DECL_OVERRIDE;
+  bool dropEvent(ChatView *view, QDropEvent *event) Q_DECL_OVERRIDE;
 
-  SendWidget::add(new ShareAction(this));
-}
+private:
+  bool isAcceptable() const;
+
+  ChatId m_id;
+  ShareCore *m_core;
+};
+
+#endif /* SHARECHATVIEW_H_ */
