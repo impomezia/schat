@@ -35,7 +35,9 @@
 #include "tasks/SaveTask.h"
 #include "Translation.h"
 #include "ui/SendWidget.h"
+#include "ui/TabWidget.h"
 #include "uploaders/UploadResult.h"
+#include "UploadPreview.h"
 
 IMPORT_PLUGIN(NoneProvider)
 IMPORT_PLUGIN(RupProvider)
@@ -114,6 +116,8 @@ void ShareCore::openFile(const QString &fileName)
     image->saveAs = ImageItem::toSaveAs(m_settings->value(kSaveCopyIn).toString(), QFileInfo(fileName).suffix(), image->date());
 
   m_settings->setValue(kLastOpenDir, QFileInfo(fileName).absolutePath());
+
+  //TabWidget::showDialog(new UploadPreview(TabWidget::i()));
   onEditingFinished(UploadItemPtr(image));
 }
 

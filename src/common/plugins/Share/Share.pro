@@ -43,6 +43,7 @@ HEADERS  = \
    src/ShareNet.h \
    src/ShareWebWidget.h \
    src/ShareWidget.h \
+   src/UploadPreview.h \
 
 SOURCES  = \
    SharePlugin.cpp \
@@ -60,6 +61,7 @@ SOURCES  = \
    src/ShareNet.cpp \
    src/ShareWebWidget.cpp \
    src/ShareWidget.cpp \
+   src/UploadPreview.cpp \
 
 RESOURCES += res/Share.qrc
 
