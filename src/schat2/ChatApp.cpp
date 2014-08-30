@@ -158,6 +158,7 @@ bool ChatApp::selfUpdate()
     return false;
 
   QProcess::startDetached(LC('"') + file + LC('"'), QStringList(LS("-update")), appPath);
+  restartRequired = false;
   return true;
 # else
   return false;
