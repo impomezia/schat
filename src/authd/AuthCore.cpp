@@ -33,6 +33,7 @@
 #include "oauth2/mail_ru/MailRuAuthData.h"
 #include "oauth2/OAuthData.h"
 #include "oauth2/odnoklassniki/OdnoklassnikiAuthData.h"
+#include "oauth2/simpleid/SimpleIdAuthData.h"
 #include "oauth2/stackoverflow/StackOverflowAuthData.h"
 #include "oauth2/vkontakte/VkontakteAuthData.h"
 #include "oauth2/yandex/YandexAuthData.h"
@@ -70,7 +71,7 @@ AuthCore::AuthCore(QObject *parent)
   m_settings->setDefault(LS("LogColor"),  true);
   m_settings->setDefault(LS("LogLevel"),  NodeLog::WarnLevel);
   m_settings->setDefault(LS("LogOutput"), NodeLog::FileOut);
-  m_settings->setDefault(LS("Order"),     QStringList() << LS("facebook") << LS("vkontakte") << LS("google") << LS("live") << LS("github") << LS("stackoverflow") << LS("yandex") << LS("odnoklassniki") << LS("mail_ru"));
+  m_settings->setDefault(LS("Order"),     QStringList() << LS("facebook") << LS("vkontakte") << LS("google") << LS("live") << LS("github") << LS("stackoverflow") << LS("yandex") << LS("odnoklassniki") << LS("mail_ru") << LS("simpleid"));
   m_settings->setDefault(LS("Root"),      defaultRoot());
 
   openLog();
@@ -91,6 +92,7 @@ AuthCore::AuthCore(QObject *parent)
   add(new LiveAuthCreator());
   add(new GithubAuthCreator());
   add(new StackOverflowAuthCreator());
+  add(new SimpleIdAuthCreator());
 
   QTimer::singleShot(0, this, SLOT(start()));
 }
@@ -144,6 +146,7 @@ void AuthCore::start()
   add(new LiveAuthData());
   add(new GithubAuthData());
   add(new StackOverflowAuthData());
+  add(new SimpleIdAuthData());
 
   if (m_providers.isEmpty()) {
     LOG_A1011

@@ -15,33 +15,32 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GENERICNODEPLUGIN_H_
-#define GENERICNODEPLUGIN_H_
+#ifndef SIMPLEIDAUTH_H_
+#define SIMPLEIDAUTH_H_
 
-#include "CoreApi.h"
-#include "NodeApi.h"
+#include "oauth2/OAuthHandler.h"
 
-class GenericNodePlugin : public QObject, CoreApi, NodeApi
+class SimpleIdAuth : public OAuthHandler
 {
   Q_OBJECT
-  Q_INTERFACES(CoreApi NodeApi)
-  Q_PLUGIN_METADATA(IID "me.schat.server.GenericNode")
 
 public:
-  QVariantMap header() const
-  {
-    QVariantMap out        = CoreApi::header();
-    out[CORE_API_ID]       = "GenericNode";
-    out[CORE_API_NAME]     = "Generic Node";
-    out[CORE_API_VERSION]  = "2.3.3";
-    out[CORE_API_TYPE]     = "server";
-    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/GenericNode";
-    out[CORE_API_DESC]     = "Standard core of server";
+  SimpleIdAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent = 0);
 
-    return out;
-  }
+private slots:
+  void dataReady();
+  void tokenReady();
 
-  NodePlugin *create();
+private:
+  void getToken() Q_DECL_OVERRIDE;
 };
 
-#endif /* GENERICNODEPLUGIN_H_ */
+
+class SimpleIdAuthCreator : public HandlerCreator
+{
+public:
+  SimpleIdAuthCreator() : HandlerCreator() {}
+  bool serve(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent) Q_DECL_OVERRIDE;
+};
+
+#endif // SIMPLEIDAUTH_H_

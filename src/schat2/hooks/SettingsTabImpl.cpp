@@ -77,16 +77,18 @@ void ProfilePage::onAutoRunClicked(bool checked)
 {
   QSettings reg(LS("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
   if (checked)
-    reg.setValue(QApplication::applicationName(), QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS(" -hide"));
+    reg.setValue(LS("Simple Chat 2"), QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS(" -hide"));
   else
-    reg.remove(QApplication::applicationName());
+    reg.remove(LS("Simple Chat 2"));
+
+  reg.remove(QApplication::applicationName());
 }
 
 
 bool ProfilePage::isAutoRun() const
 {
   QSettings reg(LS("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
-  const QString value = reg.value(QApplication::applicationName(), QString()).toString();
+  const QString value = reg.value(LS("Simple Chat 2"), QString()).toString();
   if (value.isEmpty())
     return false;
 

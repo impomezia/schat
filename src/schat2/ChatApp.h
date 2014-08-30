@@ -38,6 +38,8 @@ class ChatApp : public QtSingleApplication
   Q_OBJECT
 
 public:
+  static bool restartRequired;
+
   ChatApp(int &argc, char **argv);
   ~ChatApp();
   bool isRunning();

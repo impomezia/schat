@@ -1,6 +1,5 @@
-/* $Id: AuthIcon.cpp 3482 2013-02-10 01:06:29Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -58,6 +57,8 @@ QPixmap AuthIcon::pixmap(const QString &provider)
     x = 128;
   else if (provider == LS("stackoverflow"))
     x = 144;
+  else if (provider == LS("simpleid"))
+    x = 160;
 
   if (x == -1)
     return QPixmap();

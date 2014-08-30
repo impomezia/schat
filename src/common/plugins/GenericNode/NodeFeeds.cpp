@@ -46,17 +46,15 @@ NodeFeeds::NodeFeeds(Core *core)
 bool NodeFeeds::read(PacketReader *reader)
 {
   if (SimpleID::typeOf(reader->sender()) != SimpleID::UserId)
-    return false;
+    return cleanup();
 
   m_user = Ch::channel(reader->sender(), SimpleID::UserId);
   if (!m_user)
-    return false;
+    return cleanup();
 
   m_channel = Ch::channel(reader->dest(), SimpleID::typeOf(reader->dest()));
-  if (!m_channel) {
-    m_user = ChatChannel();
-    return false;
-  }
+  if (!m_channel)
+    return cleanup();
 
   FeedNotice packet(m_type, reader);
   m_packet = &packet;
@@ -78,9 +76,7 @@ bool NodeFeeds::read(PacketReader *reader)
   m_event->status = status;
   FeedEvents::start(m_event);
 
-  m_user    = ChatChannel();
-  m_channel = ChatChannel();
-  return false;
+  return cleanup();
 }
 
 
@@ -95,6 +91,15 @@ NodeFeeds::CheckResult::CheckResult(const QString &text)
 
   if (name.isEmpty())
     status = Notice::BadRequest;
+}
+
+
+bool NodeFeeds::cleanup()
+{
+  m_user    = ChatChannel();
+  m_channel = ChatChannel();
+
+  return false;
 }
 
 

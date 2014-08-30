@@ -1,6 +1,5 @@
-# $Id: authd.pro 3677 2013-06-08 00:17:54Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2013 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -107,6 +106,8 @@ HEADERS = \
     oauth2/OAuthHandler.h \
     oauth2/odnoklassniki/OdnoklassnikiAuth.h \
     oauth2/odnoklassniki/OdnoklassnikiAuthData.h \
+    oauth2/simpleid/SimpleIdAuth.h \
+    oauth2/simpleid/SimpleIdAuthData.h \
     oauth2/stackoverflow/StackOverflowAuth.h \
     oauth2/stackoverflow/StackOverflowAuthData.h \
     oauth2/vkontakte/VkontakteAuth.h \
@@ -137,6 +138,8 @@ SOURCES = \
     oauth2/OAuthHandler.cpp \
     oauth2/odnoklassniki/OdnoklassnikiAuth.cpp \
     oauth2/odnoklassniki/OdnoklassnikiAuthData.cpp \
+    oauth2/simpleid/SimpleIdAuth.cpp \
+    oauth2/simpleid/SimpleIdAuthData.cpp \
     oauth2/stackoverflow/StackOverflowAuth.cpp \
     oauth2/stackoverflow/StackOverflowAuthData.cpp \
     oauth2/vkontakte/VkontakteAuth.cpp \

@@ -38,7 +38,7 @@ PreviewCore::PreviewCore(QObject *parent)
   : ChatPlugin(parent)
 {
   ChatCore::settings()->setDefault(kAnimation, true);
-  ChatCore::settings()->setDefault(kMaxSize,   1024 * 1024 * 5);
+  ChatCore::settings()->setDefault(kMaxSize,   1024 * 1024 * 10);
 
 # if QT_VERSION >= 0x050000
   ChatCore::settings()->setLocalDefault(kSavePath, QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));

@@ -33,7 +33,7 @@ public:
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Preview";
     out[CORE_API_NAME]     = "Preview";
-    out[CORE_API_VERSION]  = "2.3.0";
+    out[CORE_API_VERSION]  = "2.3.3";
     out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Preview";
     out[CORE_API_DESC]     = "Image Preview";
 

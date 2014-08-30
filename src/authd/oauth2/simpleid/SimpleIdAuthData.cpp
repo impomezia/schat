@@ -15,33 +15,20 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef GENERICNODEPLUGIN_H_
-#define GENERICNODEPLUGIN_H_
+#include <QUrl>
 
-#include "CoreApi.h"
-#include "NodeApi.h"
+#include "sglobal.h"
+#include "SimpleIdAuthData.h"
 
-class GenericNodePlugin : public QObject, CoreApi, NodeApi
+SimpleIdAuthData::SimpleIdAuthData()
+  : OAuthData("simpleid")
 {
-  Q_OBJECT
-  Q_INTERFACES(CoreApi NodeApi)
-  Q_PLUGIN_METADATA(IID "me.schat.server.GenericNode")
+  name = "SimpleID";
+  htmlName = name;
+}
 
-public:
-  QVariantMap header() const
-  {
-    QVariantMap out        = CoreApi::header();
-    out[CORE_API_ID]       = "GenericNode";
-    out[CORE_API_NAME]     = "Generic Node";
-    out[CORE_API_VERSION]  = "2.3.3";
-    out[CORE_API_TYPE]     = "server";
-    out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/GenericNode";
-    out[CORE_API_DESC]     = "Standard core of server";
 
-    return out;
-  }
-
-  NodePlugin *create();
-};
-
-#endif /* GENERICNODEPLUGIN_H_ */
+QByteArray SimpleIdAuthData::toUrl(const QByteArray &state) const
+{
+  return "https://id.schat.me/oauth/authorize?client_id=" + id + "&response_type=code&redirect_uri=" + QUrl::toPercentEncoding(redirect) + "&state=" + state;
+}

@@ -1,6 +1,5 @@
-/* $Id: handlers.h 3481 2013-02-09 11:44:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,3 +26,4 @@
 #include "oauth2/vkontakte/VkontakteAuth.h"
 #include "oauth2/yandex/YandexAuth.h"
 #include "oauth2/stackoverflow/StackOverflowAuth.h"
+#include "oauth2/simpleid/SimpleIdAuth.h"
