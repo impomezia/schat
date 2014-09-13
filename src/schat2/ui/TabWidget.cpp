@@ -78,11 +78,19 @@ TabWidget::TabWidget(QWidget *parent)
   setStyleSheet(LS("QToolBar { margin:0px; border:0px; }"));
 # endif
 
-  QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFontSize,         fontInfo().pixelSize());
-  QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFixedFontSize,    fontInfo().pixelSize());
-  QWebSettings::globalSettings()->setFontFamily(QWebSettings::StandardFont,          fontInfo().family());
-  QWebSettings::globalSettings()->setFontFamily(QWebSettings::SerifFont,             fontInfo().family());
-  QWebSettings::globalSettings()->setFontFamily(QWebSettings::SansSerifFont,         fontInfo().family());
+  int fontSize = ChatCore::settings()->value(ChatSettings::kChatViewFontSize).toInt();
+  if (fontSize == -1)
+    fontSize = fontInfo().pixelSize();
+
+  QString fontFamily = ChatCore::settings()->value(ChatSettings::kChatViewFontFamily).toString();
+  if (fontFamily.isEmpty() || fontFamily == LS("\"\""))
+    fontFamily = fontInfo().family();
+
+  QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFontSize,         fontSize);
+  QWebSettings::globalSettings()->setFontSize(QWebSettings::DefaultFixedFontSize,    fontSize);
+  QWebSettings::globalSettings()->setFontFamily(QWebSettings::StandardFont,          fontFamily);
+  QWebSettings::globalSettings()->setFontFamily(QWebSettings::SerifFont,             fontFamily);
+  QWebSettings::globalSettings()->setFontFamily(QWebSettings::SansSerifFont,         fontFamily);
   QWebSettings::globalSettings()->setAttribute(QWebSettings::LocalStorageEnabled,    true);
   QWebSettings::globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, ChatCore::settings()->value(SETTINGS_LABS_DEVELOPER_EXTRAS).toBool());
 

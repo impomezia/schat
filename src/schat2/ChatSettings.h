@@ -51,6 +51,8 @@ class SCHAT_CORE_EXPORT ChatSettings : public Settings
 
 public:
   static const QString kAlertsPopup;
+  static const QString kChatViewFontFamily;
+  static const QString kChatViewFontSize;
   static const QString kProfileDefaultNick;
   static const QString kProfileGender;
   static const QString kProfileNick;

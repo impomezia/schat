@@ -26,6 +26,8 @@
 #include "ChatNotify.h"
 
 const QString ChatSettings::kAlertsPopup        = LS("Alerts/Popup");
+const QString ChatSettings::kChatViewFontFamily = LS("ChatViewFontFamily");
+const QString ChatSettings::kChatViewFontSize   = LS("ChatViewFontSize");
 const QString ChatSettings::kProfileDefaultNick = LS("Profile/DefaultNick");
 const QString ChatSettings::kProfileGender      = LS("Profile/Gender");
 const QString ChatSettings::kProfileNick        = LS("Profile/Nick");
@@ -68,6 +70,7 @@ ChatSettings::ChatSettings(const QString &fileName, const QString &defaultFile, 
   setDefault(SETTINGS_BLUR_RADIUS,                2);
   setDefault(kUserListKeyboard,                   false);
   setDefault(kUserListOffline,                    true);
+  setDefault(kChatViewFontSize,                   -1);
 
   setValue(SETTINGS_AUTO_SCROLL, true);
 }
