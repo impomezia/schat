@@ -108,7 +108,9 @@ ChatWindow::~ChatWindow()
  */
 void ChatWindow::closeChat()
 {
-  ChatClient::io()->leave();
+  if (ChatClient::io())
+    ChatClient::io()->leave();
+
   hideChat();
 
   QApplication::quit();
