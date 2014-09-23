@@ -15,39 +15,64 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCoreApplication>
+#include <CoreServices/CoreServices.h>
+
 #include "OsInfo.h"
 #include "sglobal.h"
+
+QByteArray OsInfo::userAgent()
+{
+  if (!m_ua.isEmpty())
+    return m_ua;
+
+  SInt32 major, minor, bugfix;
+  Gestalt(gestaltSystemVersionMajor, &major);
+  Gestalt(gestaltSystemVersionMinor, &minor);
+  Gestalt(gestaltSystemVersionBugFix, &bugfix);
+
+  const QString os = QString("Macintosh; Intel Mac OS X %1_%2_%3").arg(major).arg(minor).arg(bugfix);
+
+  QString ua = QString(LS("Mozilla/5.0 (%1) Qt/%2 %3/%4"))
+      .arg(os)
+      .arg(qVersion())
+      .arg(QCoreApplication::applicationName())
+      .arg(QCoreApplication::applicationVersion());
+
+  m_ua = ua.toLatin1();
+  return m_ua;
+}
+
 
 void OsInfo::init()
 {
   QString os;
   m_type = MacOSX;
 
-  switch (QSysInfo::MacintoshVersion) {
-    case QSysInfo::QSysInfo::MV_MAVERICKS:
-      os = LS("OS X 10.9 Mavericks");
+  SInt32 major, minor, bugfix;
+  Gestalt(gestaltSystemVersionMajor, &major);
+  Gestalt(gestaltSystemVersionMinor, &minor);
+  Gestalt(gestaltSystemVersionBugFix, &bugfix);
+
+  switch (minor) {
+    case 9:
+      os = QString(LS("OS X 10.9.%1 Mavericks")).arg(bugfix);
       break;
 
-#   if QT_VERSION >= 0x040803
-    case QSysInfo::MV_MOUNTAINLION:
-      os = LS("OS X 10.8 Mountain Lion");
-      break;
-#   endif
-
-    case QSysInfo::MV_LION:
-      os = LS("OS X 10.7 Lion");
+    case 8:
+      os = QString(LS("OS X 10.8.%1 Mountain Lion")).arg(bugfix);;
       break;
 
-    case QSysInfo::MV_SNOWLEOPARD:
-      os = LS("Mac OS X 10.6 Snow Leopard");
+    case 7:
+      os = QString(LS("OS X 10.7.%1 Lion")).arg(bugfix);;
       break;
 
-    case QSysInfo::MV_LEOPARD:
-      os = LS("Mac OS X 10.5 Leopard");
+    case 6:
+      os = QString(LS("Mac OS X 10.6.%1 Snow Leopard")).arg(bugfix);;
       break;
 
     default:
-      os = LS("OS X");
+      os = QString(LS("OS X %1.%2.%3")).arg(major).arg(minor).arg(bugfix);;
       break;
   }
 

@@ -19,6 +19,7 @@
 #include "tools/OsInfo.h"
 
 int OsInfo::m_type = -1;
+QByteArray OsInfo::m_ua;
 QVariantMap OsInfo::m_json;
 
 int OsInfo::type()

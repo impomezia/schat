@@ -40,6 +40,7 @@ public:
   };
 
   static int type();
+  static QByteArray userAgent();
   static QString os();
   static QVariantMap json();
 
@@ -48,6 +49,7 @@ private:
   static void init();
 
   static int m_type;         ///< Тип операционной системы.
+  static QByteArray m_ua;    ///< User-Agent.
   static QVariantMap m_json; ///< JSON данные.
 };
 
