@@ -1,5 +1,4 @@
-/* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,18 +14,17 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef VERSION_H_
-#define VERSION_H_
+#ifndef ITRANSLATION_H_
+#define ITRANSLATION_H_
 
-#include "revision.h"
+#include <QString>
 
-#define SCHAT_VERSION      "2.3.4"
-#define SCHAT_VERSION_RC   2,3,4,0
-#define SCHAT_VER_PATH     0
+class ITranslation
+{
+public:
+  virtual ~ITranslation() {}
+  virtual QString name() const = 0;
+  virtual void load(const QString &name) = 0;
+};
 
-#define SCHAT_NAME         "Simple Chat"
-#define SCHAT_ORGANIZATION "Alexander Sedov"
-#define SCHAT_DOMAIN       "schat.me"
-#define SCHAT_COPYRIGHT    "Copyright (c) 2008-2014 Alexander Sedov"
-
-#endif /*VERSION_H_*/
+#endif // ITRANSLATION_H_

@@ -1,6 +1,5 @@
-/* $Id: Translation.cpp 2458 2012-03-29 13:43:46Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -68,7 +67,11 @@ void Translation::load(const QString &name)
     if (locale.language() == QLocale::C)
       m_name = LS("en");
     else
+#     if QT_VERSION >= 0x040800
+      m_name = locale.uiLanguages().value(0).replace(QLatin1String("-"), QLatin1String("_"));
+#     else
       m_name = locale.name();
+#     endif
   }
   else if (name.endsWith(LS(".qm"))) {
     QFileInfo fileInfo = QFileInfo(name);

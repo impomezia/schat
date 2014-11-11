@@ -1,6 +1,5 @@
-/* $Id: Translation.h 2458 2012-03-29 13:43:46Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,22 +23,23 @@
 #include <QStringList>
 
 #include "schat.h"
+#include "interfaces/ITranslation.h"
 
 class QTranslator;
 
-class SCHAT_EXPORT Translation : public QObject
+class SCHAT_EXPORT Translation : public QObject, public ITranslation
 {
   Q_OBJECT
 
 public:
   Translation(QObject *parent = 0);
   inline const QString& language() const        { return m_language; }
-  inline const QString& name() const            { return m_name; }
+  QString name() const Q_DECL_OVERRIDE          { return m_name; }
   inline const QString& prefix() const          { return m_prefix; }
   inline const QStringList& search() const      { return m_search; }
   inline void setPrefix(const QString &prefix)  { m_prefix = prefix; }
   void addOther(const QString &name);
-  void load(const QString &name);
+  void load(const QString &name) Q_DECL_OVERRIDE;
   void setSearch(const QStringList &search);
 
 private:
