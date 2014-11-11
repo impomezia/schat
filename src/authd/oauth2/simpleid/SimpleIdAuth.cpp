@@ -38,7 +38,7 @@ void SimpleIdAuth::dataReady()
 {
   OAUTH_PREPARE_REPLY
 
-  const QVariantMap data = JSON::parse(raw).toMap();
+  const QVariantMap data = JSON::parse(raw).toMap().value(LS("data")).toMap();
   const QByteArray uid   = data.value(LS("id")).toByteArray();
   if (uid.isEmpty())
     return setError("invalid_uid");
@@ -67,7 +67,7 @@ void SimpleIdAuth::tokenReady()
 
   log(NodeLog::InfoLevel, "Token is successfully received");
 
-  QNetworkRequest request(QUrl(LS("https://id.schat.me/api/user")));
+  QNetworkRequest request(QUrl(LS("https://api.schat.me/1/user")));
   request.setRawHeader("Authorization", "Bearer " + token);
   QNetworkReply *reply = m_manager->get(request);
   connect(reply, SIGNAL(finished()), SLOT(dataReady()));
