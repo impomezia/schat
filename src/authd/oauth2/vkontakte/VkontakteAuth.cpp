@@ -1,6 +1,5 @@
-/* $Id: VkontakteAuth.cpp 3774 2013-08-23 22:09:10Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,8 +31,8 @@
 #include "sglobal.h"
 #include "Tufao/httpserverresponse.h"
 
-VkontakteAuth::VkontakteAuth(const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
-  : OAuthHandler(LS("vkontakte"), state, url, path, request, response, parent)
+VkontakteAuth::VkontakteAuth(const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent)
+  : OAuthHandler(LS("vkontakte"), state, url, path, request, response, successRedirect, parent)
 {
 }
 
@@ -134,7 +133,7 @@ bool VkontakteAuthCreator::serve(const QUrl &url, const QString &path, Tufao::Ht
       return true;
     }
 
-    new VkontakteAuth(state, url, path, request, response, parent);
+    new VkontakteAuth(state, url, path, request, response, m_successRedirect, parent);
     return true;
   }
 

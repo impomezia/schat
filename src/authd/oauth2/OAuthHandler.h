@@ -32,11 +32,13 @@ class OAuthHandler : public QObject
   Q_OBJECT
 
 public:
-  OAuthHandler(const QString &provider, const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent = 0);
+  OAuthHandler(const QString &provider, const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent = 0);
   static QByteArray page(const QString &name);
 
 protected slots:
-  virtual void getToken() {}
+  virtual void dataReady()  = 0;
+  virtual void getToken()   = 0;
+  virtual void tokenReady() = 0;
 
 protected:
   virtual void setError(const QByteArray &error = "unknown_error");
@@ -53,6 +55,7 @@ protected:
   QNetworkAccessManager *m_manager;      ///< Менеджер доступа к сети.
   QNetworkReply *m_reply;                ///< Текущий завершённый HTTP запрос.
   QString m_redirect;                    ///< Адрес для редиректа клиента.
+  QString m_successRedirect;
   Tufao::HttpServerRequest *m_request;   ///< HTTP запрос.
   Tufao::HttpServerResponse *m_response; ///< HTTP ответ.
 };

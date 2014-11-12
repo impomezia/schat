@@ -1,6 +1,5 @@
-/* $Id: OAuthHandler.cpp 3771 2013-08-19 22:53:21Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,12 +32,13 @@
 #include "Tufao/httpserverresponse.h"
 #include "UrlQuery.h"
 
-OAuthHandler::OAuthHandler(const QString &provider, const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
+OAuthHandler::OAuthHandler(const QString &provider, const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent)
   : QObject(parent)
   , m_path(path)
   , m_url(url)
   , m_manager(0)
   , m_reply(0)
+  , m_successRedirect(successRedirect)
   , m_request(request)
   , m_response(response)
 {
@@ -142,6 +142,7 @@ void OAuthHandler::serveOk()
     QByteArray data = page(LS("result.html"));
     data.replace("${LANGUAGE}", m_request->headers().value("Accept-Language").left(2));
     data.replace("${STATE_ID}", m_state);
+    data.replace("${SUCCESS_REDIRECT}", m_successRedirect.toUtf8());
     m_response->end(data);
   }
   else {

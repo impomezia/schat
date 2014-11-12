@@ -1,6 +1,5 @@
-/* $Id: StackOverflowAuth.h 3481 2013-02-09 11:44:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,14 +25,12 @@ class StackOverflowAuth : public OAuthHandler
   Q_OBJECT
 
 public:
-  StackOverflowAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent = 0);
-
-private slots:
-  void dataReady();
-  void tokenReady();
+  StackOverflowAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent = 0);
 
 private:
-  void getToken();
+  void dataReady() Q_DECL_OVERRIDE;
+  void tokenReady() Q_DECL_OVERRIDE;
+  void getToken() Q_DECL_OVERRIDE;
 };
 
 

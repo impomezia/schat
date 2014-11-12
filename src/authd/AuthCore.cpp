@@ -66,13 +66,14 @@ AuthCore::AuthCore(QObject *parent)
   m_log = new NodeLog();
 
   m_settings = new Settings(defaultConf(), this);
-  m_settings->setDefault(LS("BaseUrl"),   QString());
-  m_settings->setDefault(LS("Listen"),    QStringList(LS("http://0.0.0.0:7668")));
-  m_settings->setDefault(LS("LogColor"),  true);
-  m_settings->setDefault(LS("LogLevel"),  NodeLog::WarnLevel);
-  m_settings->setDefault(LS("LogOutput"), NodeLog::FileOut);
-  m_settings->setDefault(LS("Order"),     QStringList() << LS("facebook") << LS("vkontakte") << LS("google") << LS("live") << LS("github") << LS("stackoverflow") << LS("yandex") << LS("odnoklassniki") << LS("mail_ru") << LS("simpleid"));
-  m_settings->setDefault(LS("Root"),      defaultRoot());
+  m_settings->setDefault(LS("BaseUrl"),         QString());
+  m_settings->setDefault(LS("Listen"),          QStringList(LS("http://0.0.0.0:7668")));
+  m_settings->setDefault(LS("LogColor"),        true);
+  m_settings->setDefault(LS("LogLevel"),        NodeLog::WarnLevel);
+  m_settings->setDefault(LS("LogOutput"),       NodeLog::FileOut);
+  m_settings->setDefault(LS("Order"),           QStringList() << LS("facebook") << LS("vkontakte") << LS("google") << LS("live") << LS("github") << LS("stackoverflow") << LS("yandex") << LS("odnoklassniki") << LS("mail_ru") << LS("simpleid"));
+  m_settings->setDefault(LS("Root"),            defaultRoot());
+  m_settings->setDefault(LS("SuccessRedirect"), QString());
 
   openLog();
 
@@ -214,6 +215,7 @@ void AuthCore::add(const QUrl &url)
 
 void AuthCore::add(HandlerCreator *handler)
 {
+  handler->setSuccessRedirect(m_settings->value(LS("SuccessRedirect")).toString());
   HandlerRoute::routes.append(handler);
 }
 

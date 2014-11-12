@@ -1,6 +1,5 @@
-/* $Id: GithubAuth.cpp 3490 2013-02-11 02:15:27Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,8 +27,8 @@
 #include "sglobal.h"
 #include "UrlQuery.h"
 
-GithubAuth::GithubAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
-  : OAuthHandler(LS("github"), QUrlQuery(url).queryItemValue(LS("state")).toLatin1(), url, path, request, response, parent)
+GithubAuth::GithubAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent)
+  : OAuthHandler(LS("github"), QUrlQuery(url).queryItemValue(LS("state")).toLatin1(), url, path, request, response, successRedirect, parent)
 {
 }
 
@@ -91,7 +90,7 @@ void GithubAuth::getToken()
 bool GithubAuthCreator::serve(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
 {
   if (path == LS("/oauth2/github")) {
-    new GithubAuth(url, path, request, response, parent);
+    new GithubAuth(url, path, request, response, m_successRedirect, parent);
     return true;
   }
 

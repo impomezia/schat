@@ -1,5 +1,5 @@
 # Simple Chat
-# Copyright (c) 2008-2013 Alexander Sedov <imp@schat.me>
+# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -120,7 +120,6 @@ SOURCES = \
     authd.cpp \
     AuthHandler.cpp \
     AuthState.cpp \
-    HandlerCreator.cpp \
     HandlerRoute.cpp \
     handlers/ProvidersHandler.cpp \
     handlers/StateHandler.cpp \

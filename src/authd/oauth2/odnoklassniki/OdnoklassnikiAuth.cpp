@@ -1,6 +1,5 @@
-/* $Id: OdnoklassnikiAuth.cpp 3774 2013-08-23 22:09:10Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,8 +32,8 @@
 #include "sglobal.h"
 #include "Tufao/httpserverresponse.h"
 
-OdnoklassnikiAuth::OdnoklassnikiAuth(const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
-  : OAuthHandler(LS("odnoklassniki"), state, url, path, request, response, parent)
+OdnoklassnikiAuth::OdnoklassnikiAuth(const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent)
+  : OAuthHandler(LS("odnoklassniki"), state, url, path, request, response, successRedirect, parent)
 {
 }
 
@@ -113,7 +112,7 @@ bool OdnoklassnikiAuthCreator::serve(const QUrl &url, const QString &path, Tufao
       return true;
     }
 
-    new OdnoklassnikiAuth(state, url, path, request, response, parent);
+    new OdnoklassnikiAuth(state, url, path, request, response, m_successRedirect, parent);
     return true;
   }
 

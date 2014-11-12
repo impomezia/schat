@@ -17,17 +17,27 @@ var Auth = {
   setError: function()
   {
     $('#spinner').hide();
-    $('#alert').addClass('alert-error');
-    $('#alert').show();
-    $('#alert').html(Auth.tr[Auth.lang].generic_error);
+
+    var alert = $('#alert');
+    alert.addClass('alert-error');
+    alert.show();
+    alert.html(Auth.tr[Auth.lang].generic_error);
   },
 
   setSuccess: function(data)
   {
     $('#spinner').hide();
-    $('#alert').addClass('alert-success');
-    $('#alert').show();
-    $('#alert').html(Auth.tr[Auth.lang].success);
+
+    var redirect = $('body').data('redirect');
+    if (redirect) {
+      window.location = redirect + data.id;
+      return;
+    }
+
+    var alert = $('#alert');
+    alert.addClass('alert-success');
+    alert.show();
+    alert.html(Auth.tr[Auth.lang].success);
 
     $.JSONView(data, $('#raw'))
   }

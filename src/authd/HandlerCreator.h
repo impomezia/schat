@@ -1,6 +1,5 @@
-/* $Id: HandlerCreator.h 2855 2012-07-10 13:06:00Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,7 +32,11 @@ class HandlerCreator
 public:
   HandlerCreator() {}
   virtual ~HandlerCreator() {}
-  virtual bool serve(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent);
+  inline void setSuccessRedirect(const QString &url) { m_successRedirect = url; }
+  virtual bool serve(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent) = 0;
+
+protected:
+  QString m_successRedirect;
 };
 
 #endif /* HANDLERCREATOR_H_ */

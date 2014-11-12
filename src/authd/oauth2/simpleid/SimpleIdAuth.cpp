@@ -28,8 +28,8 @@
 #include "SimpleIdAuth.h"
 #include "UrlQuery.h"
 
-SimpleIdAuth::SimpleIdAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
-  : OAuthHandler(LS("simpleid"), QUrlQuery(url).queryItemValue(LS("state")).toLatin1(), url, path, request, response, parent)
+SimpleIdAuth::SimpleIdAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent)
+  : OAuthHandler(LS("simpleid"), QUrlQuery(url).queryItemValue(LS("state")).toLatin1(), url, path, request, response, successRedirect, parent)
 {
 }
 
@@ -93,7 +93,7 @@ void SimpleIdAuth::getToken()
 bool SimpleIdAuthCreator::serve(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
 {
   if (path == LS("/oauth2/simpleid")) {
-    new SimpleIdAuth(url, path, request, response, parent);
+    SimpleIdAuth *auth = new SimpleIdAuth(url, path, request, response, m_successRedirect, parent);
     return true;
   }
 

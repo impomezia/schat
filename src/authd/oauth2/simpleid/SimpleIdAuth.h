@@ -25,13 +25,11 @@ class SimpleIdAuth : public OAuthHandler
   Q_OBJECT
 
 public:
-  SimpleIdAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent = 0);
-
-private slots:
-  void dataReady();
-  void tokenReady();
+  SimpleIdAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent = 0);
 
 private:
+  void dataReady() Q_DECL_OVERRIDE;
+  void tokenReady() Q_DECL_OVERRIDE;
   void getToken() Q_DECL_OVERRIDE;
 };
 
