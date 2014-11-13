@@ -1,6 +1,5 @@
-/* $Id: OdnoklassnikiAuthData.h 2953 2012-07-31 21:57:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,6 +14,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 
 #ifndef ODNOKLASSNIKIAUTHDATA_H_
 #define ODNOKLASSNIKIAUTHDATA_H_

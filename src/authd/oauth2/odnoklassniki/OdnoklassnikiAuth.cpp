@@ -31,9 +31,10 @@
 #include "oauth2/odnoklassniki/OdnoklassnikiAuth.h"
 #include "sglobal.h"
 #include "Tufao/httpserverresponse.h"
+#include "UrlQuery.h"
 
-OdnoklassnikiAuth::OdnoklassnikiAuth(const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent)
-  : OAuthHandler(LS("odnoklassniki"), state, url, path, request, response, successRedirect, parent)
+OdnoklassnikiAuth::OdnoklassnikiAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent)
+  : OAuthHandler(LS("odnoklassniki"), QUrlQuery(url).queryItemValue(LS("state")).toLatin1(), url, path, request, response, successRedirect, parent)
 {
 }
 
@@ -52,6 +53,9 @@ void OdnoklassnikiAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
+  user.nativeId = uid;
+  user.provider = LS("odnoklassniki");
+  user.gender   = data.value(LS("gender")).toString();
   user.name     = data.value(LS("name")).toString();
   user.link     = LS("http://www.odnoklassniki.ru/profile/") + uid;
   user.birthday = data.value(LS("birthday")).toString();
@@ -91,7 +95,7 @@ void OdnoklassnikiAuth::getToken()
   request.setHeader(QNetworkRequest::ContentTypeHeader, LS("application/x-www-form-urlencoded"));
 
   QByteArray body = "code=" + m_code +
-      "&redirect_uri=" + m_provider->redirect + '/' + m_state + ChatId::toBase32(m_redirect.toLatin1()) +
+      "&redirect_uri=" + m_provider->redirect +
       "&grant_type=authorization_code&client_id=" + m_provider->id +
       "&client_secret=" + m_provider->secret;
 
@@ -103,16 +107,7 @@ void OdnoklassnikiAuth::getToken()
 bool OdnoklassnikiAuthCreator::serve(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
 {
   if (path == LS("/oauth2/odnoklassniki")) {
-    AuthHandler::setError(response, Tufao::HttpServerResponse::BAD_REQUEST);
-  }
-  else if (path.startsWith(LS("/oauth2/odnoklassniki/"))) {
-    const QByteArray state = path.section(LC('/'), 3, 3).toLatin1();
-    if (ChatId(state.left(ChatId::kEncodedSize)).type() != ChatId::MessageId) {
-      AuthHandler::setError(response, Tufao::HttpServerResponse::BAD_REQUEST);
-      return true;
-    }
-
-    new OdnoklassnikiAuth(state, url, path, request, response, m_successRedirect, parent);
+    new OdnoklassnikiAuth(url, path, request, response, m_successRedirect, parent);
     return true;
   }
 

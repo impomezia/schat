@@ -1,6 +1,5 @@
-/* $Id: OdnoklassnikiAuthData.cpp 3761 2013-08-01 08:16:32Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,6 +14,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 
 #include <QUrl>
 
@@ -31,6 +31,6 @@ OdnoklassnikiAuthData::OdnoklassnikiAuthData()
 
 QByteArray OdnoklassnikiAuthData::toUrl(const QByteArray &state) const
 {
-  QByteArray url = "http://www.odnoklassniki.ru/oauth/authorize?client_id=" + id + "&response_type=code&redirect_uri=" + QUrl::toPercentEncoding(redirect + LC('/') + state);
+  QByteArray url = "http://www.odnoklassniki.ru/oauth/authorize?client_id=" + id + "&response_type=code&redirect_uri=" + QUrl::toPercentEncoding(redirect) + "&state=" + state;;
   return url.replace("%24%7BSTATE%7D", "${STATE}");
 }

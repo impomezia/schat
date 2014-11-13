@@ -25,7 +25,7 @@ class OdnoklassnikiAuth : public OAuthHandler
   Q_OBJECT
 
 public:
-  OdnoklassnikiAuth(const QByteArray &state, const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent = 0);
+  OdnoklassnikiAuth(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, const QString &successRedirect, QObject *parent = 0);
 
 private:
   void dataReady() Q_DECL_OVERRIDE;
