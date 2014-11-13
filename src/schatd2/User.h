@@ -1,6 +1,5 @@
-/* $Id: User.h 2955 2012-08-01 02:37:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -48,16 +47,20 @@ public:
   void toMap(QVariantMap &out) const;
 
   bool saved;        ///< \b true если данные фида сохранены.
+  qint64 channel;    ///< Номер канала в базе данных.
   qint64 date;       ///< Дата модификации.
-  QString name;      ///< Имя пользователя.
-  QString email;     ///< email адрес.
+  QString birthday;  ///< День рождения.
   QString city;      ///< Город.
   QString country;   ///< Страна.
+  QString email;     ///< email адрес.
+  QString gender;    ///< Пол пользователя.
   QString link;      ///< Ссылка на профиль в социальной сети.
+  QString name;      ///< Имя пользователя.
+  QString nativeId;  ///< Нативный идентификатор пользователя.
+  QString provider;  ///< Идентификатор провайдера.
   QString site;      ///< Web-сайт пользователя.
-  QString birthday;  ///< День рождения.
   QVariantMap extra; ///< Дополнительные поля.
-  qint64 channel;    ///< Номер канала в базе данных.
+
 
 private:
   bool setString(QString &key, const QVariant &value);

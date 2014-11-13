@@ -60,7 +60,7 @@ void StateHandler::serve(const QByteArray &cookie, const QByteArray &secret, Tuf
   QVariantMap json;
   json[LS("id")]       = data->id;
   json[LS("provider")] = data->provider;
-//  json[LS("raw")]      = data->raw;
+  json[LS("raw")]      = data->raw;
   json[LS("user")]     = data->user.toMap();
 
   if (!secret.isEmpty() && SimpleID::encode(SimpleID::make(QUrl(AuthCore::baseUrl()).host().toUtf8() + secret, SimpleID::MessageId)) == data->state) {

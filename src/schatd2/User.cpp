@@ -1,6 +1,5 @@
-/* $Id: User.cpp 2955 2012-08-01 02:37:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -97,6 +96,12 @@ bool User::set(const QString &key, const QVariant &value)
     return setString(site, value);
   else if (key == LS("birthday"))
     return setString(birthday, value);
+  else if (key == LS("nativeId"))
+    return setString(nativeId, value);
+  else if (key == LS("provider"))
+    return setString(provider, value);
+  else if (key == LS("gender"))
+    return setString(gender, value);
   else {
     modified = extra.value(key) != value;
     if (modified)
@@ -134,6 +139,9 @@ void User::set(const User &other)
   birthday = other.birthday;
   extra    = other.extra;
   saved    = other.saved;
+  nativeId = other.nativeId;
+  provider = other.provider;
+  gender   = other.gender;
 }
 
 
@@ -165,6 +173,15 @@ void User::toMap(QVariantMap &out) const
 
   if (!birthday.isEmpty())
     out[LS("birthday")] = birthday;
+
+  if (!nativeId.isEmpty())
+    out[LS("nativeId")] = nativeId;
+
+  if (!provider.isEmpty())
+    out[LS("provider")] = provider;
+
+  if (!gender.isEmpty())
+    out[LS("gender")] = gender;
 }
 
 
