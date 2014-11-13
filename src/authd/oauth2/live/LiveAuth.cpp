@@ -43,9 +43,12 @@ void LiveAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
-  user.name  = data.value(LS("name")).toString();
-  user.email = data.value(LS("emails")).toMap().value(LS("account")).toString();
-  user.link  = data.value(LS("link")).toString();
+  user.nativeId = uid;
+  user.provider = LS("live");
+  user.gender   = data.value(LS("gender")).toString();
+  user.name     = data.value(LS("name")).toString();
+  user.email    = data.value(LS("emails")).toMap().value(LS("account")).toString();
+  user.link     = data.value(LS("link")).toString();
 
   Birthday birthday(data.value(LS("birth_day")).toInt(), data.value(LS("birth_month")).toInt(), data.value(LS("birth_year")).toInt());
   if (birthday.isValid())

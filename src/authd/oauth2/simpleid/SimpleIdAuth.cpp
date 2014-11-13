@@ -44,10 +44,13 @@ void SimpleIdAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
-  user.link  = data.value(LS("link")).toString();
-  user.name  = data.value(LS("name")).toString();
-  user.email = data.value(LS("email")).toString();
-  user.site  = data.value(LS("site")).toString();
+  user.nativeId = uid;
+  user.provider = LS("simpleid");
+  user.gender   = data.value(LS("gender")).toString();
+  user.link     = data.value(LS("link")).toString();
+  user.name     = data.value(LS("name")).toString();
+  user.email    = data.value(LS("email")).toString();
+  user.site     = data.value(LS("site")).toString();
 
   const QByteArray id = SimpleID::encode(SimpleID::make("simpleid:" + uid, SimpleID::UserId));
   AuthCore::state()->add(new AuthStateData(m_state, "simpleid", id, data, user));
@@ -93,7 +96,7 @@ void SimpleIdAuth::getToken()
 bool SimpleIdAuthCreator::serve(const QUrl &url, const QString &path, Tufao::HttpServerRequest *request, Tufao::HttpServerResponse *response, QObject *parent)
 {
   if (path == LS("/oauth2/simpleid")) {
-    SimpleIdAuth *auth = new SimpleIdAuth(url, path, request, response, m_successRedirect, parent);
+    new SimpleIdAuth(url, path, request, response, m_successRedirect, parent);
     return true;
   }
 

@@ -55,6 +55,9 @@ void MailRuAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
+  user.nativeId = uid;
+  user.provider = LS("mail_ru");
+  user.gender   = data.value(LS("gender")).toString();
   user.name     = data.value(LS("nick")).toString();
   user.email    = data.value(LS("email")).toString();
   user.link     = data.value(LS("link")).toString();

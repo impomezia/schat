@@ -45,6 +45,9 @@ void YandexAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
+  user.nativeId = uid;
+  user.provider = LS("yandex");
+  user.gender   = data.value(LS("sex")).toString();
   user.name     = data.value(LS("real_name")).toString();
   user.email    = data.value(LS("default_email")).toString();
   user.link     = LS("http://") + user.email.left(user.email.indexOf(LC('@'))).replace(LC('.'), LC('-')) + LS(".ya.ru");

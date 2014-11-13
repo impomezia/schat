@@ -43,10 +43,12 @@ void GithubAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
-  user.link  = data.value(LS("html_url")).toString();
-  user.name  = data.value(LS("name")).toString();
-  user.email = data.value(LS("email")).toString();
-  user.site  = data.value(LS("blog")).toString();
+  user.nativeId = uid;
+  user.provider = LS("github");
+  user.link     = data.value(LS("html_url")).toString();
+  user.name     = data.value(LS("name")).toString();
+  user.email    = data.value(LS("email")).toString();
+  user.site     = data.value(LS("blog")).toString();
 
   QByteArray id = SimpleID::encode(SimpleID::make("github:" + uid, SimpleID::UserId));
   AuthCore::state()->add(new AuthStateData(m_state, "github", id, data, user));

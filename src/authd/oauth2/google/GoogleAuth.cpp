@@ -58,6 +58,9 @@ void GoogleAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
+  user.nativeId = uid;
+  user.provider = LS("google");
+  user.gender   = data.value(LS("gender")).toString();
   user.name     = data.value(LS("name")).toString();
   user.email    = data.value(LS("email")).toString();
   user.link     = data.value(LS("link")).toString();

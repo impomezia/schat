@@ -56,6 +56,10 @@ void VkontakteAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
+  user.nativeId = uid;
+  user.provider = LS("vkontakte");
+  user.gender   = data.value(LS("gender")).toString();
+
   user.name = response.value(LS("first_name")).toString() + LC(' ') + response.value(LS("last_name")).toString();
   if (user.name == LS(" "))
     user.name = QString();

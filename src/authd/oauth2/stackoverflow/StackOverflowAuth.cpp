@@ -51,9 +51,11 @@ void StackOverflowAuth::dataReady()
     return setError("invalid_uid");
 
   User user;
-  user.name  = data.value(LS("display_name")).toString();
-  user.link  = data.value(LS("link")).toString();
-  user.site  = data.value(LS("website_url")).toString();
+  user.nativeId = uid;
+  user.provider = LS("stackoverflow");
+  user.name     = data.value(LS("display_name")).toString();
+  user.link     = data.value(LS("link")).toString();
+  user.site     = data.value(LS("website_url")).toString();
 
   const QByteArray id = SimpleID::encode(SimpleID::make("stackoverflow:" + uid, SimpleID::UserId));
   AuthCore::state()->add(new AuthStateData(m_state, "stackoverflow", id, data, user));
