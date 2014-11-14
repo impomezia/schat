@@ -74,6 +74,8 @@ AuthCore::AuthCore(QObject *parent)
   m_settings->setDefault(LS("Order"),           QStringList() << LS("facebook") << LS("vkontakte") << LS("google") << LS("live") << LS("github") << LS("stackoverflow") << LS("yandex") << LS("odnoklassniki") << LS("mail_ru") << LS("simpleid"));
   m_settings->setDefault(LS("Root"),            defaultRoot());
   m_settings->setDefault(LS("SuccessRedirect"), QString());
+  m_settings->setDefault(LS("API/Url"),         LS("https://api.schat.me/1/user"));
+  m_settings->setDefault(LS("API/Token"),       QString());
 
   openLog();
 
@@ -81,6 +83,8 @@ AuthCore::AuthCore(QObject *parent)
   m_handler->setRoot(QDir::cleanPath(m_settings->value(LS("Root")).toString()));
 
   m_state = new AuthState(this);
+  m_state->setUrl(m_settings->value(LS("API/Url")).toString());
+  m_state->setToken(m_settings->value(LS("API/Token")).toString());
 
   add(new ProvidersHandler());
   add(new StateHandlerCreator());

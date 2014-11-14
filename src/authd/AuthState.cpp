@@ -1,6 +1,5 @@
-/* $Id: AuthState.cpp 3707 2013-06-23 22:38:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,8 +15,13 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+
 #include "AuthState.h"
 #include "id/ChatId.h"
+#include "JSON.h"
 
 AuthStateData::AuthStateData(const QByteArray &state, const QByteArray &error)
   : error(error)
@@ -40,14 +44,60 @@ AuthStateData::AuthStateData(const QByteArray &state, const QByteArray &provider
 AuthState::AuthState(QObject *parent)
   : QObject(parent)
 {
+  m_net = new QNetworkAccessManager(this);
 }
 
 
 void AuthState::add(AuthStateData *data)
 {
-  AuthStatePtr ptr = AuthStatePtr(data);
-  const QByteArray &state = ptr->state;
+  AuthStatePtr state = AuthStatePtr(data);
 
-  m_states[state] = ptr;
-  emit added(state, ptr);
+  if (!state->error.isEmpty())
+    return addState(state);
+
+  if (!m_token.isEmpty()) {
+    m_pending.insert(state->state, state);
+
+    QNetworkRequest request(m_url + "/" + state->id);
+    request.setRawHeader("Content-Type",  "application/json");
+    request.setRawHeader("Authorization", "Bearer " + m_token);
+
+    QNetworkReply *reply = m_net->post(request, JSON::generate(state->user.toMap()));
+    reply->setProperty("id", state->state);
+
+    connect(reply, SIGNAL(finished()), SLOT(onFinished()));
+  }
+  else {
+    addState(state);
+  }
+}
+
+
+void AuthState::onFinished()
+{
+  QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+  if (!reply)
+    return;
+
+  AuthStatePtr state = m_pending.take(reply->property("id").toByteArray());
+  if (!state) {
+    reply->deleteLater();
+    return;
+  }
+
+  const int status = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+  if (reply->error() || status != 200) {
+    state->error = reply->errorString().toUtf8();
+  }
+
+  addState(state);
+  reply->deleteLater();
+}
+
+
+void AuthState::addState(AuthStatePtr state)
+{
+  m_states[state->state] = state;
+  emit added(state->state, state);
 }

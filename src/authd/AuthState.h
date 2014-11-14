@@ -1,6 +1,5 @@
-/* $Id: AuthState.h 2930 2012-07-27 23:33:48Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,6 +25,8 @@
 
 #include "User.h"
 
+class QNetworkAccessManager;
+
 class AuthStateData
 {
 public:
@@ -50,14 +51,25 @@ class AuthState : public QObject
 
 public:
   AuthState(QObject *parent = 0);
-  inline AuthStatePtr get(const QByteArray &state) const  { return m_states.value(state); }
+  inline AuthStatePtr get(const QByteArray &state) const { return m_states.value(state); }
+  inline void setToken(const QString &token)             { m_token = token.toLatin1(); }
+  inline void setUrl(const QString &url)                 { m_url = url; }
   void add(AuthStateData *data);
 
 signals:
   void added(const QByteArray &state, AuthStatePtr data);
 
+private slots:
+  void onFinished();
+
 private:
-  QHash<QByteArray, AuthStatePtr> m_states; ///< Таблица состояний.
+  void addState(AuthStatePtr state);
+
+  QByteArray m_token;
+  QMap<QByteArray, AuthStatePtr> m_pending;
+  QMap<QByteArray, AuthStatePtr> m_states;  ///< Таблица состояний.
+  QNetworkAccessManager *m_net;
+  QString m_url;
 };
 
 #endif /* AUTHSTATE_H_ */
