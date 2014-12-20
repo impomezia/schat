@@ -27,18 +27,23 @@ SCHAT_LITTLE_CLIENT = 1
 HEADERS = \
     Ch.h \
     ChHook.h \
+    Client.h \
     cores/AnonymousAuth.h \
     cores/CookieAuth.h \
     cores/Core.h \
     cores/DiscoveryAuth.h \
     cores/ExternalAuth.h \
     cores/NodeAuth.h \
+    crc8.h \
     DataBase.h \
     events.h \
     feeds/FeedsCore.h \
     feeds/NodeAclFeed.h \
+    Heartbeat.h \
     Host.h \
     Hosts.h \
+    interfaces/IClient.h \
+    interfaces/IClientListener.h \
     net/DataCreator.h \
     net/Net.h \
     net/NetContext.h \
@@ -56,6 +61,8 @@ HEADERS = \
     plugins/NodePlugin.h \
     ServerChannel.h \
     SettingsHook.h \
+    ShortID.h \
+    SJMPPacket.h \
     Sockets.h \
     Storage.h \
     StorageHook.h \
@@ -65,15 +72,18 @@ HEADERS = \
 SOURCES = \
     Ch.cpp \
     ChHook.cpp \
+    Client.cpp \
     cores/AnonymousAuth.cpp \
     cores/CookieAuth.cpp \
     cores/Core.cpp \
     cores/DiscoveryAuth.cpp \
     cores/ExternalAuth.cpp \
+    crc8.cpp \
     DataBase.cpp \
     events.cpp \
     feeds/FeedsCore.cpp \
     feeds/NodeAclFeed.cpp \
+    Heartbeat.cpp \
     Host.cpp \
     Hosts.cpp \
     net/Net.cpp \
@@ -91,6 +101,8 @@ SOURCES = \
     plugins/NodePlugin.cpp \
     ServerChannel.cpp \
     SettingsHook.cpp \
+    ShortID.cpp \
+    SJMPPacket.cpp \
     Sockets.cpp \
     Storage.cpp \
     StorageHook.cpp \

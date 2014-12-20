@@ -78,6 +78,9 @@ Storage::Storage(Settings *settings, const QString &app, QObject *parent)
   m_settings->setDefault(STORAGE_PRIVATE_ID,     QString());
   m_settings->setDefault(STORAGE_PRIVATE_KEY,    LS(":/server.key"));
   m_settings->setDefault(STORAGE_WORKERS,        0);
+  m_settings->setDefault(STORAGE_API_HOST,       "socket.schat.me");
+  m_settings->setDefault(STORAGE_API_PORT,       7665);
+  m_settings->setDefault(STORAGE_API_TOKEN,      QString());
 
   m_log = new NodeLog();
   new FeedStorage(this);

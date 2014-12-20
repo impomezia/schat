@@ -20,9 +20,11 @@
 #include <QTextStream>
 #include <QTimer>
 
+#include "Client.h"
 #include "cores/Core.h"
 #include "debugstream.h"
 #include "feeds/FeedsCore.h"
+#include "Heartbeat.h"
 #include "net/NodePool.h"
 #include "NodeInit.h"
 #include "NodePlugins.h"
@@ -44,18 +46,25 @@ NodeInit::NodeInit(const QString &app, QObject *parent)
   new FeedsCore(this);
 
   m_storage = new Storage(0, app, this);
-  m_core = new Core(this);
+  m_core    = new Core(this);
   m_plugins = new NodePlugins(this);
 
   CmdLine::createPid(Path::app());
 
+  m_client = new Client(this);
+  m_client->addListener(new Heartbeat(this));
+
+  m_client->open(m_storage->settings()->value(STORAGE_API_HOST).toString(), m_storage->settings()->value(STORAGE_API_PORT).toUInt());
+
   QTimer::singleShot(0, this, SLOT(start()));
 }
+
 
 NodeInit::~NodeInit()
 {
   CmdLine::removePid(Path::app());
 }
+
 
 bool NodeInit::hasVersionKey()
 {
@@ -101,8 +110,8 @@ void NodeInit::start()
 
   m_plugins->load();
 
-  QStringList listen = Storage::settings()->value(STORAGE_LISTEN).toStringList();
-  int workers = Storage::settings()->value(STORAGE_WORKERS).toInt();
+  const QStringList listen = Storage::settings()->value(STORAGE_LISTEN).toStringList();
+  const int workers = Storage::settings()->value(STORAGE_WORKERS).toInt();
   m_pool = new NodePool(listen, workers, m_core);
   connect(m_pool, SIGNAL(ready(QObject*)), m_core, SLOT(workerReady(QObject*)));
 

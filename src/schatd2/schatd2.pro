@@ -24,39 +24,8 @@ TEMPLATE = app
 DEFINES += SCHAT_DAEMON
 SCHAT_DAEMON_LIB = 1
 
-win32 {
-  QT += gui
-
-  greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += widgets
-  }
-
-  HEADERS = \
-    NodeInit.h \
-    ui/AboutPage.h \
-    ui/DaemonUi.h \
-    ui/SettingsDialog.h \
-    ui/SettingsPage.h \
-    qtsingleapplication/qtsingleapplication.h \
-    qtsingleapplication/qtlocalpeer.h \
-
-  SOURCES = \
-    NodeInit.cpp \
-    schatd2-ui.cpp \
-    ui/AboutPage.cpp \
-    ui/DaemonUi.cpp \
-    ui/SettingsDialog.cpp \
-    ui/SettingsPage.cpp \
-    qtsingleapplication/qtsingleapplication.cpp \
-    qtsingleapplication/qtlocalpeer.cpp \
- 
-  SCHAT_RESOURCES = 1
-  SCHAT_SINGLEAPP = 1
-}
-else {
-  HEADERS = NodeInit.h
-  SOURCES = NodeInit.cpp schatd2.cpp
-}
+HEADERS = NodeInit.h
+SOURCES = NodeInit.cpp schatd2.cpp
 
 include(../common/config.pri)
 include(../common/common.pri)

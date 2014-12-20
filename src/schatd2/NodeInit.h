@@ -1,6 +1,5 @@
-/* $Id: NodeInit.h 3732 2013-07-07 18:55:44Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,6 +21,7 @@
 #include <QObject>
 #include <QStringList>
 
+class Client;
 class Core;
 class NodePlugins;
 class NodePool;
@@ -46,6 +46,7 @@ public slots:
   void start();
 
 private:
+  Client *m_client;
   Core *m_core;           ///< Указатель на объект Core.
   NodePlugins *m_plugins; ///< Загрузчик плагинов.
   NodePool *m_pool;       ///< Пул обслуживающий подключения.

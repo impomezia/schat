@@ -38,6 +38,9 @@ class StorageHook;
 #define STORAGE_PRIVATE_ID     QLatin1String("PrivateId")
 #define STORAGE_PRIVATE_KEY    QLatin1String("PrivateKey")
 #define STORAGE_WORKERS        QLatin1String("Workers")
+#define STORAGE_API_HOST       QLatin1String("API/Host")
+#define STORAGE_API_PORT       QLatin1String("API/Port")
+#define STORAGE_API_TOKEN      QLatin1String("API/Token")
 
 class SCHAT_EXPORT Storage : public QObject
 {
