@@ -26,6 +26,7 @@
 #include "ServerChannel.h"
 
 class AuthResult;
+class Client;
 class Net;
 class NewPacketsEvent;
 class NodeAuth;
@@ -90,6 +91,7 @@ protected:
   void json();
   void notice(quint16 type);
 
+  Client *m_client;                   ///< Подключение к вышестоящему серверу.
   Net *m_net;                         ///< Главный обработчик JSON пакетов.
   NewPacketsEvent *m_packetsEvent;    ///< Текущий объект NewPacketsEvent.
   Notice *m_notice;                   ///< Текущий прочитанный объект Notice.

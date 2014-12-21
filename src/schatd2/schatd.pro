@@ -28,6 +28,7 @@ HEADERS = \
     Ch.h \
     ChHook.h \
     Client.h \
+    ClientListener.h \
     cores/AnonymousAuth.h \
     cores/CookieAuth.h \
     cores/Core.h \
@@ -73,6 +74,7 @@ SOURCES = \
     Ch.cpp \
     ChHook.cpp \
     Client.cpp \
+    ClientListener.cpp \
     cores/AnonymousAuth.cpp \
     cores/CookieAuth.cpp \
     cores/Core.cpp \

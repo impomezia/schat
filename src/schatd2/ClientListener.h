@@ -15,40 +15,28 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NODEINIT_H_
-#define NODEINIT_H_
+#ifndef CLIENTLISTENER_H_
+#define CLIENTLISTENER_H_
 
 #include <QObject>
-#include <QStringList>
 
-class Core;
-class NodePlugins;
-class NodePool;
-class Storage;
+#include "interfaces/IClientListener.h"
 
-/*!
- * Загрузчик сервера.
- */
-class NodeInit : public QObject
+class ClientListener : public QObject, public IClientListener
 {
   Q_OBJECT
 
 public:
-  NodeInit(const QString &app = QString(), QObject *parent = 0);
-  ~NodeInit();
-  static bool hasVersionKey();
-  static QString base();
-  static void version();
-  void quit();
-
-public slots:
-  void start();
+  ClientListener(const QString &token, QObject *parent = 0);
+  void onAuthRequired(IClient *client) override;
+  void onConnectToHost(IClient *client, const QString &hostName, quint16 port) override;
+  void onDisconnected(IClient *client, int status) override;
+  void onPacket(IClient *client, const SJMPPacket &packet) override;
+  void onPong(IClient *client) override;
 
 private:
-  Core *m_core;           ///< Указатель на объект Core.
-  NodePlugins *m_plugins; ///< Загрузчик плагинов.
-  NodePool *m_pool;       ///< Пул обслуживающий подключения.
-  Storage *m_storage;     ///< Хранилище данных.
+  bool m_waitAuth;
+  QString m_token;
 };
 
-#endif /* NODEINIT_H_ */
+#endif // CLIENTLISTENER_H_

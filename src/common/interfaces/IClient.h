@@ -25,11 +25,13 @@ class IClient
 {
 public:
   virtual ~IClient() {}
+  virtual bool isReady() const = 0;
   virtual void leave(int status = 1001) = 0;
   virtual void open(const QString &hostName, quint16 port = 7665) = 0;
   virtual void ping() = 0;
   virtual void reconnect() = 0;
-  virtual void send(const SJMPPacket &packet) = 0;
+  virtual void send(const SJMPPacket &packet, bool queue = true) = 0;
+  virtual void setReady(bool ready) = 0;
 
   virtual void addListener(IClientListener *listener) = 0;
   virtual void removeListener(IClientListener *listener) = 0;

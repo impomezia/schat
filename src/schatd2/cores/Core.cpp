@@ -21,6 +21,8 @@
 
 #include "Account.h"
 #include "Ch.h"
+#include "Client.h"
+#include "ClientListener.h"
 #include "cores/AnonymousAuth.h"
 #include "cores/CookieAuth.h"
 #include "cores/Core.h"
@@ -30,6 +32,7 @@
 #include "debugstream.h"
 #include "events.h"
 #include "feeds/ServerFeed.h"
+#include "Heartbeat.h"
 #include "net/Net.h"
 #include "net/NetContext.h"
 #include "net/NetReply.h"
@@ -44,6 +47,7 @@
 #include "NodeLog.h"
 #include "NodeNoticeReader.h"
 #include "NodePlugins.h"
+#include "Settings.h"
 #include "sglobal.h"
 #include "Sockets.h"
 #include "Storage.h"
@@ -61,6 +65,12 @@ Core::Core(QObject *parent)
   m_net = new Net(this);
   m_sendStream = new QDataStream(&m_sendBuffer, QIODevice::ReadWrite);
   m_readStream = new QDataStream(&m_readBuffer, QIODevice::ReadWrite);
+
+  m_client = new Client(this);
+  m_client->addListener(new Heartbeat(this));
+  m_client->addListener(new ClientListener(m_settings->value(STORAGE_API_TOKEN).toString(), this));
+
+  m_client->open(m_settings->value(STORAGE_API_HOST).toString(), m_settings->value(STORAGE_API_PORT).toUInt());
 }
 
 

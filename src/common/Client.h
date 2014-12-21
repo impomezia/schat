@@ -19,9 +19,10 @@
 #define CLIENT_H_
 
 #include <QSslSocket>
+#include <QQueue>
 
 #include "interfaces/IClient.h"
-#include "schat.h"
+#include "SJMPPacket.h"
 
 class SCHAT_EXPORT Client : public QSslSocket, public IClient
 {
@@ -29,11 +30,13 @@ class SCHAT_EXPORT Client : public QSslSocket, public IClient
 
 public:
   Client(QObject *parent = 0);
+  bool isReady() const override;
   void leave(int status = 1001) override;
   void open(const QString &hostName, quint16 port = 7665) override;
   void ping() override;
   void reconnect() override;
-  void send(const SJMPPacket &packet) override;
+  void send(const SJMPPacket &packet, bool queue = true) override;
+  void setReady(bool ready) override;
 
   void addListener(IClientListener *listener) override;
   void removeListener(IClientListener *listener) override;
@@ -56,10 +59,12 @@ private:
   qint32 getPayloadSize();
   void release();
 
+  bool m_ready;
   bool m_release;
   int m_status;
   qint32 m_nextFrameSize;
   QList<IClientListener*> m_listeners;
+  QQueue<SJMPPacket> m_queue;
 };
 
 #endif // CLIENT_H_

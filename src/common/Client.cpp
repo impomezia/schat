@@ -23,6 +23,7 @@
 
 Client::Client(QObject *parent)
   : QSslSocket(parent)
+  , m_ready(false)
   , m_release(false)
   , m_status(1001)
   , m_nextFrameSize(0)
@@ -40,6 +41,12 @@ Client::Client(QObject *parent)
   connect(this, SIGNAL(error(QAbstractSocket::SocketError)), SLOT(onError(QAbstractSocket::SocketError)));
   connect(this, SIGNAL(readyRead()), SLOT(onReadyRead()));
   connect(this, SIGNAL(sslErrors(QList<QSslError>)), SLOT(onSslErrors(QList<QSslError>)));
+}
+
+
+bool Client::isReady() const
+{
+  return m_ready;
 }
 
 
@@ -84,8 +91,13 @@ void Client::reconnect()
 }
 
 
-void Client::send(const SJMPPacket &packet)
+void Client::send(const SJMPPacket &packet, bool queue)
 {
+  if (queue && !isReady()) {
+    m_queue.enqueue(packet);
+    return;
+  }
+
   const QByteArray payload = packet.serialize();
   const quint32 size       = payload.size();
 
@@ -109,6 +121,20 @@ void Client::send(const SJMPPacket &packet)
 
   putChar(0x1);
   write(payload);
+}
+
+
+void Client::setReady(bool ready)
+{
+  if (m_ready == ready)
+    return;
+
+  m_ready = ready;
+
+  if (ready && !m_queue.isEmpty()) {
+    while (!m_queue.isEmpty())
+      send(m_queue.dequeue(), false);
+  }
 }
 
 
@@ -142,6 +168,7 @@ void Client::connectToHostImplementation(const QString &hostName, quint16 port, 
 {
   m_release = false;
   m_status  = 1001;
+  m_ready   = false;
 
 # if QT_VERSION < 0x050000
   foreach (IClientListener *listener, m_listeners) {

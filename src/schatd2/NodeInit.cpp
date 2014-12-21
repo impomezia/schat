@@ -51,11 +51,6 @@ NodeInit::NodeInit(const QString &app, QObject *parent)
 
   CmdLine::createPid(Path::app());
 
-  m_client = new Client(this);
-  m_client->addListener(new Heartbeat(this));
-
-  m_client->open(m_storage->settings()->value(STORAGE_API_HOST).toString(), m_storage->settings()->value(STORAGE_API_PORT).toUInt());
-
   QTimer::singleShot(0, this, SLOT(start()));
 }
 
