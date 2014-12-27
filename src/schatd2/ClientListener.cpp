@@ -15,9 +15,14 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QHostInfo>
+
 #include "ClientListener.h"
-#include "SJMPPacket.h"
+#include "DateTime.h"
 #include "interfaces/IClient.h"
+#include "SJMPPacket.h"
+#include "Storage.h"
+#include "tools/OsInfo.h"
 
 ClientListener::ClientListener(const QString &token, QObject *parent)
   : QObject(parent)
@@ -36,7 +41,14 @@ void ClientListener::onAuthRequired(IClient *client)
   SJMPPacket packet;
   packet.setType(SJMPPacket::Request);
   packet.setResource(QLatin1String("token"));
-  packet.setHeader(QLatin1String("token"), m_token);
+  packet.setHeader(QLatin1String("token"),    m_token);
+  packet.setHeader(QLatin1String("ua"),       OsInfo::userAgent());
+  packet.setHeader(QLatin1String("tz"),       DateTime::tz());
+  packet.setHeader(QLatin1String("hostName"), QHostInfo::localHostName());
+
+  const QString session = Storage::value(QLatin1String("session")).toString();
+  if (!session.isEmpty())
+    packet.setHeader(QLatin1String("session"), session);
 
   client->send(packet, false);
 }
@@ -62,7 +74,16 @@ void ClientListener::onPacket(IClient *client, const SJMPPacket &packet)
   if (m_waitAuth) {
     m_waitAuth = false;
 
-    client->setReady(packet.status() == 200);
+    if (packet.status() == 200) {
+      const QString session = packet.header(QLatin1String("session")).toString();
+      if (!session.isEmpty())
+        Storage::setValue(QLatin1String("session"), session);
+
+      client->setReady(true);
+    }
+    else {
+      client->setReady(false);
+    }
   }
 }
 

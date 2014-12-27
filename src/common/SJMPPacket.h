@@ -44,7 +44,7 @@ public:
   inline const QVariantMap &headers() const                               { return m_headers; }
   inline int status() const                                               { return m_status; }
   inline qint64 date() const                                              { return m_date; }
-  inline QVariant header(const QString &key)                              { return m_headers.value(key); }
+  inline QVariant header(const QString &key) const                        { return m_headers.value(key); }
   inline SJMPPacket &removeHeader(const QString &key)                     { m_headers.remove(key); return *this; }
   inline SJMPPacket &setBody(const QVariant &body)                        { m_body = body; return *this; }
   inline SJMPPacket &setDate(qint64 date)                                 { m_date = date; return *this; }

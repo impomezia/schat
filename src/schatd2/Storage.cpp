@@ -132,6 +132,7 @@ bool Storage::contains(const QString &key)
   return false;
 }
 
+
 /*!
  * Запись данных в хранилище.
  *
