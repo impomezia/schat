@@ -192,6 +192,12 @@ bool Core::send(Packet packet)
 }
 
 
+void Core::sendToParent(const SJMPPacket &packet)
+{
+  i()->m_client->send(packet);
+}
+
+
 bool Core::add(ChatChannel channel)
 {
   if (Ch::add(channel)) {

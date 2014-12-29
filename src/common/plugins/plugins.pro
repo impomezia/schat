@@ -22,23 +22,4 @@ SUBDIRS += \
     Messages \
     NodeChannels \
     NodeMaster \
-    NodeConsole \
-    RestApi \
-    GeoIP \
-    NodeFeedLog \
-    Http \
-    Cache \
-    History \
-    Profile \
-    Channels \
-    Popup \
-    Preview \
-    Emoticons \
-    Idle \
-    SendFile \
-    SpellChecker \
-    Proxy \
-    Console \
-    RawFeeds \
-    YouTube \
-    Update \
+    NodeConsole

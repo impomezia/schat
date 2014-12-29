@@ -120,19 +120,6 @@ QByteArray AuthReply::data(QDataStream *stream) const
 }
 
 
-AuthRequest::AuthRequest(int authType, const QString &host, Channel *channel)
-  : fields(ExtraInfoField)
-  , authType(authType)
-  , gender(channel->gender().raw())
-  , host(host)
-  , nick(channel->name())
-  , userAgent(LC('i'))
-{
-  json = OsInfo::json();
-  setStatus(channel->status().value());
-}
-
-
 AuthRequest::AuthRequest(PacketReader *reader)
   : os(0)
   , version(0)
@@ -152,7 +139,7 @@ AuthRequest::AuthRequest(PacketReader *reader)
     cookie = reader->id();
 
   if (fields & JSonField) {
-    raw = reader->get<QByteArray>();
+    const QByteArray raw = reader->get<QByteArray>();
 
     if (raw.size() <= MaxJSONSize)
       json = JSON::parse(raw).toMap();
@@ -187,44 +174,30 @@ bool AuthRequest::isValid() const
   if (authType == Cookie && SimpleID::typeOf(cookie) != SimpleID::CookieId)
     return false;
 
-  if (fields & JSonField && (raw.isEmpty() || raw.size() > MaxJSONSize))
-    return false;
-
   return true;
 }
 
 
-QByteArray AuthRequest::data(QDataStream *stream) const
+QVariantMap AuthRequest::toJSON() const
 {
-  if (!json.isEmpty())
-    fields |= JSonField;
+  QVariantMap out;
+  out.insert(LS("type"),     authType);
+  out.insert(LS("uniqueId"), ChatId(uniqueId).toString());
+  out.insert(LS("id"),       ChatId(id).toString());
+  out.insert(LS("gender"),   gender);
+  out.insert(LS("status"),   status);
+  out.insert(LS("host"),     host);
+  out.insert(LS("nick"),     nick);
+  out.insert(LS("json"),     json);
+  out.insert(LS("os"),       os);
+  out.insert(LS("version"),  Ver(version).toString());
+  out.insert(LS("tz"),       tz);
+  out.insert(LS("hostName"), hostName);
 
-  PacketWriter writer(stream, Protocol::AuthRequestPacket);
+  if (!cookie.isEmpty())
+    out.insert(LS("cookie"), ChatId(cookie).toString());
 
-  writer.put(fields);
-  writer.put(authType);
-  writer.putId(uniqueId);
-  writer.putId(id);
-  writer.put(gender);
-  writer.put(status);
-  writer.put(host);
-  writer.put(nick);
-  writer.put(userAgent);
-
-  if (authType == Cookie || authType == External)
-    writer.putId(cookie);
-
-  if (fields & JSonField)
-    writer.put(json);
-
-  if (fields & ExtraInfoField) {
-    writer.put<quint8>(OsInfo::type());
-    writer.put<quint32>(Ver::current().toUInt());
-    writer.put<qint32>(DateTime::tz());
-    writer.put(QHostInfo::localHostName());
-  }
-
-  return writer.data();
+  return out;
 }
 
 

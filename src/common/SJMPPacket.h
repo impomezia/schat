@@ -65,7 +65,7 @@ private:
   int m_version;
   QString m_resource;
   int m_status;
-  mutable QString m_id;
+  QString m_id;
   qint64 m_date;
   QVariantMap m_headers;
   QVariant m_body;

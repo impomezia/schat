@@ -33,6 +33,7 @@ class NodeAuth;
 class Notice;
 class PacketReader;
 class Settings;
+class SJMPPacket;
 class SocketReleaseEvent;
 class Storage;
 class Worker;
@@ -59,6 +60,7 @@ public:
   static bool send(const QByteArray &packet);
   static bool send(const QList<QByteArray> &packets);
   static bool send(Packet packet);
+  static void sendToParent(const SJMPPacket &packet);
 
   inline NewPacketsEvent *packetsEvent()       { return m_packetsEvent; }
   inline void addAuth(NodeAuth *auth)          { m_auth.prepend(auth); }

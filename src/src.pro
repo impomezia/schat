@@ -18,17 +18,5 @@ CONFIG   += ordered
 TEMPLATE = subdirs
 SUBDIRS  = \
     schatd2/schatd.pro \
-    tufao \
-    rest \
     schatd2 \
-    authd \
-    client \
-    schat2/schat2-core.pro \
-    schat2 \
     common/plugins \
-    
-win32 {
-  lessThan(QT_MAJOR_VERSION, 5):SUBDIRS += schatd2/schatd2-srv.pro
-  
-  SUBDIRS += crashreport
-}

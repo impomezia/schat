@@ -231,26 +231,6 @@ int Channel::isCompatibleId(const QByteArray &id)
 }
 
 
-QString Channel::defaultName()
-{
-  return QDir::home().dirName();
-}
-
-
-QString Channel::defaultName(const QString &tpl)
-{
-  QString out = tpl;
-
-  if (out.contains(LS("%USER%")))
-    out.replace(LS("%USER%"), QDir::home().dirName());
-
-  if (out.contains(LS("%HOST%")))
-    out.replace(LS("%HOST%"), QHostInfo::localHostName());
-
-  return out;
-}
-
-
 /*!
  * Получение фида по имени, эта функция позволяет автоматически создать фид, если он не существует.
  *

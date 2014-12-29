@@ -26,6 +26,7 @@ SJMPPacket::SJMPPacket()
   , m_status(200)
   , m_date(0)
 {
+  m_id = ShortID::generate();
 }
 
 
@@ -129,10 +130,6 @@ QByteArray SJMPPacket::serialize() const
 
   list.append(header);
   list.append(m_resource);
-
-  if (m_id.isEmpty())
-    m_id = ShortID::generate();
-
   list.append(m_id);
   list.append(m_date);
   list.append(m_headers);

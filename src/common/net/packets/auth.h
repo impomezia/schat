@@ -122,18 +122,12 @@ public:
     MaxJSONSize = 1024
   };
 
-  AuthRequest()
-  : fields(0)
-  , authType(0)
-  {}
-
-  AuthRequest(int authType, const QString &host, Channel *channel);
   AuthRequest(PacketReader *reader);
   bool isValid() const;
-  QByteArray data(QDataStream *stream) const;
-  void setStatus(quint8 status);
+  QVariantMap toJSON() const;
 
-  mutable quint8 fields;   ///< Битовая маска дополнительный полей пакета.
+public:
+  quint8 fields;           ///< Битовая маска дополнительный полей пакета.
   quint8 authType;         ///< Тип авторизации.
   QByteArray uniqueId;     ///< Уникальный идентификатор клиента.
   QByteArray id;           ///< Уникальный идентификатор авторизации.
@@ -142,20 +136,19 @@ public:
   QString host;            ///< Адрес по которому клиент подключается к серверу.
   QString nick;            ///< Ник.
   QString userAgent;       ///< Идентификатор клиента пользователя.
-  QString privateId;       ///< Приватный идентификатор сервера, только для типа авторизации AuthRequest::SlaveNode.
   QByteArray cookie;       ///< Cookie, только для типа авторизации AuthRequest::Cookie.
-  QString account;         ///< Зарегистрированное имя пользователя.
-  QByteArray password;     ///< Пароль.
 
   // JSonField.
   QVariantMap json;        ///< JSON данные.
-  QByteArray raw;          ///< Сырые JSON данные.
 
   // ExtraInfoField.
   quint8 os;               ///< Базовый тип операционной системы.
   quint32 version;         ///< Версия клиента.
   qint32 tz;               ///< Смещение времени относительно UTC.
   QString hostName;        ///< Локальное имя хоста клиента.
+
+private:
+  void setStatus(quint8 status);
 };
 
 #endif /* AUTH_H_ */
