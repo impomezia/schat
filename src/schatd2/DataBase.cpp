@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -472,7 +472,7 @@ void DataBase::add(Account *account)
 
   if (account->cookie.isEmpty()) {
     account->setDate(DateTime::utc());
-    account->cookie = Ch::cookie();
+//    account->cookie = Ch::cookie();
   }
 
   if (account->saved)

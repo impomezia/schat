@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,6 +33,9 @@ public:
   void onDisconnected(IClient *client, int status) override;
   void onPacket(IClient *client, const SJMPPacket &packet) override;
   void onPong(IClient *client) override;
+
+signals:
+  void packet(const SJMPPacket &packet);
 
 private:
   bool m_waitAuth;

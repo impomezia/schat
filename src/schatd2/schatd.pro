@@ -1,5 +1,5 @@
 # Simple Chat
-# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+# Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -69,6 +69,7 @@ HEADERS = \
     StorageHook.h \
     tools/CmdLine.h \
     User.h \
+    cores/AuthProxy.h
 
 SOURCES = \
     Ch.cpp \
@@ -110,6 +111,7 @@ SOURCES = \
     StorageHook.cpp \
     tools/CmdLine.cpp \
     User.cpp \
+    cores/AuthProxy.cpp
 
 include(../common/client.pri)
 

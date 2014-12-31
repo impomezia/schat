@@ -15,26 +15,30 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ANONYMOUSAUTH_H_
-#define ANONYMOUSAUTH_H_
+#ifndef AUTHPROXY_H_
+#define AUTHPROXY_H_
 
-#include "cores/NodeAuth.h"
-#include "schat.h"
+#include "net/packets/auth.h"
 
-class ServerChannel;
+class AuthRequest;
+class SJMPPacket;
 
-class SCHAT_EXPORT AnonymousAuth : public NodeAuth
+class AuthProxy : public QObject
 {
+  Q_OBJECT
+
 public:
-  AnonymousAuth(Core *core);
-  AuthResult auth(const AuthRequest &data);
-  int type() const;
-  static AuthResult isCollision(const QByteArray &id, const QString &name, const QByteArray &authId, bool override = false);
+  AuthProxy(const AuthRequest &data, const QString &ip, QObject *parent = 0);
 
-protected:
-  void update(ServerChannel *channel, const AuthRequest &data);
+private slots:
+  void onPacket(const SJMPPacket &packet);
 
-  static QMap<QByteArray, quint64> m_collisions; ///< Счётчик количества попыток автоматического разрешения коллизий ника.
+private:
+  const AuthRequest m_data;
+  const QString m_id;
+  const QString m_ip;
+  const QString m_uuid;
+  const quint64 m_socket;
 };
 
-#endif /* ANONYMOUSAUTH_H_ */
+#endif // AUTHPROXY_H_

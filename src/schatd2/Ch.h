@@ -1,6 +1,5 @@
-/* $Id: Ch.h 3441 2013-01-24 22:14:27Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -45,7 +44,6 @@ public:
   static int rename(ChatChannel channel, const QString &name);
   static QByteArray cookie();
   static QByteArray makeId(const QByteArray &normalized);
-  static QByteArray userId(const QByteArray &uniqueId);
   static void load();
   static void userChannel(ChatChannel channel, const AuthRequest &data, const QString &host, bool created = false, quint64 socket = 0);
 

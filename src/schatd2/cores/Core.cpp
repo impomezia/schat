@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -68,7 +68,10 @@ Core::Core(QObject *parent)
 
   m_client = new Client(this);
   m_client->addListener(new Heartbeat(this));
-  m_client->addListener(new ClientListener(m_settings->value(STORAGE_API_TOKEN).toString(), this));
+
+  ClientListener *listener = new ClientListener(m_settings->value(STORAGE_API_TOKEN).toString(), this);
+  m_client->addListener(listener);
+  connect(listener, SIGNAL(packet(SJMPPacket)), SIGNAL(packet(SJMPPacket)));
 
   m_client->open(m_settings->value(STORAGE_API_HOST).toString(), m_settings->value(STORAGE_API_PORT).toUInt());
 }
