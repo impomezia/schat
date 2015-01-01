@@ -1,6 +1,5 @@
-/* $Id: GenericCh.cpp 3611 2013-03-31 03:45:26Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -62,9 +61,6 @@ void GenericCh::sync(ChatChannel channel, ChatChannel user)
 
 void GenericCh::userChannel(ChatChannel channel)
 {
-  if (!channel->account())
-    channel->createAccount();
-
   Ch::addNewUserFeedIfNotExist(channel, FEED_NAME_ACL);
   Ch::addNewUserFeedIfNotExist(channel, FEED_NAME_PROFILE);
   Ch::addNewUserFeedIfNotExist(channel, FEED_NAME_CHANNEL);

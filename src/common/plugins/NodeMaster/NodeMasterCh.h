@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class NodeMasterCh : public ChHook
 
 public:
   NodeMasterCh(QObject *parent = 0);
-  void load(ChatChannel channel);
+  void load(ChatChannel channel) override;
 
 private slots:
   void onNotify(const FeedEvent &event);

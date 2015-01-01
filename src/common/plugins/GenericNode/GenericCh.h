@@ -1,6 +1,5 @@
-/* $Id: GenericCh.h 3611 2013-03-31 03:45:26Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,11 +26,11 @@ class GenericCh : public ChHook
 
 public:
   GenericCh(QObject *parent = 0);
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel());
-  void rename(ChatChannel channel);
-  void server(ChatChannel channel, bool created);
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel());
-  void userChannel(ChatChannel channel);
+  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) override;
+  void rename(ChatChannel channel) override;
+  void server(ChatChannel channel, bool created) override;
+  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) override;
+  void userChannel(ChatChannel channel) override;
 };
 
 #endif /* GENERICCH_H_ */

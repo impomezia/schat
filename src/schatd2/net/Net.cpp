@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Account.h"
 #include "acl/AclValue.h"
 #include "Ch.h"
 #include "cores/Core.h"
@@ -152,6 +151,8 @@ bool Net::get(const NetContext &context, NetReply &reply) const
 
 
 /*!
+ * FIXME: account()
+ *
  * Подготовка запроса к чтению.
  */
 bool Net::prepare(const NetContext &context, NetReply &reply)
@@ -159,17 +160,17 @@ bool Net::prepare(const NetContext &context, NetReply &reply)
   LOG_N9010
 
   m_sender = Ch::channel(Core::i()->packetsEvent()->channelId(), ChatId::UserId, false);
-  if (!m_sender || !m_sender->account()) {
+  if (!m_sender) {
     reply.status = NetReply::BAD_REQUEST;
     LOG_N9011
     return false;
   }
 
   if (context.req()->headers.contains(LS("user"))) {
-    if (!m_sender->account()->groups.contains(LS("master"))) {
+//    if (!m_sender->account()->groups.contains(LS("master"))) {
       reply.status = NetReply::BAD_REQUEST;
       return false;
-    }
+//    }
 
     const ChatId id(context.req()->headers.value(LS("user")).toString());
     m_user = id.isNull() ? ChatChannel() : Ch::channel(id.toByteArray(), ChatId::UserId);

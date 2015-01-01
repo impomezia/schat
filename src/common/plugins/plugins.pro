@@ -22,4 +22,3 @@ SUBDIRS += \
     Messages \
     NodeChannels \
     NodeMaster \
-    NodeConsole

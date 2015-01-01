@@ -15,15 +15,11 @@
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 HEADERS += \
-    Account.h \
     acl/Acl.h \
     acl/AclValue.h \
     acl/Groups.h \
     base32/base32.h \
     Channel.h \
-    client/AbstractClient.h \
-    client/AbstractClient_p.h \
-    client/NetworkPool.h \
     DateTime.h \
     feeds/Feed.h \
     feeds/FeedCreator.h \
@@ -82,8 +78,6 @@ SOURCES += \
     acl/AclValue.cpp \
     base32/base32.cpp \
     Channel.cpp \
-    client/AbstractClient.cpp \
-    client/NetworkPool.cpp \
     DateTime.cpp \
     feeds/Feed.cpp \
     feeds/FeedEvent.cpp \

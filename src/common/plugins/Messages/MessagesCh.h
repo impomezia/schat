@@ -1,6 +1,5 @@
-/* $Id: MessagesCh.h 3755 2013-07-14 23:11:47Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,10 +26,10 @@ class MessagesCh : public ChHook
 
 public:
   MessagesCh(QObject *parent = 0);
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel());
-  void server(ChatChannel channel, bool created);
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel());
-  void userChannel(ChatChannel channel);
+  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) override;
+  void server(ChatChannel channel, bool created) override;
+  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) override;
+  void userChannel(ChatChannel channel) override;
 };
 
 #endif /* MESSAGESCH_H_ */

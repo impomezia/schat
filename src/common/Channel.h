@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -55,27 +55,6 @@ public:
   inline bool operator==(int other) const { return m_status == other; }
   inline Status& operator=(int other)     { m_status = other; return *this; }
 
-  QString toString() const
-  {
-    switch (m_status) {
-      case Online:
-        return QLatin1String("Online");
-
-      case Away:
-      case AutoAway:
-        return QLatin1String("Away");
-
-      case DnD:
-        return QLatin1String("DnD");
-
-      case FreeForChat:
-        return QLatin1String("FreeForChat");
-
-      default:
-        return QLatin1String("Offline");
-    }
-  }
-
 private:
   quint8 m_status;
 };
@@ -125,7 +104,6 @@ public:
   virtual ~Channel();
   virtual bool isValid() const;
 
-  inline Account *account() const         { return m_account; }
   inline bool isSynced() const            { return m_synced; }
   inline const QByteArray& id() const     { return m_id; }
   inline const QString& name() const      { return m_name; }
@@ -140,7 +118,6 @@ public:
   inline virtual void setKey(qint64 key)       { m_key = key; }
   inline void setData(const QVariantMap &data) { m_data = data; }
   inline void setSynced(bool synced)           { m_synced = synced; }
-  void setAccount(Account *account = 0);
   void setDate(qint64 date = 0);
 
   inline Channels& channels()             { return m_channels; }
@@ -158,7 +135,6 @@ public:
   FeedPtr feed(const QString &name, bool create = true, bool save = true);
 
 protected:
-  Account *m_account;              ///< Аккаунт пользователя
   Channels m_channels;             ///< Список каналов.
 
 private:

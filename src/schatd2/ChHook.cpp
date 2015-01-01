@@ -119,22 +119,3 @@ void ChHook::userChannel(ChatChannel channel)
 {
   Q_UNUSED(channel)
 }
-
-
-/*!
- * Создание нового или успешная авторизация существующего пользователя.
- *
- * \param channel Канал-пользователь.
- * \param data    Авторизационные данные.
- * \param host    Адрес пользователя.
- * \param created \b true если пользователь был создан.
- * \param socket  Сокет пользователя.
- */
-void ChHook::userChannel(ChatChannel channel, const AuthRequest &data, const QString &host, bool created, quint64 socket)
-{
-  Q_UNUSED(channel)
-  Q_UNUSED(data)
-  Q_UNUSED(host)
-  Q_UNUSED(created)
-  Q_UNUSED(socket)
-}

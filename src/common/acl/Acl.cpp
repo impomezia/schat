@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Account.h"
 #include "acl/Acl.h"
 #include "Channel.h"
 #include "net/SimpleID.h"
@@ -70,8 +69,9 @@ int Acl::match(Channel *channel) const
   if (channel->type() == SimpleID::ServerId)
     return 077;
 
-  if (channel->account() && channel->account()->groups.contains(LS("master")))
-    return 077;
+  // FIXME: account()
+//  if (channel->account() && channel->account()->groups.contains(LS("master")))
+//    return 077;
 
   const QByteArray &id = channel->id();
 

@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 #include <QDir>
 #include <QHostInfo>
 
-#include "Account.h"
 #include "Channel.h"
 #include "DateTime.h"
 #include "feeds/FeedStorage.h"
@@ -101,8 +100,7 @@ Channels& Channels::operator=(const QList<QByteArray> &channels)
 
 
 Channel::Channel()
-  : m_account(0)
-  , m_synced(false)
+  : m_synced(false)
   , m_type(SimpleID::InvalidId)
   , m_date(0)
   , m_key(0)
@@ -111,8 +109,7 @@ Channel::Channel()
 
 
 Channel::Channel(const QByteArray &id, const QString &name)
-  : m_account(0)
-  , m_synced(false)
+  : m_synced(false)
   , m_type(SimpleID::InvalidId)
   , m_date(0)
   , m_key(0)
@@ -124,8 +121,6 @@ Channel::Channel(const QByteArray &id, const QString &name)
 
 Channel::~Channel()
 {
-  if (m_account)
-    delete m_account;
 }
 
 
@@ -180,16 +175,6 @@ bool Channel::setName(const QString &name)
 
   m_name = tmp;
   return true;
-}
-
-
-void Channel::setAccount(Account *account)
-{
-  if (!m_account)
-    m_account = new Account();
-
-  if (account)
-    *m_account = *account;
 }
 
 

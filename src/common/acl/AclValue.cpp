@@ -1,6 +1,5 @@
-/* $Id: AclValue.cpp 3590 2013-03-23 21:46:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,7 +15,6 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Account.h"
 #include "acl/Acl.h"
 #include "acl/AclValue.h"
 #include "Channel.h"
@@ -94,8 +92,9 @@ int AclValue::match(const Feed *feed, Channel *channel)
     if (channel && channel->type() == SimpleID::ServerId)
       return 077;
 
-    if (channel && channel->account() && channel->account()->groups.contains(LS("master")))
-      return 077;
+    // FIXME: account()
+//    if (channel && channel->account() && channel->account()->groups.contains(LS("master")))
+//      return 077;
 
     if (!feed->data().contains(FEED_WILDCARD_ASTERISK))
       return 6; // Необходимо для обеспечения обратной совместимости новых клиентов с сервером старее 1.99.53.

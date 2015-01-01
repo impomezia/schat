@@ -19,7 +19,6 @@
 #include <QEvent>
 #include <QThread>
 
-#include "Account.h"
 #include "Ch.h"
 #include "Client.h"
 #include "ClientListener.h"
@@ -220,9 +219,6 @@ void Core::accept(const AuthRequest &request, const AuthResult &result, const QS
   ChatChannel channel = Ch::channel(result.id);
   if (!channel)
     return;
-
-  if (!channel->account()->saved)
-    channel->createAccount();
 
   QList<QByteArray> packets;
   if (result.packet) {

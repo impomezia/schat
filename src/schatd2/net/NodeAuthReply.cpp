@@ -18,7 +18,6 @@
 
 #include <QUrl>
 
-#include "Account.h"
 #include "Ch.h"
 #include "cores/NodeAuth.h"
 #include "feeds/ServerFeed.h"
@@ -46,9 +45,9 @@ NodeAuthReply::NodeAuthReply(const AuthRequest &request, const AuthResult &resul
 
   if (user) {
     userId   = user->id();
-    cookie   = user->account()->cookie;
+//    cookie   = user->account()->cookie; // FIXME: account()
     hostId   = user->hosts()->id();
-    provider = user->account()->provider;
+    provider = LS("simpleid");
 
     const QString name = path(request.host);
     if (!name.isEmpty()) {

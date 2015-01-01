@@ -21,7 +21,6 @@
 #include <QObject>
 #include <QRunnable>
 
-#include "Account.h"
 #include "net/SimpleID.h"
 #include "ServerChannel.h"
 #include "User.h"
@@ -51,9 +50,6 @@ public:
   static qint64 isCollision(const QByteArray &id, const QByteArray &normalized, int type);
   static void saveData(Channel *channel);
 
-  // accounts.
-  static void add(Account *account);
-
   // hosts.
   static QMap<QByteArray, HostInfo> hosts(qint64 channel);
   static void add(HostInfo host);
@@ -71,7 +67,6 @@ private slots:
   void startTasks();
 
 private:
-  static Account account(qint64 key);
   static ChatChannel channel(qint64 id);
   static qint64 accountKey(const QByteArray &cookie);
   static qint64 channelKey(const QByteArray &id, int type = SimpleID::ChannelId);

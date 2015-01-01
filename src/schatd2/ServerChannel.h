@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -53,7 +53,6 @@ public:
   bool addChannel(const QByteArray &id);
   bool removeChannel(const QByteArray &id, bool offline = false);
   bool setName(const QString &name);
-  void createAccount();
   void setKey(qint64 key);
 
   bool canEdit(ChatChannel channel, bool special = true);

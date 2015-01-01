@@ -77,9 +77,7 @@ QVariantMap NodeProfileFeed::feed(Channel *channel) const
   User *user = static_cast<ServerChannel *>(head().channel())->user();
   QVariantMap out = user->toMap();
 
-  Account *account = head().channel()->account();
-  if (!account->provider.isEmpty())
-    out[LS("provider")] = account->provider;
+  out[LS("provider")] = LS("simpleid");
 
   return out;
 }

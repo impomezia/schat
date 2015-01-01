@@ -36,6 +36,11 @@ public:
   quint16 year;
 };
 
+/**
+ * @brief The User class
+ *
+ * FIXME: Remove User
+ */
 class SCHAT_EXPORT User
 {
 public:

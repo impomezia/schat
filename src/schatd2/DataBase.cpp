@@ -465,33 +465,6 @@ void DataBase::saveData(Channel *channel)
 }
 
 
-void DataBase::add(Account *account)
-{
-  if (!account || !account->channel)
-    return;
-
-  if (account->cookie.isEmpty()) {
-    account->setDate(DateTime::utc());
-//    account->cookie = Ch::cookie();
-  }
-
-  if (account->saved)
-    return;
-
-  QSqlQuery query;
-  query.prepare(LS("INSERT INTO accounts (channel, date, cookie, provider, flags, groups) "
-                     "VALUES (:channel, :date, :cookie, :provider, :flags, :groups);"));
-
-  query.bindValue(LS(":channel"),    account->channel);
-  query.bindValue(LS(":date"),       account->date);
-  query.bindValue(LS(":cookie"),     SimpleID::encode(account->cookie));
-  query.bindValue(LS(":provider"),   account->provider);
-  query.bindValue(LS(":flags"),      account->flags);
-  query.bindValue(LS(":groups"),     account->groups.toString());
-  query.exec();
-}
-
-
 /*!
  * Получения списка хостов связанных с каналом.
  */
@@ -562,6 +535,8 @@ void DataBase::add(User *user)
 
 /*!
  * Получение профиля пользователя.
+ *
+ * FIXME: Remove user
  */
 User DataBase::user(qint64 channel)
 {
@@ -635,33 +610,6 @@ void DataBase::startTasks()
 
 
 /*!
- * Получение аккаунта пользователя.
- *
- * \param key Ключ канала.
- */
-Account DataBase::account(qint64 key)
-{
-  QSqlQuery query;
-  query.prepare(LS("SELECT channel, date, cookie, provider, flags, groups FROM accounts WHERE channel = :channel LIMIT 1;"));
-  query.bindValue(LS(":channel"), key);
-  query.exec();
-
-  if (!query.first())
-    return Account();
-
-  Account account;
-  account.channel  = query.value(0).toLongLong();
-  account.date     = query.value(1).toLongLong();
-  account.cookie   = SimpleID::decode(query.value(2).toByteArray());
-  account.provider = query.value(3).toString();
-  account.flags    = query.value(4).toLongLong();
-  account.groups.set(query.value(5).toString());
-
-  return account;
-}
-
-
-/*!
  * Получение канала на основе первичного ключа в таблице \b channels.
  */
 ChatChannel DataBase::channel(qint64 id)
@@ -677,13 +625,6 @@ ChatChannel DataBase::channel(qint64 id)
   ChatChannel channel(new ServerChannel(SimpleID::decode(query.value(0).toByteArray()), query.value(3).toString()));
   channel->setKey(id);
   channel->gender().setRaw(query.value(1).toLongLong());
-
-  if (channel->type() == SimpleID::UserId) {
-    channel->user()->set(user(id));
-
-    Account account = DataBase::account(id);
-    channel->setAccount(&account);
-  }
 
   channel->setData(JSON::parse(query.value(4).toByteArray()).toMap());
   channel->setDate(query.value(5).toLongLong());
@@ -895,18 +836,6 @@ void DataBase::update(ChatChannel channel)
   query.bindValue(LS(":date"),       channel->date());
   query.bindValue(LS(":id"),         channel->key());
   query.exec();
-
-  Account *account = channel->account();
-  if (account && !account->saved) {
-    query.prepare(LS("UPDATE accounts SET date = :date, cookie = :cookie, provider = :provider, flags = :flags, groups = :groups WHERE channel = :channel;"));
-    query.bindValue(LS(":date"),       account->date);
-    query.bindValue(LS(":cookie"),     SimpleID::encode(account->cookie));
-    query.bindValue(LS(":provider"),   account->provider);
-    query.bindValue(LS(":flags"),      account->flags);
-    query.bindValue(LS(":groups"),     account->groups.toString());
-    query.bindValue(LS(":channel"),    channel->key());
-    query.exec();
-  }
 }
 
 

@@ -18,7 +18,6 @@
 #include <QNetworkInterface>
 #include <QHostInfo>
 
-#include "Account.h"
 #include "Channel.h"
 #include "DateTime.h"
 #include "feeds/ServerFeed.h"

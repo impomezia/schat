@@ -1,6 +1,5 @@
-/* $Id: NodeUserFeed.cpp 3576 2013-03-13 14:52:45Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,7 +15,6 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Account.h"
 #include "DateTime.h"
 #include "feeds/NodeUserFeed.h"
 #include "net/SimpleID.h"
@@ -53,12 +51,8 @@ QVariantMap NodeUserFeed::feed(Channel *channel) const
       connections[SimpleID::encode(info->hostId)] = toMap(info);
   }
 
-  Account *account = ch->account();
-  if (!account->provider.isEmpty())
-    out[LS("provider")] = account->provider;
-
+  out[LS("provider")] = "simpleid";
   out[LS("connections")] = connections;
-  out[LS("groups")]      = account->groups.toString();
 
   if (connections.isEmpty() && m_data.contains(LS("last")))
     merge(LS("last"), out, toMap(hosts.value(SimpleID::decode(m_data.value(LS("last")).toString()))));

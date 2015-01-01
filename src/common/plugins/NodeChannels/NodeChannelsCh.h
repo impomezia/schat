@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ class NodeChannelsCh : public ChHook
 
 public:
   NodeChannelsCh(QObject *parent = 0);
-  void load();
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel());
-  void server(ChatChannel channel, bool created);
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel());
-  void userChannel(ChatChannel channel);
+  void load() override;
+  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) override;
+  void server(ChatChannel channel, bool created) override;
+  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) override;
+  void userChannel(ChatChannel channel) override;
 };
 
 #endif /* NODECHANNELSCH_H_ */

@@ -15,7 +15,6 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Account.h"
 #include "Ch.h"
 #include "ChHook.h"
 #include "cores/Core.h"
@@ -249,13 +248,14 @@ void Ch::load()
  */
 void Ch::userChannel(ChatChannel channel, const AuthRequest &data, const QString &host, bool created, quint64 socket)
 {
+  Q_UNUSED(created)
+
   if (!socket)
     socket = Core::socket();
 
   channel->hosts()->add(HostInfo(new Host(data, host, socket)));
 
   foreach (ChHook *hook, m_self->m_hooks) {
-    hook->userChannel(channel, data, host, created, socket);
     hook->userChannel(channel);
   }
 
@@ -378,9 +378,6 @@ void Ch::cache(ChatChannel channel)
 
   m_channels[id] = channel;
   m_channels[channel->normalized()] = channel;
-
-  if (channel->account())
-    m_channels[channel->account()->cookie] = channel;
 }
 
 
@@ -406,9 +403,6 @@ void Ch::remove(const QByteArray &id)
 
   m_channels.remove(channel->id());
   m_channels.remove(channel->normalized());
-
-  if (channel->account())
-    m_channels.remove(channel->account()->cookie);
 }
 
 

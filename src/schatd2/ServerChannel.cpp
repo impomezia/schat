@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,7 +15,6 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Account.h"
 #include "Ch.h"
 #include "DataBase.h"
 #include "DateTime.h"
@@ -130,16 +129,6 @@ bool ServerChannel::setName(const QString &name)
   }
 
   return false;
-}
-
-
-void ServerChannel::createAccount()
-{
-  m_account->date    = DateTime::utc();
-  m_account->channel = key();
-  m_account->setDate(DateTime::utc());
-
-  DataBase::add(account());
 }
 
 
