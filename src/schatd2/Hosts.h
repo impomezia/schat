@@ -1,6 +1,5 @@
-/* $Id: Hosts.h 3418 2013-01-18 13:33:05Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,26 +37,23 @@ public:
   inline QList<quint64> sockets() const          { return m_sockets.keys(); }
   inline void setChannel(ServerChannel *channel) { m_channel = channel; }
 
-  const QMap<QByteArray, HostInfo>& all();
+  const QMap<ChatId, HostInfo>& all();
   FeedPtr feed() const;
   FeedPtr user() const;
-  QByteArray id(const QByteArray &publicId = QByteArray()) const;
   QList<quint64> sockets(const QByteArray &publicId) const;
 
   void add(HostInfo hostInfo);
   void remove(quint64 socket);
   void unlink(const QByteArray &hostId);
 
-  static QByteArray toHostId(const QByteArray &uniqueId, const QByteArray &channelId);
-
 private:
   FeedPtr feed(const QString &name, int mask) const;
-  QByteArray publicId(quint64 socket = 0) const;
+  ChatId publicId(quint64 socket = 0) const;
   void updateHostsFeed(HostInfo host, const QString &method, quint64 socket);
   void updateUserFeed(HostInfo host, const QString &method, quint64 socket);
 
   qint64 m_date;                      ///< Последняя дата модификации.
-  QMap<QByteArray, HostInfo> m_hosts; ///< Таблица хостов, в качестве ключа публичный идентификатор хоста.
+  QMap<ChatId, HostInfo> m_hosts;     ///< Таблица хостов, в качестве ключа публичный идентификатор хоста.
   QMap<quint64, HostInfo> m_sockets;  ///< Таблица сокетов и ассоциированных с ними хостов.
   ServerChannel *m_channel;           ///< Канал.
 };

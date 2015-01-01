@@ -45,14 +45,15 @@ QVariantMap NodeUserFeed::feed(Channel *channel) const
   QVariantMap connections;
 
   ServerChannel *ch = static_cast<ServerChannel *>(head().channel());
-  const QMap<QByteArray, HostInfo> &hosts = ch->hosts()->all();
+  const QMap<ChatId, HostInfo> &hosts = ch->hosts()->all();
   foreach (const HostInfo &info, hosts) {
     if (info->online)
-      connections[SimpleID::encode(info->hostId)] = toMap(info);
+      connections[info->hostId.toString()] = toMap(info);
   }
 
-  out[LS("provider")] = "simpleid";
+  out[LS("provider")]    = "simpleid";
   out[LS("connections")] = connections;
+  out[LS("groups")]      = LS("registered");
 
   if (connections.isEmpty() && m_data.contains(LS("last")))
     merge(LS("last"), out, toMap(hosts.value(SimpleID::decode(m_data.value(LS("last")).toString()))));
@@ -67,7 +68,7 @@ QVariantMap NodeUserFeed::toMap(HostInfo host) const
     return QVariantMap();
 
   QVariantMap out;
-  out[LS("host")]    = host->address;
+  out[LS("host")]    = host->ip;
   out[LS("version")] = Ver(host->version).toString();
   out[LS("os")]      = host->os;
   out[LS("osName")]  = host->osName;

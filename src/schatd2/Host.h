@@ -1,6 +1,5 @@
-/* $Id: Host.h 2911 2012-07-24 11:15:38Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -22,9 +21,10 @@
 #include <QSharedPointer>
 #include <QVariant>
 
-#include "schat.h"
+#include "id/ChatId.h"
 
 class AuthRequest;
+class SJMPPacket;
 
 /*!
  * Информация о подключении пользователя.
@@ -42,13 +42,13 @@ public:
   , socket(0)
   {}
 
-  Host(const AuthRequest &data, const QString &address, quint64 socket);
+  Host(const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket);
 
   bool online;            ///< \b true если подключение активно.
   qint64 channel;         ///< Номер канала в базе данных.
-  QByteArray hostId;      ///< Публичный идентификатор хоста.
+  ChatId hostId;         ///< Публичный идентификатор хоста.
   QString name;           ///< Имя хоста.
-  QString address;        ///< IP адрес пользователя.
+  QString ip;             ///< IP адрес пользователя.
   quint32 version;        ///< Версия клиента.
   quint8 os;              ///< Базовый тип операционной системы.
   QString osName;         ///< Имя операционной системы.
@@ -59,6 +59,7 @@ public:
   QList<quint64> sockets; ///< Список сокетов.
   QByteArray uniqueId;    ///< Уникальный идентификатор пользователя.
   quint64 socket;         ///< Сокет пользователя.
+  QString uuid;           ///< UUID подключения.
 };
 
 typedef QSharedPointer<Host> HostInfo;

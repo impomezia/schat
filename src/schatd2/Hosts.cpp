@@ -1,6 +1,5 @@
-/* $Id: Hosts.cpp 3576 2013-03-13 14:52:45Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,7 +26,6 @@
 #include "net/packets/auth.h"
 #include "net/packets/ChannelNotice.h"
 #include "net/packets/FeedNotice.h"
-#include "plugins/GeoHook.h"
 #include "ServerChannel.h"
 #include "sglobal.h"
 #include "Sockets.h"
@@ -41,7 +39,7 @@ Hosts::Hosts(ServerChannel *channel)
 }
 
 
-const QMap<QByteArray, HostInfo>& Hosts::all()
+const QMap<ChatId, HostInfo>& Hosts::all()
 {
   if (m_hosts.isEmpty())
     m_hosts = DataBase::hosts(m_channel->key());
@@ -72,15 +70,6 @@ FeedPtr Hosts::user() const
 }
 
 
-QByteArray Hosts::id(const QByteArray &publicId) const
-{
-  if (publicId.isEmpty() || SimpleID::typeOf(publicId) != SimpleID::HostId)
-    return this->publicId();
-
-  return publicId;
-}
-
-
 QList<quint64> Hosts::sockets(const QByteArray &publicId) const
 {
   if (SimpleID::typeOf(publicId) == SimpleID::HostId) {
@@ -99,27 +88,25 @@ QList<quint64> Hosts::sockets(const QByteArray &publicId) const
  */
 void Hosts::add(HostInfo hostInfo)
 {
-  const QByteArray id = toHostId(hostInfo->uniqueId, m_channel->id());
   all();
 
-  HostInfo host = m_hosts.value(id);
+  HostInfo host = m_hosts.value(hostInfo->hostId);
   if (host) {
     host->name    = hostInfo->name;
-    host->address = hostInfo->address;
+    host->ip      = hostInfo->ip;
     host->version = hostInfo->version;
     host->os      = hostInfo->os;
     host->osName  = hostInfo->osName;
     host->tz      = hostInfo->tz;
+    host->geo     = hostInfo->geo;
   }
   else {
     host = hostInfo;
-    m_hosts[id] = host;
+    m_hosts[hostInfo->hostId] = host;
   }
 
   host->online  = true;
   host->channel = m_channel->key();
-  host->hostId  = id;
-  host->geo     = GeoHook::geo(host->address);
 
   host->sockets.append(hostInfo->socket);
   m_sockets[hostInfo->socket] = host;
@@ -175,19 +162,6 @@ void Hosts::unlink(const QByteArray &hostId)
 
 
 /*!
- * Получение публичного идентификатора хоста на основе приватного идентификатора сервера
- * и уникального идентификатора пользователя.
- *
- * \param uniqueId  Уникальный идентификатор пользователя.
- * \param channelId Идентификатор пользователя.
- */
-QByteArray Hosts::toHostId(const QByteArray &uniqueId, const QByteArray &channelId)
-{
-  return SimpleID::make("host:" + Storage::privateId() + uniqueId + channelId, SimpleID::HostId);
-}
-
-
-/*!
  * Служебная функция получения фида.
  *
  * На фид установляется маска прав доступа \p mask и если фид не существует добавляется владелец фида.
@@ -210,13 +184,13 @@ FeedPtr Hosts::feed(const QString &name, int mask) const
  *
  * \return Идентификатор хоста или пустые данные, если хост не найден.
  */
-QByteArray Hosts::publicId(quint64 socket) const
+ChatId Hosts::publicId(quint64 socket) const
 {
   if (socket == 0)
     socket = Core::socket();
 
   if (!m_sockets.contains(socket))
-    return QByteArray();
+    return ChatId();
 
   return m_sockets.value(socket)->hostId;
 }
@@ -240,7 +214,7 @@ void Hosts::updateHostsFeed(HostInfo host, const QString &method, quint64 socket
   event->diffTo    = hosts->head().date();
   event->date      = m_date;
   event->status    = Notice::OK;
-  event->path      = SimpleID::encode(host->hostId);
+  event->path      = host->hostId.toBase32();
   event->socket    = socket;
 
   DataBase::add(host);
@@ -268,7 +242,7 @@ void Hosts::updateUserFeed(HostInfo host, const QString &method, quint64 socket)
   event->diffTo    = user->head().date();
   event->date      = m_date;
   event->status    = Notice::OK;
-  event->path      = SimpleID::encode(host->hostId);
+  event->path      = host->hostId.toBase32();
   event->socket    = socket;
 
   user->data()[LS("last")] = event->path;

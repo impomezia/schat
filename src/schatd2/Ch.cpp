@@ -246,14 +246,12 @@ void Ch::load()
  * \param created \b true если пользователь был создан.
  * \param socket  Сокет пользователя.
  */
-void Ch::userChannel(ChatChannel channel, const AuthRequest &data, const QString &host, bool created, quint64 socket)
+void Ch::userChannel(ChatChannel channel, const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket)
 {
-  Q_UNUSED(created)
-
   if (!socket)
     socket = Core::socket();
 
-  channel->hosts()->add(HostInfo(new Host(data, host, socket)));
+  channel->hosts()->add(HostInfo(new Host(data, packet, ip, uuid, socket)));
 
   foreach (ChHook *hook, m_self->m_hooks) {
     hook->userChannel(channel);

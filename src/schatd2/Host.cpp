@@ -1,6 +1,5 @@
-/* $Id: Host.cpp 2911 2012-07-24 11:15:38Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,18 +18,22 @@
 #include "Host.h"
 #include "net/packets/auth.h"
 #include "sglobal.h"
+#include "SJMPPacket.h"
 
-Host::Host(const AuthRequest &data, const QString &address, quint64 socket)
+Host::Host(const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket)
   : online(true)
+  , hostId(ChatId(packet.header(LS("session")).toByteArray(), ChatId::HostId))
   , channel(0)
   , name(data.hostName)
-  , address(address)
+  , ip(ip)
   , version(data.version)
   , os(data.os)
   , osName(data.json.value(LS("os")).toString())
   , tz(data.tz)
+  , geo(packet.body().toMap().value(LS("geo")).toMap())
   , uniqueId(data.uniqueId)
   , socket(socket)
+  , uuid(uuid)
 {
 
 }

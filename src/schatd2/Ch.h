@@ -45,7 +45,7 @@ public:
   static QByteArray cookie();
   static QByteArray makeId(const QByteArray &normalized);
   static void load();
-  static void userChannel(ChatChannel channel, const AuthRequest &data, const QString &host, bool created = false, quint64 socket = 0);
+  static void userChannel(ChatChannel channel, const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket = 0);
 
   // Служебные функции.
   static void addNewFeedIfNotExist(ChatChannel channel, const QString &name, ChatChannel user = ChatChannel());

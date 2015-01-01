@@ -1,6 +1,5 @@
-/* $Id: NodeAuthReply.cpp 3503 2013-02-15 11:44:58Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -45,8 +44,8 @@ NodeAuthReply::NodeAuthReply(const AuthRequest &request, const AuthResult &resul
 
   if (user) {
     userId   = user->id();
-//    cookie   = user->account()->cookie; // FIXME: account()
-    hostId   = user->hosts()->id();
+    cookie   = result.cookie.toByteArray();
+    hostId   = result.hostId.toByteArray();
     provider = LS("simpleid");
 
     const QString name = path(request.host);

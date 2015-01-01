@@ -58,7 +58,7 @@ void AddHostTask::run()
 {
   QSqlQuery query;
   query.prepare(LS("SELECT id FROM hosts WHERE hostId = :hostId LIMIT 1;"));
-  query.bindValue(LS(":hostId"), SimpleID::encode(m_host.hostId));
+  query.bindValue(LS(":hostId"), m_host.hostId.toBase32());
   query.exec();
 
   qint64 key = -1;
@@ -71,7 +71,7 @@ void AddHostTask::run()
                                " VALUES (:channel, :hostId, :name, :address, :version, :os, :osName, :tz, :date, :geo, :data)"));
 
     query.bindValue(LS(":channel"), m_host.channel);
-    query.bindValue(LS(":hostId"),  SimpleID::encode(m_host.hostId));
+    query.bindValue(LS(":hostId"),  m_host.hostId.toBase32());
   }
   else {
     query.prepare(LS("UPDATE hosts SET name = :name, address = :address, version = :version, os = :os, osName = :osName, tz = :tz, date = :date, geo = :geo, data = :data WHERE id = :id;"));
@@ -79,7 +79,7 @@ void AddHostTask::run()
   }
 
   query.bindValue(LS(":name"),    m_host.name);
-  query.bindValue(LS(":address"), m_host.address);
+  query.bindValue(LS(":address"), m_host.ip);
   query.bindValue(LS(":version"), Ver(m_host.version).toString());
   query.bindValue(LS(":os"),      m_host.os);
   query.bindValue(LS(":osName"),  m_host.osName);
@@ -468,9 +468,9 @@ void DataBase::saveData(Channel *channel)
 /*!
  * Получения списка хостов связанных с каналом.
  */
-QMap<QByteArray, HostInfo> DataBase::hosts(qint64 channel)
+QMap<ChatId, HostInfo> DataBase::hosts(qint64 channel)
 {
-  QMap<QByteArray, HostInfo> out;
+  QMap<ChatId, HostInfo> out;
 
   QSqlQuery query;
   query.prepare(LS("SELECT hostId, name, address, version, os, osName, tz, date, geo, data FROM hosts WHERE channel = :channel;"));
@@ -482,7 +482,7 @@ QMap<QByteArray, HostInfo> DataBase::hosts(qint64 channel)
     host->channel = channel;
     host->hostId  = SimpleID::decode(query.value(0).toByteArray());
     host->name    = query.value(1).toString();
-    host->address = query.value(2).toString();
+    host->ip      = query.value(2).toString();
     host->version = Ver(query.value(3).toString()).toUInt();
     host->os      = query.value(4).toInt();
     host->osName  = query.value(5).toString();

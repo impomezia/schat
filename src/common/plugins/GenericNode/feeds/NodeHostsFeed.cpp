@@ -93,12 +93,12 @@ QVariantMap NodeHostsFeed::feed(Channel *channel) const
   QVariantMap out;
 
   ServerChannel *user = static_cast<ServerChannel *>(head().channel());
-  const QMap<QByteArray, HostInfo> &hosts = user->hosts()->all();
+  const QMap<ChatId, HostInfo> &hosts = user->hosts()->all();
   foreach (const HostInfo &info, hosts) {
     QVariantMap data;
     data[LS("online")]  = info->online;
     data[LS("name")]    = info->name;
-    data[LS("host")]    = info->address;
+    data[LS("host")]    = info->ip;
     data[LS("version")] = Ver(info->version).toString();
     data[LS("os")]      = info->os;
     data[LS("osName")]  = info->osName;
@@ -107,7 +107,7 @@ QVariantMap NodeHostsFeed::feed(Channel *channel) const
 
     merge(LS("geo"),  data, info->geo);
     merge(LS("data"), data, info->data);
-    out[SimpleID::encode(info->hostId)] = data;
+    out[info->hostId.toString()] = data;
   }
 
   return out;

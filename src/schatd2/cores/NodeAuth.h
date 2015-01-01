@@ -1,6 +1,5 @@
-/* $Id: NodeAuth.h 2905 2012-07-22 20:33:28Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -19,7 +18,8 @@
 #ifndef NODEAUTH_H_
 #define NODEAUTH_H_
 
-#include <QVariant>
+#include "id/ChatId.h"
+#include "SJMPPacket.h"
 
 class AuthRequest;
 class Core;
@@ -49,13 +49,15 @@ public:
   , authId(authId)
   {}
 
-  AuthResult(const QByteArray &id, const QByteArray &authId)
+  AuthResult(const QByteArray &id, const QByteArray &authId, const SJMPPacket &packet)
   : action(Accept)
   , packet(true)
   , option(1)
   , status(200)
   , authId(authId)
   , id(id)
+  , hostId(ChatId(packet.header(QLatin1String("session")).toByteArray(), ChatId::HostId))
+  , cookie(packet.header(QLatin1String("cookie")).toByteArray())
   {}
 
   virtual ~AuthResult() {}
@@ -67,6 +69,8 @@ public:
   QByteArray authId; ///< Идентификатор авторизации.
   QByteArray id;     ///< Идентификатор пользователя.
   QVariantMap json;  ///< JSON данные.
+  ChatId hostId;
+  ChatId cookie;
 };
 
 

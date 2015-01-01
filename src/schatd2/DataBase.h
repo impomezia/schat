@@ -51,7 +51,7 @@ public:
   static void saveData(Channel *channel);
 
   // hosts.
-  static QMap<QByteArray, HostInfo> hosts(qint64 channel);
+  static QMap<ChatId, HostInfo> hosts(qint64 channel);
   static void add(HostInfo host);
   static void removeHost(const QByteArray &hostId);
 
