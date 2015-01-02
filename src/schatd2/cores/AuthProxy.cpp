@@ -55,18 +55,26 @@ void AuthProxy::onPacket(const SJMPPacket &packet)
 
   deleteLater();
 
-  if (packet.status() != 200)
+  if (packet.status() != 200) {
+    int status = Notice::Forbidden;
+    if (packet.status() == 302)
+      status = Notice::Found;
+
+    return Core::i()->reject(m_data, AuthResult(status, m_data.id), m_socket);
+  }
+
+  const QVariantMap user = packet.body().toMap().value(LS("user")).toMap();
+  const ChatId chatId(user.value(LS("chatId")).toString());
+
+  Q_ASSERT(chatId.type() == ChatId::UserId);
+  if (chatId.type() != ChatId::UserId) {
     return Core::i()->reject(m_data, AuthResult(Notice::Forbidden, m_data.id), m_socket);
+  }
 
-  const QVariantMap user  = packet.body().toMap().value(LS("user")).toMap();
-  const QByteArray chatId = ChatId(user.value(LS("chatId")).toString()).toByteArray();
-
-  ChatChannel channel = Ch::channel(chatId, SimpleID::UserId);
-  bool created = false;
+  ChatChannel channel = Ch::channel(chatId.toByteArray(), SimpleID::UserId);
 
   if (!channel) {
-    channel = ChatChannel(new ServerChannel(chatId, user.value(LS("nick")).toString()));
-    created = true;
+    channel = ChatChannel(new ServerChannel(chatId.toByteArray(), user.value(LS("nick")).toString()));
   }
 
   channel->setName(user.value(LS("nick")).toString());
@@ -77,10 +85,10 @@ void AuthProxy::onPacket(const SJMPPacket &packet)
   }
 
   Core::add(channel);
-  Ch::userChannel(channel, m_data, m_ip, created, m_socket);
+  Ch::userChannel(channel, m_data, packet, m_ip, m_uuid, m_socket);
 
-  LOG_INFO("N1100", "Core/AuthProxy", channel->name() << "@" << m_ip + "/" + ChatId(channel->id()).toString() << ", " << m_data.host)
+  LOG_INFO("N1100", "Core/AuthProxy", channel->name() << "@" << m_ip + "/" + chatId.toString() << ", " << m_data.host)
 
-  const AuthResult result(chatId, m_data.id);
+  const AuthResult result(chatId.toByteArray(), m_data.id, packet);
   Core::i()->accept(m_data, result, m_ip);
 }

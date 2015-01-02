@@ -44,7 +44,6 @@ public:
   inline const Channels& offline() const        { return m_offline; }
   inline const QByteArray& normalized() const   { return m_normalized; }
   inline const Subscribers& subscribers() const { return m_subscribers; }
-  inline Hosts* hosts() const                   { return m_hosts; }
   inline QList<quint64> sockets() const         { if (m_hosts) return m_hosts->sockets(); return QList<quint64>(); }
   inline Subscribers& subscribers()             { return m_subscribers; }
   inline User* user() const                     { return m_user; }
@@ -53,6 +52,7 @@ public:
   bool addChannel(const QByteArray &id);
   bool removeChannel(const QByteArray &id, bool offline = false);
   bool setName(const QString &name);
+  Hosts* hosts() const;
   void setKey(qint64 key);
 
   bool canEdit(ChatChannel channel, bool special = true);

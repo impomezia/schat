@@ -19,14 +19,12 @@
 #include <QEvent>
 #include <QThread>
 
+#include "AuthProxy.h"
 #include "Ch.h"
 #include "Client.h"
 #include "ClientListener.h"
-#include "cores/AnonymousAuth.h"
-#include "cores/CookieAuth.h"
 #include "cores/Core.h"
-#include "cores/DiscoveryAuth.h"
-#include "cores/ExternalAuth.h"
+#include "cores/NodeAuth.h"
 #include "DateTime.h"
 #include "debugstream.h"
 #include "events.h"
@@ -303,7 +301,7 @@ void Core::newPacketsEvent(NewPacketsEvent *event)
     m_reader = &reader;
 
     if (reader.type() == Protocol::AuthRequestPacket) {
-      auth();
+      onAuth();
       continue;
     }
 
@@ -341,7 +339,7 @@ void Core::packet(int type)
 /*!
  * Обработка авторизации пользователя.
  */
-bool Core::auth()
+bool Core::onAuth()
 {
   AuthRequest request(m_reader);
 
@@ -350,37 +348,8 @@ bool Core::auth()
     return false;
   }
 
-  if (m_auth.isEmpty()) {
-    const QStringList methods = Ch::server()->feed(FEED_NAME_SERVER)->data().value(SERVER_FEED_AUTH_KEY).toStringList();
-    if (methods.contains(AUTH_METHOD_ANONYMOUS))
-      addAuth(new AnonymousAuth(this));
-
-    addAuth(new CookieAuth(this));
-    addAuth(new DiscoveryAuth(this));
-
-    if (methods.contains(AUTH_METHOD_OAUTH))
-      addAuth(new ExternalAuth(this));
-  }
-
-  for (int i = 0; i < m_auth.size(); ++i) {
-    if (request.authType != m_auth.at(i)->type())
-      continue;
-
-    AuthResult result = m_auth.at(i)->auth(request);
-    if (result.action == AuthResult::Reject) {
-      reject(request, result);
-      return false;
-    }
-    else if (result.action == AuthResult::Accept) {
-      accept(request, result);
-      return true;
-    }
-    else if (result.action == AuthResult::Pending)
-      return true;
-  }
-
-  reject(request, AuthResult(Notice::NotImplemented, request.id, NewPacketsEvent::KillSocketOption));
-  return false;
+  new AuthProxy(request, packetsEvent()->address.toString(), this);
+  return true;
 }
 
 

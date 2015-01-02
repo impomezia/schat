@@ -132,6 +132,14 @@ bool ServerChannel::setName(const QString &name)
 }
 
 
+Hosts* ServerChannel::hosts() const
+{
+  Q_ASSERT(m_hosts);
+
+  return m_hosts;
+}
+
+
 void ServerChannel::setKey(qint64 key)
 {
   Channel::setKey(key);

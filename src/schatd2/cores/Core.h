@@ -81,13 +81,13 @@ public slots:
 protected:
   void customEvent(QEvent *event);
 
-protected:
+private:
   virtual bool checkPacket();
   virtual void newPacketsEvent(NewPacketsEvent *event);
   virtual void packet(int type);
 
   // Авторизация.
-  virtual bool auth();
+  bool onAuth();
 
   // users.
   void release(SocketReleaseEvent *event);

@@ -29,11 +29,7 @@ HEADERS = \
     ChHook.h \
     Client.h \
     ClientListener.h \
-    cores/AnonymousAuth.h \
-    cores/CookieAuth.h \
     cores/Core.h \
-    cores/DiscoveryAuth.h \
-    cores/ExternalAuth.h \
     cores/NodeAuth.h \
     crc8.h \
     DataBase.h \
@@ -75,11 +71,7 @@ SOURCES = \
     ChHook.cpp \
     Client.cpp \
     ClientListener.cpp \
-    cores/AnonymousAuth.cpp \
-    cores/CookieAuth.cpp \
     cores/Core.cpp \
-    cores/DiscoveryAuth.cpp \
-    cores/ExternalAuth.cpp \
     crc8.cpp \
     DataBase.cpp \
     events.cpp \
