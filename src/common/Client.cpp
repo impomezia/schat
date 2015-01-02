@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ Client::Client(QObject *parent)
   , m_release(false)
   , m_status(1001)
   , m_nextFrameSize(0)
+  , m_port(0)
 {
 # if QT_VERSION >= 0x050000
   setProtocol(QSsl::TlsV1_0);
@@ -71,6 +72,9 @@ void Client::leave(int status)
 
 void Client::open(const QString &hostName, quint16 port)
 {
+  m_hostName = hostName;
+  m_port     = port;
+
   connectToHostEncrypted(hostName, port);
 }
 
@@ -84,10 +88,10 @@ void Client::ping()
 
 void Client::reconnect()
 {
-  if (!peerPort())
+  if (!m_port)
     return;
 
-  open(peerName(), peerPort());
+  open(m_hostName, m_port);
 }
 
 
