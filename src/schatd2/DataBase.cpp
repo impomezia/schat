@@ -92,54 +92,6 @@ void AddHostTask::run()
 }
 
 
-AddProfileTask::AddProfileTask(User *user)
-  : QRunnable()
-  , m_user(*user)
-{
-}
-
-
-/*!
- * Запуск задачи.
- */
-void AddProfileTask::run()
-{
-  QSqlQuery query;
-  query.prepare(LS("SELECT id FROM profiles WHERE channel = :channel LIMIT 1;"));
-  query.bindValue(LS(":channel"), m_user.channel);
-  query.exec();
-
-  qint64 key = -1;
-  if (query.first())
-    key = query.value(0).toLongLong();
-
-  if (key == -1) {
-    query.prepare(LS("INSERT INTO profiles (channel,  date,  name,  email,  city,  country,  link,  site,  birthday,  extra)"
-                                  " VALUES (:channel, :date, :name, :email, :city, :country, :link, :site, :birthday, :extra)"));
-
-    query.bindValue(LS(":channel"),  m_user.channel);
-  }
-  else {
-    query.prepare(LS("UPDATE profiles SET date = :date, name = :name, email = :email, city = :city, country = :country,"
-        "link = :link, site = :site, birthday = :birthday, extra = :extra WHERE id = :id;"));
-
-    query.bindValue(LS(":id"), key);
-  }
-
-  query.bindValue(LS(":date"),     m_user.date);
-  query.bindValue(LS(":name"),     m_user.name);
-  query.bindValue(LS(":email"),    m_user.email);
-  query.bindValue(LS(":city"),     m_user.city);
-  query.bindValue(LS(":country"),  m_user.country);
-  query.bindValue(LS(":link"),     m_user.link);
-  query.bindValue(LS(":site"),     m_user.site);
-  query.bindValue(LS(":birthday"), m_user.birthday);
-  query.bindValue(LS(":extra"),    JSON::generate(m_user.extra));
-
-  query.exec();
-}
-
-
 AddValueTask::AddValueTask(const QString &key, const QVariant &value)
   : QRunnable()
   , m_key(key)
@@ -516,51 +468,6 @@ void DataBase::removeHost(const QByteArray &hostId)
   query.prepare(LS("DELETE FROM hosts WHERE hostId = :hostId;"));
   query.bindValue(LS(":hostId"), SimpleID::encode(hostId));
   query.exec();
-}
-
-
-void DataBase::add(User *user)
-{
-  if (!user->channel || user->saved)
-    return;
-
-  user->saved = true;
-
-  AddProfileTask *task = new AddProfileTask(user);
-  m_self->m_tasks.append(task);
-  if (m_self->m_tasks.size() == 1)
-    QTimer::singleShot(0, m_self, SLOT(startTasks()));
-}
-
-
-/*!
- * Получение профиля пользователя.
- *
- * FIXME: Remove user
- */
-User DataBase::user(qint64 channel)
-{
-  QSqlQuery query;
-  query.prepare(LS("SELECT date, name, email, city, country, link, site, birthday, extra FROM profiles WHERE channel = :channel;"));
-  query.bindValue(LS(":channel"), channel);
-  query.exec();
-
-  User out;
-  if (!query.first())
-    return out;
-
-  out.channel  = channel;
-  out.date     = query.value(0).toLongLong();
-  out.name     = query.value(1).toString();
-  out.email    = query.value(2).toString();
-  out.city     = query.value(3).toString();
-  out.country  = query.value(4).toString();
-  out.link     = query.value(5).toString();
-  out.site     = query.value(6).toString();
-  out.birthday = query.value(7).toString();
-  out.extra    = JSON::parse(query.value(8).toByteArray()).toMap();
-
-  return out;
 }
 
 

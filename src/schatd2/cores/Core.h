@@ -79,18 +79,15 @@ public slots:
   inline void workerReady(QObject *listener) { m_listeners.append(listener); }
 
 protected:
-  void customEvent(QEvent *event);
+  void customEvent(QEvent *event) override;
 
 private:
-  virtual bool checkPacket();
-  virtual void newPacketsEvent(NewPacketsEvent *event);
-  virtual void packet(int type);
+  bool checkPacket();
+  void onNewPackets(NewPacketsEvent *event);
+  void onPacket(int type);
 
-  // Авторизация.
   bool onAuth();
-
-  // users.
-  void release(SocketReleaseEvent *event);
+  void onRelease(SocketReleaseEvent *event);
 
   // notices.
   void json();

@@ -1,6 +1,5 @@
-/* $Id: NodeProfileFeed.cpp 3735 2013-07-07 23:38:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,7 +22,6 @@
 #include "net/SimpleID.h"
 #include "ServerChannel.h"
 #include "sglobal.h"
-#include "User.h"
 
 NodeProfileFeed::NodeProfileFeed(const QString &name, const QVariantMap &data)
   : Feed(name, data)
@@ -47,13 +45,13 @@ FeedReply NodeProfileFeed::post(const QString &path, const QVariantMap &json, Ch
   if (path.isEmpty() || path.contains(LC('*')) || !json.contains(LS("value")))
     return Notice::BadRequest;
 
-  const QVariant& value = json[LS("value")];
-  User *user = static_cast<ServerChannel *>(head().channel())->user();
+//  const QVariant& value = json[LS("value")];
+//  User *user = static_cast<ServerChannel *>(head().channel())->user();
 
-  if (user->set(path, value)) {
-    DataBase::add(user);
-    return FeedReply(Notice::OK, DateTime::utc());
-  }
+//  if (user->set(path, value)) {
+//    DataBase::add(user);
+//    return FeedReply(Notice::OK, DateTime::utc());
+//  }
 
   return Notice::NotModified;
 }
@@ -74,8 +72,9 @@ QVariantMap NodeProfileFeed::feed(Channel *channel) const
   if (head().channel()->type() != SimpleID::UserId || !can(channel, Acl::Read))
     return QVariantMap();
 
-  User *user = static_cast<ServerChannel *>(head().channel())->user();
-  QVariantMap out = user->toMap();
+  QVariantMap out;
+//  User *user = static_cast<ServerChannel *>(head().channel())->user();
+//  QVariantMap out = user->toMap();
 
   out[LS("provider")] = LS("simpleid");
 

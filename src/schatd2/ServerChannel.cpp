@@ -25,21 +25,17 @@
 #include "Normalize.h"
 #include "ServerChannel.h"
 #include "sglobal.h"
-#include "User.h"
 
 ServerChannel::ServerChannel(ClientChannel channel)
   : Channel(channel->id(), channel->name())
   , m_permanent(false)
   , m_hosts(0)
-  , m_user(0)
 {
   normalize();
   m_channels.set(channel->channels().all());
 
-  if (type() == SimpleID::UserId) {
+  if (type() == SimpleID::UserId)
     m_hosts = new Hosts(this);
-    m_user  = new User();
-  }
 }
 
 
@@ -47,14 +43,11 @@ ServerChannel::ServerChannel(const QByteArray &id, const QString &name)
   : Channel(id, name)
   , m_permanent(false)
   , m_hosts(0)
-  , m_user(0)
 {
   normalize();
 
-  if (type() == SimpleID::UserId) {
+  if (type() == SimpleID::UserId)
     m_hosts = new Hosts(this);
-    m_user  = new User();
-  }
 }
 
 
@@ -62,9 +55,6 @@ ServerChannel::~ServerChannel()
 {
   if (m_hosts)
     delete m_hosts;
-
-  if (m_user)
-    delete m_user;
 }
 
 
@@ -137,19 +127,6 @@ Hosts* ServerChannel::hosts() const
   Q_ASSERT(m_hosts);
 
   return m_hosts;
-}
-
-
-void ServerChannel::setKey(qint64 key)
-{
-  Channel::setKey(key);
-
-  if (m_user) {
-    m_user->channel = key;
-
-    if (!m_user->saved)
-      DataBase::add(m_user);
-  }
 }
 
 

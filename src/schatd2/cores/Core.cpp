@@ -261,11 +261,11 @@ void Core::customEvent(QEvent *event)
 {
   switch ((int) event->type()) {
     case ServerEvent::NewPackets:
-      newPacketsEvent(static_cast<NewPacketsEvent*>(event));
+      onNewPackets(static_cast<NewPacketsEvent*>(event));
       break;
 
     case ServerEvent::SocketRelease:
-      release(static_cast<SocketReleaseEvent*>(event));
+      onRelease(static_cast<SocketReleaseEvent*>(event));
       break;
 
     default:
@@ -289,7 +289,7 @@ bool Core::checkPacket()
 /*!
  * Обработка новых пакетов.
  */
-void Core::newPacketsEvent(NewPacketsEvent *event)
+void Core::onNewPackets(NewPacketsEvent *event)
 {
   m_packetsEvent = event;
   QList<QByteArray> packets = event->packets;
@@ -313,12 +313,12 @@ void Core::newPacketsEvent(NewPacketsEvent *event)
       continue;
 
     m_timestamp = 0;
-    packet(reader.type());
+    onPacket(reader.type());
   }
 }
 
 
-void Core::packet(int type)
+void Core::onPacket(int type)
 {
   switch (type) {
     case Protocol::NoticePacket:
@@ -356,7 +356,7 @@ bool Core::onAuth()
 /*!
  * Обработка физического отключения пользователя от сервера.
  */
-void Core::release(SocketReleaseEvent *event)
+void Core::onRelease(SocketReleaseEvent *event)
 {
   ChatChannel user = Ch::channel(event->channelId(), SimpleID::UserId);
   if (!user)

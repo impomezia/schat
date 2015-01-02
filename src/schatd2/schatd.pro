@@ -63,7 +63,6 @@ HEADERS = \
     Storage.h \
     StorageHook.h \
     tools/CmdLine.h \
-    User.h \
     cores/AuthProxy.h
 
 SOURCES = \
@@ -100,7 +99,6 @@ SOURCES = \
     Storage.cpp \
     StorageHook.cpp \
     tools/CmdLine.cpp \
-    User.cpp \
     cores/AuthProxy.cpp
 
 include(../common/client.pri)

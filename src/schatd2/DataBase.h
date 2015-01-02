@@ -23,7 +23,6 @@
 
 #include "net/SimpleID.h"
 #include "ServerChannel.h"
-#include "User.h"
 
 class QThreadPool;
 
@@ -54,10 +53,6 @@ public:
   static QMap<ChatId, HostInfo> hosts(qint64 channel);
   static void add(HostInfo host);
   static void removeHost(const QByteArray &hostId);
-
-  // profiles.
-  static void add(User *user);
-  static User user(qint64 channel);
 
   static bool contains(const QString &key);
   static QVariant value(const QString &key, const QVariant &defaultValue = QVariant());
@@ -93,20 +88,6 @@ public:
 
 private:
   Host m_host; ///< Информация о хосте пользователя.
-};
-
-
-/*!
- * Отложенная запись или обновление информации о профиле пользователя.
- */
-class AddProfileTask : public QRunnable
-{
-public:
-  AddProfileTask(User *user);
-  void run();
-
-private:
-  User m_user;
 };
 
 

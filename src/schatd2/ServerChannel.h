@@ -23,7 +23,6 @@
 #include "net/Subscribers.h"
 
 class ServerChannel;
-class User;
 
 typedef QSharedPointer<ServerChannel> ChatChannel;
 
@@ -46,14 +45,12 @@ public:
   inline const Subscribers& subscribers() const { return m_subscribers; }
   inline QList<quint64> sockets() const         { if (m_hosts) return m_hosts->sockets(); return QList<quint64>(); }
   inline Subscribers& subscribers()             { return m_subscribers; }
-  inline User* user() const                     { return m_user; }
   inline void setPermanent(bool permanent )     { m_permanent = permanent; }
 
   bool addChannel(const QByteArray &id);
   bool removeChannel(const QByteArray &id, bool offline = false);
   bool setName(const QString &name);
   Hosts* hosts() const;
-  void setKey(qint64 key);
 
   bool canEdit(ChatChannel channel, bool special = true);
   bool canRead(ChatChannel channel, bool special = false);
@@ -67,7 +64,6 @@ private:
   Hosts *m_hosts;            ///< Информация о хостах.
   QByteArray m_normalized;   ///< Нормализованное имя канала.
   Subscribers m_subscribers; ///< Подписчики.
-  User *m_user;              ///< Профиль пользователя.
 };
 
 #endif /* SERVERCHANNEL_H_ */
