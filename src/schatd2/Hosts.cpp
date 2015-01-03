@@ -28,6 +28,7 @@
 #include "net/packets/FeedNotice.h"
 #include "ServerChannel.h"
 #include "sglobal.h"
+#include "SJMPPacket.h"
 #include "Sockets.h"
 #include "Storage.h"
 #include "tools/Ver.h"
@@ -136,6 +137,14 @@ void Hosts::remove(quint64 socket)
 
   host->sockets.removeAll(socket);
   m_sockets.remove(socket);
+
+  SJMPPacket packet;
+  packet.setMethod(LS("delete"));
+  packet.setResource(LS("token"));
+  packet.setHeader(LS("user"), m_channel->nativeId());
+  packet.setHeader(LS("uuid"), host->uuid);
+
+  Core::send(packet);
 }
 
 

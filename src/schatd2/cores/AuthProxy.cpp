@@ -44,7 +44,7 @@ AuthProxy::AuthProxy(const AuthRequest &data, const QString &ip, QObject *parent
   packet.setHeader(LS("uuid"), m_uuid);
   packet.setBody(data.toJSON());
 
-  Core::sendToParent(packet);
+  Core::send(packet);
 }
 
 

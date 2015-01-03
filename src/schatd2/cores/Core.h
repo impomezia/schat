@@ -60,7 +60,7 @@ public:
   static bool send(const QByteArray &packet);
   static bool send(const QList<QByteArray> &packets);
   static bool send(Packet packet);
-  static void sendToParent(const SJMPPacket &packet);
+  static void send(const SJMPPacket &packet);
 
   inline NewPacketsEvent *packetsEvent()       { return m_packetsEvent; }
   inline void addAuth(NodeAuth *auth)          { m_auth.prepend(auth); }

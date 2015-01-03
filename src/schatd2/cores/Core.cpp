@@ -192,7 +192,7 @@ bool Core::send(Packet packet)
 }
 
 
-void Core::sendToParent(const SJMPPacket &packet)
+void Core::send(const SJMPPacket &packet)
 {
   i()->m_client->send(packet);
 }
