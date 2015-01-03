@@ -107,6 +107,7 @@ public:
   inline bool isSynced() const            { return m_synced; }
   inline const QByteArray& id() const     { return m_id; }
   inline const QString& name() const      { return m_name; }
+  inline const QString& nativeId() const  { return m_nativeId; }
   inline const QVariantMap& data() const  { return m_data; }
   inline int type() const                 { return m_type; }
   inline qint64 date() const              { return m_date; }
@@ -136,6 +137,7 @@ public:
 
 protected:
   Channels m_channels;             ///< Список каналов.
+  QString m_nativeId;
 
 private:
   bool m_synced;                   ///< true если канал синхронизирован.

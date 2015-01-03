@@ -32,6 +32,7 @@ class NewPacketsEvent;
 class NodeAuth;
 class Notice;
 class PacketReader;
+class QEventLoop;
 class Settings;
 class SJMPPacket;
 class SocketReleaseEvent;
@@ -60,6 +61,7 @@ public:
   static bool send(const QByteArray &packet);
   static bool send(const QList<QByteArray> &packets);
   static bool send(Packet packet);
+  static SJMPPacket sendSync(const SJMPPacket &packet);
   static void send(const SJMPPacket &packet);
 
   inline NewPacketsEvent *packetsEvent()       { return m_packetsEvent; }
@@ -80,6 +82,9 @@ public slots:
 
 protected:
   void customEvent(QEvent *event) override;
+
+private slots:
+  void onPacket(const SJMPPacket &packet);
 
 private:
   bool checkPacket();
@@ -105,6 +110,8 @@ private:
   qint64 m_timestamp;                 ///< Отметка времени.
   QList<NodeAuth *> m_auth;           ///< Модули авторизации.
   QList<QObject *> m_listeners;       ///< Слушатели событий.
+  QMap<QString, QEventLoop*> m_loops;
+  QMap<QString, SJMPPacket> m_packets;
   quint64 m_socket;                   ///< Текущий сокет от которого получен пакет.
   Settings *m_settings;               ///< Настройки.
   static Core *m_self;                ///< Указатель на себя.

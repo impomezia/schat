@@ -15,6 +15,7 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "cores/Core.h"
 #include "DataBase.h"
 #include "DateTime.h"
 #include "feeds/NodeProfileFeed.h"
@@ -22,6 +23,7 @@
 #include "net/SimpleID.h"
 #include "ServerChannel.h"
 #include "sglobal.h"
+#include "SJMPPacket.h"
 
 NodeProfileFeed::NodeProfileFeed(const QString &name, const QVariantMap &data)
   : Feed(name, data)
@@ -45,13 +47,20 @@ FeedReply NodeProfileFeed::post(const QString &path, const QVariantMap &json, Ch
   if (path.isEmpty() || path.contains(LC('*')) || !json.contains(LS("value")))
     return Notice::BadRequest;
 
-//  const QVariant& value = json[LS("value")];
-//  User *user = static_cast<ServerChannel *>(head().channel())->user();
+  QVariantMap body;
+  body.insert(path, json[LS("value")]);
 
-//  if (user->set(path, value)) {
-//    DataBase::add(user);
-//    return FeedReply(Notice::OK, DateTime::utc());
-//  }
+  SJMPPacket packet;
+  packet.setMethod(LS("put"));
+  packet.setResource(LS("v4/user/") + head().channel()->nativeId());
+  packet.setBody(body);
+
+  SJMPPacket reply = Core::sendSync(packet);
+
+  if (reply.status() == 200) {
+    head().channel()->setData(LS("profile"), reply.body());
+    return FeedReply(Notice::OK, reply.date());
+  }
 
   return Notice::NotModified;
 }
@@ -73,9 +82,6 @@ QVariantMap NodeProfileFeed::feed(Channel *channel) const
     return QVariantMap();
 
   QVariantMap out = channel->data().value(LS("profile")).toMap();
-//  User *user = static_cast<ServerChannel *>(head().channel())->user();
-//  QVariantMap out = user->toMap();
-
   out[LS("provider")] = LS("simpleid");
 
   return out;

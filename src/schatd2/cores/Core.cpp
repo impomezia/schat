@@ -68,7 +68,7 @@ Core::Core(QObject *parent)
 
   ClientListener *listener = new ClientListener(m_settings->value(STORAGE_API_TOKEN).toString(), this);
   m_client->addListener(listener);
-  connect(listener, SIGNAL(packet(SJMPPacket)), SIGNAL(packet(SJMPPacket)));
+  connect(listener, SIGNAL(packet(SJMPPacket)), SLOT(onPacket(SJMPPacket)));
 
   m_client->open(m_settings->value(STORAGE_API_HOST).toString(), m_settings->value(STORAGE_API_PORT).toUInt());
 }
@@ -192,6 +192,19 @@ bool Core::send(Packet packet)
 }
 
 
+SJMPPacket Core::sendSync(const SJMPPacket &packet)
+{
+  QEventLoop *l = new QEventLoop(i());
+  i()->m_loops.insert(packet.id(), l);
+
+  send(packet);
+
+  l->exec();
+
+  return i()->m_packets.take(packet.id());
+}
+
+
 void Core::send(const SJMPPacket &packet)
 {
   i()->m_client->send(packet);
@@ -271,6 +284,22 @@ void Core::customEvent(QEvent *event)
     default:
       break;
   }
+}
+
+
+void Core::onPacket(const SJMPPacket &packet)
+{
+  QEventLoop *l = m_loops.take(packet.id());
+
+  if (!l) {
+    emit this->packet(packet);
+    return;
+  }
+
+  m_packets.insert(packet.id(), packet);
+
+  l->quit();
+  l->deleteLater();
 }
 
 
