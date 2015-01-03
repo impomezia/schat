@@ -1,6 +1,5 @@
-/* $Id: Gender.cpp 2950 2012-07-31 06:06:11Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -50,18 +49,6 @@ quint8 Gender::value() const
 }
 
 
-/*!
- * Установка пола.
- */
-void Gender::set(Genders gender)
-{
-  if (gender >= Unknown)
-    m_gender = gender;
-  else
-    m_gender = gender + color();
-}
-
-
 void Gender::setColor(Colors color)
 {
   if (m_gender >= Unknown)
@@ -71,88 +58,38 @@ void Gender::setColor(Colors color)
 }
 
 
-void Gender::setColor(quint8 color)
+void Gender::set(const QString &gender, const QString &color)
 {
-  if (color > Thief)
-    color = Default;
+  if (gender == LS("male"))
+    m_gender = Male;
+  else if (gender == LS("female"))
+    m_gender = Female;
+  else if (gender == LS("ghost"))
+    m_gender = Ghost;
+  else if (gender == LS("bot"))
+    m_gender = Bot;
+  else
+    m_gender = Unknown;
 
-  setColor(static_cast<Colors>(color));
-}
+  if (m_gender > Female)
+    return;
 
-
-int Gender::stringToColor(const QString &color)
-{
-  QString c = color.toLower();
-  if (c == LS("black"))
-    return Black;
-
-  if (c == LS("gray"))
-    return Gray;
-
-  if (c == LS("green"))
-    return Green;
-
-  if (c == LS("red"))
-    return Red;
-
-  if (c == LS("white"))
-    return White;
-
-  if (c == LS("yellow"))
-    return Yellow;
-
-  if (c == LS("medical"))
-    return Medical;
-
-  if (c == LS("nude"))
-    return Nude;
-
-  if (c == LS("thief"))
-    return Thief;
-
-  return Default;
-}
-
-
-QString Gender::colorToString(quint8 color)
-{
-  switch (color) {
-    case Black:
-      return LS("black");
-
-    case Gray:
-      return LS("gray");
-
-    case Green:
-      return LS("green");
-
-    case Red:
-      return LS("red");
-
-    case White:
-      return LS("white");
-
-    case Yellow:
-      return LS("yellow");
-
-    case Medical:
-      return LS("medical");
-
-    case Nude:
-      return LS("nude");
-
-    case Thief:
-      return LS("thief");
-
-    default:
-      return LS("default");
-      break;
-  }
-}
-
-
-Gender& Gender::operator=(int other)
-{
-  m_gender = other;
-  return *this;
+  if (color == LS("black"))
+    m_gender += Black;
+  else if (color == LS("gray"))
+    m_gender += Gray;
+  if (color == LS("green"))
+    m_gender += Green;
+  else if (color == LS("red"))
+    m_gender += Red;
+  else if (color == LS("white"))
+    m_gender += White;
+  else if (color == LS("yellow"))
+    m_gender += Yellow;
+  else if (color == LS("medical"))
+    m_gender += Medical;
+  else if (color == LS("nude"))
+    m_gender += Nude;
+  else if (color == LS("thief"))
+    m_gender += Thief;
 }

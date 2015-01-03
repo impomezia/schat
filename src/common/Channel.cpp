@@ -101,7 +101,8 @@ Channels& Channels::operator=(const QList<QByteArray> &channels)
 
 Channel::Channel()
   : m_synced(false)
-  , m_type(SimpleID::InvalidId)
+  , m_status(Status::Offline)
+  , m_type(ChatId::InvalidId)
   , m_date(0)
   , m_key(0)
 {
@@ -110,7 +111,8 @@ Channel::Channel()
 
 Channel::Channel(const QByteArray &id, const QString &name)
   : m_synced(false)
-  , m_type(SimpleID::InvalidId)
+  , m_status(Status::Offline)
+  , m_type(ChatId::InvalidId)
   , m_date(0)
   , m_key(0)
 {

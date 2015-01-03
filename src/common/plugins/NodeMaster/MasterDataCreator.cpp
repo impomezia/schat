@@ -28,7 +28,7 @@ bool MasterDataCreator::create(ChatChannel channel, const QString &path, NetReco
     map.insert(LS("name"),   channel->name());
     map.insert(LS("type"),   channel->type());
 
-    int value = channel->status().value();
+    int value = channel->status();
     if (value) map.insert(LS("status"), value);
 
     value = channel->gender().value();

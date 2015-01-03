@@ -1,6 +1,5 @@
-/* $Id: Gender.h 2950 2012-07-31 06:06:11Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -57,18 +56,11 @@ public:
   {}
 
   inline int raw() const          { return m_gender; }
-  inline QString toString() const { return colorToString(color()); }
   inline void setRaw(int gender)  { m_gender = gender; }
   quint8 color() const;
   quint8 value() const;
-  void set(Genders gender);
   void setColor(Colors color);
-  void setColor(quint8 color);
-
-  static int stringToColor(const QString &color);
-  static QString colorToString(quint8 color);
-
-  Gender& operator=(int other);
+  void set(const QString &gender, const QString &color);
 
 private:
   quint8 m_gender;

@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -330,7 +330,7 @@ int NodeChannels::update()
   if (m_user->gender().raw() != m_packet->gender && FeedsCore::put(m_user.data(), CHANNEL_FEED_GENDER_REQ, m_user.data(), m_packet->gender, options).status == Notice::OK)
     updates++;
 
-  if (m_user->status().value() != m_packet->channelStatus && FeedsCore::put(m_user.data(), CHANNEL_FEED_STATUS_REQ, m_user.data(), m_packet->channelStatus, options).status == Notice::OK)
+  if (m_user->status() != m_packet->channelStatus && FeedsCore::put(m_user.data(), CHANNEL_FEED_STATUS_REQ, m_user.data(), m_packet->channelStatus, options).status == Notice::OK)
     updates++;
 
   if (!updates)
@@ -359,7 +359,7 @@ ChannelPacket NodeChannels::reply(ChatChannel channel, bool forbidden, const QSt
   packet->setDirection(Notice::Server2Client);
   packet->setText(channel->name());
   packet->gender        = channel->gender().raw();
-  packet->channelStatus = channel->status().value();
+  packet->channelStatus = channel->status();
 
   if (channel->type() == SimpleID::ChannelId) {
     if (!forbidden) {

@@ -1,6 +1,5 @@
-/* $Id: ChannelNotice.cpp 3632 2013-04-12 04:44:28Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -69,7 +68,7 @@ ChannelPacket ChannelNotice::channel(ClientChannel channel, const QByteArray &de
   packet->setDirection(Server2Client);
   packet->setText(channel->name());
   packet->gender        = channel->gender().raw();
-  packet->channelStatus = channel->status().value();
+  packet->channelStatus = channel->status();
 //  packet.setData(channel->feeds().headers(0));
 
   if (channel->type() == SimpleID::ChannelId)
@@ -85,7 +84,7 @@ ChannelPacket ChannelNotice::info(ClientChannel channel, qint64 date)
   packet->setDirection(Server2Client);
   packet->setText(channel->name());
   packet->gender        = channel->gender().raw();
-  packet->channelStatus = channel->status().value();
+  packet->channelStatus = channel->status();
   return packet;
 }
 
@@ -136,6 +135,6 @@ ChannelPacket ChannelNotice::update(ClientChannel channel)
   ChannelPacket packet(new ChannelNotice(channel->id(), channel->id(), CHANNELS_UPDATE_CMD, DateTime::utc()));
   packet->setText(channel->name());
   packet->gender        = channel->gender().raw();
-  packet->channelStatus = channel->status().value();
+  packet->channelStatus = channel->status();
   return packet;
 }

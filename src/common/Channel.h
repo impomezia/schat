@@ -26,16 +26,10 @@
 #include "Gender.h"
 #include "id/ChatId.h"
 
-class Account;
-
-/*!
- * Базовый статус пользователя.
- */
 class Status
 {
 public:
-  /// Статус.
-  enum Statuses {
+  enum {
     Offline,
     Online,
     Away,
@@ -43,20 +37,6 @@ public:
     DnD,
     FreeForChat
   };
-
-  Status(quint8 status = Offline)
-  : m_status(status)
-  {}
-
-  inline quint8 value() const    { return m_status; }
-  inline void set(quint8 status) { m_status = status; }
-
-  inline bool operator!=(int other) const { return m_status != other; }
-  inline bool operator==(int other) const { return m_status == other; }
-  inline Status& operator=(int other)     { m_status = other; return *this; }
-
-private:
-  quint8 m_status;
 };
 
 
@@ -115,20 +95,20 @@ public:
 
   bool setId(const QByteArray &id);
   bool setName(const QString &name);
-  inline void setKey(qint64 key)                { m_key = key; }
-  inline void setSynced(bool synced)            { m_synced = synced; }
-  virtual void setData(const QVariantMap &data);
+  inline void setKey(qint64 key)          { m_key = key; }
+  inline void setStatus(int status)       { m_status = status; }
+  inline void setSynced(bool synced)      { m_synced = synced; }
   virtual void setData(const QString &key, const QVariant &data);
+  virtual void setData(const QVariantMap &data);
   void setDate(qint64 date = 0);
 
   inline Channels& channels()             { return m_channels; }
   inline const Channels& channels() const { return m_channels; }
   inline const Feeds& feeds() const       { return m_feeds; }
   inline const Gender& gender() const     { return m_gender; }
-  inline const Status& status() const     { return m_status; }
+  inline int status() const               { return m_status; }
   inline Feeds& feeds()                   { return m_feeds; }
   inline Gender& gender()                 { return m_gender; }
-  inline Status& status()                 { return m_status; }
 
   static bool isValidName(const QString &name);
   static int isCompatibleId(const QByteArray &id);
@@ -143,13 +123,13 @@ private:
   bool m_synced;                   ///< true если канал синхронизирован.
   Feeds m_feeds;                   ///< Таблица фидов.
   Gender m_gender;                 ///< Пол и цвет иконки.
+  int m_status;                    ///< Статус пользователя.
   int m_type;                      ///< Тип канала, соответствует типу идентификатора канала \sa SimpleID::Types.
   QByteArray m_id;                 ///< Уникальный идентификатор канала.
   qint64 m_date;                   ///< Дата модификации.
   qint64 m_key;                    ///< Ключ в таблице базы данных.
   QString m_name;                  ///< Имя канала.
   QVariantMap m_data;              ///< JSON данные канала.
-  Status m_status;                 ///< Статус пользователя.
 };
 
 typedef QSharedPointer<Channel> ClientChannel;

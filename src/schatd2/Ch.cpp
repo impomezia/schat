@@ -72,7 +72,7 @@ bool Ch::gc(ChatChannel channel)
     if (channel->sockets().size())
       return false;
 
-    channel->status() = Status::Offline;
+    channel->setStatus(Status::Offline);
     channel->setDate();
 
     Ch::server()->removeChannel(channel->id());
@@ -83,31 +83,6 @@ bool Ch::gc(ChatChannel channel)
 
   m_self->remove(channel);
   return true;
-}
-
-
-/*!
- * Проверка ника на коллизию.
- *
- * \param id       Идентификатор пользователя.
- * \param name     Новый ник.
- * \param override \b true если разрешена перезапись ника.
- *
- * \return \b true если обнаружена коллизия.
- */
-bool Ch::isCollision(const QByteArray &id, const QString &name, bool override)
-{
-  const int type = SimpleID::typeOf(id);
-  const QByteArray normalized = Normalize::toId(type, name);
-
-  ChatChannel channel = Ch::channel(normalized, type, false);
-  if (channel && channel->id() != id)
-    return channel->id() != id;
-
-  if (override)
-    return DataBase::isCollision(id, normalized);
-
-  return DataBase::isCollision(id, normalized, type);
 }
 
 
@@ -179,9 +154,6 @@ ChatChannel Ch::server()
 int Ch::rename(ChatChannel channel, const QString &name)
 {
   QByteArray normalized = channel->normalized();
-  if (isCollision(channel->id(), name))
-    return Notice::ObjectAlreadyExists;
-
   if (!channel->setName(name))
     return Notice::BadRequest;
 
