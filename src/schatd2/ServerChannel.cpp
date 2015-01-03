@@ -130,6 +130,31 @@ Hosts* ServerChannel::hosts() const
 }
 
 
+void ServerChannel::setData(const QVariantMap &data)
+{
+  Channel::setData(data);
+}
+
+
+void ServerChannel::setData(const QString &key, const QVariant &data)
+{
+  if (key != LS("profile"))
+    return Channel::setData(key, data);
+
+  QVariantMap profile = data.toMap();
+  profile.remove(LS("chatId"));
+  profile.remove(LS("color"));
+  profile.remove(LS("gender"));
+  profile.remove(LS("status"));
+
+  profile.insert(LS("city"), profile.take(LS("location")));
+
+  m_nativeId = profile.value(LS("id")).toString();
+
+  Channel::setData(key, profile);
+}
+
+
 bool ServerChannel::canEdit(ChatChannel channel, bool special)
 {
   return feed(FEED_NAME_ACL)->can(channel.data(), Acl::Edit | (special ? Acl::SpecialEdit : 0));

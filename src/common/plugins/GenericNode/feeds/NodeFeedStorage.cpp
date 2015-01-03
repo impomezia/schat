@@ -1,6 +1,5 @@
-/* $Id: NodeFeedStorage.cpp 3611 2013-03-31 03:45:26Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -143,7 +142,7 @@ void NodeFeedStorage::removeImpl(FeedPtr feed)
   FeedHeader &head = feed->head();
   QVariantMap feeds = head.channel()->data()[LS("feeds")].toMap();
   feeds[head.name()] = -head.data()[LS("rev")].toLongLong();
-  head.channel()->data()[LS("feeds")] = feeds;
+  head.channel()->setData(LS("feeds"), feeds);
   DataBase::saveData(head.channel());
 }
 
@@ -261,6 +260,6 @@ void NodeFeedStorage::updateKey(FeedPtr feed)
   FeedHeader &head = feed->head();
   QVariantMap feeds = head.channel()->data().value(LS("feeds")).toMap();
   feeds[head.name()] = feed->head().key();
-  head.channel()->data()[LS("feeds")] = feeds;
+  head.channel()->setData(LS("feeds"), feeds);
   DataBase::saveData(head.channel());
 }

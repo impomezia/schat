@@ -63,8 +63,8 @@ void AuthProxy::onPacket(const SJMPPacket &packet)
     return Core::i()->reject(m_data, AuthResult(status, m_data.id), m_socket);
   }
 
-  const QVariantMap user = packet.body().toMap().value(LS("user")).toMap();
-  const ChatId chatId(user.value(LS("chatId")).toString());
+  const QVariantMap profile = packet.body().toMap().value(LS("user")).toMap();
+  const ChatId chatId(profile.value(LS("chatId")).toString());
 
   Q_ASSERT(chatId.type() == ChatId::UserId);
   if (chatId.type() != ChatId::UserId) {
@@ -74,15 +74,17 @@ void AuthProxy::onPacket(const SJMPPacket &packet)
   ChatChannel channel = Ch::channel(chatId.toByteArray(), SimpleID::UserId);
 
   if (!channel) {
-    channel = ChatChannel(new ServerChannel(chatId.toByteArray(), user.value(LS("nick")).toString()));
+    channel = ChatChannel(new ServerChannel(chatId.toByteArray(), profile.value(LS("nick")).toString()));
   }
 
-  channel->setName(user.value(LS("nick")).toString());
+  channel->setName(profile.value(LS("nick")).toString());
 
   if (channel->status().value() == Status::Offline) {
     channel->setDate();
-    channel->status().set(user.value(LS("status")).toInt());
+    channel->status().set(profile.value(LS("status")).toInt());
   }
+
+  channel->setData(LS("profile"), profile);
 
   Core::add(channel);
   Ch::userChannel(channel, m_data, packet, m_ip, m_uuid, m_socket);

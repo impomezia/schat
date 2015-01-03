@@ -72,7 +72,7 @@ QVariantMap NodeProfileFeed::feed(Channel *channel) const
   if (head().channel()->type() != SimpleID::UserId || !can(channel, Acl::Read))
     return QVariantMap();
 
-  QVariantMap out;
+  QVariantMap out = channel->data().value(LS("profile")).toMap();
 //  User *user = static_cast<ServerChannel *>(head().channel())->user();
 //  QVariantMap out = user->toMap();
 

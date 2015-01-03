@@ -111,13 +111,13 @@ public:
   inline int type() const                 { return m_type; }
   inline qint64 date() const              { return m_date; }
   inline qint64 key() const               { return m_key; }
-  inline QVariantMap& data()              { return m_data; }
 
   bool setId(const QByteArray &id);
   bool setName(const QString &name);
-  inline virtual void setKey(qint64 key)       { m_key = key; }
-  inline void setData(const QVariantMap &data) { m_data = data; }
-  inline void setSynced(bool synced)           { m_synced = synced; }
+  inline void setKey(qint64 key)                { m_key = key; }
+  inline void setSynced(bool synced)            { m_synced = synced; }
+  virtual void setData(const QVariantMap &data);
+  virtual void setData(const QString &key, const QVariant &data);
   void setDate(qint64 date = 0);
 
   inline Channels& channels()             { return m_channels; }

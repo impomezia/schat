@@ -178,6 +178,18 @@ bool Channel::setName(const QString &name)
 }
 
 
+void Channel::setData(const QVariantMap &data)
+{
+  m_data = data;
+}
+
+
+void Channel::setData(const QString &key, const QVariant &data)
+{
+  m_data.insert(key, data);
+}
+
+
 void Channel::setDate(qint64 date)
 {
   if (!date)

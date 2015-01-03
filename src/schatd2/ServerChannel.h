@@ -42,6 +42,7 @@ public:
   inline const Channels& channels() const       { return m_channels; }
   inline const Channels& offline() const        { return m_offline; }
   inline const QByteArray& normalized() const   { return m_normalized; }
+  inline const QString& nativeId() const        { return m_nativeId; }
   inline const Subscribers& subscribers() const { return m_subscribers; }
   inline QList<quint64> sockets() const         { if (m_hosts) return m_hosts->sockets(); return QList<quint64>(); }
   inline Subscribers& subscribers()             { return m_subscribers; }
@@ -51,6 +52,8 @@ public:
   bool removeChannel(const QByteArray &id, bool offline = false);
   bool setName(const QString &name);
   Hosts* hosts() const;
+  void setData(const QVariantMap &data) override;
+  void setData(const QString &key, const QVariant &data) override;
 
   bool canEdit(ChatChannel channel, bool special = true);
   bool canRead(ChatChannel channel, bool special = false);
@@ -64,6 +67,7 @@ private:
   Hosts *m_hosts;            ///< Информация о хостах.
   QByteArray m_normalized;   ///< Нормализованное имя канала.
   Subscribers m_subscribers; ///< Подписчики.
+  QString m_nativeId;
 };
 
 #endif /* SERVERCHANNEL_H_ */
