@@ -64,4 +64,6 @@ void GenericCh::userChannel(ChatChannel channel)
   Ch::addNewUserFeedIfNotExist(channel, FEED_NAME_ACL);
   Ch::addNewUserFeedIfNotExist(channel, FEED_NAME_PROFILE);
   Ch::addNewUserFeedIfNotExist(channel, FEED_NAME_CHANNEL);
+
+  channel->feed(FEED_NAME_PROFILE, false, false)->head().setDate(channel->data().value(LS("profile")).toMap().value(LS("datetime")).toLongLong());
 }
