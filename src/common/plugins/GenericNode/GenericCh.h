@@ -31,6 +31,9 @@ public:
   void server(ChatChannel channel, bool created) override;
   void sync(ChatChannel channel, ChatChannel user = ChatChannel()) override;
   void userChannel(ChatChannel channel) override;
+
+private slots:
+  void onPacket(const SJMPPacket &packet);
 };
 
 #endif /* GENERICCH_H_ */

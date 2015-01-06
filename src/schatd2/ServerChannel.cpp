@@ -18,13 +18,17 @@
 #include "Ch.h"
 #include "DataBase.h"
 #include "DateTime.h"
+#include "feeds/FeedEvent.h"
+#include "feeds/FeedEvents.h"
 #include "feeds/FeedsCore.h"
 #include "feeds/FeedStorage.h"
 #include "feeds/FeedStrings.h"
+#include "net/packets/Notice.h"
 #include "net/SimpleID.h"
 #include "Normalize.h"
 #include "ServerChannel.h"
 #include "sglobal.h"
+#include "Sockets.h"
 
 ServerChannel::ServerChannel(ClientChannel channel)
   : Channel(channel->id(), channel->name())
@@ -130,9 +134,22 @@ Hosts* ServerChannel::hosts() const
 }
 
 
-void ServerChannel::setData(const QVariantMap &data)
+void ServerChannel::broadcast(const QString &feedName, const QString &path, qint64 date)
 {
-  Channel::setData(data);
+  FeedPtr feed = this->feed(feedName, false, false);
+  if (!feed)
+    return;
+
+  FeedEvent *event = new FeedEvent(id(), id(), FEED_METHOD_POST);
+
+  event->broadcast = Sockets::all(Ch::channel(id()), true);
+  event->name      = feedName;
+  event->diffTo    = feed->head().date();
+  event->date      = date;
+  event->status    = Notice::OK;
+
+  FeedStorage::save(feed, date);
+  FeedEvents::start(event);
 }
 
 
@@ -152,6 +169,12 @@ void ServerChannel::setData(const QString &key, const QVariant &data)
   m_nativeId = profile.value(LS("id")).toString();
 
   Channel::setData(key, profile);
+}
+
+
+void ServerChannel::setData(const QVariantMap &data)
+{
+  Channel::setData(data);
 }
 
 

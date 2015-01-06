@@ -16,16 +16,19 @@
  */
 
 #include "Ch.h"
+#include "cores/Core.h"
 #include "feeds/FeedsCore.h"
 #include "feeds/FeedStorage.h"
 #include "feeds/FeedStrings.h"
 #include "feeds/ServerFeed.h"
 #include "GenericCh.h"
 #include "sglobal.h"
+#include "SJMPPacket.h"
 
 GenericCh::GenericCh(QObject *parent)
   : ChHook(parent)
 {
+  connect(Core::i(), SIGNAL(packet(SJMPPacket)), SLOT(onPacket(SJMPPacket)));
 }
 
 
@@ -66,4 +69,22 @@ void GenericCh::userChannel(ChatChannel channel)
   Ch::addNewUserFeedIfNotExist(channel, FEED_NAME_CHANNEL);
 
   channel->feed(FEED_NAME_PROFILE, false, false)->head().setDate(channel->data().value(LS("profile")).toMap().value(LS("datetime")).toLongLong());
+}
+
+
+void GenericCh::onPacket(const SJMPPacket &packet)
+{
+  if (packet.type() != SJMPPacket::Modified && !packet.resource().startsWith(LS("user/")))
+    return;
+
+  ChatChannel user = Ch::user(packet.resource().mid(5));
+  if (!user)
+    return;
+
+  if (user->feed(FEED_NAME_PROFILE)->head().date() != packet.date()) {
+    user->setData(LS("profile"), packet.body());
+    user->feed(FEED_NAME_PROFILE)->head().setDate(packet.date());
+
+    user->broadcast(FEED_NAME_PROFILE, QString(), packet.date());
+  }
 }

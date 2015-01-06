@@ -40,6 +40,7 @@ public:
   static ChatChannel channel(const QByteArray &id, int type = SimpleID::ChannelId, bool db = true);
   static ChatChannel channel(const QString &name, ChatChannel user = ChatChannel());
   static ChatChannel server();
+  static ChatChannel user(const QString &nativeId);
   static int rename(ChatChannel channel, const QString &name);
   static QByteArray cookie();
   static QByteArray makeId(const QByteArray &normalized);

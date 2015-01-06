@@ -151,6 +151,12 @@ ChatChannel Ch::server()
 }
 
 
+ChatChannel Ch::user(const QString &nativeId)
+{
+  return m_self->m_channels.value(nativeId.toLatin1());
+}
+
+
 int Ch::rename(ChatChannel channel, const QString &name)
 {
   QByteArray normalized = channel->normalized();
@@ -348,6 +354,7 @@ void Ch::cache(ChatChannel channel)
 
   m_channels[id] = channel;
   m_channels[channel->normalized()] = channel;
+  m_channels[channel->nativeId().toLatin1()] = channel;
 }
 
 
@@ -373,6 +380,7 @@ void Ch::remove(const QByteArray &id)
 
   m_channels.remove(channel->id());
   m_channels.remove(channel->normalized());
+  m_channels.remove(channel->nativeId().toLatin1());
 }
 
 

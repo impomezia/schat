@@ -74,7 +74,8 @@ void Heartbeat::onPacket(IClient *client, const SJMPPacket &packet)
   Q_UNUSED(client)
   Q_UNUSED(packet)
 
-  setTimerState(Idle);
+  if (packet.type() == SJMPPacket::Reply)
+    setTimerState(Idle);
 }
 
 

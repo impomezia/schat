@@ -51,8 +51,9 @@ public:
   bool removeChannel(const QByteArray &id, bool offline = false);
   bool setName(const QString &name);
   Hosts* hosts() const;
-  void setData(const QVariantMap &data) override;
+  void broadcast(const QString &feedName, const QString &path, qint64 date);
   void setData(const QString &key, const QVariant &data) override;
+  void setData(const QVariantMap &data) override;
 
   bool canEdit(ChatChannel channel, bool special = true);
   bool canRead(ChatChannel channel, bool special = false);
