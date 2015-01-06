@@ -78,7 +78,7 @@ void AuthProxy::onPacket(const SJMPPacket &packet)
   }
 
   channel->setName(profile.value(LS("nick")).toString());
-  channel->gender().set(profile.value(LS("gender")).toString(), profile.value(LS("color")).toString());
+  channel->gender().set(profile);
 
   if (channel->status() == Status::Offline) {
     channel->setDate();

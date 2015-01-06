@@ -59,10 +59,12 @@ public:
   inline void setRaw(int gender)  { m_gender = gender; }
   quint8 color() const;
   quint8 value() const;
+  void set(const QVariantMap &data);
   void setColor(Colors color);
-  void set(const QString &gender, const QString &color);
 
 private:
+  void set(const QString &gender, const QString &color);
+
   quint8 m_gender;
 };
 

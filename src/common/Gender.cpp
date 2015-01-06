@@ -49,6 +49,12 @@ quint8 Gender::value() const
 }
 
 
+void Gender::set(const QVariantMap &data)
+{
+  set(data.value(LS("gender")).toString(), data.value(LS("color")).toString());
+}
+
+
 void Gender::setColor(Colors color)
 {
   if (m_gender >= Unknown)

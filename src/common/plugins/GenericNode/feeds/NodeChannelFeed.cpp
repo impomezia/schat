@@ -91,14 +91,21 @@ FeedReply NodeChannelFeed::put(const QString &path, const QVariantMap &json, Cha
 }
 
 
-void NodeChannelFeed::setChannel(Channel *channel)
+QVariantMap NodeChannelFeed::feed(Channel *channel) const
 {
-  Feed::setChannel(channel);
+  Channel *user = head().channel();
 
-  m_data[CHANNEL_FEED_NAME_KEY]   = channel->name();
-  m_data[CHANNEL_FEED_GENDER_KEY] = channel->gender().raw();
-  m_data[CHANNEL_FEED_STATUS_KEY] = channel->status();
-  m_data[CHANNEL_FEED_TYPE_KEY]   = SimpleID::typeOf(channel->id());
+  if (!user || !can(channel, Acl::Read))
+    return QVariantMap();
+
+  QVariantMap data;
+
+  data[CHANNEL_FEED_NAME_KEY]   = user->name();
+  data[CHANNEL_FEED_GENDER_KEY] = user->gender().raw();
+  data[CHANNEL_FEED_STATUS_KEY] = user->status();
+  data[CHANNEL_FEED_TYPE_KEY]   = SimpleID::typeOf(user->id());
+
+  return data;
 }
 
 
@@ -153,15 +160,12 @@ FeedReply NodeChannelFeed::update(const QString &path, const QVariantMap &json, 
     channel->setName(reply.body().toMap().value(LS("nick")).toString());
 
     Ch::rename(channel, channel->name());
-    m_data[CHANNEL_FEED_NAME_KEY] = channel->name();
   }
   else if (path == CHANNEL_FEED_GENDER_KEY) {
-    channel->gender().set(reply.body().toMap().value(CHANNEL_FEED_GENDER_KEY).toString(), reply.body().toMap().value(LS("color")).toString());
-    m_data[CHANNEL_FEED_GENDER_KEY] = channel->gender().raw();
+    channel->gender().set(reply.body().toMap());
   }
   else if (path == CHANNEL_FEED_STATUS_KEY) {
     channel->setStatus(reply.body().toMap().value(CHANNEL_FEED_STATUS_KEY).toInt());
-    m_data[CHANNEL_FEED_STATUS_KEY] = channel->status();
   }
 
   channel->setDate(reply.date());

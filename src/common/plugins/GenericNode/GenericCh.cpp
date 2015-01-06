@@ -17,6 +17,7 @@
 
 #include "Ch.h"
 #include "cores/Core.h"
+#include "feeds/ChannelFeed.h"
 #include "feeds/FeedsCore.h"
 #include "feeds/FeedStorage.h"
 #include "feeds/FeedStrings.h"
@@ -81,10 +82,23 @@ void GenericCh::onPacket(const SJMPPacket &packet)
   if (!user)
     return;
 
-  if (user->feed(FEED_NAME_PROFILE)->head().date() != packet.date()) {
-    user->setData(LS("profile"), packet.body());
-    user->feed(FEED_NAME_PROFILE)->head().setDate(packet.date());
+  const QVariantMap body = packet.body().toMap();
 
+  if (user->name() != body.value(LS("nick"))) {
+    user->setName(body.value(LS("nick")).toString());
+    Ch::rename(user, user->name());
+    user->broadcast(FEED_NAME_CHANNEL, CHANNEL_FEED_NAME_KEY, packet.date());
+  }
+
+  const int gender = user->gender().raw();
+  user->gender().set(body);
+  if (gender != user->gender().raw()) {
+    user->broadcast(FEED_NAME_CHANNEL, CHANNEL_FEED_GENDER_KEY, packet.date());
+  }
+
+
+  if (user->feed(FEED_NAME_PROFILE)->head().date() != packet.date()) {
+    user->setData(LS("profile"), body);
     user->broadcast(FEED_NAME_PROFILE, QString(), packet.date());
   }
 }

@@ -147,6 +147,7 @@ void ServerChannel::broadcast(const QString &feedName, const QString &path, qint
   event->diffTo    = feed->head().date();
   event->date      = date;
   event->status    = Notice::OK;
+  event->path      = path;
 
   FeedStorage::save(feed, date);
   FeedEvents::start(event);

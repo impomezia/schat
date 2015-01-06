@@ -30,11 +30,11 @@ public:
   NodeChannelFeed(const QString &name, const QVariantMap &data);
   NodeChannelFeed(const QString &name = FEED_NAME_CHANNEL, qint64 date = 0);
 
-  bool can(Channel *channel, int acl) const;
-  FeedReply del(const QString &path, Channel *channel = 0, const QByteArray &blob = QByteArray());
-  FeedReply post(const QString &path, const QVariantMap &json, Channel *channel = 0, const QByteArray &blob = QByteArray());
-  FeedReply put(const QString &path, const QVariantMap &json, Channel *channel = 0, const QByteArray &blob = QByteArray());
-  void setChannel(Channel *channel);
+  bool can(Channel *channel, int acl) const override;
+  FeedReply del(const QString &path, Channel *channel = 0, const QByteArray &blob = QByteArray()) override;
+  FeedReply post(const QString &path, const QVariantMap &json, Channel *channel = 0, const QByteArray &blob = QByteArray()) override;
+  FeedReply put(const QString &path, const QVariantMap &json, Channel *channel = 0, const QByteArray &blob = QByteArray()) override;
+  QVariantMap feed(Channel *channel = 0) const override;
 
   static bool isReservedKey(const QString &key);
 
