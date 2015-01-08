@@ -36,6 +36,7 @@ public:
 
 signals:
   void packet(const SJMPPacket &packet);
+  void rejoin();
 
 private:
   bool m_waitAuth;

@@ -44,22 +44,22 @@ public:
 
   Host(const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket);
 
-  bool online;            ///< \b true если подключение активно.
-  qint64 channel;         ///< Номер канала в базе данных.
-  ChatId hostId;         ///< Публичный идентификатор хоста.
-  QString name;           ///< Имя хоста.
-  QString ip;             ///< IP адрес пользователя.
-  quint32 version;        ///< Версия клиента.
-  quint8 os;              ///< Базовый тип операционной системы.
-  QString osName;         ///< Имя операционной системы.
-  qint32 tz;              ///< Смещение времени относительно UTC.
-  qint64 date;            ///< Дата последнего подключения или отключения.
-  QVariantMap geo;        ///< GEO информация о пользователе.
-  QVariantMap data;       ///< Дополнительные данные.
-  QList<quint64> sockets; ///< Список сокетов.
-  QByteArray uniqueId;    ///< Уникальный идентификатор пользователя.
-  quint64 socket;         ///< Сокет пользователя.
-  QString uuid;           ///< UUID подключения.
+  bool online;                    ///< \b true если подключение активно.
+  ChatId hostId;                  ///< Публичный идентификатор хоста.
+  QByteArray uniqueId;            ///< Уникальный идентификатор пользователя.
+  qint32 tz;                      ///< Смещение времени относительно UTC.
+  qint64 channel;                 ///< Номер канала в базе данных.
+  qint64 date;                    ///< Дата последнего подключения или отключения.
+  QMap<quint64, QString> sockets; ///< Список сокетов.
+  QString ip;                     ///< IP адрес пользователя.
+  QString name;                   ///< Имя хоста.
+  QString osName;                 ///< Имя операционной системы.
+  QString uuid;                   ///< UUID подключения.
+  quint32 version;                ///< Версия клиента.
+  quint64 socket;                 ///< Сокет пользователя.
+  quint8 os;                      ///< Базовый тип операционной системы.
+  QVariantMap data;               ///< Дополнительные данные.
+  QVariantMap geo;                ///< GEO информация о пользователе.
 };
 
 typedef QSharedPointer<Host> HostInfo;

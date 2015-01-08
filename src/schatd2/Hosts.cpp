@@ -75,10 +75,43 @@ QList<quint64> Hosts::sockets(const QByteArray &publicId) const
 {
   if (SimpleID::typeOf(publicId) == SimpleID::HostId) {
     HostInfo host = m_hosts.value(publicId);
-    return host->sockets;
+    return host->sockets.keys();
   }
 
   return QList<quint64>();
+}
+
+
+/*!
+ * Удаление сокета.
+ */
+QString Hosts::remove(quint64 socket)
+{
+  if (socket == 0)
+    socket = Core::socket();
+
+  HostInfo host = m_sockets.value(socket);
+  if (!host)
+    return QString();
+
+  if (host->sockets.size() == 1) {
+    host->online = false;
+    updateHostsFeed(host, FEED_METHOD_PUT, socket);
+    updateUserFeed(host, FEED_METHOD_DELETE, socket);
+  }
+
+  if (Core::isReady()) {
+    SJMPPacket packet;
+    packet.setMethod(LS("delete"));
+    packet.setResource(LS("token"));
+    packet.setHeader(LS("user"), m_channel->nativeId());
+    packet.setHeader(LS("uuid"), host->uuid);
+
+    Core::send(packet);
+  }
+
+  m_sockets.remove(socket);
+  return host->sockets.take(socket);
 }
 
 
@@ -92,6 +125,7 @@ void Hosts::add(HostInfo hostInfo)
   all();
 
   HostInfo host = m_hosts.value(hostInfo->hostId);
+
   if (host) {
     host->name    = hostInfo->name;
     host->ip      = hostInfo->ip;
@@ -109,42 +143,11 @@ void Hosts::add(HostInfo hostInfo)
   host->online  = true;
   host->channel = m_channel->key();
 
-  host->sockets.append(hostInfo->socket);
+  host->sockets.insert(hostInfo->socket, hostInfo->uuid);
   m_sockets[hostInfo->socket] = host;
 
   updateHostsFeed(host, FEED_METHOD_POST, hostInfo->socket);
   updateUserFeed(host, FEED_METHOD_POST, hostInfo->socket);
-}
-
-
-/*!
- * Удаление сокета.
- */
-void Hosts::remove(quint64 socket)
-{
-  if (socket == 0)
-    socket = Core::socket();
-
-  HostInfo host = m_sockets.value(socket);
-  if (!host)
-    return;
-
-  if (host->sockets.size() == 1) {
-    host->online = false;
-    updateHostsFeed(host, FEED_METHOD_PUT, socket);
-    updateUserFeed(host, FEED_METHOD_DELETE, socket);
-  }
-
-  host->sockets.removeAll(socket);
-  m_sockets.remove(socket);
-
-  SJMPPacket packet;
-  packet.setMethod(LS("delete"));
-  packet.setResource(LS("token"));
-  packet.setHeader(LS("user"), m_channel->nativeId());
-  packet.setHeader(LS("uuid"), host->uuid);
-
-  Core::send(packet);
 }
 
 
@@ -160,7 +163,7 @@ void Hosts::unlink(const QByteArray &hostId)
   m_date = DateTime::utc();
   updateUserFeed(host, FEED_METHOD_DELETE, 0);
 
-  QList<quint64> sockets = host->sockets;
+  QList<quint64> sockets = host->sockets.keys();
   if (!sockets.isEmpty()) {
     foreach (quint64 socket, sockets)
       m_sockets.remove(socket);

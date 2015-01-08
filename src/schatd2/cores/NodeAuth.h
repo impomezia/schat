@@ -73,23 +73,4 @@ public:
   ChatId cookie;
 };
 
-
-/*!
- * Базовый класс модуля авторизации.
- */
-class NodeAuth
-{
-public:
-  NodeAuth(Core *core)
-  : m_core(core)
-  {}
-
-  virtual ~NodeAuth() {}
-  virtual AuthResult auth(const AuthRequest &data) = 0;
-  virtual int type() const = 0;
-
-protected:
-  Core *m_core;
-};
-
 #endif /* NODEAUTH_H_ */

@@ -84,6 +84,8 @@ void ClientListener::onPacket(IClient *client, const SJMPPacket &packet)
     else {
       client->setReady(false);
     }
+
+    emit rejoin();
   }
   else {
     emit this->packet(packet);

@@ -69,6 +69,7 @@ Core::Core(QObject *parent)
   ClientListener *listener = new ClientListener(m_settings->value(STORAGE_API_TOKEN).toString(), this);
   m_client->addListener(listener);
   connect(listener, SIGNAL(packet(SJMPPacket)), SLOT(onPacket(SJMPPacket)));
+  connect(listener, SIGNAL(rejoin()), SLOT(onRejoin()));
 
   m_client->open(m_settings->value(STORAGE_API_HOST).toString(), m_settings->value(STORAGE_API_PORT).toUInt());
 }
@@ -76,9 +77,18 @@ Core::Core(QObject *parent)
 
 Core::~Core()
 {
+  m_self = 0;
+
   delete m_sendStream;
   delete m_readStream;
-  qDeleteAll(m_auth);
+}
+
+
+Core *Core::i()
+{
+  Q_ASSERT(m_self);
+
+  return m_self;
 }
 
 
@@ -87,10 +97,10 @@ Core::~Core()
  */
 qint64 Core::date()
 {
-  if (m_self->m_timestamp == 0)
-    m_self->m_timestamp = DateTime::utc();
+  if (i()->m_timestamp == 0)
+    i()->m_timestamp = DateTime::utc();
 
-  return m_self->m_timestamp;
+  return i()->m_timestamp;
 }
 
 
@@ -165,6 +175,12 @@ bool Core::send(const QList<quint64> &sockets, Packet packet, int option, const 
 }
 
 
+bool Core::isReady()
+{
+  return i()->m_client->isReady();
+}
+
+
 /*!
  * Отправка пакета текущему сокету.
  */
@@ -211,14 +227,14 @@ void Core::send(const SJMPPacket &packet)
 }
 
 
-bool Core::add(ChatChannel channel)
+bool Core::add(ChatChannel channel, const QString &uuid, const SJMPPacket &packet)
 {
-  if (Ch::add(channel)) {
-    NodeNoticeReader::add(channel);
-    return true;
-  }
+  if (!Ch::add(channel))
+    return false;
 
-  return false;
+  i()->m_auth.insert(uuid, packet);
+  NodeNoticeReader::add(channel);
+  return true;
 }
 
 
@@ -300,6 +316,14 @@ void Core::onPacket(const SJMPPacket &packet)
 
   l->quit();
   l->deleteLater();
+}
+
+
+void Core::onRejoin()
+{
+  foreach (const SJMPPacket &packet, m_auth) {
+    m_client->send(packet, false);
+  }
 }
 
 
@@ -391,7 +415,7 @@ void Core::onRelease(SocketReleaseEvent *event)
   if (!user)
     return;
 
-  user->hosts()->remove(event->socket());
+  m_auth.remove(user->hosts()->remove(event->socket()));
   NodeNoticeReader::release(user, event->socket());
 
   Ch::gc(user);

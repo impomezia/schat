@@ -36,15 +36,7 @@ AuthProxy::AuthProxy(const AuthRequest &data, const QString &ip, QObject *parent
 {
   connect(Core::i(), SIGNAL(packet(SJMPPacket)), SLOT(onPacket(SJMPPacket)));
 
-  SJMPPacket packet;
-  packet.setMethod(LS("post"));
-  packet.setResource(LS("v4/auth"));
-  packet.setId(m_id);
-  packet.setHeader(LS("ip"), ip);
-  packet.setHeader(LS("uuid"), m_uuid);
-  packet.setBody(data.toJSON());
-
-  Core::send(packet);
+  Core::send(request());
 }
 
 
@@ -71,6 +63,9 @@ void AuthProxy::onPacket(const SJMPPacket &packet)
     return Core::i()->reject(m_data, AuthResult(Notice::Forbidden, m_data.id), m_socket);
   }
 
+  m_data.authType = AuthRequest::Cookie;
+  m_data.cookie   = ChatId(packet.header(LS("cookie")).toString()).toByteArray();
+
   ChatChannel channel = Ch::channel(chatId.toByteArray(), SimpleID::UserId);
 
   if (!channel) {
@@ -87,11 +82,25 @@ void AuthProxy::onPacket(const SJMPPacket &packet)
 
   channel->setData(LS("profile"), profile);
 
-  Core::add(channel);
+  Core::add(channel, m_uuid, request());
   Ch::userChannel(channel, m_data, packet, m_ip, m_uuid, m_socket);
 
   LOG_INFO("N1100", "Core/AuthProxy", channel->name() << "@" << m_ip + "/" + chatId.toString() << ", " << m_data.host)
 
   const AuthResult result(chatId.toByteArray(), m_data.id, packet);
   Core::i()->accept(m_data, result, m_ip);
+}
+
+
+SJMPPacket AuthProxy::request() const
+{
+  SJMPPacket packet;
+  packet.setMethod(LS("post"));
+  packet.setResource(LS("v4/auth"));
+  packet.setId(m_id);
+  packet.setHeader(LS("ip"), m_ip);
+  packet.setHeader(LS("uuid"), m_uuid);
+  packet.setBody(m_data.toJSON());
+
+  return packet;
 }

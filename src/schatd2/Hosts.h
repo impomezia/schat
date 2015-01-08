@@ -42,8 +42,8 @@ public:
   FeedPtr user() const;
   QList<quint64> sockets(const QByteArray &publicId) const;
 
+  QString remove(quint64 socket);
   void add(HostInfo hostInfo);
-  void remove(quint64 socket);
   void unlink(const QByteArray &hostId);
 
 private:

@@ -29,7 +29,6 @@ class AuthResult;
 class Client;
 class Net;
 class NewPacketsEvent;
-class NodeAuth;
 class Notice;
 class PacketReader;
 class QEventLoop;
@@ -46,7 +45,7 @@ class SCHAT_EXPORT Core : public QObject
 public:
   Core(QObject *parent = 0);
   ~Core();
-  inline static Core *i() { return m_self; }
+  static Core *i();
   static qint64 date();
 
   // Функции отправки пакетов.
@@ -58,15 +57,16 @@ public:
   inline static Net *net()            { return m_self->m_net; }
   inline static QDataStream *stream() { return m_self->m_sendStream; }
   inline static quint64 socket()      { return m_self->m_socket; }
+  static bool isReady();
   static bool send(const QByteArray &packet);
   static bool send(const QList<QByteArray> &packets);
   static bool send(Packet packet);
   static SJMPPacket sendSync(const SJMPPacket &packet);
   static void send(const SJMPPacket &packet);
 
+
   inline NewPacketsEvent *packetsEvent()       { return m_packetsEvent; }
-  inline void addAuth(NodeAuth *auth)          { m_auth.prepend(auth); }
-  static bool add(ChatChannel channel);
+  static bool add(ChatChannel channel, const QString &uuid, const SJMPPacket &packet);
   virtual int start() { return 0; }
   virtual void quit() {}
 
@@ -85,6 +85,7 @@ protected:
 
 private slots:
   void onPacket(const SJMPPacket &packet);
+  void onRejoin();
 
 private:
   bool checkPacket();
@@ -108,9 +109,9 @@ private:
   QDataStream *m_readStream;          ///< Поток чтения виртуальных пакетов.
   QDataStream *m_sendStream;          ///< Поток отправки виртуальных пакетов.
   qint64 m_timestamp;                 ///< Отметка времени.
-  QList<NodeAuth *> m_auth;           ///< Модули авторизации.
   QList<QObject *> m_listeners;       ///< Слушатели событий.
   QMap<QString, QEventLoop*> m_loops;
+  QMap<QString, SJMPPacket> m_auth;
   QMap<QString, SJMPPacket> m_packets;
   quint64 m_socket;                   ///< Текущий сокет от которого получен пакет.
   Settings *m_settings;               ///< Настройки.

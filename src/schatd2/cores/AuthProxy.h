@@ -19,6 +19,7 @@
 #define AUTHPROXY_H_
 
 #include "net/packets/auth.h"
+#include "SJMPPacket.h"
 
 class AuthRequest;
 class SJMPPacket;
@@ -34,7 +35,9 @@ private slots:
   void onPacket(const SJMPPacket &packet);
 
 private:
-  const AuthRequest m_data;
+  SJMPPacket request() const;
+
+  AuthRequest m_data;
   const QString m_id;
   const QString m_ip;
   const QString m_uuid;
