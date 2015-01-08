@@ -91,6 +91,9 @@ QString Hosts::remove(quint64 socket)
     socket = Core::socket();
 
   HostInfo host = m_sockets.value(socket);
+
+  Q_ASSERT(host);
+
   if (!host)
     return QString();
 
@@ -100,12 +103,14 @@ QString Hosts::remove(quint64 socket)
     updateUserFeed(host, FEED_METHOD_DELETE, socket);
   }
 
+  Q_ASSERT(!host->sockets.value(socket).isEmpty());
+
   if (Core::isReady()) {
     SJMPPacket packet;
     packet.setMethod(LS("delete"));
     packet.setResource(LS("token"));
     packet.setHeader(LS("user"), m_channel->nativeId());
-    packet.setHeader(LS("uuid"), host->uuid);
+    packet.setHeader(LS("uuid"), host->sockets.value(socket));
 
     Core::send(packet);
   }
@@ -154,10 +159,12 @@ void Hosts::add(HostInfo hostInfo)
 void Hosts::unlink(const QByteArray &hostId)
 {
   HostInfo host = m_hosts.value(hostId);
+
+  Q_ASSERT(host);
+
   if (!host)
     return;
 
-  m_hosts.remove(hostId);
   DataBase::removeHost(hostId);
 
   m_date = DateTime::utc();
@@ -165,9 +172,6 @@ void Hosts::unlink(const QByteArray &hostId)
 
   QList<quint64> sockets = host->sockets.keys();
   if (!sockets.isEmpty()) {
-    foreach (quint64 socket, sockets)
-      m_sockets.remove(socket);
-
     Core::i()->send(sockets, ChannelNotice::request(m_channel->id(), m_channel->id(), LS("quit"))->data(Core::stream()), NewPacketsEvent::KillSocketOption);
   }
 }
@@ -188,23 +192,6 @@ FeedPtr Hosts::feed(const QString &name, int mask) const
 
   feed->head().acl().setMask(mask);
   return feed;
-}
-
-
-/*!
- * Получение идентификатора хоста по сокету.
- *
- * \return Идентификатор хоста или пустые данные, если хост не найден.
- */
-ChatId Hosts::publicId(quint64 socket) const
-{
-  if (socket == 0)
-    socket = Core::socket();
-
-  if (!m_sockets.contains(socket))
-    return ChatId();
-
-  return m_sockets.value(socket)->hostId;
 }
 
 

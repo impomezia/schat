@@ -48,7 +48,6 @@ public:
 
 private:
   FeedPtr feed(const QString &name, int mask) const;
-  ChatId publicId(quint64 socket = 0) const;
   void updateHostsFeed(HostInfo host, const QString &method, quint64 socket);
   void updateUserFeed(HostInfo host, const QString &method, quint64 socket);
 
