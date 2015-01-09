@@ -58,7 +58,7 @@ void AddHostTask::run()
 {
   QSqlQuery query;
   query.prepare(LS("SELECT id FROM hosts WHERE hostId = :hostId LIMIT 1;"));
-  query.bindValue(LS(":hostId"), m_host.hostId.toBase32());
+  query.bindValue(LS(":hostId"), m_host.nativeId);
   query.exec();
 
   qint64 key = -1;
@@ -71,7 +71,7 @@ void AddHostTask::run()
                                " VALUES (:channel, :hostId, :name, :address, :version, :os, :osName, :tz, :date, :geo, :data)"));
 
     query.bindValue(LS(":channel"), m_host.channel);
-    query.bindValue(LS(":hostId"),  m_host.hostId.toBase32());
+    query.bindValue(LS(":hostId"),  m_host.nativeId);
   }
   else {
     query.prepare(LS("UPDATE hosts SET name = :name, address = :address, version = :version, os = :os, osName = :osName, tz = :tz, date = :date, geo = :geo, data = :data WHERE id = :id;"));
@@ -168,32 +168,6 @@ int DataBase::start()
   query.exec(LS("PRAGMA synchronous = OFF"));
   QStringList tables = db.tables();
 
-  query.exec(LS(
-    "CREATE TABLE IF NOT EXISTS accounts ( "
-    "  id         INTEGER PRIMARY KEY,"
-    "  channel    INTEGER UNIQUE,"
-    "  date       INTEGER DEFAULT ( 0 ),"
-    "  cookie     BLOB    NOT NULL UNIQUE,"
-    "  provider   TEXT,"
-    "  flags      INTEGER DEFAULT ( 0 ),"
-    "  groups     TEXT,"
-    "  data       BLOB"
-    ");"
-  ));
-
-  if (!tables.contains(LS("groups"))) {
-    query.exec(LS(
-    "CREATE TABLE groups ( "
-    "  id          INTEGER PRIMARY KEY,"
-    "  name        TEXT    NOT NULL UNIQUE ,"
-    "  permissions TEXT"
-    ");"));
-
-    addGroup(LS("master"));
-    addGroup(LS("registered"));
-    addGroup(LS("anonymous"));
-  }
-
   if (!tables.contains(LS("channels"))) {
     query.exec(LS(
     "CREATE TABLE channels ( "
@@ -228,22 +202,6 @@ int DataBase::start()
   ));
 
   query.exec(LS(
-    "CREATE TABLE IF NOT EXISTS profiles ( "
-    "  id         INTEGER PRIMARY KEY,"
-    "  channel    INTEGER UNIQUE,"
-    "  date       INTEGER DEFAULT ( 0 ),"
-    "  name       TEXT,"
-    "  email      TEXT,"
-    "  city       TEXT,"
-    "  country    TEXT,"
-    "  link       TEXT,"
-    "  site       TEXT,"
-    "  birthday   TEXT,"
-    "  extra      BLOB"
-    ");"
-  ));
-
-  query.exec(LS(
     "CREATE TABLE IF NOT EXISTS storage ( "
     "  id         INTEGER PRIMARY KEY,"
     "  k          TEXT UNIQUE,"
@@ -254,21 +212,6 @@ int DataBase::start()
 
   version();
   return 0;
-}
-
-
-qint64 DataBase::addGroup(const QString &name, const QString &permissions)
-{
-  QSqlQuery query;
-  query.prepare(LS("INSERT INTO groups (name, permissions) VALUES (:name, :permissions);"));
-  query.bindValue(LS(":name"), name);
-  query.bindValue(LS(":permissions"), permissions);
-  query.exec();
-
-  if (query.numRowsAffected() <= 0)
-    return -1;
-
-  return query.lastInsertId().toLongLong();
 }
 
 
@@ -431,17 +374,22 @@ QMap<ChatId, HostInfo> DataBase::hosts(qint64 channel)
 
   while (query.next()) {
     HostInfo host(new Host());
-    host->channel = channel;
-    host->hostId  = SimpleID::decode(query.value(0).toByteArray());
-    host->name    = query.value(1).toString();
-    host->ip      = query.value(2).toString();
-    host->version = Ver(query.value(3).toString()).toUInt();
-    host->os      = query.value(4).toInt();
-    host->osName  = query.value(5).toString();
-    host->tz      = query.value(6).toInt();
-    host->date    = query.value(7).toLongLong();
-    host->geo     = JSON::parse(query.value(8).toByteArray()).toMap();
-    host->data    = JSON::parse(query.value(9).toByteArray()).toMap();
+    host->channel  = channel;
+    host->nativeId = query.value(0).toString();
+    host->name     = query.value(1).toString();
+    host->ip       = query.value(2).toString();
+    host->version  = Ver(query.value(3).toString()).toUInt();
+    host->os       = query.value(4).toInt();
+    host->osName   = query.value(5).toString();
+    host->tz       = query.value(6).toInt();
+    host->date     = query.value(7).toLongLong();
+    host->geo      = JSON::parse(query.value(8).toByteArray()).toMap();
+    host->data     = JSON::parse(query.value(9).toByteArray()).toMap();
+
+    if (host->nativeId.size() == 34)
+      host->hostId.init(host->nativeId.toLatin1());
+    else
+      host->hostId.init(host->nativeId.toLatin1(), ChatId::HostId);
 
     out[host->hostId] = host;
   }
@@ -542,26 +490,6 @@ ChatChannel DataBase::channel(qint64 id)
 
 
 /*!
- * Получение ключа в таблице \b accounts на основе Сookie пользователя.
- */
-qint64 DataBase::accountKey(const QByteArray &cookie)
-{
-  if (SimpleID::typeOf(cookie) != SimpleID::CookieId)
-    return -1;
-
-  QSqlQuery query;
-  query.prepare(LS("SELECT id FROM accounts WHERE cookie = :cookie LIMIT 1;"));
-  query.bindValue(LS(":cookie"), SimpleID::encode(cookie));
-  query.exec();
-
-  if (!query.first())
-    return -1;
-
-  return query.value(0).toLongLong();
-}
-
-
-/*!
  * Возвращает ключ в таблице \b channels на основе идентификатора канала или нормализированного имени.
  *
  * \param id   Идентификатор по которому будет производится поиск.
@@ -575,23 +503,6 @@ qint64 DataBase::accountKey(const QByteArray &cookie)
 qint64 DataBase::channelKey(const QByteArray &id, int type)
 {
   int idType = SimpleID::typeOf(id);
-
-  if (idType == SimpleID::CookieId) {
-    qint64 key = accountKey(id);
-    if (key == -1)
-      return key;
-
-    QSqlQuery query;
-    query.prepare(LS("SELECT channel FROM accounts WHERE id = :id LIMIT 1;"));
-    query.bindValue(LS(":id"), key);
-    query.exec();
-
-    if (!query.first())
-      return -1;
-
-    return query.value(0).toLongLong();
-  }
-
   if (!Channel::isCompatibleId(id) && idType != SimpleID::NormalizedId)
     return -1;
 
@@ -723,6 +634,21 @@ qint64 DataBase::V4()
 }
 
 
+qint64 DataBase::V5()
+{
+  QSqlQuery query;
+
+  query.exec(LS("DROP TABLE IF EXISTS accounts"));
+  query.exec(LS("DROP TABLE IF EXISTS profiles"));
+  query.exec(LS("DROP TABLE IF EXISTS groups"));
+
+  query.exec(LS("PRAGMA user_version = 5"));
+  query.exec(LS("COMMIT;"));
+
+  return 5;
+}
+
+
 /*!
  * Обновление информации об канале.
  * Если канал также содержит пользовательский аккаунт, то он также будет обновлён.
@@ -768,4 +694,5 @@ void DataBase::version()
   if (version == 1) version = V2();
   if (version == 2) version = V3();
   if (version == 3) version = V4();
+  if (version == 4) version = V5();
 }

@@ -39,9 +39,6 @@ public:
   inline static QThreadPool *pool() { return m_self->m_pool; }
   static int start();
 
-  // users.
-  static qint64 addGroup(const QString &name, const QString &permissions = QString());
-
   // channels.
   static ChatChannel channel(const QByteArray &id, int type = SimpleID::ChannelId);
   static qint64 add(ChatChannel channel);
@@ -63,11 +60,11 @@ private slots:
 
 private:
   static ChatChannel channel(qint64 id);
-  static qint64 accountKey(const QByteArray &cookie);
   static qint64 channelKey(const QByteArray &id, int type = SimpleID::ChannelId);
   static qint64 V2();
   static qint64 V3();
   static qint64 V4();
+  static qint64 V5();
   static void update(ChatChannel channel);
   static void version();
 

@@ -159,13 +159,20 @@ void Hosts::add(HostInfo hostInfo)
 void Hosts::unlink(const QByteArray &hostId)
 {
   HostInfo host = m_hosts.value(hostId);
-
   Q_ASSERT(host);
-
   if (!host)
     return;
 
-  DataBase::removeHost(hostId);
+  SJMPPacket packet;
+  packet.setMethod(LS("delete"));
+  packet.setResource(LS("v4/session/") + host->nativeId);
+
+  if (host->online)
+    Core::sendSync(packet);
+  else
+    Core::send(packet);
+
+  DataBase::removeHost(host->nativeId.toLatin1());
 
   m_date = DateTime::utc();
   updateUserFeed(host, FEED_METHOD_DELETE, 0);
@@ -217,7 +224,7 @@ void Hosts::updateHostsFeed(HostInfo host, const QString &method, quint64 socket
   event->socket    = socket;
 
   DataBase::add(host);
-  FeedStorage::save(feed(), m_date);
+  FeedStorage::save(hosts, m_date);
   FeedEvents::start(event);
 }
 

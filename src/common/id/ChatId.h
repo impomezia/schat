@@ -1,6 +1,5 @@
-/* $Id: ChatId.h 3728 2013-07-05 22:24:27Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 Alexander Sedov <support@schat.me>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -117,5 +116,7 @@ private:
   };
 };
 #pragma pack()
+
+QDebug SCHAT_EXPORT operator<<(QDebug dbg, const ChatId &id);
 
 #endif /* CHATID_H_ */

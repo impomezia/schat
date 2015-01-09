@@ -1,6 +1,5 @@
-/* $Id: ChatId.cpp 3753 2013-07-13 18:03:34Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 Alexander Sedov <support@schat.me>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -175,3 +174,10 @@ QByteArray ChatId::toRfc4122(const QUuid uuid) const
   return QByteArray::fromHex(uuid.toString().remove(LC('{')).remove(LC('}')).remove(LC('-')).toLatin1());
 }
 #endif
+
+
+QDebug operator<<(QDebug dbg, const ChatId &id)
+{
+  dbg.nospace() << "ChatId(" << id.toString() << ")";
+  return dbg.maybeSpace();
+}

@@ -46,6 +46,7 @@ public:
 
   bool online;                    ///< \b true если подключение активно.
   ChatId hostId;                  ///< Публичный идентификатор хоста.
+  QString nativeId;
   QByteArray uniqueId;            ///< Уникальный идентификатор пользователя.
   qint32 tz;                      ///< Смещение времени относительно UTC.
   qint64 channel;                 ///< Номер канала в базе данных.
