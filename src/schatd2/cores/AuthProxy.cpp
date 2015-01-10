@@ -25,6 +25,7 @@
 #include "NodeLog.h"
 #include "sglobal.h"
 #include "SJMPPacket.h"
+#include "tools/Ver.h"
 
 AuthProxy::AuthProxy(const AuthRequest &data, const QString &ip, QObject *parent)
   : QObject(parent)
@@ -100,6 +101,7 @@ SJMPPacket AuthProxy::request() const
   packet.setId(m_id);
   packet.setHeader(LS("ip"), m_ip);
   packet.setHeader(LS("uuid"), m_uuid);
+  packet.setHeader(LS("ua"), QString("(%1) Simple Chat/%2").arg(m_data.json.value(LS("os")).toString()).arg(Ver(m_data.version).toString()));
   packet.setBody(m_data.toJSON());
 
   return packet;
