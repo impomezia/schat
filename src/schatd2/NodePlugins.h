@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,24 +18,17 @@
 #ifndef NODEPLUGINS_H_
 #define NODEPLUGINS_H_
 
-#include "Plugins.h"
+#include <QObject>
 
 class NodePlugin;
 
-class SCHAT_EXPORT NodePlugins : public Plugins
+class NodePlugins : public QObject
 {
   Q_OBJECT
 
 public:
   NodePlugins(QObject *parent = 0);
-  inline static NodePlugins *i() { return m_self; }
-
-protected:
-  void init();
-
-private:
-  QList<NodePlugin *> m_nodePlugins; ///< Список плагинов.
-  static NodePlugins *m_self;        ///< Указатель на себя.
+  void load();
 };
 
 #endif /* NODEPLUGINS_H_ */

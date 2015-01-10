@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,15 +25,16 @@ class GenericNodePlugin : public QObject, CoreApi, NodeApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi NodeApi)
-  Q_PLUGIN_METADATA(IID "me.schat.server.GenericNode")
 
 public:
-  QVariantMap header() const
+  GenericNodePlugin(QObject *parent = 0);
+
+  QVariantMap header() const override
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "GenericNode";
     out[CORE_API_NAME]     = "Generic Node";
-    out[CORE_API_VERSION]  = "2.3.3";
+    out[CORE_API_VERSION]  = "3.0.0";
     out[CORE_API_TYPE]     = "server";
     out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/GenericNode";
     out[CORE_API_DESC]     = "Standard core of server";
@@ -41,7 +42,7 @@ public:
     return out;
   }
 
-  NodePlugin *create();
+  NodePlugin *create() override;
 };
 
 #endif /* GENERICNODEPLUGIN_H_ */

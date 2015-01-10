@@ -1,5 +1,5 @@
 # Simple Chat
-# Copyright (с) 2008-2014 Alexander Sedov <imp@schat.me>
+# Copyright (с) 2008-2015 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -14,19 +14,13 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-SCHAT_DAEMON_LIB = 1
-QT = core network
-OTHER_FILES += NodeMaster.json
-
-HEADERS  = \
+HEADERS += \
    MasterDataCreator.h \
    NodeMasterCh.h \
    NodeMasterPlugin.h \
    NodeMasterPlugin_p.h \
 
-SOURCES  = \
+SOURCES += \
    MasterDataCreator.cpp \
    NodeMasterCh.cpp \
    NodeMasterPlugin.cpp \
-
-include(../plugins.pri)

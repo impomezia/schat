@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,8 +14,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include <QtPlugin>
 
 #include "cores/Core.h"
 #include "feeds/FeedStorage.h"
@@ -44,10 +42,14 @@ NodeMessagesBase::~NodeMessagesBase()
 }
 
 
+MessagesPlugin::MessagesPlugin(QObject *parent)
+  : QObject(parent)
+{
+}
+
+
 NodePlugin *MessagesPlugin::create()
 {
   m_plugin = new NodeMessagesBase(this);
   return m_plugin;
 }
-
-Q_EXPORT_PLUGIN2(Messages, MessagesPlugin);

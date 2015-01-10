@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -72,14 +72,5 @@ public:
 };
 
 Q_DECLARE_INTERFACE(CoreApi, "me.schat.CoreApi/1.2")
-
-#if QT_VERSION < 0x050000
-# define Q_PLUGIN_METADATA(...)
-#endif
-
-#if QT_VERSION >= 0x050000 && defined(Q_EXPORT_PLUGIN2)
-# undef Q_EXPORT_PLUGIN2
-# define Q_EXPORT_PLUGIN2(...)
-#endif
 
 #endif /* COREINTERFACE_H_ */

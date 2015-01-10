@@ -1,6 +1,5 @@
-/* $Id: NodeApi.h 2109 2012-01-07 05:34:49Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -35,7 +34,7 @@ protected:
   NodePlugin *m_plugin;
 };
 
-Q_DECLARE_INTERFACE(NodeApi, "me.schat.NodeApi/1.1");
+Q_DECLARE_INTERFACE(NodeApi, "me.schat.NodeApi/1.1")
 
 
 #endif /* NODEAPI_H_ */

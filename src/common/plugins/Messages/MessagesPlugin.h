@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,15 +25,16 @@ class MessagesPlugin : public QObject, CoreApi, NodeApi
 {
   Q_OBJECT
   Q_INTERFACES(CoreApi NodeApi)
-  Q_PLUGIN_METADATA(IID "me.schat.server.Messages")
 
 public:
-  QVariantMap header() const
+  MessagesPlugin(QObject *parent = 0);
+
+  QVariantMap header() const override
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Messages";
     out[CORE_API_NAME]     = "Messages";
-    out[CORE_API_VERSION]  = "2.3.3";
+    out[CORE_API_VERSION]  = "3.0.0";
     out[CORE_API_TYPE]     = "server";
     out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Messages";
     out[CORE_API_DESC]     = "Server Messages Support";
@@ -41,7 +42,7 @@ public:
     return out;
   }
 
-  NodePlugin *create();
+  NodePlugin *create() override;
 };
 
 #endif /* MESSAGESPLUGIN_H_ */

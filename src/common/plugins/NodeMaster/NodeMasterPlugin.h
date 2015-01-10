@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,17 +26,15 @@ class NodeMasterPlugin : public QObject, CoreApi, NodeApi
   Q_OBJECT
   Q_INTERFACES(CoreApi NodeApi)
 
-# if QT_VERSION >= 0x050000
-  Q_PLUGIN_METADATA(IID "me.schat.server.NodeMaster" FILE "NodeMaster.json")
-# endif
-
 public:
-  QVariantMap header() const
+  NodeMasterPlugin(QObject *parent);
+
+  QVariantMap header() const override
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "NodeMaster";
     out[CORE_API_NAME]     = "Node Master";
-    out[CORE_API_VERSION]  = "0.1.0";
+    out[CORE_API_VERSION]  = "3.0.0";
     out[CORE_API_TYPE]     = "server";
     out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/NodeMaster";
     out[CORE_API_DESC]     = "Node Master";
@@ -45,7 +43,7 @@ public:
     return out;
   }
 
-  NodePlugin *create();
+  NodePlugin *create() override;
 };
 
 #endif /* NODEMASTERPLUGIN_H_ */

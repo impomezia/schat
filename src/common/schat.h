@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -18,26 +18,8 @@
 #ifndef SCHAT_H_
 #define SCHAT_H_
 
-#if defined(SCHAT_NO_DLL)
-#  define SCHAT_EXPORT
-#  define SCHAT_CORE_EXPORT
-#else
-#  if defined(SCHAT_LIBRARY)
-#    define SCHAT_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_EXPORT Q_DECL_IMPORT
-#  endif
-#  if defined(SCHAT_CORE_LIBRARY)
-#    define SCHAT_CORE_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_CORE_EXPORT Q_DECL_IMPORT
-#  endif
-#  if defined(SCHAT_REST_LIBRARY)
-#    define SCHAT_REST_EXPORT Q_DECL_EXPORT
-#  else
-#    define SCHAT_REST_EXPORT Q_DECL_IMPORT
-#  endif
-#endif
+#define SCHAT_EXPORT
+#define SCHAT_CORE_EXPORT
 
 #ifndef Q_DECL_OVERRIDE
 #  define Q_DECL_OVERRIDE

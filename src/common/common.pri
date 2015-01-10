@@ -1,5 +1,5 @@
 # Simple Chat
-# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+# Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -17,19 +17,34 @@
 DEPENDPATH += \
     . \
     ../common \
+    ../common/plugins \
+    ../common/plugins/GenericNode \
+    ../common/plugins/Messages \
+    ../common/plugins/NodeChannels \
+    ../common/plugins/NodeMaster \
     ../3rdparty \
 
 VPATH += \
     . \
     ../common \
+    ../common/plugins \
+    ../common/plugins/GenericNode \
+    ../common/plugins/Messages \
+    ../common/plugins/NodeChannels \
+    ../common/plugins/NodeMaster \
     ../3rdparty \
 
 INCLUDEPATH += \
     . \
     ../common \
+    ../common/plugins \
+    ../common/plugins/GenericNode \
+    ../common/plugins/Messages \
+    ../common/plugins/NodeChannels \
+    ../common/plugins/NodeMaster \
     ../3rdparty \
 
-!win32:VERSION = 2.4.0
+!win32:VERSION = 3.0.0
 
 CONFIG(debug, debug|release) { 
   RCC_DIR = ../../tmp/$${TEMPLATE}/$${TARGET}/debug/rcc

@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,45 +16,27 @@
  */
 
 #include "cores/Core.h"
+#include "GenericNodePlugin.h"
+#include "MessagesPlugin.h"
+#include "NodeChannelsPlugin.h"
+#include "NodeMasterPlugin.h"
 #include "NodePlugins.h"
 #include "plugins/NodeApi.h"
 #include "plugins/NodePlugin.h"
 #include "Settings.h"
-#include "Storage.h"
 #include "sglobal.h"
-
-NodePlugins *NodePlugins::m_self = 0;
+#include "Storage.h"
 
 NodePlugins::NodePlugins(QObject *parent)
-  : Plugins(parent)
+  : QObject(parent)
 {
-  m_self = this;
-  m_type = LS("server");
 }
 
 
-void NodePlugins::init()
+void NodePlugins::load()
 {
-  Settings *settings = Storage::settings();
-
-  for (int i = 0; i < m_list.size(); ++i) {
-    PluginItem *item = m_list.at(i);
-
-    NodeApi *api = qobject_cast<NodeApi *>(item->plugin());
-
-    if (!api)
-      continue;
-
-    const QString key = LS("Plugins/") + item->id();
-    settings->setDefault(key, item->header().value(CORE_API_ENABLED).toBool());
-    if (settings->value(key) == false)
-      continue;
-
-    NodePlugin *plugin = api->create();
-    if (!plugin)
-      continue;
-
-    item->setLoaded(true);
-    m_nodePlugins.append(plugin);
-  }
+  qobject_cast<NodeApi *>(new GenericNodePlugin(this))->create();
+  qobject_cast<NodeApi *>(new MessagesPlugin(this))->create();
+  qobject_cast<NodeApi *>(new NodeChannelsPlugin(this))->create();
+  qobject_cast<NodeApi *>(new NodeMasterPlugin(this))->create();
 }

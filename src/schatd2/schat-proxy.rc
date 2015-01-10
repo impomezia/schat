@@ -42,7 +42,7 @@ VS_VERSION_INFO VERSIONINFO
         VALUE "FileDescription",  "IMPOMEZIA Simple Chat Daemon"
         VALUE "FileVersion",      SCHAT_VERSION
         VALUE "LegalCopyright",   SCHAT_COPYRIGHT
-        VALUE "OriginalFilename", "schatd2.exe"
+        VALUE "OriginalFilename", "schat-proxy.exe"
         VALUE "ProductName",      SCHAT_NAME
         VALUE "ProductVersion",   SCHAT_VERSION
       END

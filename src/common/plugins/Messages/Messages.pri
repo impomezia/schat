@@ -14,7 +14,17 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-CONFIG   += ordered
-TEMPLATE = subdirs
-SUBDIRS  = \
-    schatd2 \
+HEADERS += \
+   feeds/NodeMessagesFeed.h \
+   MessagesCh.h \
+   MessagesPlugin.h \
+   MessagesPlugin_p.h \
+   NodeMessages.h \
+   NodeMessagesDB.h \
+
+SOURCES += \
+   feeds/NodeMessagesFeed.cpp \
+   MessagesCh.cpp \
+   MessagesPlugin.cpp \
+   NodeMessages.cpp \
+   NodeMessagesDB.cpp \

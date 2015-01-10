@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,8 +14,6 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include <QtPlugin>
 
 #include "feeds/AutoKick.h"
 #include "feeds/FeedStorage.h"
@@ -47,12 +45,14 @@ NodeChannelsImpl::NodeChannelsImpl(QObject *parent)
 }
 
 
+NodeChannelsPlugin::NodeChannelsPlugin(QObject *parent)
+  : QObject(parent)
+{
+}
+
+
 NodePlugin *NodeChannelsPlugin::create()
 {
   m_plugin = new NodeChannelsImpl(this);
   return m_plugin;
 }
-
-#if QT_VERSION < 0x050000
-  Q_EXPORT_PLUGIN2(NodeChannels, NodeChannelsPlugin);
-#endif

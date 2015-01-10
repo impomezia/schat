@@ -1,5 +1,5 @@
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+# Simple Chat
+# Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -14,29 +14,27 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-SCHAT_DAEMON_LIB = 1
-QT = core network
-OTHER_FILES += NodeChannels.json
+HEADERS += \
+   feeds/NodeChannelFeed.h \
+   feeds/NodeFeedStorage.h \
+   feeds/NodeHostsFeed.h \
+   feeds/NodeProfileFeed.h \
+   feeds/NodeServerFeed.h \
+   feeds/NodeUserFeed.h \
+   GenericCh.h \
+   GenericNodePlugin.h \
+   GenericNodePlugin_p.h \
+   NodeChannels.h \
+   NodeFeeds.h \
 
-HEADERS  = \
-   feeds/AutoKick.h \
-   feeds/NodeInfoFeed.h \
-   feeds/NodeListFeed.h \
-   feeds/NodeStatsFeed.h \
-   feeds/NodeUsersFeed.h \
-   NodeChannelIndex.h \
-   NodeChannelsCh.h \
-   NodeChannelsPlugin.h \
-   NodeChannelsPlugin_p.h \
-
-SOURCES  = \
-   feeds/AutoKick.cpp \
-   feeds/NodeInfoFeed.cpp \
-   feeds/NodeListFeed.cpp \
-   feeds/NodeStatsFeed.cpp \
-   feeds/NodeUsersFeed.cpp \
-   NodeChannelIndex.cpp \
-   NodeChannelsCh.cpp \
-   NodeChannelsPlugin.cpp \
-
-include(../plugins.pri)
+SOURCES += \
+   feeds/NodeChannelFeed.cpp \
+   feeds/NodeFeedStorage.cpp \
+   feeds/NodeHostsFeed.cpp \
+   feeds/NodeProfileFeed.cpp \
+   feeds/NodeServerFeed.cpp \
+   feeds/NodeUserFeed.cpp \
+   GenericCh.cpp \
+   GenericNodePlugin.cpp \
+   NodeChannels.cpp \
+   NodeFeeds.cpp \
