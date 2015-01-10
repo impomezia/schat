@@ -1,7 +1,0 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource prefix="/">
-  <file alias="translations/dummy_en.qm">res/translations/dummy_en.qm</file>
-  <file alias="translations/dummy_ru.qm">res/translations/dummy_ru.qm</file>
-  <file alias="translations/dummy_uk.qm">res/translations/dummy_uk.qm</file>
-</qresource>
-</RCC>
