@@ -92,9 +92,9 @@ int AclValue::match(const Feed *feed, Channel *channel)
     if (channel && channel->type() == SimpleID::ServerId)
       return 077;
 
-    // FIXME: account()
-//    if (channel && channel->account() && channel->account()->groups.contains(LS("master")))
-//      return 077;
+    // FIXME: L4SGc3F
+    if (channel && channel->nativeId() == LS("L4SGc3F"))
+      return 077;
 
     if (!feed->data().contains(FEED_WILDCARD_ASTERISK))
       return 6; // Необходимо для обеспечения обратной совместимости новых клиентов с сервером старее 1.99.53.

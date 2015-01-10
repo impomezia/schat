@@ -175,17 +175,6 @@ int Ch::rename(ChatChannel channel, const QString &name)
 
 
 /*!
- * Генерирование новой Cookie.
- *
- * FIXME: Remove cookie.
- */
-QByteArray Ch::cookie()
-{
-  return ChatId(ChatId::CookieId, Storage::privateId()).toByteArray();
-}
-
-
-/*!
  * Создание идентификатора канала.
  */
 QByteArray Ch::makeId(const QByteArray &normalized)

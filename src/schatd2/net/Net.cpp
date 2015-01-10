@@ -151,7 +151,7 @@ bool Net::get(const NetContext &context, NetReply &reply) const
 
 
 /*!
- * FIXME: account()
+ * FIXME: L4SGc3F
  *
  * Подготовка запроса к чтению.
  */
@@ -167,10 +167,10 @@ bool Net::prepare(const NetContext &context, NetReply &reply)
   }
 
   if (context.req()->headers.contains(LS("user"))) {
-//    if (!m_sender->account()->groups.contains(LS("master"))) {
+    if (m_sender->nativeId() != LS("L4SGc3F")) {
       reply.status = NetReply::BAD_REQUEST;
       return false;
-//    }
+    }
 
     const ChatId id(context.req()->headers.value(LS("user")).toString());
     m_user = id.isNull() ? ChatChannel() : Ch::channel(id.toByteArray(), ChatId::UserId);

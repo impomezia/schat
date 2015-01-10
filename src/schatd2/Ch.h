@@ -42,7 +42,6 @@ public:
   static ChatChannel server();
   static ChatChannel user(const QString &nativeId);
   static int rename(ChatChannel channel, const QString &name);
-  static QByteArray cookie();
   static QByteArray makeId(const QByteArray &normalized);
   static void load();
   static void userChannel(ChatChannel channel, const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket = 0);

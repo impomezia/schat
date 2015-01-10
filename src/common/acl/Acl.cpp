@@ -69,9 +69,9 @@ int Acl::match(Channel *channel) const
   if (channel->type() == SimpleID::ServerId)
     return 077;
 
-  // FIXME: account()
-//  if (channel->account() && channel->account()->groups.contains(LS("master")))
-//    return 077;
+  // FIXME: L4SGc3F
+  if (channel->nativeId() == LS("L4SGc3F"))
+    return 077;
 
   const QByteArray &id = channel->id();
 
