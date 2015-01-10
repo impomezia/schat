@@ -1,5 +1,5 @@
 # Simple Chat
-# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+# Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,19 +29,12 @@ HEADERS += \
     feeds/Feeds.h \
     feeds/FeedStorage.h \
     Gender.h \
-    GenericDownloadItem.h \
     id/ChatId.h \
     id/ObjectId.h \
     id/SecureRandom.h \
-    interfaces/IDownloadItem.h \
-    interfaces/INetworkError.h \
-    interfaces/INetworkHandler.h \
-    interfaces/INetworkListener.h \
-    interfaces/IServiceTask.h \
     interfaces/ITranslation.h \
     JSON.h \
     k8json/k8json.h \
-    net/dns/ChatDNS.h \
     net/NetReply.h \
     net/NetRequest.h \
     net/PacketReader.h \
@@ -56,22 +49,13 @@ HEADERS += \
     net/SimpleSocket_p.h \
     net/TransportReader.h \
     net/TransportWriter.h \
-    NetworkAccess.h \
     Path.h \
-    Plugins.h \
     schat.h \
-    ServiceList.h \
-    ServiceThread.h \
     Settings.h \
     sglobal.h \
-    text/HtmlFilter.h \
-    text/HtmlFilter_p.h \
-    text/HtmlToken.h \
-    text/PlainTextFilter.h \
     tools/OsInfo.h \
     tools/Ver.h \
     Tr.h \
-    Translation.h \
 
 SOURCES += \
     acl/Acl.cpp \
@@ -91,7 +75,6 @@ SOURCES += \
     id/SecureRandom.cpp \
     JSON.cpp \
     k8json/k8json.cpp \
-    net/dns/ChatDNS.cpp \
     net/NetReply.cpp \
     net/NetRequest.cpp \
     net/PacketReader.cpp \
@@ -104,18 +87,11 @@ SOURCES += \
     net/SimpleSocket.cpp \
     net/TransportReader.cpp \
     net/TransportWriter.cpp \
-    NetworkAccess.cpp \
     Path.cpp \
-    Plugins.cpp \
-    ServiceList.cpp \
-    ServiceThread.cpp \
     Settings.cpp \
-    text/HtmlFilter.cpp \
-    text/PlainTextFilter.cpp \
     tools/OsInfo.cpp \
     tools/Ver.cpp \
     Tr.cpp \
-    Translation.cpp \
 
 win32 {
   SOURCES += Path_win.cpp tools/OsInfo_win.cpp
@@ -130,29 +106,6 @@ macx: {
 }
 
 win32-msvc*:DEFINES += _CRT_RAND_S
-
-!contains( SCHAT_LITTLE_CLIENT, 1 ) {
-  HEADERS += \
-    client/AuthClient.h \
-    client/ChatClient.h \
-    client/ClientChannels.h \
-    client/ClientCmd.h \
-    client/ClientFeeds.h \
-    client/ClientHooks.h \
-    client/ClientMessages.h \
-    client/SimpleClient.h \
-    client/SimpleClient_p.h \
-    
-  SOURCES += \
-    client/AuthClient.cpp \
-    client/ChatClient.cpp \
-    client/ClientChannels.cpp \
-    client/ClientCmd.cpp \
-    client/ClientFeeds.cpp \
-    client/ClientHooks.cpp \
-    client/ClientMessages.cpp \
-    client/SimpleClient.cpp \
-}
 
 contains( SCHAT_QDNS, 1 ) {
     include(../common/net/dns/qdnslookup.pri)

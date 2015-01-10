@@ -23,7 +23,6 @@
 #include "feeds/FeedStorage.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
-#include "text/HtmlFilter.h"
 
 /*!
  * Добавление идентификатора в список каналов.
