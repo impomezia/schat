@@ -107,9 +107,4 @@ macx: {
 
 win32-msvc*:DEFINES += _CRT_RAND_S
 
-contains( SCHAT_QDNS, 1 ) {
-    include(../common/net/dns/qdnslookup.pri)
-}
-else {
-    DEFINES += SCHAT_NO_QDNS
-}
+DEFINES += SCHAT_NO_QDNS
