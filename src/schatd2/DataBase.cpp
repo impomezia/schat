@@ -410,12 +410,19 @@ void DataBase::add(HostInfo host)
 }
 
 
-void DataBase::removeHost(const QByteArray &hostId)
+void DataBase::removeHost(const QString &hostId)
 {
   QSqlQuery query;
   query.prepare(LS("DELETE FROM hosts WHERE hostId = :hostId;"));
-  query.bindValue(LS(":hostId"), SimpleID::encode(hostId));
+
+  if (hostId.size() == 34)
+    query.bindValue(LS(":hostId"), hostId.toLatin1());
+  else
+    query.bindValue(LS(":hostId"), hostId);
+
   query.exec();
+
+  Q_ASSERT(query.numRowsAffected());
 }
 
 

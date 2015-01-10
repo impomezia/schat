@@ -49,7 +49,7 @@ public:
   // hosts.
   static QMap<ChatId, HostInfo> hosts(qint64 channel);
   static void add(HostInfo host);
-  static void removeHost(const QByteArray &hostId);
+  static void removeHost(const QString &hostId);
 
   static bool contains(const QString &key);
   static QVariant value(const QString &key, const QVariant &defaultValue = QVariant());

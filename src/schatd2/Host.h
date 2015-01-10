@@ -34,6 +34,7 @@ class SCHAT_EXPORT Host
 public:
   Host()
   : online(false)
+  , removed(false)
   , channel(0)
   , version(0)
   , os(0)
@@ -45,6 +46,7 @@ public:
   Host(const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket);
 
   bool online;                    ///< \b true если подключение активно.
+  bool removed;
   ChatId hostId;                  ///< Публичный идентификатор хоста.
   QString nativeId;
   QByteArray uniqueId;            ///< Уникальный идентификатор пользователя.

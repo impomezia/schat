@@ -22,6 +22,7 @@
 
 Host::Host(const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket)
   : online(true)
+  , removed(false)
   , hostId(ChatId(packet.header(LS("session")).toByteArray(), ChatId::HostId))
   , nativeId(packet.header(LS("session")).toString())
   , channel(0)
@@ -36,5 +37,4 @@ Host::Host(const AuthRequest &data, const SJMPPacket &packet, const QString &ip,
   , socket(socket)
   , uuid(uuid)
 {
-
 }

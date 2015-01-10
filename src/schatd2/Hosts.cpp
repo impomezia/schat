@@ -116,6 +116,7 @@ QString Hosts::remove(quint64 socket)
   }
 
   m_sockets.remove(socket);
+  m_hosts.remove(host->hostId);
   return host->sockets.take(socket);
 }
 
@@ -163,6 +164,8 @@ void Hosts::unlink(const QByteArray &hostId)
   if (!host)
     return;
 
+  host->removed = true;
+
   SJMPPacket packet;
   packet.setMethod(LS("delete"));
   packet.setResource(LS("v4/session/") + host->nativeId);
@@ -172,7 +175,7 @@ void Hosts::unlink(const QByteArray &hostId)
   else
     Core::send(packet);
 
-  DataBase::removeHost(host->nativeId.toLatin1());
+  DataBase::removeHost(host->nativeId);
 
   m_date = DateTime::utc();
   updateUserFeed(host, FEED_METHOD_DELETE, 0);
@@ -223,8 +226,11 @@ void Hosts::updateHostsFeed(HostInfo host, const QString &method, quint64 socket
   event->path      = host->hostId.toBase32();
   event->socket    = socket;
 
-  DataBase::add(host);
-  FeedStorage::save(hosts, m_date);
+  if (!host->removed) {
+    DataBase::add(host);
+    FeedStorage::save(hosts, m_date);
+  }
+
   FeedEvents::start(event);
 }
 
