@@ -46,7 +46,7 @@ private:
   class Creators
   {
   public:
-    Creators() {};
+    Creators() {}
     ~Creators();
     inline DataCreator* get(const QString &path) const { return m_map.value(path); }
     void add(DataCreator *creator);
