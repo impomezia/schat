@@ -21,6 +21,7 @@
 #include <QObject>
 
 #include "interfaces/IClientListener.h"
+#include "schat.h"
 
 class ClientListener : public QObject, public IClientListener
 {
@@ -28,11 +29,11 @@ class ClientListener : public QObject, public IClientListener
 
 public:
   ClientListener(const QString &token, QObject *parent = 0);
-  void onAuthRequired(IClient *client) override;
-  void onConnectToHost(IClient *client, const QString &hostName, quint16 port) override;
-  void onDisconnected(IClient *client, int status) override;
-  void onPacket(IClient *client, const SJMPPacket &packet) override;
-  void onPong(IClient *client) override;
+  void onAuthRequired(IClient *client) Q_DECL_OVERRIDE;
+  void onConnectToHost(IClient *client, const QString &hostName, quint16 port) Q_DECL_OVERRIDE;
+  void onDisconnected(IClient *client, int status) Q_DECL_OVERRIDE;
+  void onPacket(IClient *client, const SJMPPacket &packet) Q_DECL_OVERRIDE;
+  void onPong(IClient *client) Q_DECL_OVERRIDE;
 
 signals:
   void packet(const SJMPPacket &packet);

@@ -32,14 +32,14 @@ class SCHAT_EXPORT Heartbeat : public QObject, public IClientListener
 public:
   Heartbeat(QObject *parent = 0);
   ~Heartbeat();
-  void onAuthRequired(IClient *client) override;
-  void onConnectToHost(IClient *client, const QString &hostName, quint16 port) override;
-  void onDisconnected(IClient *client, int status) override;
-  void onPacket(IClient *client, const SJMPPacket &packet) override;
-  void onPong(IClient *client) override;
+  void onAuthRequired(IClient *client) Q_DECL_OVERRIDE;
+  void onConnectToHost(IClient *client, const QString &hostName, quint16 port) Q_DECL_OVERRIDE;
+  void onDisconnected(IClient *client, int status) Q_DECL_OVERRIDE;
+  void onPacket(IClient *client, const SJMPPacket &packet) Q_DECL_OVERRIDE;
+  void onPong(IClient *client) Q_DECL_OVERRIDE;
 
 protected:
-  void timerEvent(QTimerEvent *event) override;
+  void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
 
 private:
   enum TimerState {

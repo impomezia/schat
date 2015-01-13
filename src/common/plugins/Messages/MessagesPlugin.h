@@ -29,7 +29,7 @@ class MessagesPlugin : public QObject, CoreApi, NodeApi
 public:
   MessagesPlugin(QObject *parent = 0);
 
-  QVariantMap header() const override
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Messages";
@@ -42,7 +42,7 @@ public:
     return out;
   }
 
-  NodePlugin *create() override;
+  NodePlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* MESSAGESPLUGIN_H_ */

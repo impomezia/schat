@@ -26,11 +26,11 @@ class NodeChannelsCh : public ChHook
 
 public:
   NodeChannelsCh(QObject *parent = 0);
-  void load() override;
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) override;
-  void server(ChatChannel channel, bool created) override;
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) override;
-  void userChannel(ChatChannel channel) override;
+  void load() Q_DECL_OVERRIDE;
+  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) Q_DECL_OVERRIDE;
+  void server(ChatChannel channel, bool created) Q_DECL_OVERRIDE;
+  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) Q_DECL_OVERRIDE;
+  void userChannel(ChatChannel channel) Q_DECL_OVERRIDE;
 };
 
 #endif /* NODECHANNELSCH_H_ */

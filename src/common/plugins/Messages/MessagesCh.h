@@ -26,10 +26,10 @@ class MessagesCh : public ChHook
 
 public:
   MessagesCh(QObject *parent = 0);
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) override;
-  void server(ChatChannel channel, bool created) override;
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) override;
-  void userChannel(ChatChannel channel) override;
+  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) Q_DECL_OVERRIDE;
+  void server(ChatChannel channel, bool created) Q_DECL_OVERRIDE;
+  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) Q_DECL_OVERRIDE;
+  void userChannel(ChatChannel channel) Q_DECL_OVERRIDE;
 };
 
 #endif /* MESSAGESCH_H_ */

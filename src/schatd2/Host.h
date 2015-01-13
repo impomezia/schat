@@ -35,12 +35,12 @@ public:
   Host()
   : online(false)
   , removed(false)
-  , channel(0)
-  , version(0)
-  , os(0)
   , tz(0)
+  , channel(0)
   , date(0)
+  , version(0)
   , socket(0)
+  , os(0)
   {}
 
   Host(const AuthRequest &data, const SJMPPacket &packet, const QString &ip, const QString &uuid, quint64 socket);

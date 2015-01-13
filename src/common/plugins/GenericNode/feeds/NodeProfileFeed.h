@@ -30,18 +30,18 @@ public:
   NodeProfileFeed(const QString &name, const QVariantMap &data);
   NodeProfileFeed(const QString &name = FEED_NAME_PROFILE, qint64 date = 0);
 
-  FeedReply post(const QString &path, const QVariantMap &json, Channel *channel = 0, const QByteArray &blob = QByteArray()) override;
-  FeedReply put(const QString &path, const QVariantMap &json, Channel *channel = 0, const QByteArray &blob = QByteArray()) override;
-  QVariantMap feed(Channel *channel = 0) const override;
+  FeedReply post(const QString &path, const QVariantMap &json, Channel *channel = 0, const QByteArray &blob = QByteArray()) Q_DECL_OVERRIDE;
+  FeedReply put(const QString &path, const QVariantMap &json, Channel *channel = 0, const QByteArray &blob = QByteArray()) Q_DECL_OVERRIDE;
+  QVariantMap feed(Channel *channel = 0) const Q_DECL_OVERRIDE;
 };
 
 
 class NodeProfileFeedCreator : public FeedCreator
 {
 public:
-  Feed* create(const QString &name) const override;
-  Feed* load(const QString &name, const QVariantMap &data) const override;
-  QString name() const override { return FEED_NAME_PROFILE; }
+  Feed* create(const QString &name) const Q_DECL_OVERRIDE;
+  Feed* load(const QString &name, const QVariantMap &data) const Q_DECL_OVERRIDE;
+  QString name() const Q_DECL_OVERRIDE { return FEED_NAME_PROFILE; }
 };
 
 #endif /* NODEPROFILEFEED_H_ */

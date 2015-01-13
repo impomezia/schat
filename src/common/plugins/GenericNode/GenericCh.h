@@ -26,11 +26,11 @@ class GenericCh : public ChHook
 
 public:
   GenericCh(QObject *parent = 0);
-  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) override;
-  void rename(ChatChannel channel) override;
-  void server(ChatChannel channel, bool created) override;
-  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) override;
-  void userChannel(ChatChannel channel) override;
+  void newChannel(ChatChannel channel, ChatChannel user = ChatChannel()) Q_DECL_OVERRIDE;
+  void rename(ChatChannel channel) Q_DECL_OVERRIDE;
+  void server(ChatChannel channel, bool created) Q_DECL_OVERRIDE;
+  void sync(ChatChannel channel, ChatChannel user = ChatChannel()) Q_DECL_OVERRIDE;
+  void userChannel(ChatChannel channel) Q_DECL_OVERRIDE;
 
 private slots:
   void onPacket(const SJMPPacket &packet);

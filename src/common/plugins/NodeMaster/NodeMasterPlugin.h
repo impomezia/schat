@@ -29,7 +29,7 @@ class NodeMasterPlugin : public QObject, CoreApi, NodeApi
 public:
   NodeMasterPlugin(QObject *parent);
 
-  QVariantMap header() const override
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "NodeMaster";
@@ -43,7 +43,7 @@ public:
     return out;
   }
 
-  NodePlugin *create() override;
+  NodePlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* NODEMASTERPLUGIN_H_ */

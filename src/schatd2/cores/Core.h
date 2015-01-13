@@ -81,7 +81,7 @@ public slots:
   inline void workerReady(QObject *listener) { m_listeners.append(listener); }
 
 protected:
-  void customEvent(QEvent *event) override;
+  void customEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
   void onPacket(const SJMPPacket &packet);

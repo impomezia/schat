@@ -29,7 +29,7 @@ class NodeMasterCh : public ChHook
 
 public:
   NodeMasterCh(QObject *parent = 0);
-  void load(ChatChannel channel) override;
+  void load(ChatChannel channel) Q_DECL_OVERRIDE;
 
 private slots:
   void onNotify(const FeedEvent &event);

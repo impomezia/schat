@@ -30,16 +30,16 @@ class SCHAT_EXPORT Client : public QSslSocket, public IClient
 
 public:
   Client(QObject *parent = 0);
-  bool isReady() const override;
-  void leave(int status = 1001) override;
-  void open(const QString &hostName, quint16 port = 7665) override;
-  void ping() override;
-  void reconnect() override;
-  void send(const SJMPPacket &packet, bool queue = true) override;
-  void setReady(bool ready) override;
+  bool isReady() const Q_DECL_OVERRIDE;
+  void leave(int status = 1001) Q_DECL_OVERRIDE;
+  void open(const QString &hostName, quint16 port = 7665) Q_DECL_OVERRIDE;
+  void ping() Q_DECL_OVERRIDE;
+  void reconnect() Q_DECL_OVERRIDE;
+  void send(const SJMPPacket &packet, bool queue = true) Q_DECL_OVERRIDE;
+  void setReady(bool ready) Q_DECL_OVERRIDE;
 
-  void addListener(IClientListener *listener) override;
-  void removeListener(IClientListener *listener) override;
+  void addListener(IClientListener *listener) Q_DECL_OVERRIDE;
+  void removeListener(IClientListener *listener) Q_DECL_OVERRIDE;
 
 # if QT_VERSION >= 0x050000
   void connectToHost(const QString &hostName, quint16 port, OpenMode openMode = ReadWrite, NetworkLayerProtocol protocol = AnyIPProtocol);

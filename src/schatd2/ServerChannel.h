@@ -52,8 +52,8 @@ public:
   bool setName(const QString &name);
   Hosts* hosts() const;
   void broadcast(const QString &feedName, const QString &path, qint64 date);
-  void setData(const QString &key, const QVariant &data) override;
-  void setData(const QVariantMap &data) override;
+  void setData(const QString &key, const QVariant &data) Q_DECL_OVERRIDE;
+  void setData(const QVariantMap &data) Q_DECL_OVERRIDE;
 
   bool canEdit(ChatChannel channel, bool special = true);
   bool canRead(ChatChannel channel, bool special = false);

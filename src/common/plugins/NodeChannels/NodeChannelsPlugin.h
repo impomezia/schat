@@ -29,7 +29,7 @@ class NodeChannelsPlugin : public QObject, CoreApi, NodeApi
 public:
   NodeChannelsPlugin(QObject *parent);
 
-  QVariantMap header() const override
+  QVariantMap header() const Q_DECL_OVERRIDE
   {
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "NodeChannels";
@@ -42,7 +42,7 @@ public:
     return out;
   }
 
-  NodePlugin *create() override;
+  NodePlugin *create() Q_DECL_OVERRIDE;
 };
 
 #endif /* NODECHANNELSPLUGIN_H_ */
