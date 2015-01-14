@@ -1,4 +1,4 @@
-schat2 (##SCHAT_VERSION##-1~##DIST##) unstable; urgency=low
+schat-proxy (##SCHAT_VERSION##-1~##DIST##) unstable; urgency=low
 
   * Initial release.
 

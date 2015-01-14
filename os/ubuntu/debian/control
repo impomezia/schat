@@ -1,19 +1,13 @@
-Source: schat2
+Source: schat-proxy
 Section: net
 Priority: extra
 Maintainer: Alexander Sedov <impomezia@gmail.com>
-Build-Depends: debhelper (>= 7), libqtwebkit-dev | libqt4-dev, qt4-qmake, libxss-dev, zlib1g-dev, pkg-config, libhunspell-dev, libgeoip-dev
+Build-Depends: debhelper (>= 7), qt4-qmake, zlib1g-dev, pkg-config 
 Standards-Version: 3.8.3
 Homepage: https://schat.me
 
-Package: schat2
+Package: schat-proxy
 Architecture: any 
 Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-sql-sqlite (>= 4:4.6.1)
-Description: IMPOMEZIA Simple Chat Client
+Description: IMPOMEZIA Simple Chat Proxy Daemon
  Simple and powerful cross-platform chat client for local networks and the Internet.
-
-Package: schatd2
-Architecture: any 
-Depends: ${shlibs:Depends}, ${misc:Depends}, libqt4-sql-sqlite (>= 4:4.6.1)
-Description: IMPOMEZIA Simple Chat Daemon
- Simple and powerful cross-platform chat server for local networks and the Internet.

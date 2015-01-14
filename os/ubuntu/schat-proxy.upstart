@@ -1,4 +1,4 @@
-description "Simple Chat Daemon"
+description "Simple Chat Proxy Daemon"
 author "Alexander Sedov <support@schat.me>"
 
 start on (filesystem and networking) or runlevel [2345]
@@ -7,7 +7,7 @@ stop on runlevel [016]
 env UID=schatd2
 env GID=schatd2
 env UMASK=007
-env BASE=schatd2
+env BASE=schat-proxy
 
 respawn
 expect fork
@@ -26,10 +26,6 @@ pre-start script
 
   chown -R $UID:$GID /var/lib/$BASE
   chown -R $UID:$GID /var/log/$BASE
-
-  if [ "schatd2" != "$BASE" ]; then
-    ln -s /usr/share/schatd2 /usr/share/$BASE || true
-  fi
 end script
 
 post-stop script

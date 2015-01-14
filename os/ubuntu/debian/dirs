@@ -1,0 +1,3 @@
+etc/schat-proxy
+var/lib/schat-proxy
+var/log/schat-proxy

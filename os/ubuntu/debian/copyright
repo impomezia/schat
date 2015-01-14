@@ -1,16 +1,16 @@
 This work was packaged for Debian by:
 
-    Alexander Sedov <impomezia@gmail.com>
+    Alexander Sedov <imp@schat.me>
 
 It was downloaded from <https://schat.me>
 
 Upstream Author(s):
 
-    Alexander Sedov <impomezia@gmail.com>
+    Alexander Sedov <imp@schat.me>
 
 Copyright:
 
-    Copyright (C) 2008-2012 Alexander Sedov <impomezia@gmail.com>
+    Copyright (C) 2008-2015 Alexander Sedov <imp@schat.me>
 
 License:
 
@@ -29,7 +29,7 @@ License:
 
 The Debian packaging is:
 
-    Copyright (C) 2012 Alexander Sedov <impomezia@gmail.com>
+    Copyright (C) 2015 Alexander Sedov <imp@schat.me>
 
 and is licensed under the GPL version 3, 
 see `/usr/share/common-licenses/GPL-3'.

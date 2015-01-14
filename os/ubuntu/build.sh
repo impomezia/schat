@@ -1,7 +1,6 @@
 #!/bin/bash
-# $Id: build.sh 3242 2012-10-30 09:37:15Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -18,9 +17,11 @@
 
 set -e
 
+SCHAT_VERSION=3.0.0
+
 cat debian/changelog.in | sed "s/##RDATE##/`date -R`/g" | sed "s/##DIST##/`lsb_release -cs`/g" | sed "s/##SCHAT_VERSION##/$SCHAT_VERSION/g" > debian/changelog
 cp -fr debian ../../
 cd ../..
 dpkg-buildpackage -us -uc
 cp -f ../*.deb os/ubuntu/deb
-rm ../schat*.deb ../schat2*.changes ../schat2*.dsc ../schat2*.tar.gz
+rm ../schat-proxy*.deb ../schat-proxy*.changes ../schat-proxy*.dsc ../schat-proxy*.tar.gz
