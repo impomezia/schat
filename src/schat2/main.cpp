@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 
   int ret = 0;
   QString appPath;
+  QStringList args;
 
   {
     ChatApp app(argc, argv);
@@ -42,12 +43,15 @@ int main(int argc, char *argv[])
       return 0;
 
     appPath = app.applicationFilePath();
+    args = app.arguments();
+    args.takeFirst();
+
     app.start();
     ret = app.exec();
   }
 
   if (ChatApp::restartRequired) {
-    QProcess::startDetached(LC('"') + appPath + LC('"'));
+    QProcess::startDetached(LC('"') + appPath + LC('"'), args);
   }
 
   return ret;

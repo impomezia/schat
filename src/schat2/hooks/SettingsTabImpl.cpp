@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -76,8 +76,12 @@ ProfilePage::ProfilePage(QWidget *parent)
 void ProfilePage::onAutoRunClicked(bool checked)
 {
   QSettings reg(LS("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"), QSettings::NativeFormat);
-  if (checked)
-    reg.setValue(LS("Simple Chat 2"), QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS(" -hide"));
+  if (checked) {
+    QStringList args = QApplication::arguments();
+    args.takeFirst();
+
+    reg.setValue(LS("Simple Chat 2"), QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS(" -hide ") + args.join(LC(' ')));
+  }
   else
     reg.remove(LS("Simple Chat 2"));
 
@@ -92,7 +96,10 @@ bool ProfilePage::isAutoRun() const
   if (value.isEmpty())
     return false;
 
-  return QApplication::applicationFilePath() + LS(" -hide") == QDir::fromNativeSeparators(value);
+  QStringList args = QApplication::arguments();
+  args.takeFirst();
+
+  return QApplication::applicationFilePath() + LS(" -hide ") + args.join(LC(' ')) == QDir::fromNativeSeparators(value);
 }
 
 
