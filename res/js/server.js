@@ -1,6 +1,5 @@
-/* $Id: server.js 3662 2013-04-30 17:55:42Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -73,7 +72,7 @@ var Hosts = {
     if (json === false)
       return;
 
-    $('.host-row').hide();
+    $('.host-row').remove();
 
     for (var key in json) if (json.hasOwnProperty(key) && key.length == 34) {
       Hosts.processSingleHost(key, json[key]);
@@ -182,7 +181,7 @@ Modal.create.auth = function(event)
   $('#modal-header h3 span').attr('data-tr', 'sign_in_with');
 
   $('#modal-body').append('<div id="providers"></div>');
-  
+
   if (Auth.anonymous()) {
     $('#modal-body').append('<div id="anonymous-auth"><a data-tr="or_anon_connect" href="#">' + Utils.tr('or_anon_connect') + '</a></div>');
 

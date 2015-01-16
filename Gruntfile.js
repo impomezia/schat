@@ -5,10 +5,6 @@ module.exports = function(grunt) {
     uglify: {
       all: {
         files: {
-          'res/html/js/PluginsView.min.js': ['res/html/src/PluginsView.js'],
-          'res/html/js/server.min.js': ['res/html/src/server.js'],
-          'res/html/js/user.min.js': ['res/html/src/user.js'],
-          'res/html/js/about.min.js': ['res/html/src/about.js'],
           'res/html/js/bootstrap-tooltip.min.js': ['res/html/src/bootstrap-tooltip.js'],
           'res/html/js/bootstrap-modal.min.js': ['res/html/src/bootstrap-modal.js'],
           'res/html/js/jquery.timeago.min.js': ['res/html/src/jquery.timeago.js'],

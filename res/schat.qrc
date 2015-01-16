@@ -76,16 +76,12 @@
   <file alias="images/user-white-female.png">images/fugue/user-white-female.png</file>
   <file alias="images/user-yellow.png">images/fugue/user-yellow.png</file>
   <file alias="images/user-yellow-female.png">images/fugue/user-yellow-female.png</file>
-  <file alias="js/about.js">html/js/about.min.js</file>
   <file alias="js/bootstrap-modal.js">html/js/bootstrap-modal.min.js</file>
   <file alias="js/bootstrap-tooltip.js">html/js/bootstrap-tooltip.min.js</file>
   <file alias="js/jquery.js">html/js/jquery.min.js</file>
   <file alias="js/jquery.timeago.en.js">html/js/jquery.timeago.en.min.js</file>
   <file alias="js/jquery.timeago.js">html/js/jquery.timeago.min.js</file>
   <file alias="js/jquery.timeago.ru.js">html/js/jquery.timeago.ru.min.js</file>
-  <file alias="js/PluginsView.js">html/js/PluginsView.min.js</file>
-  <file alias="js/server.js">html/js/server.min.js</file>
-  <file alias="js/user.js">html/js/user.min.js</file>
   <file>html/about.html</file>
   <file>html/Channel.html</file>
   <file>html/Plugins.html</file>
@@ -128,7 +124,11 @@
   <file>images/spinner-yellow.gif</file>
   <file>images/stop.png</file>
   <file>images/trash.png</file>
+  <file>js/about.js</file>
   <file>js/ChatView.js</file>
+  <file>js/PluginsView.js</file>
+  <file>js/server.js</file>
+  <file>js/user.js</file>
   <file>translations/en.png</file>
   <file>translations/unknown.png</file>
 </qresource>
