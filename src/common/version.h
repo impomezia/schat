@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,6 +27,6 @@
 #define SCHAT_NAME         "Simple Chat"
 #define SCHAT_ORGANIZATION "Alexander Sedov"
 #define SCHAT_DOMAIN       "schat.me"
-#define SCHAT_COPYRIGHT    "Copyright (c) 2008-2014 Alexander Sedov"
+#define SCHAT_COPYRIGHT    "Copyright (c) 2008-2015 Alexander Sedov"
 
 #endif /*VERSION_H_*/
