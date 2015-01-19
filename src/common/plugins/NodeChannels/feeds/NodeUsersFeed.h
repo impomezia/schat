@@ -1,6 +1,5 @@
-/* $Id: NodeUsersFeed.h 3735 2013-07-07 23:38:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -31,10 +30,10 @@ public:
   NodeUsersFeed(const QString &name, const QVariantMap &data);
   NodeUsersFeed(const QString &name = FEED_NAME_USERS, qint64 date = 0);
 
-  FeedReply del(const QString &path, Channel *channel = 0, const QByteArray &blob = QByteArray());
-  FeedReply post(const QString &path, const QVariantMap &json, Channel *user = 0, const QByteArray &blob = QByteArray());
+  FeedReply del(const QString &path, Channel *channel = 0, const QByteArray &blob = QByteArray()) Q_DECL_OVERRIDE;
+  FeedReply post(const QString &path, const QVariantMap &json, Channel *user = 0, const QByteArray &blob = QByteArray()) Q_DECL_OVERRIDE;
 
-  void setChannel(Channel *channel);
+  void setChannel(Channel *channel) Q_DECL_OVERRIDE;
 
 private:
   bool isSupportOfflineUsers() const;
@@ -48,9 +47,9 @@ private:
 class NodeUsersFeedCreator : public FeedCreator
 {
 public:
-  Feed* create(const QString &name) const;
-  Feed* load(const QString &name, const QVariantMap &data) const;
-  inline QString name() const { return FEED_NAME_USERS; }
+  Feed* create(const QString &name) const Q_DECL_OVERRIDE;
+  Feed* load(const QString &name, const QVariantMap &data) const Q_DECL_OVERRIDE;
+  inline QString name() const Q_DECL_OVERRIDE { return FEED_NAME_USERS; }
 };
 
 #endif /* NODEUSERSFEED_H_ */
