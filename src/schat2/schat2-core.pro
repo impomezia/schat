@@ -1,5 +1,5 @@
 # Simple Chat
-# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+# Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -258,6 +258,7 @@ CODECFORSRC = UTF-8
 unix {
   macx {
     target.path += ../../out/SimpleChat2.app/Contents/Frameworks/
+    LIBS += -framework CoreServices
   } else {
     include(../common/prefix.pri)
 
