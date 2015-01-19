@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include "id/ChatId.h"
 #include "interfaces/IDownloadItem.h"
 
+class Notify;
 class PreviewDB;
 class PreviewItem;
 struct ImageRecord;
@@ -46,8 +47,11 @@ signals:
 private slots:
   void onFinished(const ImageRecord &record);
   void onFinished(DownloadItem item);
+  void onNotify(const Notify &notify);
 
 private:
+  void removeRecursively(const QString &path);
+
   PreviewDB *m_db;
   QMap<ChatId, PreviewItem*> m_items;
   QMap<ChatId, QList<ChatId> > m_messages;

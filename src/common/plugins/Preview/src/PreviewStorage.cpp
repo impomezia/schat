@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -15,10 +15,13 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
 #include <QDir>
+#include <QDirIterator>
 #include <QThreadPool>
 
 #include "ChatCore.h"
+#include "ChatNotify.h"
 #include "ChatSettings.h"
 #include "NetworkAccess.h"
 #include "Path.h"
@@ -43,6 +46,7 @@ PreviewStorage::PreviewStorage(QObject *parent) :
   m_db->open(Path::cache() + LS("/preview.sqlite"));
 
   connect(ChatCore::networkAccess(), SIGNAL(finished(DownloadItem)), SLOT(onFinished(DownloadItem)));
+  connect(ChatNotify::i(), SIGNAL(notify(Notify)), SLOT(onNotify(Notify)));
 }
 
 
@@ -127,4 +131,31 @@ void PreviewStorage::onFinished(DownloadItem item)
   connect(task, SIGNAL(finished(ImageRecord)), SLOT(onFinished(ImageRecord)));
 
   QThreadPool::globalInstance()->start(task);
+}
+
+
+void PreviewStorage::onNotify(const Notify &notify)
+{
+  if (notify.type() == Notify::ClearCache) {
+    removeRecursively(PreviewItem::path());
+    m_db->clear();
+  }
+}
+
+
+void PreviewStorage::removeRecursively(const QString &path)
+{
+  QDirIterator di(path, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot);
+  while (di.hasNext()) {
+    di.next();
+    const QFileInfo &fi = di.fileInfo();
+
+    if (fi.isDir() && !fi.isSymLink())
+      removeRecursively(di.filePath());
+    else
+      QFile::remove(di.filePath());
+  }
+
+  QDir().rmdir(path);
+  QApplication::processEvents();
 }

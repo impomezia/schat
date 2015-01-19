@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@
 #include "client/SimpleClient.h"
 #include "DateTime.h"
 #include "hooks/CommandsImpl.h"
-#include "messages/AlertMessage.h"
 #include "messages/AlertMessage.h"
 #include "QtEscape.h"
 #include "sglobal.h"
@@ -71,6 +70,13 @@ bool CommandsImpl::command(const QByteArray &dest, const ClientCmd &cmd)
       ChatNotify::start(Notify::ClearChat, dest);
     else if (cmd.body() == LS("cache"))
       ChatNotify::start(Notify::ClearCache);
+  }
+
+  else if (command == LS("cache")) {
+    if (cmd.body() == LS("clear"))
+      ChatNotify::start(Notify::ClearCache);
+    else
+      AlertMessage::show(tr("Usage: <b>/cache clear</b>"), ALERT_MESSAGE_INFO);
   }
 
   /// - /color Установка цвета иконки пользователя.

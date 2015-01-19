@@ -72,6 +72,20 @@ ImageRecord PreviewDB::findById(const ChatId &id)
 }
 
 
+void PreviewDB::clear()
+{
+  {
+    QSqlQuery query(QSqlDatabase::database(m_id));
+    query.exec(LS("DROP TABLE IF EXISTS images;"));
+  }
+
+  create();
+
+  QSqlQuery query(QSqlDatabase::database(m_id));
+  query.exec(LS("VACUUM;"));
+}
+
+
 void PreviewDB::save(const ChatId &id, const QUrl &url)
 {
   QSqlQuery query(QSqlDatabase::database(m_id));
