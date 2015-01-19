@@ -1,6 +1,5 @@
-/* $Id: FindWidget.cpp 3107 2012-09-20 23:19:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -43,6 +42,7 @@ FindWidget::FindWidget(QWidget *parent)
   m_editFind = new SLineEdit(this);
   m_editFind->addWidget(label, LineEdit::LeftSide);
   m_editFind->setWidgetSpacing(3);
+  m_editFind->installEventFilter(this);
 
   m_toolBar->addWidget(m_editFind);
   m_previous = m_toolBar->addAction(QIcon(LS(":/images/find_previous.png")), tr("Previous"));
@@ -125,7 +125,7 @@ void FindWidget::actionTriggered(QAction *action)
 
 bool FindWidget::eventFilter(QObject *watched, QEvent *event)
 {
-  if (event->type() == QEvent::KeyPress) {
+  if (watched == this && event->type() == QEvent::KeyPress) {
     QKeyEvent *e = static_cast<QKeyEvent*>(event);
 
     if (e->matches(QKeySequence::Find) || e->matches(QKeySequence::FindNext)) {
@@ -142,6 +142,14 @@ bool FindWidget::eventFilter(QObject *watched, QEvent *event)
 
       ChatNotify::start(Notify::SetSendFocus);
       return true;
+    }
+  }
+  else if (watched == m_editFind && event->type() == QEvent::KeyPress) {
+    if (static_cast<QKeyEvent*>(event)->matches(QKeySequence::Copy)) {
+      if (!m_editFind->hasSelectedText()) {
+        ChatNotify::start(Notify::CopyRequest);
+        return true;
+      }
     }
   }
 

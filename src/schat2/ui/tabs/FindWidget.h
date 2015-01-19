@@ -1,6 +1,5 @@
-/* $Id: FindWidget.h 3107 2012-09-20 23:19:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,6 +19,8 @@
 #define FINDWIDGET_H_
 
 #include <QFrame>
+
+#include "schat.h"
 
 class QToolBar;
 class SLineEdit;
@@ -42,13 +43,13 @@ public slots:
   void setFocus();
 
 protected:
-  void changeEvent(QEvent *event);
+  void changeEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
   void actionTriggered(QAction *action);
 
 private:
-  bool eventFilter(QObject *watched, QEvent *event);
+  bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
   void retranslateUi();
 
   QAction *m_close;      ///< Кнопка закрытия виджета.
