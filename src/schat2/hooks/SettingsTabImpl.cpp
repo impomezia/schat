@@ -80,7 +80,7 @@ void ProfilePage::onAutoRunClicked(bool checked)
     QStringList args = QApplication::arguments();
     args.takeFirst();
 
-    reg.setValue(LS("Simple Chat 2"), QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS(" -hide ") + args.join(LC(' ')));
+    reg.setValue(LS("Simple Chat 2"), QDir::toNativeSeparators(QApplication::applicationFilePath()) + LS(" -hide ") + args.join(LS(" ")));
   }
   else
     reg.remove(LS("Simple Chat 2"));
