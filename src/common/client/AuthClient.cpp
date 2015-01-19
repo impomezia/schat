@@ -1,6 +1,5 @@
-/* $Id: AuthClient.cpp 3707 2013-06-23 22:38:01Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -126,6 +125,11 @@ void AuthClient::getState()
  */
 void AuthClient::providersReady()
 {
+  Q_ASSERT(m_reply);
+
+  if (!m_reply)
+    return;
+
   if (m_reply->error())
     return setError(m_reply->error());
 

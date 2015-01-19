@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -36,7 +36,6 @@ class ChatWindow : public QMainWindow
 
 public:
   ChatWindow(QWidget *parent = 0);
-  ~ChatWindow();
 
 signals:
   void restartRequest();
@@ -72,7 +71,6 @@ private:
   void stylize();
 
   ChatSettings *m_settings;  ///< Настройки.
-  QDesktopWidget *m_desktop; ///< Виджет для определения геометрии экрана.
   QTime m_activationChanged; ///< Время когда была изменена видимость окна.
   QVBoxLayout *m_mainLay;    ///< Основной компоновщик.
   QWidget *m_central;        ///< Центральный виджет.
