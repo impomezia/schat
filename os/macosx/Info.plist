@@ -21,7 +21,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>me.schat</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2008-2014, Alexander Sedov.</string>
+	<string>Copyright © 2008-2015, Alexander Sedov.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>

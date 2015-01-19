@@ -1,6 +1,5 @@
-# $Id: client.pro 3560 2013-03-05 21:43:23Z IMPOMEZIA $
-# IMPOMEZIA Simple Chat
-# Copyright (c) 2008-2013 IMPOMEZIA <schat@impomezia.com>
+# Simple Chat
+# Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -24,6 +23,7 @@ win32:RC_FILE = client.rc
 unix {
   macx {
     target.path += ../../out/SimpleChat2.app/Contents/Frameworks/
+    LIBS += -framework CoreServices
   } else {
     include(../common/prefix.pri)
 
