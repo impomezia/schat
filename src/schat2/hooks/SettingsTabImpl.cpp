@@ -99,7 +99,7 @@ bool ProfilePage::isAutoRun() const
   QStringList args = QApplication::arguments();
   args.takeFirst();
 
-  return QApplication::applicationFilePath() + LS(" -hide ") + args.join(LC(' ')) == QDir::fromNativeSeparators(value);
+  return QApplication::applicationFilePath() + LS(" -hide ") + args.join(LS(" ")) == QDir::fromNativeSeparators(value);
 }
 
 
