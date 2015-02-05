@@ -126,6 +126,7 @@
   <file>images/trash.png</file>
   <file>js/about.js</file>
   <file>js/ChatView.js</file>
+  <file>js/hogan.js</file>
   <file>js/PluginsView.js</file>
   <file>js/server.js</file>
   <file>js/user.js</file>
