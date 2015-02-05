@@ -274,7 +274,8 @@ var History = {
 
 if (typeof HistoryView === 'undefined') {
   HistoryView = {
-    isAutoLoad: function(id) { return true; }
+    isAutoLoad: function(id)   { return true; },
+    filter: function(id, text) { return text; }
   }
 }
 else {

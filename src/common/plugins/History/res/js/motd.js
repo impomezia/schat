@@ -65,7 +65,10 @@
 
     ui.messages.innerHTML = template.render({
       title: Utils.tr('history_motd_title'),
-      messages: messages
+      messages: messages.map(function(item) {
+        item.text = HistoryView.filter(item.id, item.text);
+        return item;
+      })
     });
 
     function notEmpty(element) {

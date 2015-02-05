@@ -35,6 +35,7 @@ public:
   HistoryChatView(QObject *parent = 0);
   ~HistoryChatView();
   Q_INVOKABLE bool isAutoLoad(const QString &id) const;
+  Q_INVOKABLE QString filter(const QString &id, const QString &text) const;
 
   bool contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result) Q_DECL_OVERRIDE;
   void add(ChatView *view) Q_DECL_OVERRIDE;

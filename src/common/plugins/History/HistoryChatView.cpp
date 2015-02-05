@@ -34,6 +34,7 @@
 #include "hooks/ChatViewHooks.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
+#include "text/TokenFilter.h"
 #include "ui/ChatIcons.h"
 #include "ui/tabs/ChatView.h"
 
@@ -66,6 +67,12 @@ bool HistoryChatView::isAutoLoad(const QString &id) const
     return false;
 
   return true;
+}
+
+
+QString HistoryChatView::filter(const QString &id, const QString &text) const
+{
+  return TokenFilter::filter(LS("channel"), text, 0);
 }
 
 

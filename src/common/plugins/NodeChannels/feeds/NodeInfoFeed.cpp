@@ -111,6 +111,7 @@ FeedReply NodeInfoFeed::post(const QString &path, const QVariantMap &json, Chann
       return Notice::BadRequest;
 
     QVariantList list = m_data.value(path).toList();
+    list.removeAll(value.toString());
     list.prepend(value.toString());
 
     m_data.insert(path, list);
