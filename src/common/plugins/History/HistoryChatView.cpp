@@ -72,6 +72,8 @@ bool HistoryChatView::isAutoLoad(const QString &id) const
 
 QString HistoryChatView::filter(const QString &id, const QString &text) const
 {
+  Q_UNUSED(id);
+
   return TokenFilter::filter(LS("channel"), text, 0);
 }
 
@@ -184,7 +186,7 @@ void HistoryChatView::pin()
   if (data.size() < 2)
     return;
 
-  ClientFeeds::post(data.at(0).toByteArray(), FEED_NAME_INFO + "/motd", data.at(1).toString(), Feed::Share | Feed::ShareAll);
+  ClientFeeds::post(data.at(0).toByteArray(), FEED_NAME_INFO + "/motd", data.at(1).toString(), Feed::Share | Feed::Broadcast | Feed::ShareAll);
 }
 
 

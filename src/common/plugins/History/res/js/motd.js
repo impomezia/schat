@@ -10,12 +10,15 @@
   });
 
   var ui = {
+    counter: document.createElement('div'),
     messages: document.createElement('div')
   };
 
   ui.messages.id = 'motd-messages';
+  ui.counter.id  = 'motd-counter';
+  ui.counter.textContent = '0';
+  document.getElementById('page-switcher-end').appendChild(ui.counter);
   document.getElementById('page-body').appendChild(ui.messages);
-
 
   if (typeof ChatView !== 'undefined') {
     ChatView.feed.connect(onFeed);
@@ -57,6 +60,7 @@
 
   function render(messages) {
     messages = messages.filter(notEmpty);
+    ui.counter.textContent = messages.length;
 
     if (!template || !messages.length) {
       ui.messages.innerHTML= '';

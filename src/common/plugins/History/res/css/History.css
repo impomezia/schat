@@ -197,3 +197,25 @@ ol, ul {
 .panel .list-group-item:first-child {
   border-top: 0;
 }
+
+#motd-counter {
+  margin: 45px 2px 0 2px;
+  border-top: 1px solid #d9d9d9;
+  padding: 4px 0;
+}
+
+#page-switcher-end.active {
+  -webkit-animation: pulse 2s infinite linear;
+}
+
+#page-switcher-end.active:hover {
+  -webkit-animation: none;
+}
+
+
+@-webkit-keyframes pulse {
+  50% {
+    background-color: #427fed;
+    opacity: .9;
+  }
+}
