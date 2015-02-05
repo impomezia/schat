@@ -1,6 +1,5 @@
-/* $Id: NodeInfoFeed.cpp 3735 2013-07-07 23:38:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -67,7 +66,24 @@ FeedReply NodeInfoFeed::del(const QString &path, Channel *channel, const QByteAr
 {
   Q_UNUSED(blob)
 
-  if (!can(channel, Acl::Edit))
+  const bool owner     = can(channel, Acl::Edit);
+  const bool moderator = can(channel, Acl::SpecialWrite);
+  if (!owner && !moderator)
+    return Notice::Forbidden;
+
+  if (path.startsWith(INFO_FEED_MOTD_KEY + LS("/"))) {
+    ChatId id(path.mid(5));
+    if (id.type() != ChatId::MessageId)
+      return Notice::BadRequest;
+
+    QVariantList list = m_data.value(INFO_FEED_MOTD_KEY).toList();
+    list.removeAll(id.toString());
+
+    m_data.insert(INFO_FEED_MOTD_KEY, list);
+    return FeedReply(Notice::OK, DateTime::utc());
+  }
+
+  if (!owner)
     return Notice::Forbidden;
 
   return Feed::del(path, channel);
@@ -78,7 +94,9 @@ FeedReply NodeInfoFeed::post(const QString &path, const QVariantMap &json, Chann
 {
   Q_UNUSED(blob)
 
-  if (!can(channel, Acl::Edit))
+  const bool owner     = can(channel, Acl::Edit);
+  const bool moderator = can(channel, Acl::SpecialWrite);
+  if (!owner && !moderator)
     return Notice::Forbidden;
 
   if (!channel || path.isEmpty() || path.contains(FEED_WILDCARD_ASTERISK) || !json.contains(FEED_KEY_VALUE))
@@ -86,6 +104,21 @@ FeedReply NodeInfoFeed::post(const QString &path, const QVariantMap &json, Chann
 
   const QVariant& value = json[FEED_KEY_VALUE];
   const qint64 date = DateTime::utc();
+
+  if (path == INFO_FEED_MOTD_KEY) {
+    ChatId id(value.toString());
+    if (id.type() != ChatId::MessageId)
+      return Notice::BadRequest;
+
+    QVariantList list = m_data.value(path).toList();
+    list.prepend(value.toString());
+
+    m_data.insert(path, list);
+    return FeedReply(Notice::OK, date);
+  }
+
+  if (!owner)
+    return Notice::Forbidden;
 
   // Установка текстового заголовка канала.
   if (path == INFO_FEED_TITLE_KEY) {

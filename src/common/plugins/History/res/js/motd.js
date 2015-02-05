@@ -36,7 +36,7 @@
       return;
     }
 
-    if (json.feed == FEED_NAME_INFO) {
+    if (json.feed == FEED_NAME_INFO && json.cmd == 'get') {
       onInfo(json.data, json.status);
     }
     else if (json.name == 'messages/fetch' && json.data.format == 'motd') {

@@ -185,8 +185,11 @@ FeedReply NodeMessagesFeed::fetch(const QVariantMap &json, Channel *user) const
     QVariantList messages;
 
     foreach (const MessageRecordV2 &record, records) {
+      ChatId id = record.oid;
+      id.setDate(record.mdate);
+
       QVariantMap data;
-      data.insert(LS("id"), record.oid.toString());
+      data.insert(LS("id"), id.toString());
       data.insert(LS("text"), record.text);
 
       messages.append(data);
