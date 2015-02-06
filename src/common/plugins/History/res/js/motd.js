@@ -27,6 +27,8 @@
     ChatView.feed.connect(onFeed);
   }
 
+  onInfo(SimpleChat.feed(Settings.getId(), FEED_NAME_INFO, 4), 300);
+
 
   Pages.onInfo.push(function() {
     if (Pages.current != 1) {
@@ -68,7 +70,8 @@
       return;
     }
 
-    if (Pages.current != 1 && cacheTag !== tag) {
+    messages = messages.filter(function(message) { return !!message.text; });
+    if (Pages.current != 1 && cacheTag !== tag && messages.length) {
       $(ui.switcher).addClass('active');
     }
 
@@ -76,7 +79,6 @@
     cacheTag = tag;
     HistoryView.setTag(Settings.getId(), tag);
 
-    messages = messages.filter(function(message) { return !!message.text; });
     ui.counter.textContent = messages.length;
 
     if (!template || !messages.length) {
