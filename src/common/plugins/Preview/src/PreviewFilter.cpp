@@ -35,6 +35,9 @@ PreviewFilter::PreviewFilter(PreviewCore *core)
 
 bool PreviewFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
+  if (id.isNull())
+    return false;
+
   QList<QUrl> urls;
 
   for (int i = 0; i < tokens.size(); ++i) {

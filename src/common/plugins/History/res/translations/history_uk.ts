@@ -21,9 +21,21 @@
 <context>
     <name>HistoryChatView</name>
     <message>
-        <location filename="../../HistoryChatView.cpp" line="132"/>
-        <location filename="../../HistoryChatView.cpp" line="275"/>
+        <location filename="../../HistoryChatView.cpp" line="175"/>
+        <location filename="../../HistoryChatView.cpp" line="359"/>
         <source>Remove message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../HistoryChatView.cpp" line="178"/>
+        <location filename="../../HistoryChatView.cpp" line="347"/>
+        <source>Pin message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../HistoryChatView.cpp" line="181"/>
+        <location filename="../../HistoryChatView.cpp" line="371"/>
+        <source>Unpin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -38,13 +50,18 @@
 <context>
     <name>ProfilePluginTr</name>
     <message>
-        <location filename="../../HistoryPlugin.cpp" line="59"/>
+        <location filename="../../HistoryPlugin.cpp" line="58"/>
         <source>Loading messages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../HistoryPlugin.cpp" line="60"/>
+        <location filename="../../HistoryPlugin.cpp" line="59"/>
         <source>More messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../HistoryPlugin.cpp" line="60"/>
+        <source>Pinned messages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

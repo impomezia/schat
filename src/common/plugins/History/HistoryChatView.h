@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -35,6 +35,10 @@ public:
   HistoryChatView(QObject *parent = 0);
   ~HistoryChatView();
   Q_INVOKABLE bool isAutoLoad(const QString &id) const;
+  Q_INVOKABLE QString filter(const QString &id, const QString &text) const;
+  Q_INVOKABLE QString genTag(const QStringList &messages) const;
+  Q_INVOKABLE QString getTag(const QString &channel) const;
+  Q_INVOKABLE void setTag(const QString &channel, const QString &tag) const;
 
   bool contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result) Q_DECL_OVERRIDE;
   void add(ChatView *view) Q_DECL_OVERRIDE;
@@ -47,10 +51,12 @@ signals:
 
 private slots:
   void notify(const Notify &notify);
+  void pin();
   void ready();
   void remove();
   void settingsChanged(const QString &key, const QVariant &value);
   void synced();
+  void unpin();
 
 private:
   /// Опции редактирования сообщений.
@@ -76,11 +82,16 @@ private:
   bool compatible(const QByteArray &id) const;
   bool sync(const QByteArray &id, qint64 date = 0);
   int permissions(const MessageRecord &record) const;
+  QAction *pinAction(const QVariant &data);
   QAction *removeAction(const QVariant &data);
+  QAction *unpinAction(const QVariant &data);
   void emulateLast(const QByteArray &channelId, const QList<QByteArray> &ids);
+  void unpin(ChatView *view, QMenu *menu, const QString &messageId);
 
   bool m_autoLoad;   ///< Опция SETTINGS_HISTORY_AUTO_LOAD.
+  QAction *m_pin;
   QAction *m_remove; ///< Удаление сообщения.
+  QAction *m_unpin;
 };
 
 #endif /* HISTORYCHATVIEW_H_ */

@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -173,10 +173,36 @@ FeedReply NodeMessagesFeed::fetch(const QVariantMap &json, Channel *user) const
   if (records.isEmpty())
     return FeedReply(Notice::NotFound);
 
-  FeedReply reply(Notice::OK);
-  toPackets(reply.packets, records, json.value(MESSAGES_FEED_V_KEY).toInt());
+  const QString format = json.value(MESSAGES_FEED_FORMAT_KEY).toString();
 
-  reply.json[MESSAGES_FEED_COUNT_KEY] = reply.packets.size();
+  FeedReply reply(Notice::OK);
+
+  if (format.isEmpty()) {
+    toPackets(reply.packets, records, json.value(MESSAGES_FEED_V_KEY).toInt());
+    reply.json[MESSAGES_FEED_COUNT_KEY] = reply.packets.size();
+  }
+  else if (format == LS("motd")) {
+    QVariantList messages;
+
+    foreach (const MessageRecordV2 &record, records) {
+      ChatId id = record.oid;
+      id.setDate(record.mdate);
+
+      QVariantMap data;
+      data.insert(LS("id"), id.toString());
+      data.insert(LS("text"), record.text);
+
+      messages.append(data);
+    }
+
+    reply.json.insert(MESSAGES_FEED_MESSAGES_KEY, messages);
+    reply.json.insert(MESSAGES_FEED_COUNT_KEY,    records.size());
+    reply.json.insert(MESSAGES_FEED_FORMAT_KEY,   format);
+  }
+  else {
+    return Notice::BadRequest;
+  }
+
   return reply;
 }
 

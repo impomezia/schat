@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -142,6 +142,20 @@ MessageRecord HistoryDB::get(const ChatId &id)
 }
 
 
+QString HistoryDB::getValue(const QString &key)
+{
+  QSqlQuery query(QSqlDatabase::database(m_id));
+  query.prepare(LS("SELECT value FROM storage WHERE id = :id LIMIT 1;"));
+  query.bindValue(LS(":id"), key);
+  query.exec();
+
+  if (query.first())
+    return query.value(0).toString();
+
+  return QString();
+}
+
+
 /*!
  * Получение идентификатора последних сообщений.
  */
@@ -191,6 +205,8 @@ void HistoryDB::clear()
 {
   QSqlQuery query(QSqlDatabase::database(m_id));
   query.exec("DROP TABLE IF EXISTS messages;");
+  query.exec("DROP TABLE IF EXISTS last;");
+  query.exec("DROP TABLE IF EXISTS storage;");
   query.exec("VACUUM;");
 
   create();
@@ -204,6 +220,18 @@ void HistoryDB::close()
 {
   QSqlDatabase::removeDatabase(m_id);
   m_id.clear();
+}
+
+
+void HistoryDB::setValue(const QString &key, const QString &value)
+{
+  QSqlQuery query(QSqlDatabase::database(m_id));
+
+  query.prepare(LS("INSERT OR REPLACE INTO storage (id, value) VALUES (:id, :value);"));
+  query.bindValue(LS(":id"), key);
+  query.bindValue(LS(":value"), value);
+
+  query.exec();
 }
 
 
@@ -241,6 +269,13 @@ void HistoryDB::create()
     "  channel    BLOB    NOT NULL UNIQUE,"
     "  tag        BLOB,"
     "  data       BLOB"
+    ");"
+  ));
+
+  query.exec(LS(
+    "CREATE TABLE IF NOT EXISTS storage ( "
+    "  id         TEXT PRIMARY KEY,"
+    "  value      TEXT"
     ");"
   ));
 

@@ -2,7 +2,6 @@
 <qresource prefix="/">
   <file alias="css/about.css">html/css/about.min.css</file>
   <file alias="css/channel.css">html/css/channel.min.css</file>
-  <file alias="css/ChatView.css">html/css/ChatView.min.css</file>
   <file alias="css/input.css">html/css/input.css</file>
   <file alias="css/PluginsView.css">html/css/PluginsView.min.css</file>
   <file alias="css/server.css">html/css/server.min.css</file>
@@ -82,6 +81,7 @@
   <file alias="js/jquery.timeago.en.js">html/js/jquery.timeago.en.min.js</file>
   <file alias="js/jquery.timeago.js">html/js/jquery.timeago.min.js</file>
   <file alias="js/jquery.timeago.ru.js">html/js/jquery.timeago.ru.min.js</file>
+  <file>css/ChatView.css</file>
   <file>html/about.html</file>
   <file>html/Channel.html</file>
   <file>html/Plugins.html</file>
@@ -126,6 +126,7 @@
   <file>images/trash.png</file>
   <file>js/about.js</file>
   <file>js/ChatView.js</file>
+  <file>js/hogan.js</file>
   <file>js/PluginsView.js</file>
   <file>js/server.js</file>
   <file>js/user.js</file>

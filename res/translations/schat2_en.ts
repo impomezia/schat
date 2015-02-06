@@ -51,7 +51,7 @@
 <context>
     <name>AlertsPage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="159"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="168"/>
         <source>Notifications</source>
         <translation type="unfinished"></translation>
     </message>
@@ -222,6 +222,14 @@
     </message>
 </context>
 <context>
+    <name>CommandsImpl</name>
+    <message>
+        <location filename="../../src/schat2/hooks/CommandsImpl.cpp" line="79"/>
+        <source>Usage: &lt;b&gt;/cache clear&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogFrame</name>
     <message>
         <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="54"/>
@@ -234,19 +242,19 @@
     <name>FindWidget</name>
     <message>
         <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="48"/>
-        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="155"/>
+        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="163"/>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="49"/>
-        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="154"/>
+        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="162"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="51"/>
-        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="156"/>
+        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="164"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -320,7 +328,7 @@
 <context>
     <name>Hooks::CommandsImpl</name>
     <message>
-        <location filename="../../src/schat2/hooks/CommandsImpl.cpp" line="181"/>
+        <location filename="../../src/schat2/hooks/CommandsImpl.cpp" line="187"/>
         <source>Latency time: &lt;b style=&apos;color:#%1&apos;&gt;%2 ms&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -385,7 +393,7 @@
 <context>
     <name>LocalePage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="188"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="197"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -442,7 +450,7 @@
 <context>
     <name>NetworkPage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="133"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="142"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
@@ -534,22 +542,22 @@
 <context>
     <name>ProfilePage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="99"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="108"/>
         <source>Profile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="102"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="111"/>
         <source>Nick:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="103"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="112"/>
         <source>Gender:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="108"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="117"/>
         <source>Run at Windows start up</source>
         <translation type="unfinished"></translation>
     </message>
@@ -847,17 +855,17 @@
 <context>
     <name>TabWidget</name>
     <message>
-        <location filename="../../src/schat2/ui/TabWidget.cpp" line="470"/>
+        <location filename="../../src/schat2/ui/TabWidget.cpp" line="478"/>
         <source>Pin tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/TabWidget.cpp" line="476"/>
+        <location filename="../../src/schat2/ui/TabWidget.cpp" line="484"/>
         <source>Close tab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/TabWidget.cpp" line="788"/>
+        <location filename="../../src/schat2/ui/TabWidget.cpp" line="796"/>
         <source>Connecting</source>
         <translation type="unfinished"></translation>
     </message>
