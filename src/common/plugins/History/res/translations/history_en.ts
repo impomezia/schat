@@ -22,6 +22,14 @@
         <source>Remove message</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pin message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unpin</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HistorySettings</name>
@@ -38,6 +46,10 @@
     </message>
     <message>
         <source>More messages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pinned messages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
