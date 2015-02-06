@@ -2,6 +2,8 @@
   'use strict';
 
   var template = null;
+  var rendered = false;
+  var cacheTag = HistoryView.getTag(Settings.getId());
 
   Loader.loadTpl('qrc:/js/History/motd.mustache', function(err, tpl) {
     if (!err) {
@@ -10,14 +12,15 @@
   });
 
   var ui = {
-    counter: document.createElement('div'),
+    switcher: document.getElementById('page-switcher-end'),
+    counter:  document.createElement('div'),
     messages: document.createElement('div')
   };
 
   ui.messages.id = 'motd-messages';
   ui.counter.id  = 'motd-counter';
   ui.counter.textContent = '0';
-  document.getElementById('page-switcher-end').appendChild(ui.counter);
+  ui.switcher.appendChild(ui.counter);
   document.getElementById('page-body').appendChild(ui.messages);
 
   if (typeof ChatView !== 'undefined') {
@@ -30,6 +33,7 @@
       return;
     }
 
+    $(ui.switcher).removeClass('active');
     onInfo(SimpleChat.feed(Settings.getId(), FEED_NAME_INFO, 3), 300);
   });
 
@@ -59,7 +63,20 @@
 
 
   function render(messages) {
-    messages = messages.filter(notEmpty);
+    var tag = HistoryView.genTag(messages.map(function(message) { return message.id }));
+    if (rendered && cacheTag === tag) {
+      return;
+    }
+
+    if (Pages.current != 1 && cacheTag !== tag) {
+      $(ui.switcher).addClass('active');
+    }
+
+    rendered = true;
+    cacheTag = tag;
+    HistoryView.setTag(Settings.getId(), tag);
+
+    messages = messages.filter(function(message) { return !!message.text; });
     ui.counter.textContent = messages.length;
 
     if (!template || !messages.length) {
@@ -74,9 +91,5 @@
         return item;
       })
     });
-
-    function notEmpty(element) {
-      return !!element.text;
-    }
   }
 })();

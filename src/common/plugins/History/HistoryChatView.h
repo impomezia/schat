@@ -36,6 +36,9 @@ public:
   ~HistoryChatView();
   Q_INVOKABLE bool isAutoLoad(const QString &id) const;
   Q_INVOKABLE QString filter(const QString &id, const QString &text) const;
+  Q_INVOKABLE QString genTag(const QStringList &messages) const;
+  Q_INVOKABLE QString getTag(const QString &channel) const;
+  Q_INVOKABLE void setTag(const QString &channel, const QString &tag) const;
 
   bool contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result) Q_DECL_OVERRIDE;
   void add(ChatView *view) Q_DECL_OVERRIDE;

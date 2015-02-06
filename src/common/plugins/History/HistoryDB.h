@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -42,11 +42,13 @@ public:
   static int status(int status);
   static MessageRecord get(const ChatId &id);
   static QList<QByteArray> last(const QByteArray &channelId);
+  static QString getValue(const QString &key);
   static QString tag(const QByteArray &channelId);
   static void add(const QByteArray &channelId, const QStringList &messages);
   static void add(MessagePacket packet);
   static void clear();
   static void close();
+  static void setValue(const QString &key, const QString &value);
 
 private slots:
   void startTasks();

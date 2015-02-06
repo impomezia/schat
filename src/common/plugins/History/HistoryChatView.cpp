@@ -70,11 +70,30 @@ bool HistoryChatView::isAutoLoad(const QString &id) const
 }
 
 
+
 QString HistoryChatView::filter(const QString &id, const QString &text) const
 {
   Q_UNUSED(id);
 
   return TokenFilter::filter(LS("channel"), text, 0);
+}
+
+
+QString HistoryChatView::genTag(const QStringList &messages) const
+{
+  return MessageNotice::toTag(messages);
+}
+
+
+QString HistoryChatView::getTag(const QString &channel) const
+{
+  return HistoryDB::getValue(channel);
+}
+
+
+void HistoryChatView::setTag(const QString &channel, const QString &tag) const
+{
+  HistoryDB::setValue(channel, tag);
 }
 
 
