@@ -7,12 +7,12 @@
     <message>
         <location filename="../../IdleSettings.cpp" line="69"/>
         <source>Away after</source>
-        <translation type="unfinished"></translation>
+        <translation>Рахувати відсутнім через</translation>
     </message>
     <message>
         <location filename="../../IdleSettings.cpp" line="70"/>
         <source>min</source>
-        <translation type="unfinished"></translation>
+        <translation>хвилин</translation>
     </message>
 </context>
 </TS>

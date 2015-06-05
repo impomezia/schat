@@ -7,7 +7,7 @@
     <message>
         <location filename="../../SendFilePlugin.cpp" line="106"/>
         <source>Incoming file</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідний файл</translation>
     </message>
 </context>
 <context>
@@ -15,7 +15,7 @@
     <message>
         <location filename="../../SendFileAction.cpp" line="60"/>
         <source>Send file</source>
-        <translation type="unfinished"></translation>
+        <translation>Надіслати файл</translation>
     </message>
 </context>
 <context>
@@ -23,22 +23,22 @@
     <message>
         <location filename="../../SendFilePage.cpp" line="75"/>
         <source>File transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Передача файлів</translation>
     </message>
     <message>
         <location filename="../../SendFilePage.cpp" line="76"/>
         <source>Use port</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати порт</translation>
     </message>
     <message>
         <location filename="../../SendFilePage.cpp" line="77"/>
         <source>for file transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>для передачі файлів</translation>
     </message>
     <message>
         <location filename="../../SendFilePage.cpp" line="78"/>
         <source>Your changes will be applied the next time you start Simple Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваші налаштування будуть застосовані при наступному запуску Simple Chat</translation>
     </message>
 </context>
 <context>
@@ -46,23 +46,23 @@
     <message>
         <location filename="../../SendFilePlugin.cpp" line="157"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="321"/>
         <location filename="../../SendFilePlugin.cpp" line="395"/>
         <source>%1 of %2</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 з %2</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="636"/>
         <source>Incoming file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Вхідний файл: %1</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="671"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
 </context>
 <context>
@@ -70,47 +70,47 @@
     <message>
         <location filename="../../SendFilePlugin.cpp" line="76"/>
         <source>Waiting</source>
-        <translation type="unfinished"></translation>
+        <translation>Чекаю</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="77"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="78"/>
         <source>Cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Відмінено</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="79"/>
         <source>Save as</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти як</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="80"/>
         <source>Connecting...</source>
-        <translation type="unfinished"></translation>
+        <translation>З&apos;єднуюсь...</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="81"/>
         <source>File sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Відсилка файлу</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="82"/>
         <source>File received.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл передано.</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="83"/>
         <source>Show in folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати у папці</translation>
     </message>
     <message>
         <location filename="../../SendFilePlugin.cpp" line="84"/>
         <source>Open file</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити файл</translation>
     </message>
 </context>
 </TS>
