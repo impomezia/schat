@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,17 +33,16 @@ public:
     QVariantMap out            = CoreApi::header();
     out[CORE_API_ID]           = "YouTube";
     out[CORE_API_NAME]         = "YouTube";
-    out[CORE_API_VERSION]      = "2.3.0";
+    out[CORE_API_VERSION]      = "2.3.4";
     out[CORE_API_SITE]         = "https://wiki.schat.me/Plugin/YouTube";
-    out[CORE_API_DESC]         = "Adds support for embedding YouTube videos in messages";
-    out[CORE_API_DESC_RU]      = "Добавляет поддержку встраивания видео c YouTube в сообщения";
-    out[CORE_API_CONFIGURABLE] = true;
+    out[CORE_API_DESC]         = "Adds support for preview YouTube videos in messages";
+    out[CORE_API_DESC_RU]      = "Добавляет поддержку предпросмотра видео с YouTube в сообщения";
+    out[CORE_API_CONFIGURABLE] = false;
 
     return out;
   }
 
   ChatPlugin *create() Q_DECL_OVERRIDE;
-  QWidget *settings(QWidget *parent) Q_DECL_OVERRIDE;
 };
 
 #endif /* YOUTUBEPLUGIN_H_ */

@@ -30,11 +30,6 @@ public:
   YouTubePluginImpl(QObject *parent);
   void chatReady() Q_DECL_OVERRIDE;
 
-private slots:
-  void settingsChanged(const QString &key, const QVariant &value);
-
-private:
-  const QString m_key;
 };
 
 #endif /* YOUTUBEPLUGIN_P_H_ */
