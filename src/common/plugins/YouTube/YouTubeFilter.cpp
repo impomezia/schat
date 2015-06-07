@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
 
 YouTubeFilter::YouTubeFilter()
 {
-  m_hosts << LS("www.youtube.com") << LS("youtu.be");
 }
 
 
@@ -38,11 +37,16 @@ bool YouTubeFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 
       const QString u = tag.url.replace(LS("&amp;"), LS("&"));
       const QUrl url(u);
-      if (!m_hosts.contains(url.host()))
-        continue;
 
-      const QString vid = QUrlQuery(url).queryItemValue(LS("v"));
-      if (vid.size() != 11)
+      QString vid;
+      if (url.host() == LS("www.youtube.com")) {
+        vid = QUrlQuery(url).queryItemValue(LS("v"));
+      }
+      else if (url.host() == LS("youtu.be")) {
+        vid = url.path().remove(0, 1);
+      }
+
+      if (vid.isEmpty())
         continue;
 
       tag.classes += LS("youtube");
