@@ -7,7 +7,7 @@
     <message>
         <location filename="../../YouTubeSettings.cpp" line="61"/>
         <source>Embed video</source>
-        <translation type="unfinished"></translation>
+        <translation>Вбудувати відео</translation>
     </message>
 </context>
 </TS>

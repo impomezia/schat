@@ -7,43 +7,43 @@
     <message>
         <location filename="../../ProxySettings.cpp" line="211"/>
         <source>Connect via proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>З&apos;єднуватись через проксі</translation>
     </message>
     <message>
         <location filename="../../ProxySettings.cpp" line="212"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип:</translation>
     </message>
     <message>
         <location filename="../../ProxySettings.cpp" line="213"/>
         <source>Address:</source>
-        <translation type="unfinished"></translation>
+        <translation>Адрес:</translation>
     </message>
     <message>
         <location filename="../../ProxySettings.cpp" line="214"/>
         <source>Port:</source>
-        <translation type="unfinished"></translation>
+        <translation>Порт:</translation>
     </message>
     <message>
         <location filename="../../ProxySettings.cpp" line="215"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Логін:</translation>
     </message>
     <message>
         <location filename="../../ProxySettings.cpp" line="216"/>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль:</translation>
     </message>
     <message>
         <location filename="../../ProxySettings.cpp" line="217"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати</translation>
     </message>
     <message>
         <location filename="../../ProxySettings.cpp" line="220"/>
         <location filename="../../ProxySettings.cpp" line="221"/>
         <source>Optional</source>
-        <translation type="unfinished"></translation>
+        <translation>Додатково</translation>
     </message>
 </context>
 </TS>

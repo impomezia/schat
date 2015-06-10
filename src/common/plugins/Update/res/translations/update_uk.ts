@@ -7,42 +7,42 @@
     <message>
         <location filename="../../UpdatePlugin.cpp" line="206"/>
         <source>Release Notes</source>
-        <translation type="unfinished"></translation>
+        <translation>Новини релізу</translation>
     </message>
     <message>
         <location filename="../../UpdatePlugin.cpp" line="212"/>
         <source>Download</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажити</translation>
     </message>
     <message>
         <location filename="../../UpdatePlugin.cpp" line="215"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Пауза</translation>
     </message>
     <message>
         <location filename="../../UpdatePlugin.cpp" line="218"/>
         <source>Resume</source>
-        <translation type="unfinished"></translation>
+        <translation>Продовжити</translation>
     </message>
     <message>
         <location filename="../../UpdatePlugin.cpp" line="259"/>
         <source>Downloading update</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантаження оновлення</translation>
     </message>
     <message>
         <location filename="../../UpdatePlugin.cpp" line="435"/>
         <source>Install Update Now</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановити оновлення зараз</translation>
     </message>
     <message>
         <location filename="../../UpdatePlugin.cpp" line="440"/>
         <source>Update Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка оновлення</translation>
     </message>
     <message>
         <location filename="../../UpdatePlugin.cpp" line="444"/>
         <source>Update Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступно оновлення</translation>
     </message>
 </context>
 <context>
@@ -50,12 +50,12 @@
     <message>
         <location filename="../../UpdateSettings.cpp" line="77"/>
         <source>Automatically download and install updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично завантажувати та встановлювати оновлення</translation>
     </message>
     <message>
         <location filename="../../UpdateSettings.cpp" line="78"/>
         <source>Update to beta versions</source>
-        <translation type="unfinished"></translation>
+        <translation>Оновлювати до бета-версій</translation>
     </message>
 </context>
 <context>
@@ -63,42 +63,42 @@
     <message>
         <location filename="../../UpdateWidget.cpp" line="56"/>
         <source>Checking for updates...</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевірка оновлень...</translation>
     </message>
     <message>
         <location filename="../../UpdateWidget.cpp" line="70"/>
         <source>An error occurred while checking for updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виникла помилка при перевірці оновлень.</translation>
     </message>
     <message>
         <location filename="../../UpdateWidget.cpp" line="75"/>
         <source>Simple Chat is up to date.</source>
-        <translation type="unfinished"></translation>
+        <translation>У вас остання версія Simple Chat.</translation>
     </message>
     <message>
         <location filename="../../UpdateWidget.cpp" line="81"/>
         <source>Downloading update...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантаження оновлень...</translation>
     </message>
     <message>
         <location filename="../../UpdateWidget.cpp" line="87"/>
         <source>New version of Simple Chat available. Version &lt;b&gt;%1&lt;/b&gt;, size &lt;b&gt;%2&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступна новіша версія Simple Chat. Версія &lt;b&gt;%1&lt;/b&gt;, розмір &lt;b&gt;%2&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../../UpdateWidget.cpp" line="89"/>
         <source>New version of Simple Chat available. Version &lt;b&gt;%1&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступна новіша версія Simple Chat. Версія &lt;b&gt;%1&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../../UpdateWidget.cpp" line="95"/>
         <source>An error occurred when downloading updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виникла помилка при завантажені оновленя.</translation>
     </message>
     <message>
         <location filename="../../UpdateWidget.cpp" line="100"/>
         <source>Update ready to install.</source>
-        <translation type="unfinished"></translation>
+        <translation>Оновлення готово до встановлення.</translation>
     </message>
 </context>
 </TS>

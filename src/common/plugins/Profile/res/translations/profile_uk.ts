@@ -8,7 +8,7 @@
         <location filename="../../CountryField.cpp" line="64"/>
         <location filename="../../CountryField.cpp" line="169"/>
         <source>Not selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Не обрано</translation>
     </message>
 </context>
 <context>
@@ -16,32 +16,32 @@
     <message>
         <location filename="../../ProfilePlugin.cpp" line="68"/>
         <source>Country</source>
-        <translation type="unfinished"></translation>
+        <translation>Країна</translation>
     </message>
     <message>
         <location filename="../../ProfilePlugin.cpp" line="69"/>
         <source>City</source>
-        <translation type="unfinished"></translation>
+        <translation>Місто</translation>
     </message>
     <message>
         <location filename="../../ProfilePlugin.cpp" line="70"/>
         <source>Site</source>
-        <translation type="unfinished"></translation>
+        <translation>Сайт</translation>
     </message>
     <message>
         <location filename="../../ProfilePlugin.cpp" line="71"/>
         <source>E-Mail</source>
-        <translation type="unfinished"></translation>
+        <translation>E-Mail</translation>
     </message>
     <message>
         <location filename="../../ProfilePlugin.cpp" line="72"/>
         <source>ISP</source>
-        <translation type="unfinished"></translation>
+        <translation>Провайдер</translation>
     </message>
     <message>
         <location filename="../../ProfilePlugin.cpp" line="73"/>
         <source>Time</source>
-        <translation type="unfinished"></translation>
+        <translation>Час</translation>
     </message>
 </context>
 </TS>

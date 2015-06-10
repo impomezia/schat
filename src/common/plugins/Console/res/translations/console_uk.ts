@@ -7,7 +7,7 @@
     <message>
         <location filename="../../ConsoleCmd.cpp" line="82"/>
         <source>Not enough rights, you must be a server administrator.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вистачає прав, ви повинні бути адміністратором сервера.</translation>
     </message>
 </context>
 <context>
@@ -15,7 +15,7 @@
     <message>
         <location filename="../../ConsolePlugin.cpp" line="109"/>
         <source>Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Консоль</translation>
     </message>
 </context>
 <context>
@@ -23,7 +23,7 @@
     <message>
         <location filename="../../ui/ConsoleTab.cpp" line="53"/>
         <source>Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Консоль</translation>
     </message>
 </context>
 <context>
@@ -31,152 +31,152 @@
     <message>
         <location filename="../../ConsolePlugin.cpp" line="45"/>
         <source>Remote management is disabled by default for security reasons. &lt;a href=&apos;https://wiki.schat.me/How_to_enable_console&apos;&gt;How to enable?&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Дістанційне керування вимкнуто у цілях безпеки. &lt;a href=&apos;https://wiki.schat.me/How_to_enable_console&apos;&gt;Як включити?&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="46"/>
         <source>Password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль:</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="47"/>
         <source>Login</source>
-        <translation type="unfinished"></translation>
+        <translation>Логін</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="48"/>
         <source>Password cannot be empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль не повинен бути пустим</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="49"/>
         <source>You entered an incorrect password</source>
-        <translation type="unfinished"></translation>
+        <translation>Такий пароль не можна застосовувати</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="50"/>
         <source>Change password</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити пароль</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="51"/>
         <source>New password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Новий пароль:</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="52"/>
         <source>Confirm new password:</source>
-        <translation type="unfinished"></translation>
+        <translation>Повторити новий пароль:</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="53"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="54"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="55"/>
         <source>The passwords you entered don&apos;t match</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш паролі не співпадають</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="56"/>
         <source>Password is too short</source>
-        <translation type="unfinished"></translation>
+        <translation>Пароль дуже короткий</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="57"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>Додому</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="58"/>
         <source>Logout</source>
-        <translation type="unfinished"></translation>
+        <translation>Вийти</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="59"/>
         <source>Server Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва сервера</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="60"/>
         <source>About server</source>
-        <translation type="unfinished"></translation>
+        <translation>Про сервер</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="61"/>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва:</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="62"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Версія:</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="63"/>
         <source>Certificate has expired</source>
-        <translation type="unfinished"></translation>
+        <translation>Термін сертифікату збіг</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="64"/>
         <source>Users online</source>
-        <translation type="unfinished"></translation>
+        <translation>Користувачів у мережі</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="65"/>
         <source>Now:</source>
-        <translation type="unfinished"></translation>
+        <translation>Зараз:</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="66"/>
         <source>Peak:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пік:</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="67"/>
         <source>Registration</source>
-        <translation type="unfinished"></translation>
+        <translation>Реєстрація</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="68"/>
         <source>OAuth</source>
-        <translation type="unfinished"></translation>
+        <translation>OAuth</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="69"/>
         <source>Anonymous</source>
-        <translation type="unfinished"></translation>
+        <translation>Анонім</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="70"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Так</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="71"/>
         <source>Main channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Головна кімната</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="72"/>
         <source>Use main channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати головну кімнату</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="73"/>
         <source>Forced join to main channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Зразу підключатися у головну кімнату</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="74"/>
         <source>Disable leave from channel</source>
-        <translation type="unfinished"></translation>
+        <translation>Заборонити виходити із кімнати</translation>
     </message>
 </context>
 <context>
@@ -184,8 +184,8 @@
     <message numerus="yes">
         <location filename="../../ui/ConsoleView.cpp" line="48"/>
         <source>Certificate expires in %n days</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Сертифікат втратить чиннить через %n днів</numerusform>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
