@@ -202,7 +202,7 @@
         <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="289"/>
         <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="478"/>
         <source>Service messages</source>
-        <translation>Сервісне повідомлення</translation>
+        <translation>Системні повідомлення</translation>
     </message>
 </context>
 <context>
@@ -265,13 +265,13 @@
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="41"/>
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="147"/>
         <source>Male</source>
-        <translation>Чоловічий</translation>
+        <translation>Чоловік</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="42"/>
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="148"/>
         <source>Female</source>
-        <translation>Жіночий</translation>
+        <translation>Жінка</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="47"/>
@@ -1145,7 +1145,7 @@
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="94"/>
         <source>Sent:</source>
-        <translation>Відправити:</translation>
+        <translation>Відправлено:</translation>
     </message>
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="95"/>
