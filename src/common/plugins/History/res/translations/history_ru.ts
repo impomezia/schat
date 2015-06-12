@@ -22,6 +22,14 @@
         <source>Remove message</source>
         <translation>Удалить сообщение</translation>
     </message>
+    <message>
+        <source>Pin message</source>
+        <translation>Закрепить сообщение</translation>
+    </message>
+    <message>
+        <source>Unpin</source>
+        <translation>Удалить</translation>
+    </message>
 </context>
 <context>
     <name>HistorySettings</name>
@@ -39,6 +47,10 @@
     <message>
         <source>More messages</source>
         <translation>Больше сообщений</translation>
+    </message>
+    <message>
+        <source>Pinned messages</source>
+        <translation>Закреплённые сообщения</translation>
     </message>
 </context>
 </TS>

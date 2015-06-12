@@ -42,6 +42,7 @@ HEADERS += \
     interfaces/INetworkHandler.h \
     interfaces/INetworkListener.h \
     interfaces/IServiceTask.h \
+    interfaces/ITranslation.h \
     JSON.h \
     k8json/k8json.h \
     net/dns/ChatDNS.h \

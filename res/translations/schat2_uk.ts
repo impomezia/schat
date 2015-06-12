@@ -51,7 +51,7 @@
 <context>
     <name>AlertsPage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="159"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="168"/>
         <source>Notifications</source>
         <translation>Сповіщення</translation>
     </message>
@@ -100,27 +100,27 @@
     <message>
         <location filename="../../src/schat2/AuthBridge.cpp" line="58"/>
         <source>Authorization has been canceled by you. %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви відхилили авторізацію. %1</translation>
     </message>
     <message>
         <location filename="../../src/schat2/AuthBridge.cpp" line="102"/>
         <source>Access denied. %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступ заборонено. %1</translation>
     </message>
     <message>
         <location filename="../../src/schat2/AuthBridge.cpp" line="128"/>
         <source>You have successfully logged in using &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви увійшли використовуючи &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../src/schat2/AuthBridge.cpp" line="137"/>
         <source>Exceeded number of attempts to check authorization. %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви вичерпали кількість дозволених спроб авторізації. %1</translation>
     </message>
     <message>
         <location filename="../../src/schat2/AuthBridge.cpp" line="143"/>
         <source>Try again?</source>
-        <translation type="unfinished"></translation>
+        <translation>Спробувати ще?</translation>
     </message>
 </context>
 <context>
@@ -128,7 +128,7 @@
     <message>
         <location filename="../../src/schat2/ui/tabs/BackdropWidget.cpp" line="80"/>
         <source>Blur Effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефект розмиття</translation>
     </message>
 </context>
 <context>
@@ -178,7 +178,7 @@
         <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="285"/>
         <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="469"/>
         <source>Autoscroll</source>
-        <translation type="unfinished"></translation>
+        <translation>Автопрокрутка</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="286"/>
@@ -202,7 +202,7 @@
         <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="289"/>
         <location filename="../../src/schat2/ui/tabs/ChatView.cpp" line="478"/>
         <source>Service messages</source>
-        <translation>Сервісне повідомлення</translation>
+        <translation>Системні повідомлення</translation>
     </message>
 </context>
 <context>
@@ -222,31 +222,39 @@
     </message>
 </context>
 <context>
+    <name>CommandsImpl</name>
+    <message>
+        <location filename="../../src/schat2/hooks/CommandsImpl.cpp" line="79"/>
+        <source>Usage: &lt;b&gt;/cache clear&lt;/b&gt;</source>
+        <translation>Приклад: &lt;b&gt;/cache clear&lt;/b&gt;</translation>
+    </message>
+</context>
+<context>
     <name>DialogFrame</name>
     <message>
         <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="54"/>
         <location filename="../../src/schat2/ui/tabs/DialogFrame.cpp" line="112"/>
         <source>Close</source>
-        <translation type="unfinished">Закрити</translation>
+        <translation>Закрити</translation>
     </message>
 </context>
 <context>
     <name>FindWidget</name>
     <message>
         <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="48"/>
-        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="155"/>
+        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="163"/>
         <source>Previous</source>
         <translation>Знайти попередні</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="49"/>
-        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="154"/>
+        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="162"/>
         <source>Next</source>
         <translation>Знайти наступні</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="51"/>
-        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="156"/>
+        <location filename="../../src/schat2/ui/tabs/FindWidget.cpp" line="164"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
@@ -257,13 +265,13 @@
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="41"/>
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="147"/>
         <source>Male</source>
-        <translation>Чоловічий</translation>
+        <translation>Чоловік</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="42"/>
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="148"/>
         <source>Female</source>
-        <translation>Жіночий</translation>
+        <translation>Жінка</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/fields/GenderField.cpp" line="47"/>
@@ -311,7 +319,7 @@
 <context>
     <name>Hooks::CommandsImpl</name>
     <message>
-        <location filename="../../src/schat2/hooks/CommandsImpl.cpp" line="181"/>
+        <location filename="../../src/schat2/hooks/CommandsImpl.cpp" line="187"/>
         <source>Latency time: &lt;b style=&apos;color:#%1&apos;&gt;%2 ms&lt;/b&gt;</source>
         <translation>Час затримки: &lt;b style=&apos;color:#%1&apos;&gt;%2 мс&lt;/b&gt;</translation>
     </message>
@@ -376,7 +384,7 @@
 <context>
     <name>LocalePage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="188"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="197"/>
         <source>Language</source>
         <translation>Мова</translation>
     </message>
@@ -433,7 +441,7 @@
 <context>
     <name>NetworkPage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="133"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="142"/>
         <source>Network</source>
         <translation>Мережа</translation>
     </message>
@@ -525,24 +533,24 @@
 <context>
     <name>ProfilePage</name>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="99"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="108"/>
         <source>Profile</source>
         <translation>Профіль</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="102"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="111"/>
         <source>Nick:</source>
         <translation>Нік:</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="103"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="112"/>
         <source>Gender:</source>
         <translation>Стать:</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="108"/>
+        <location filename="../../src/schat2/hooks/SettingsTabImpl.cpp" line="117"/>
         <source>Run at Windows start up</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускати разом з Windows</translation>
     </message>
 </context>
 <context>
@@ -588,7 +596,7 @@
     <message>
         <location filename="../../src/schat2/ui/tabs/ProgressTab.cpp" line="54"/>
         <source>Starting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускаємо...</translation>
     </message>
 </context>
 <context>
@@ -795,7 +803,7 @@
     <message>
         <location filename="../../src/schat2/ui/StatusBar.cpp" line="230"/>
         <source>Starting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускаємо...</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/StatusBar.cpp" line="244"/>
@@ -844,19 +852,19 @@
 <context>
     <name>TabWidget</name>
     <message>
-        <location filename="../../src/schat2/ui/TabWidget.cpp" line="470"/>
+        <location filename="../../src/schat2/ui/TabWidget.cpp" line="478"/>
         <source>Pin tab</source>
         <translation>Закріпити</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/TabWidget.cpp" line="476"/>
+        <location filename="../../src/schat2/ui/TabWidget.cpp" line="484"/>
         <source>Close tab</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../../src/schat2/ui/TabWidget.cpp" line="788"/>
+        <location filename="../../src/schat2/ui/TabWidget.cpp" line="796"/>
         <source>Connecting</source>
-        <translation type="unfinished">З&apos;єднання</translation>
+        <translation>З&apos;єднання</translation>
     </message>
 </context>
 <context>
@@ -894,7 +902,7 @@
         <location filename="../../src/schat2/ui/TrayIcon.cpp" line="47"/>
         <location filename="../../src/schat2/ui/TrayIcon.cpp" line="91"/>
         <source>Show Simple Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Про програму</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/TrayIcon.cpp" line="59"/>
@@ -932,7 +940,7 @@
     <message>
         <location filename="../../src/schat2/ui/tabs/UserView.cpp" line="197"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування</translation>
     </message>
 </context>
 <context>
@@ -940,17 +948,17 @@
     <message>
         <location filename="../../src/schat2/ui/tabs/UserViewProperties.cpp" line="54"/>
         <source>User list properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування списку користувачів</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/tabs/UserViewProperties.cpp" line="56"/>
         <source>Show offline users</source>
-        <translation type="unfinished"></translation>
+        <translation>Показувати користувачів поза мережею</translation>
     </message>
     <message>
         <location filename="../../src/schat2/ui/tabs/UserViewProperties.cpp" line="57"/>
         <source>Keyboard navigation</source>
-        <translation type="unfinished"></translation>
+        <translation>Клавіатурна навігація</translation>
     </message>
 </context>
 <context>
@@ -1019,13 +1027,15 @@
         <location filename="../../src/schat2/WebBridge.cpp" line="71"/>
         <source>Was online</source>
         <comment>Male</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Чоловік</translatorcomment>
+        <translation>В мережі</translation>
     </message>
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="72"/>
         <source>Was online</source>
         <comment>Female</comment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Жінка</translatorcomment>
+        <translation>В мережі</translation>
     </message>
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="73"/>
@@ -1135,7 +1145,7 @@
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="94"/>
         <source>Sent:</source>
-        <translation>Відправити:</translation>
+        <translation>Відправлено:</translation>
     </message>
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="95"/>
@@ -1160,17 +1170,17 @@
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="99"/>
         <source>en</source>
-        <translation type="unfinished"></translation>
+        <translation>en</translation>
     </message>
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="100"/>
         <source>This message has been removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це повідомленя стерто.</translation>
     </message>
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="101"/>
         <source>Statistics</source>
-        <translation type="unfinished"></translation>
+        <translation>Статистика</translation>
     </message>
 </context>
 <context>

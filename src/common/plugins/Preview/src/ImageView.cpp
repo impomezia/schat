@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -81,7 +81,10 @@ void ImageView::setImage(const QImage &image)
 {
   reset();
 
-  m_image = image;
+  if (image.format() == QImage::Format_Indexed8)
+    m_image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
+  else
+    m_image = image;
 
   m_item = new QGraphicsRectItem();
   m_item->setRect(0, 0, m_image.width(), m_image.height());

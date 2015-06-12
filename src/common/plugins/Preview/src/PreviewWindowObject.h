@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@ public:
   PreviewWindowObject(PreviewCore *core);
   Q_INVOKABLE QVariant findById(const QString &id) const;
   Q_INVOKABLE QVariant findByOID(const QString &id) const;
+  Q_INVOKABLE void open(const QString &url) const;
 
 signals:
   void changed(const QString &id);

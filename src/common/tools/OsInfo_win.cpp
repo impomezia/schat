@@ -15,8 +15,36 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCoreApplication>
+#include <qt_windows.h>
+
 #include "OsInfo.h"
 #include "sglobal.h"
+
+QByteArray OsInfo::userAgent()
+{
+  if (!m_ua.isEmpty())
+    return m_ua;
+
+  OSVERSIONINFO osvi;
+
+  ZeroMemory(&osvi, sizeof(OSVERSIONINFO));
+  osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+
+  GetVersionEx(&osvi);
+
+  const QString os = QString("Windows NT %1.%2").arg(osvi.dwMajorVersion).arg(osvi.dwMinorVersion);
+
+  QString ua = QString(LS("Mozilla/5.0 (%1) Qt/%2 %3/%4"))
+      .arg(os)
+      .arg(qVersion())
+      .arg(QCoreApplication::applicationName())
+      .arg(QCoreApplication::applicationVersion());
+
+  m_ua = ua.toLatin1();
+  return m_ua;
+}
+
 
 void OsInfo::init()
 {

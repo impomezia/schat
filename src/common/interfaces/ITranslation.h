@@ -1,6 +1,4 @@
-/* $Id: YouTube.css 2686 2012-05-21 07:19:30Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/*   Copyright (C) 2013-2014 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,18 +14,17 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-.youtube {
-  background: url(qrc:/images/YouTube/YouTube.png) 0 50% no-repeat;
-  padding-left: 20px;
-}
+#ifndef ITRANSLATION_H_
+#define ITRANSLATION_H_
 
-.btn-youtube {
-  padding: 3px;
-  line-height: 0;
-  vertical-align: bottom;
-  margin-left: 2px;
-}
+#include <QString>
 
-.youtube-player {
-  margin: 6px;
-}
+class ITranslation
+{
+public:
+  virtual ~ITranslation() {}
+  virtual QString name() const = 0;
+  virtual void load(const QString &name) = 0;
+};
+
+#endif // ITRANSLATION_H_

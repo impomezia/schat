@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -57,7 +57,6 @@ ChatWindow::ChatWindow(QWidget *parent)
 {
   setObjectName(LS("ChatWindow"));
 
-  m_desktop = new QDesktopWidget();
   new StatusMenu(this);
 
   m_central = new QWidget(this);
@@ -94,12 +93,6 @@ ChatWindow::ChatWindow(QWidget *parent)
   setWindowTitle(QApplication::applicationName());
 
   setupAppIcon();
-}
-
-
-ChatWindow::~ChatWindow()
-{
-  delete m_desktop;
 }
 
 
@@ -261,10 +254,12 @@ void ChatWindow::settingsChanged(const QString &key, const QVariant &value)
 
 QString ChatWindow::geometryKey() const
 {
-  const int count = m_desktop->screenCount();
+  QDesktopWidget *desktop = QApplication::desktop();
+  const int count         = desktop->screenCount();
   QString out;
+
   for (int i = 0; i < count; ++i) {
-    QRect r = m_desktop->screenGeometry(i);
+    QRect r = desktop->screenGeometry(i);
     out += QString::number(r.x()) + LC('.') + QString::number(r.y()) + LC('.') + QString::number(r.width()) + LC('x') + QString::number(r.height());
   }
 

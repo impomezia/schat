@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,12 +34,15 @@
 #include "hooks/ChatViewHooks.h"
 #include "net/SimpleID.h"
 #include "sglobal.h"
+#include "text/TokenFilter.h"
 #include "ui/ChatIcons.h"
 #include "ui/tabs/ChatView.h"
 
 HistoryChatView::HistoryChatView(QObject *parent)
   : QObject(parent)
+  , m_pin(0)
   , m_remove(0)
+  , m_unpin(0)
 {
   ChatViewHooks::add(this);
 
@@ -67,6 +70,33 @@ bool HistoryChatView::isAutoLoad(const QString &id) const
 }
 
 
+
+QString HistoryChatView::filter(const QString &id, const QString &text) const
+{
+  Q_UNUSED(id);
+
+  return TokenFilter::filter(LS("channel"), text, 0);
+}
+
+
+QString HistoryChatView::genTag(const QStringList &messages) const
+{
+  return MessageNotice::toTag(messages);
+}
+
+
+QString HistoryChatView::getTag(const QString &channel) const
+{
+  return HistoryDB::getValue(channel);
+}
+
+
+void HistoryChatView::setTag(const QString &channel, const QString &tag) const
+{
+  HistoryDB::setValue(channel, tag);
+}
+
+
 bool HistoryChatView::contextMenu(ChatView *view, QMenu *menu, const QWebHitTestResult &result)
 {
   ChatId id(view->id());
@@ -74,6 +104,11 @@ bool HistoryChatView::contextMenu(ChatView *view, QMenu *menu, const QWebHitTest
     return false;
 
   const QWebElement block = result.enclosingBlockElement();
+
+  if (block.hasClass(LS("list-group-item")) && block.attribute(LS("id")).startsWith(LS("motd-"))) {
+    unpin(view, menu,  block.attribute(LS("id")).mid(5));
+  }
+
   if (!block.hasClass("blocks") || block.hasClass("removed"))
     return false;
 
@@ -88,16 +123,21 @@ bool HistoryChatView::contextMenu(ChatView *view, QMenu *menu, const QWebHitTest
   if (id.type() != ChatId::MessageId)
     return false;
 
-  const int permissions = this->permissions(HistoryDB::get(id));
-  if (permissions == NoPermissions)
-    return false;
-
-  if (permissions & Remove) {
+  if (permissions(HistoryDB::get(id)) & Remove) {
     QVariantList data;
     data << view->id() << (id.hasOid() ? ChatId::toBase32(id.oid().byteArray()) : id.toString());
 
     menu->insertAction(menu->actions().first(), removeAction(data));
   }
+
+  ClientChannel channel = ChatClient::channels()->get(view->id());
+  if (channel && channel->type() == SimpleID::ChannelId) {
+    const int acl = ClientFeeds::match(channel, ChatClient::channel());
+    if (acl != -1 && (acl & Acl::Edit || acl & Acl::SpecialWrite)) {
+      menu->insertAction(menu->actions().first(), pinAction(QVariantList() << view->id() << id.toString()));
+    }
+  }
+
   return true;
 }
 
@@ -117,6 +157,9 @@ void HistoryChatView::init(ChatView *view)
     view->page()->mainFrame()->addToJavaScriptWindowObject(LS("HistoryView"), this);
     view->addJS(LS("qrc:/js/History/History.js"));
   }
+
+  if (SimpleID::typeOf(view->id()) == SimpleID::ChannelId)
+    view->addJS(LS("qrc:/js/History/motd.js"));
 }
 
 
@@ -130,6 +173,12 @@ void HistoryChatView::retranslate()
 {
   if (m_remove)
     m_remove->setText(tr("Remove message"));
+
+  if (m_pin)
+    m_pin->setText(tr("Pin message"));
+
+  if (m_unpin)
+    m_unpin->setText(tr("Unpin"));
 }
 
 
@@ -147,6 +196,16 @@ void HistoryChatView::notify(const Notify &notify)
         HistoryDB::add(n.channel(), n.json().value(MESSAGES_FEED_MESSAGES_KEY).toStringList());
     }
   }
+}
+
+
+void HistoryChatView::pin()
+{
+  const QVariantList data = m_pin->data().toList();
+  if (data.size() < 2)
+    return;
+
+  ClientFeeds::post(data.at(0).toByteArray(), FEED_NAME_INFO + "/motd", data.at(1).toString(), Feed::Share | Feed::Broadcast | Feed::ShareAll);
 }
 
 
@@ -190,6 +249,16 @@ void HistoryChatView::settingsChanged(const QString &key, const QVariant &value)
 void HistoryChatView::synced()
 {
   m_autoLoad = ChatCore::settings()->value(SETTINGS_HISTORY_AUTO_LOAD).toBool();
+}
+
+
+void HistoryChatView::unpin()
+{
+  const QVariantList data = m_unpin->data().toList();
+  if (data.size() < 2)
+    return;
+
+  ClientFeeds::del(data.at(0).toByteArray(), FEED_NAME_INFO + "/motd/" + data.at(1).toString(), Feed::Share | Feed::Broadcast | Feed::ShareAll);
 }
 
 
@@ -272,6 +341,18 @@ int HistoryChatView::permissions(const MessageRecord &record) const
 }
 
 
+QAction *HistoryChatView::pinAction(const QVariant &data)
+{
+  if (!m_pin) {
+    m_pin = new QAction(SCHAT_ICON(Pin), tr("Pin message"), this);
+    connect(m_pin, SIGNAL(triggered()), SLOT(pin()));
+  }
+
+  m_pin->setData(data);
+  return m_pin;
+}
+
+
 QAction *HistoryChatView::removeAction(const QVariant &data)
 {
   if (!m_remove) {
@@ -281,6 +362,18 @@ QAction *HistoryChatView::removeAction(const QVariant &data)
 
   m_remove->setData(data);
   return m_remove;
+}
+
+
+QAction *HistoryChatView::unpinAction(const QVariant &data)
+{
+  if (!m_unpin) {
+    m_unpin = new QAction(SCHAT_ICON(Remove), tr("Unpin"), this);
+    connect(m_unpin, SIGNAL(triggered()), SLOT(unpin()));
+  }
+
+  m_unpin->setData(data);
+  return m_unpin;
 }
 
 
@@ -299,4 +392,16 @@ void HistoryChatView::emulateLast(const QByteArray &channelId, const QList<QByte
 
   FeedNotify *notify = new FeedNotify(Notify::FeedReply, channelId, MESSAGES_FEED_LAST_REQ, data);
   ChatNotify::start(notify);
+}
+
+
+void HistoryChatView::unpin(ChatView *view, QMenu *menu, const QString &messageId)
+{
+  ClientChannel channel = ChatClient::channels()->get(view->id());
+  if (channel && channel->type() == SimpleID::ChannelId) {
+    const int acl = ClientFeeds::match(channel, ChatClient::channel());
+    if (acl != -1 && (acl & Acl::Edit || acl & Acl::SpecialWrite)) {
+      menu->insertAction(menu->actions().first(), unpinAction(QVariantList() << view->id() << messageId));
+    }
+  }
 }

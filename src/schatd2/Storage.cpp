@@ -264,9 +264,10 @@ int Storage::start()
   NodeLog::setOutFlags(static_cast<NodeLog::OutFlags>(value(kLogOutput, NodeLog::FileOut).toInt()));
   NodeLog::setColors(value(kLogColor, true).toBool());
 
-  m_privateId = m_settings->value(STORAGE_PRIVATE_ID).toString().toUtf8();
+  m_privateId = value(STORAGE_PRIVATE_ID).toByteArray();
+
   if (m_privateId.isEmpty()) {
-    m_privateId = value(STORAGE_PRIVATE_ID).toByteArray();
+    m_privateId = m_settings->value(STORAGE_PRIVATE_ID).toString().toUtf8();
 
     if (m_privateId.isEmpty())
       m_privateId = ChatId(ChatId::UniqueUserId).toBase32();

@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -685,6 +685,22 @@ var Loader = {
 
     document.getElementsByTagName("head")[0].appendChild(e);
   },
+
+
+  loadTpl: function(filename, callback) {
+    $.ajax({
+      url: filename,
+      dataType: 'html',
+      isLocal: true,
+      success: function(msg) {
+        callback(null, Hogan.compile(msg));
+      },
+      error: function(jqXHR, textStatus) {
+        callback(new Error(textStatus));
+      }
+    });
+  },
+
 
   loadJS: function(jsfile, success) {
     $.ajax({

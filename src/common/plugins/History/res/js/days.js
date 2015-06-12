@@ -64,7 +64,15 @@ Messages.reload = function()
   if (Pages.current != 0)
     return;
 
-  $('.day').remove();
+  var elem;
+
+  for (var i = 0; i < Messages.days.length; i++) {
+    elem = document.getElementById('day-' + Messages.days[i]);
+
+    if (elem !== null)
+      elem.parentNode.removeChild(elem);
+  }
+
   Messages.days = [];
   alignChat();
 };

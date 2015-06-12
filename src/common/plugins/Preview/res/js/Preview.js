@@ -35,10 +35,13 @@
       }
 
       elem.addEventListener('click', function(event) {
-
-        if (ChatView.openDialog('preview', item))
+        if (event.button === 1) {
           event.preventDefault();
-
+          PreviewPlugin.open(item.url);
+        }
+        else if (ChatView.openDialog('preview', item)) {
+          event.preventDefault();
+        }
       });
     }
   }
@@ -114,7 +117,8 @@
   if (typeof window.PreviewPlugin === 'undefined') {
     window.PreviewPlugin = {
       findById: function(id)  { return null; },
-      findByOID: function(id) { return null; }
+      findByOID: function(id) { return null; },
+      open: function(url)     {}
     }
   }
   else {

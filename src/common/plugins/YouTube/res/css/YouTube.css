@@ -1,6 +1,5 @@
-/* $Id: YouTubeSettings.h 3288 2012-11-28 05:48:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -16,30 +15,30 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef YOUTUBESETTINGS_H_
-#define YOUTUBESETTINGS_H_
+.youtube {
+  background: url(qrc:/images/YouTube/YouTube.png) 0 50% no-repeat;
+  padding-left: 20px;
+}
 
-#include <QWidget>
+.btn-youtube {
+  padding: 3px;
+  line-height: 0;
+  vertical-align: bottom;
+  margin-left: 2px;
+}
 
-class QCheckBox;
+.youtube-player {
+  margin: 6px;
+}
 
-class YouTubeSettings : public QWidget
-{
-  Q_OBJECT
 
-public:
-  YouTubeSettings(QWidget *parent = 0);
-
-protected:
-  void changeEvent(QEvent *event);
-
-private slots:
-  void embed(bool checked);
-
-private:
-  void retranslateUi();
-
-  QCheckBox *m_embed;
-};
-
-#endif /* YOUTUBESETTINGS_H_ */
+.youtube-thumbnail {
+  background: #fff center no-repeat;
+  display: inline-block;
+  width: 120px;
+  height: 90px;
+  border: 1px solid #DDD;
+  margin: 2px 2px 0 8px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+}

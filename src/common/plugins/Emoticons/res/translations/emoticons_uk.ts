@@ -7,7 +7,7 @@
     <message>
         <location filename="../../EmoticonsButton.cpp" line="99"/>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Смайлікі</translation>
     </message>
 </context>
 <context>
@@ -15,7 +15,7 @@
     <message>
         <location filename="../../EmoticonsButton.cpp" line="74"/>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Смайлікі</translation>
     </message>
 </context>
 <context>
@@ -23,7 +23,7 @@
     <message>
         <location filename="../../EmoticonsPage.cpp" line="41"/>
         <source>Emoticons</source>
-        <translation type="unfinished"></translation>
+        <translation>Смайлікі</translation>
     </message>
 </context>
 </TS>

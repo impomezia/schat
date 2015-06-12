@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -35,6 +35,9 @@ PreviewFilter::PreviewFilter(PreviewCore *core)
 
 bool PreviewFilter::filter(QList<HtmlToken> &tokens, const ChatId &id) const
 {
+  if (id.isNull())
+    return false;
+
   QList<QUrl> urls;
 
   for (int i = 0; i < tokens.size(); ++i) {
@@ -64,7 +67,9 @@ bool PreviewFilter::isProbablyImage(const QUrl &url) const
   if (url.scheme() != LS("http") && url.scheme() != LS("https"))
     return false;
 
-  const QString path = url.path().toLower();
+  QString path = url.path().toLower();
+  if (url.host() == LS("mdata.yandex.net") && path == LS("/i"))
+    path = url.toString();
 
   foreach (const QString &format, m_formats) {
     if (path.endsWith(format))

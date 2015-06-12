@@ -48,6 +48,7 @@ public:
   ~PreviewDB();
   bool open(const QString &path);
   ImageRecord findById(const ChatId &id);
+  void clear();
   void save(const ChatId &id, const QUrl &url);
   void save(PreviewItem *item);
 

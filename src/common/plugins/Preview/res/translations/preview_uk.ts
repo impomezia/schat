@@ -5,39 +5,39 @@
     <name>PreviewDialog</name>
     <message>
         <source>Copy Link</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати посилання</translation>
     </message>
     <message>
         <source>Open Link...</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити посилання...</translation>
     </message>
     <message>
         <source>Copy Image to Clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати зображення до буферу</translation>
     </message>
     <message>
         <source>Save As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти як...</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшити</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменшити</translation>
     </message>
     <message>
         <source>100%</source>
-        <translation type="unfinished"></translation>
+        <translation>100%</translation>
     </message>
     <message>
         <source>Fit Screen</source>
-        <translation type="unfinished"></translation>
+        <translation>На весь екран</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
 </context>
 </TS>

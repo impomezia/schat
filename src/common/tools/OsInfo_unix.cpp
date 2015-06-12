@@ -15,12 +15,43 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-# include <QFile>
-# include <QSettings>
-# include <sys/utsname.h>
+#include <QCoreApplication>
+#include <QFile>
+#include <QSettings>
+#include <sys/utsname.h>
 
 #include "OsInfo.h"
 #include "sglobal.h"
+
+QByteArray OsInfo::userAgent()
+{
+  if (!m_ua.isEmpty())
+    return m_ua;
+
+  QString os = LS("X11; ");
+
+  if (type() == Ubuntu)
+    os += LS("Ubuntu; ");
+
+#if defined(Q_OS_LINUX)
+# if defined(__x86_64__)
+    os += LS("Linux x86_64");
+# elif defined(__i386__)
+    os += LS("Linux i686");
+# else
+    os += LS("Linux");
+# endif
+#endif
+
+  QString ua = QString(LS("Mozilla/5.0 (%1) Qt/%2 %3/%4"))
+      .arg(os)
+      .arg(qVersion())
+      .arg(QCoreApplication::applicationName())
+      .arg(QCoreApplication::applicationVersion());
+
+  m_ua = ua.toLatin1();
+  return m_ua;
+}
 
 
 void detectLinux(QString &name, int &type)

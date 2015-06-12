@@ -25,16 +25,14 @@ HEADERS  = \
    YouTubeFilter.h \
    YouTubePlugin.h \
    YouTubePlugin_p.h \
-   YouTubeSettings.h \
 
 SOURCES  = \
    YouTubeChatView.cpp \
    YouTubeFilter.cpp \
    YouTubePlugin.cpp \
-   YouTubeSettings.cpp \
 
 RESOURCES += \
-    YouTube.qrc
+    res/YouTube.qrc
 
 TRANSLATIONS += res/translations/youtube_en.ts
 TRANSLATIONS += res/translations/youtube_ru.ts

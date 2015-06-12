@@ -1,6 +1,5 @@
-/* $Id: NodeUsersFeed.cpp 3735 2013-07-07 23:38:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -58,6 +57,12 @@ FeedReply NodeUsersFeed::del(const QString &path, Channel *channel, const QByteA
       dump();
       return FeedReply(Notice::OK, DateTime::utc());
     }
+  }
+  else if (path == LS("offline")) {
+    ServerChannel *channel = static_cast<ServerChannel*>(head().channel());
+    channel->offline().clear();
+    dump();
+    return FeedReply(Notice::OK, DateTime::utc());
   }
 
   return Notice::NotModified;

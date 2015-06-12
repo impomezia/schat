@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #define MESSAGES_FEED_END_KEY      QLatin1String("end")
 #define MESSAGES_FEED_FETCH_KEY    QLatin1String("fetch")
 #define MESSAGES_FEED_FETCH_REQ    QLatin1String("messages/fetch")
+#define MESSAGES_FEED_FORMAT_KEY   QLatin1String("format")
 #define MESSAGES_FEED_LAST_KEY     QLatin1String("last")
 #define MESSAGES_FEED_LAST_REQ     QLatin1String("messages/last")
 #define MESSAGES_FEED_LOGGING_KEY  QLatin1String("logging")
