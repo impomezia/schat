@@ -51,7 +51,7 @@
     <message>
         <location filename="../../ConsolePlugin.cpp" line="49"/>
         <source>You entered an incorrect password</source>
-        <translation>Такий пароль не можна застосовувати</translation>
+        <translation>Ви ввели неправильний пароль</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="50"/>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../../ConsolePlugin.cpp" line="55"/>
         <source>The passwords you entered don&apos;t match</source>
-        <translation>Ваш паролі не співпадають</translation>
+        <translation>Паролі, які Ви ввели, не співпадають</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="56"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../../ConsolePlugin.cpp" line="63"/>
         <source>Certificate has expired</source>
-        <translation>Термін сертифікату збіг</translation>
+        <translation>Термін дії сертифікату збіг</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="64"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../../ConsolePlugin.cpp" line="73"/>
         <source>Forced join to main channel</source>
-        <translation>Зразу підключатися у головну кімнату</translation>
+        <translation>Відразу підключатися до головної кімнати</translation>
     </message>
     <message>
         <location filename="../../ConsolePlugin.cpp" line="74"/>

@@ -110,12 +110,12 @@
     <message>
         <location filename="../../src/schat2/AuthBridge.cpp" line="128"/>
         <source>You have successfully logged in using &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation>Ви увійшли використовуючи &lt;b&gt;%1&lt;/b&gt;</translation>
+        <translation>Ви увійшли, використовуючи &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <location filename="../../src/schat2/AuthBridge.cpp" line="137"/>
         <source>Exceeded number of attempts to check authorization. %1</source>
-        <translation>Ви вичерпали кількість дозволених спроб авторізації. %1</translation>
+        <translation>Ви вичерпали кількість дозволених спроб авторизації. %1</translation>
     </message>
     <message>
         <location filename="../../src/schat2/AuthBridge.cpp" line="143"/>
@@ -1175,7 +1175,7 @@
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="100"/>
         <source>This message has been removed.</source>
-        <translation>Це повідомленя стерто.</translation>
+        <translation>Це повідомлення було видалено.</translation>
     </message>
     <message>
         <location filename="../../src/schat2/WebBridge.cpp" line="101"/>

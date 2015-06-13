@@ -230,7 +230,7 @@
     <message>
         <location filename="../../ChannelsPlugin.cpp" line="83"/>
         <source>Now {0} online in {1}. Peak online &lt;b&gt;{2}&lt;/b&gt; was &lt;span class=&quot;timeago&quot; data-date=&quot;{3}&quot;&gt;&lt;/span&gt;.</source>
-        <translation>Зараз {0} у мережі в {1}. Дуже велика онлайн-присутність &lt;b&gt;{2}&lt;/b&gt; була &lt;span class=&quot;timeago&quot; data-date=&quot;{3}&quot;&gt;&lt;/span&gt;.</translation>
+        <translation>Зараз {0} у мережі в {1}. Hайбільше користувачів &lt;b&gt;{2}&lt;/b&gt; було &lt;span class=&quot;timeago&quot; data-date=&quot;{3}&quot;&gt;&lt;/span&gt;.</translation>
     </message>
     <message numerus="yes">
         <location filename="../../ChannelsPlugin.cpp" line="89"/>

@@ -14,7 +14,7 @@
         <location filename="../../TalksCache.cpp" line="63"/>
         <location filename="../../TalksCache.cpp" line="119"/>
         <source>Clear</source>
-        <translation>Відчистити</translation>
+        <translation>Очистити</translation>
     </message>
 </context>
 </TS>

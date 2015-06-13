@@ -98,7 +98,7 @@
     <message>
         <location filename="../../UpdateWidget.cpp" line="100"/>
         <source>Update ready to install.</source>
-        <translation>Оновлення готово до встановлення.</translation>
+        <translation>Оновлення готове до встановлення.</translation>
     </message>
 </context>
 </TS>

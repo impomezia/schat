@@ -17,7 +17,7 @@
     <message>
         <location filename="../../ProxySettings.cpp" line="213"/>
         <source>Address:</source>
-        <translation>Адрес:</translation>
+        <translation>Адреса:</translation>
     </message>
     <message>
         <location filename="../../ProxySettings.cpp" line="214"/>

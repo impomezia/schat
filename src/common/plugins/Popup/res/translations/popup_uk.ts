@@ -22,12 +22,12 @@
     <message>
         <location filename="../../PopupSettings.cpp" line="131"/>
         <source>0 - infinitely</source>
-        <translation>0 - безкінця</translation>
+        <translation>0 - нескінченно</translation>
     </message>
     <message>
         <location filename="../../PopupSettings.cpp" line="134"/>
         <source>Don&apos;t show popups when active fullscreen application</source>
-        <translation>Не показувати спливаючі вікна при працюючому повноекраному додатку</translation>
+        <translation>Не показувати спливаючі вікна при активній повноекранній програмі</translation>
     </message>
 </context>
 </TS>

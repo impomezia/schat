@@ -7,7 +7,7 @@
     <message>
         <location filename="../../SendFilePlugin.cpp" line="106"/>
         <source>Incoming file</source>
-        <translation>Вихідний файл</translation>
+        <translation>Вхідний файл</translation>
     </message>
 </context>
 <context>

@@ -52,7 +52,7 @@
     <message>
         <location filename="../../HistoryPlugin.cpp" line="58"/>
         <source>Loading messages</source>
-        <translation>Завантажити повідомлення</translation>
+        <translation>Завантаження повідомлень</translation>
     </message>
     <message>
         <location filename="../../HistoryPlugin.cpp" line="59"/>

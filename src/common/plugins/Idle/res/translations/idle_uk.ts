@@ -7,7 +7,7 @@
     <message>
         <location filename="../../IdleSettings.cpp" line="69"/>
         <source>Away after</source>
-        <translation>Рахувати відсутнім через</translation>
+        <translation>Відсутній після</translation>
     </message>
     <message>
         <location filename="../../IdleSettings.cpp" line="70"/>

@@ -15,7 +15,7 @@
     <message>
         <location filename="../../EmoticonsButton.cpp" line="74"/>
         <source>Emoticons</source>
-        <translation>Смайлікі</translation>
+        <translation>Смайлики</translation>
     </message>
 </context>
 <context>
