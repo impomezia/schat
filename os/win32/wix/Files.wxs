@@ -6,9 +6,6 @@
       <Component Id="libeay32.dll" Guid="{2CA95C73-2F04-4BDC-AAAD-0C352E8B23F1}">
         <File Id="libeay32.dll" KeyPath="yes" Source="..\schat2\libeay32.dll" />
       </Component>
-      <Component Id="libpng15.dll" Guid="{8A7A6989-A407-4705-8262-DD03A7148883}">
-        <File Id="libpng15.dll" KeyPath="yes" Source="..\schat2\libpng15.dll" />
-      </Component>
       <Component Id="license.txt" Guid="{10F15664-0B79-4FA0-8084-39FDAE124B66}">
         <File Id="license.txt" KeyPath="yes" Source="..\license.txt" />
       </Component>
@@ -47,9 +44,6 @@
       </Component>
       <Component Id="ssleay32.dll" Guid="{A3AD1CBB-8304-4173-8965-B48F2FB59398}">
         <File Id="ssleay32.dll" KeyPath="yes" Source="..\schat2\ssleay32.dll" />
-      </Component>
-      <Component Id="zlib.dll" Guid="{4C49D73F-870C-4A5F-B1D4-D40A8447C927}">
-        <File Id="zlib.dll" KeyPath="yes" Source="..\schat2\zlib.dll" />
       </Component>
       <Component Id="qt.conf" Guid="{6FEEAB69-A89A-456B-99A3-C84C4A159518}">
         <File Id="qt.conf" KeyPath="yes" Source="..\schat2\qt.conf" />
@@ -231,7 +225,6 @@
   <Fragment>
     <ComponentGroup Id="Core">
       <ComponentRef Id="libeay32.dll" />
-      <ComponentRef Id="libpng15.dll" />
       <ComponentRef Id="license.txt" />
       <ComponentRef Id="msvcp100.dll" />
       <ComponentRef Id="msvcr100.dll" />
@@ -239,7 +232,6 @@
       <ComponentRef Id="schat.dll" />
       <ComponentRef Id="schat2.exe" />
       <ComponentRef Id="ssleay32.dll" />
-      <ComponentRef Id="zlib.dll" />
       <ComponentRef Id="ChangeLog.html" />
       <ComponentRef Id="en.png" />
       <ComponentRef Id="ru.png" />

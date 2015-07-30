@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -112,7 +112,6 @@ Section "Core Components"
   File "${SCHAT_SOURCE}\schatd2-srv.exe"
   File "${SCHAT_SOURCE}\..\schat2\crashreport.exe"
   File "${SCHAT_SOURCE}\..\schat2\QtGui4.dll"
-  File "${SCHAT_SOURCE}\..\schat2\libpng15.dll"
   File "${SCHAT_SOURCE}\schatd.dll"
   File "${SCHAT_SOURCE}\schat-authd.exe"
   File "${SCHAT_SOURCE}\schat-tufao.dll"
@@ -124,7 +123,6 @@ Section "Core Components"
   File "${SCHAT_SOURCE}\QtNetwork4.dll"
   File "${SCHAT_SOURCE}\QtSql4.dll"
   File "${SCHAT_SOURCE}\ssleay32.dll"
-  File "${SCHAT_SOURCE}\zlib.dll"
 
   !if ${SCHAT_VC100} == 1
     File "${SCHAT_SOURCE}\msvcp100.dll"
