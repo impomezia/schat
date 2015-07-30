@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -52,6 +52,12 @@ void OsInfo::init()
   m_type = Windows;
 
   switch (QSysInfo::WindowsVersion) {
+#   if QT_VERSION >= 0x040807
+    case QSysInfo::WV_WINDOWS10:
+      os = LS("10");
+      break;
+#   endif
+
 #   if QT_VERSION >= 0x040806
     case QSysInfo::WV_WINDOWS8_1:
       os = LS("8.1");

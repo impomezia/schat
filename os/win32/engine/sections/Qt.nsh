@@ -1,6 +1,5 @@
-/* $Id: Qt.nsh 3679 2013-06-08 16:38:22Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -9,7 +8,7 @@
  *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *   GNU General Public License for more details.
  *
  *   You should have received a copy of the GNU General Public License
@@ -24,14 +23,12 @@ ${Section}
 
   SetOutPath "$INSTDIR"
   File "${SCHAT_SOURCE}\libeay32.dll"
-  File "${SCHAT_SOURCE}\libpng15.dll"
   File "${SCHAT_SOURCE}\QtCore4.dll"
   File "${SCHAT_SOURCE}\QtGui4.dll"
   File "${SCHAT_SOURCE}\QtNetwork4.dll"
   File "${SCHAT_SOURCE}\QtSql4.dll"
   File "${SCHAT_SOURCE}\QtWebKit4.dll"
   File "${SCHAT_SOURCE}\ssleay32.dll"
-  File "${SCHAT_SOURCE}\zlib.dll"
   File "${SCHAT_SOURCE}\qt.conf"
 
   !if ${SCHAT_VC100} == 1
