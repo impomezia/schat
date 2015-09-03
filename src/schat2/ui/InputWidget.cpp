@@ -1,6 +1,5 @@
-/* $Id: InputWidget.cpp 3765 2013-08-13 16:53:23Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -123,9 +122,19 @@ void InputWidget::setMsg(int index)
 
   if (index < state.history.size()) {
     state.current = index;
-    setHtml(state.history.at(state.current));
-    moveCursor(QTextCursor::End);
+    setMsg(state.history.at(state.current));
   }
+}
+
+
+void InputWidget::setMsg(const QString &html)
+{
+  if (html.isEmpty()) {
+    return;
+  }
+
+  setHtml(html);
+  moveCursor(QTextCursor::End);
 }
 
 
@@ -331,17 +340,7 @@ void InputWidget::send()
   if (PlainTextFilter::filter(out).isEmpty())
     return;
 
-  State &state         = m_states[m_id];
-  QStringList& history = state.history;
-
-  if (state.history.isEmpty() || state.history.last() != html) {
-    if (state.history.size() == 20)
-      state.history.takeFirst();
-
-    state.history << html;
-  }
-
-  state.current = history.count();
+  m_states[m_id].add(html);
   emit send(out);
 }
 
@@ -452,6 +451,39 @@ void InputWidget::textChanged()
 }
 
 
+QString InputWidget::State::next()
+{
+  if (current + 1 < history.count()) {
+    return history.at(++current);
+  }
+
+  return QString();
+}
+
+
+QString InputWidget::State::previous()
+{
+  if (current && current <= history.count()) {
+    return history.at(--current);
+  }
+
+  return QString();
+}
+
+
+void InputWidget::State::add(const QString &html)
+{
+  if (history.isEmpty() || history.last() != html) {
+    if (history.size() == 20)
+      history.takeFirst();
+
+    history << html;
+  }
+
+  current = history.count();
+}
+
+
 /*!
  * Пересылка клавиатурных сочетаний которые не должны обрабатыватся полем ввода текста.
  */
@@ -541,12 +573,7 @@ void InputWidget::mergeFormat(const QTextCharFormat &format)
  */
 void InputWidget::nextMsg()
 {
-  State &state = m_states[m_id];
-
-  if (state.current + 1 < state.history.count()) {
-    ++state.current;
-    setMsg(state.current);
-  }
+  setMsg(m_states[m_id].next());
 }
 
 
@@ -555,14 +582,7 @@ void InputWidget::nextMsg()
  */
 void InputWidget::prevMsg()
 {
-  State &state = m_states[m_id];
-
-  if (state.current) {
-    if (state.current <= state.history.count()) {
-      --state.current;
-      setMsg(state.current);
-    }
-  }
+  setMsg(m_states[m_id].previous());
 }
 
 

@@ -1,6 +1,5 @@
-/* $Id: InputWidget.h 3766 2013-08-13 17:12:24Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -47,6 +46,7 @@ public:
   QSize sizeHint() const;
   void reload(const QByteArray &id);
   void setMsg(int index);
+  void setMsg(const QString &html);
 
 signals:
   void contextMenu(QMenu *menu, const QPoint &pos);
@@ -88,6 +88,10 @@ private:
     int pos;             ///< Текущая позиция курсора.
     QString html;        ///< Текущий html текст в виджете.
     QStringList history; ///< Отправленные сообщения.
+
+    QString next();
+    QString previous();
+    void add(const QString &html);
   };
 
   bool bypass(QKeyEvent *event);
