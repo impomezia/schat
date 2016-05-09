@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -67,8 +67,8 @@ void AddHostTask::run()
 
 
   if (key == -1) {
-    query.prepare(LS("INSERT INTO hosts (channel,  hostId,  name,  address,  version,  os,  osName,  tz,  date,  geo,  data)"
-                               " VALUES (:channel, :hostId, :name, :address, :version, :os, :osName, :tz, :date, :geo, :data)"));
+    query.prepare(LS("INSERT INTO hosts (channel,  hostId,  name,  address,  version,  os,  osName,  tz,  date,  geo,  data,  cookie,  provider)"
+                               " VALUES (:channel, :hostId, :name, :address, :version, :os, :osName, :tz, :date, :geo, :data, :cookie, :provider)"));
 
     query.bindValue(LS(":channel"), m_host.channel);
     query.bindValue(LS(":hostId"),  SimpleID::encode(m_host.hostId));
@@ -78,15 +78,17 @@ void AddHostTask::run()
     query.bindValue(LS(":id"),      key);
   }
 
-  query.bindValue(LS(":name"),    m_host.name);
-  query.bindValue(LS(":address"), m_host.address);
-  query.bindValue(LS(":version"), Ver(m_host.version).toString());
-  query.bindValue(LS(":os"),      m_host.os);
-  query.bindValue(LS(":osName"),  m_host.osName);
-  query.bindValue(LS(":tz"),      m_host.tz);
-  query.bindValue(LS(":date"),    m_host.date);
-  query.bindValue(LS(":geo"),     JSON::generate(m_host.geo));
-  query.bindValue(LS(":data"),    JSON::generate(m_host.data));
+  query.bindValue(LS(":name"),     m_host.name);
+  query.bindValue(LS(":address"),  m_host.address);
+  query.bindValue(LS(":version"),  Ver(m_host.version).toString());
+  query.bindValue(LS(":os"),       m_host.os);
+  query.bindValue(LS(":osName"),   m_host.osName);
+  query.bindValue(LS(":tz"),       m_host.tz);
+  query.bindValue(LS(":date"),     m_host.date);
+  query.bindValue(LS(":geo"),      JSON::generate(m_host.geo));
+  query.bindValue(LS(":data"),     JSON::generate(m_host.data));
+  query.bindValue(LS(":cookie"),   m_host.cookie);
+  query.bindValue(LS(":provider"), m_host.provider);
 
   query.exec();
 }
@@ -274,6 +276,8 @@ int DataBase::start()
     "  data       BLOB"
     ");"
   ));
+
+  query.exec(LS("CREATE INDEX IF NOT EXISTS idx_hosts_channel ON hosts (channel);"));
 
   query.exec(LS(
     "CREATE TABLE IF NOT EXISTS profiles ( "
@@ -500,25 +504,27 @@ QMap<QByteArray, HostInfo> DataBase::hosts(qint64 channel)
   QMap<QByteArray, HostInfo> out;
 
   QSqlQuery query;
-  query.prepare(LS("SELECT hostId, name, address, version, os, osName, tz, date, geo, data FROM hosts WHERE channel = :channel;"));
+  query.prepare(LS("SELECT hostId, name, address, version, os, osName, tz, date, geo, data, cookie, provider FROM hosts WHERE channel = :channel;"));
   query.bindValue(LS(":channel"), channel);
   query.exec();
 
   while (query.next()) {
     HostInfo host(new Host());
-    host->channel = channel;
-    host->hostId  = SimpleID::decode(query.value(0).toByteArray());
-    host->name    = query.value(1).toString();
-    host->address = query.value(2).toString();
-    host->version = Ver(query.value(3).toString()).toUInt();
-    host->os      = query.value(4).toInt();
-    host->osName  = query.value(5).toString();
-    host->tz      = query.value(6).toInt();
-    host->date    = query.value(7).toLongLong();
-    host->geo     = JSON::parse(query.value(8).toByteArray()).toMap();
-    host->data    = JSON::parse(query.value(9).toByteArray()).toMap();
+    host->channel  = channel;
+    host->hostId   = SimpleID::decode(query.value(0).toByteArray());
+    host->name     = query.value(1).toString();
+    host->address  = query.value(2).toString();
+    host->version  = Ver(query.value(3).toString()).toUInt();
+    host->os       = query.value(4).toInt();
+    host->osName   = query.value(5).toString();
+    host->tz       = query.value(6).toInt();
+    host->date     = query.value(7).toLongLong();
+    host->geo      = JSON::parse(query.value(8).toByteArray()).toMap();
+    host->data     = JSON::parse(query.value(9).toByteArray()).toMap();
+    host->cookie   = query.value(10).toByteArray();
+    host->provider = query.value(11).toString();
 
-    out[host->hostId] = host;
+    out.insert(host->hostId, host);
   }
 
   return out;

@@ -1,6 +1,5 @@
-/* $Id: Host.h 2911 2012-07-24 11:15:38Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -59,6 +58,8 @@ public:
   QList<quint64> sockets; ///< Список сокетов.
   QByteArray uniqueId;    ///< Уникальный идентификатор пользователя.
   quint64 socket;         ///< Сокет пользователя.
+  QByteArray cookie;
+  QString provider;
 };
 
 typedef QSharedPointer<Host> HostInfo;
