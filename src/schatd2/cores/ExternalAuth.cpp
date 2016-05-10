@@ -1,6 +1,5 @@
-/* $Id: ExternalAuth.cpp 3763 2013-08-09 15:05:39Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -165,12 +164,14 @@ AuthResult ExternalAuthTask::auth(const QVariantMap &data)
     created = true;
 
     channel->setAccount();
+    channel->setName(m_data.nick);
+    channel->gender().setRaw(m_data.gender);
+  }
+
+  if (channel->account() && channel->account()->provider.isEmpty()) {
     channel->account()->provider = data.value(LS("provider")).toString();
     channel->account()->groups += LS("registered");
     channel->account()->setDate(DateTime::utc());
-
-    channel->setName(m_data.nick);
-    channel->gender().setRaw(m_data.gender);
     channel->user()->set(User(data.value(LS("user")).toMap()));
   }
 
