@@ -504,25 +504,26 @@ QMap<QByteArray, HostInfo> DataBase::hosts(qint64 channel)
   QMap<QByteArray, HostInfo> out;
 
   QSqlQuery query;
-  query.prepare(LS("SELECT hostId, name, address, version, os, osName, tz, date, geo, data, cookie, provider FROM hosts WHERE channel = :channel;"));
+  query.prepare(LS("SELECT id, hostId, name, address, version, os, osName, tz, date, geo, data, cookie, provider FROM hosts WHERE channel = :channel;"));
   query.bindValue(LS(":channel"), channel);
   query.exec();
 
   while (query.next()) {
     HostInfo host(new Host());
+    host->id       = query.value(0).toLongLong();
     host->channel  = channel;
-    host->hostId   = SimpleID::decode(query.value(0).toByteArray());
-    host->name     = query.value(1).toString();
-    host->address  = query.value(2).toString();
-    host->version  = Ver(query.value(3).toString()).toUInt();
-    host->os       = query.value(4).toInt();
-    host->osName   = query.value(5).toString();
-    host->tz       = query.value(6).toInt();
-    host->date     = query.value(7).toLongLong();
-    host->geo      = JSON::parse(query.value(8).toByteArray()).toMap();
-    host->data     = JSON::parse(query.value(9).toByteArray()).toMap();
-    host->cookie   = query.value(10).toByteArray();
-    host->provider = query.value(11).toString();
+    host->hostId   = SimpleID::decode(query.value(1).toByteArray());
+    host->name     = query.value(2).toString();
+    host->address  = query.value(3).toString();
+    host->version  = Ver(query.value(4).toString()).toUInt();
+    host->os       = query.value(5).toInt();
+    host->osName   = query.value(6).toString();
+    host->tz       = query.value(7).toInt();
+    host->date     = query.value(8).toLongLong();
+    host->geo      = JSON::parse(query.value(9).toByteArray()).toMap();
+    host->data     = JSON::parse(query.value(10).toByteArray()).toMap();
+    host->cookie   = query.value(11).toByteArray();
+    host->provider = query.value(12).toString();
 
     out.insert(host->hostId, host);
   }
@@ -708,7 +709,7 @@ qint64 DataBase::accountKey(const QByteArray &cookie)
     return -1;
 
   QSqlQuery query;
-  query.prepare(LS("SELECT id FROM accounts WHERE cookie = :cookie LIMIT 1;"));
+  query.prepare(LS("SELECT channel FROM accounts WHERE cookie = :cookie LIMIT 1;"));
   query.bindValue(LS(":cookie"), SimpleID::encode(cookie));
   query.exec();
 
@@ -736,18 +737,9 @@ qint64 DataBase::channelKey(const QByteArray &id, int type)
 
   if (idType == SimpleID::CookieId) {
     qint64 key = accountKey(id);
-    if (key == -1)
+    if (key == -1) {
       return key;
-
-    QSqlQuery query;
-    query.prepare(LS("SELECT channel FROM accounts WHERE id = :id LIMIT 1;"));
-    query.bindValue(LS(":id"), key);
-    query.exec();
-
-    if (!query.first())
-      return -1;
-
-    return query.value(0).toLongLong();
+    }
   }
 
   if (!Channel::isCompatibleId(id) && idType != SimpleID::NormalizedId)

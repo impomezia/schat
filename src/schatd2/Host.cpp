@@ -19,8 +19,10 @@
 #include "net/packets/auth.h"
 #include "sglobal.h"
 
+
 Host::Host(const AuthRequest &data, const QString &address, quint64 socket)
-  : online(true)
+  : id(0)
+  , online(true)
   , channel(0)
   , name(data.hostName)
   , address(address)
@@ -31,5 +33,13 @@ Host::Host(const AuthRequest &data, const QString &address, quint64 socket)
   , uniqueId(data.uniqueId)
   , socket(socket)
 {
+}
 
+
+QDebug operator<<(QDebug dbg, const Host &host) {
+  dbg.nospace() << "Host<" << host.id << "/" << host.channel << "> "
+                << host.address.toUtf8().constData() << " -- "
+                << '"' << host.name.toUtf8().constData() << "/" << host.osName.toUtf8().constData() << '"';
+
+  return dbg.nospace();
 }

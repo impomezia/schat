@@ -32,7 +32,8 @@ class SCHAT_EXPORT Host
 {
 public:
   Host()
-  : online(false)
+  : id(0)
+  , online(false)
   , channel(0)
   , version(0)
   , os(0)
@@ -43,6 +44,7 @@ public:
 
   Host(const AuthRequest &data, const QString &address, quint64 socket);
 
+  qint64 id;
   bool online;            ///< \b true если подключение активно.
   qint64 channel;         ///< Номер канала в базе данных.
   QByteArray hostId;      ///< Публичный идентификатор хоста.
@@ -63,5 +65,8 @@ public:
 };
 
 typedef QSharedPointer<Host> HostInfo;
+
+
+QDebug operator<<(QDebug dbg, const Host &host);
 
 #endif /* HOST_H_ */
