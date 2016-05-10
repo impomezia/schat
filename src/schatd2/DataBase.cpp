@@ -579,8 +579,10 @@ User DataBase::user(qint64 channel)
   query.exec();
 
   User out;
-  if (!query.first())
+  if (!query.first()) {
+    out.saved = false;
     return out;
+  }
 
   out.channel  = channel;
   out.date     = query.value(0).toLongLong();
@@ -906,6 +908,11 @@ void DataBase::update(ChatChannel channel)
     query.bindValue(LS(":groups"),     account->groups.toString());
     query.bindValue(LS(":channel"),    channel->key());
     query.exec();
+  }
+
+  User *user = channel->user();
+  if (user && !user->saved) {
+    add(user);
   }
 }
 

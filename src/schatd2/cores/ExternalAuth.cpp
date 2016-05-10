@@ -173,6 +173,7 @@ AuthResult ExternalAuthTask::auth(const QVariantMap &data)
     channel->account()->groups += LS("registered");
     channel->account()->setDate(DateTime::utc());
     channel->user()->set(User(data.value(LS("user")).toMap()));
+    channel->user()->saved = false;
   }
 
   if (channel->status().value() == Status::Offline) {
