@@ -1,6 +1,5 @@
-/* $Id: CookieAuth.cpp 3722 2013-07-02 23:05:19Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright © 2008-2013 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -35,8 +34,9 @@ CookieAuth::CookieAuth(Core *core)
 
 AuthResult CookieAuth::auth(const AuthRequest &data)
 {
-  if (SimpleID::typeOf(data.cookie) != SimpleID::CookieId)
+  if (SimpleID::typeOf(data.cookie) != SimpleID::CookieId) {
     return AnonymousAuth::auth(data);
+  }
 
   return auth(data, Ch::channel(data.cookie, SimpleID::UserId));
 }
@@ -50,11 +50,9 @@ int CookieAuth::type() const
 
 AuthResult CookieAuth::auth(const AuthRequest &data, ChatChannel channel)
 {
-  if (!channel)
-    return AnonymousAuth::auth(data);
-
-  if (isPasswordRequired(channel.data(), data.uniqueId))
+  if (!channel || isPasswordRequired(channel.data(), data.uniqueId)) {
     return AuthResult(Notice::Forbidden, data.id);
+  }
 
   update(channel.data(), data);
   if (!channel->isValid())

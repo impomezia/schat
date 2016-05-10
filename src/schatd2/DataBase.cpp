@@ -329,9 +329,10 @@ qint64 DataBase::addGroup(const QString &name, const QString &permissions)
  */
 ChatChannel DataBase::channel(const QByteArray &id, int type)
 {
-  qint64 key = channelKey(id, type);
-  if (key == -1)
+  const qint64 key = channelKey(id, type);
+  if (key == -1) {
     return ChatChannel();
+  }
 
   return channel(key);
 }
@@ -653,10 +654,13 @@ Account DataBase::account(qint64 key)
   query.bindValue(LS(":channel"), key);
   query.exec();
 
-  if (!query.first())
-    return Account();
-
   Account account;
+
+  if (!query.first()) {
+    account.saved = false;
+    return account;
+  }
+
   account.channel  = query.value(0).toLongLong();
   account.date     = query.value(1).toLongLong();
   account.cookie   = SimpleID::decode(query.value(2).toByteArray());
@@ -705,16 +709,18 @@ ChatChannel DataBase::channel(qint64 id)
  */
 qint64 DataBase::accountKey(const QByteArray &cookie)
 {
-  if (SimpleID::typeOf(cookie) != SimpleID::CookieId)
+  if (SimpleID::typeOf(cookie) != SimpleID::CookieId) {
     return -1;
+  }
 
   QSqlQuery query;
   query.prepare(LS("SELECT channel FROM accounts WHERE cookie = :cookie LIMIT 1;"));
   query.bindValue(LS(":cookie"), SimpleID::encode(cookie));
   query.exec();
 
-  if (!query.first())
+  if (!query.first()) {
     return -1;
+  }
 
   return query.value(0).toLongLong();
 }
@@ -733,13 +739,9 @@ qint64 DataBase::accountKey(const QByteArray &cookie)
  */
 qint64 DataBase::channelKey(const QByteArray &id, int type)
 {
-  int idType = SimpleID::typeOf(id);
-
+  const int idType = SimpleID::typeOf(id);
   if (idType == SimpleID::CookieId) {
-    qint64 key = accountKey(id);
-    if (key == -1) {
-      return key;
-    }
+    return accountKey(id);
   }
 
   if (!Channel::isCompatibleId(id) && idType != SimpleID::NormalizedId)
