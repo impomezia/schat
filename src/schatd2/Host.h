@@ -60,8 +60,6 @@ public:
   QList<quint64> sockets; ///< Список сокетов.
   QByteArray uniqueId;    ///< Уникальный идентификатор пользователя.
   quint64 socket;         ///< Сокет пользователя.
-  QByteArray cookie;
-  QString provider;
 };
 
 typedef QSharedPointer<Host> HostInfo;
