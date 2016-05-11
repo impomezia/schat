@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 #include "NodeMessagesDB.h"
 #include "sglobal.h"
 #include "Storage.h"
-#include "text/PlainTextFilter.h"
+
 
 NodeMessagesDB *NodeMessagesDB::m_self = 0;
 QString NodeMessagesDB::m_id;
@@ -94,14 +94,11 @@ bool NodeMessagesDB::open()
     ");"
   ));
 
-  query.exec(LS(
-    "CREATE INDEX IF NOT EXISTS idx_messages ON messages ( "
-    "  sender,"
-    "  dest,"
-    "  date,"
-    "  mdate"
-    ");"
-  ));
+  query.exec(LS("DROP INDEX IF EXISTS idx_messages;"));
+  query.exec(LS("CREATE INDEX IF NOT EXISTS idx_dest    ON messages ( dest DESC );"));
+  query.exec(LS("CREATE INDEX IF NOT EXISTS idx_last    ON messages ( sender, dest );"));
+  query.exec(LS("CREATE INDEX IF NOT EXISTS idx_offline ON messages ( dest, status );"));
+  query.exec(LS("CREATE INDEX IF NOT EXISTS idx_since   ON messages ( dest DESC, date ASC );"));
 
   query.exec(LS(
     "CREATE TABLE IF NOT EXISTS channels ( "
@@ -255,41 +252,45 @@ QList<MessageRecordV2> NodeMessagesDB::get(const QList<ChatId> &ids, const ChatI
 
   LOG_M1018
 
+  QStringList list;
+# if QT_VERSION >= 0x040700
+  list.reserve(ids.size());
+# endif
+
+  for (int i = 0; i < ids.size(); ++i) {
+    list.append("?");
+  }
+
   QSqlQuery query(QSqlDatabase::database(m_id));
-  query.prepare(LS("SELECT id, sender, dest, status, date, mdate, cmd, text, data, blob FROM messages WHERE oid = :oid LIMIT 1;"));
+  query.prepare(LS("SELECT id, oid, sender, dest, status, date, mdate, cmd, text, data, blob FROM messages WHERE oid IN (") + list.join(LS(", ")) + LS(");"));
 
   QList<MessageRecordV2> out;
+  MessageRecordV2 record;
 # if QT_VERSION >= 0x040700
   out.reserve(ids.size());
 # endif
 
-  MessageRecordV2 record;
+  foreach (const ChatId &id, ids) {
+    query.addBindValue(id.hasOid() ? ChatId::toBase32(id.oid().byteArray()) : id.toBase32());
+  }
 
-  for (int i = 0; i < ids.size(); ++i) {
-    const ChatId &id = ids.at(i);
+  query.exec();
 
-    query.bindValue(LS(":oid"), id.hasOid() ? ChatId::toBase32(id.oid().byteArray()) : id.toBase32());
-    query.exec();
-
-    if (!query.first()) {
-      LOG_M1019
-      continue;
-    }
-
+  while (query.next()) {
     record.id        = query.value(0).toLongLong();
-    record.oid       = id;
-    record.sender    = m_self->m_channels.get(query.value(1).toLongLong());
-    record.dest      = m_self->m_channels.get(query.value(2).toLongLong());
+    record.oid       = ChatId(query.value(1).toByteArray());
+    record.sender    = m_self->m_channels.get(query.value(2).toLongLong());
+    record.dest      = m_self->m_channels.get(query.value(3).toLongLong());
     if (!userId.isNull() && (record.sender != userId && record.dest != userId))
       continue;
 
-    record.status    = query.value(3).toLongLong();
-    record.date      = query.value(4).toLongLong();
-    record.mdate     = query.value(5).toLongLong();
-    record.cmd       = query.value(6).toString();
-    record.text      = query.value(7).toString();
-    record.data      = query.value(8).toByteArray();
-    record.blob      = query.value(9).toByteArray();
+    record.status    = query.value(4).toLongLong();
+    record.date      = query.value(5).toLongLong();
+    record.mdate     = query.value(6).toLongLong();
+    record.cmd       = query.value(7).toString();
+    record.text      = query.value(8).toString();
+    record.data      = query.value(9).toByteArray();
+    record.blob      = query.value(10).toByteArray();
 
     out.append(record);
   }
@@ -566,15 +567,6 @@ qint64 NodeMessagesDB::V5()
     "  text   TEXT,"
     "  data   BLOB,"
     "  blob   BLOB"
-    ");"
-  ));
-
-  query.exec(LS(
-    "CREATE INDEX IF NOT EXISTS idx_messages ON messages ( "
-    "  sender,"
-    "  dest,"
-    "  date,"
-    "  mdate"
     ");"
   ));
 
