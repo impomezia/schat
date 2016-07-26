@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ class NodeUsersFeedCreator : public FeedCreator
 public:
   Feed* create(const QString &name) const Q_DECL_OVERRIDE;
   Feed* load(const QString &name, const QVariantMap &data) const Q_DECL_OVERRIDE;
-  inline QString name() const Q_DECL_OVERRIDE { return FEED_NAME_USERS; }
+  QString name() const Q_DECL_OVERRIDE { return FEED_NAME_USERS; }
 };
 
 #endif /* NODEUSERSFEED_H_ */

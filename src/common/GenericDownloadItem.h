@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -41,19 +41,19 @@ public:
       delete m_error;
   }
 
-  inline bool isFinished() const             Q_DECL_OVERRIDE { return m_endDate > 0; }
-  inline const QByteArray &data() const      Q_DECL_OVERRIDE { return m_data; }
-  inline INetworkError *error() const        Q_DECL_OVERRIDE { return m_error; }
-  inline QByteArray &data()                  Q_DECL_OVERRIDE { return m_data; }
-  inline qint64 endDate() const              Q_DECL_OVERRIDE { return m_endDate; }
-  inline qint64 pos() const                  Q_DECL_OVERRIDE { return m_pos; }
-  inline qint64 size() const                 Q_DECL_OVERRIDE { return m_size; }
-  inline qint64 startDate() const            Q_DECL_OVERRIDE { return m_startDate; }
-  inline QString fileName() const            Q_DECL_OVERRIDE { return m_fileName; }
-  inline QUrl url() const                    Q_DECL_OVERRIDE { return m_url; }
-  inline void setEndDate(qint64 date)        Q_DECL_OVERRIDE { m_endDate = date; }
-  inline void setError(INetworkError *error) Q_DECL_OVERRIDE { if (m_error) delete m_error; m_error = error; }
-  inline void setStartDate(qint64 date)      Q_DECL_OVERRIDE { m_startDate = date; }
+  bool isFinished() const             Q_DECL_OVERRIDE { return m_endDate > 0; }
+  const QByteArray &data() const      Q_DECL_OVERRIDE { return m_data; }
+  INetworkError *error() const        Q_DECL_OVERRIDE { return m_error; }
+  QByteArray &data()                  Q_DECL_OVERRIDE { return m_data; }
+  qint64 endDate() const              Q_DECL_OVERRIDE { return m_endDate; }
+  qint64 pos() const                  Q_DECL_OVERRIDE { return m_pos; }
+  qint64 size() const                 Q_DECL_OVERRIDE { return m_size; }
+  qint64 startDate() const            Q_DECL_OVERRIDE { return m_startDate; }
+  QString fileName() const            Q_DECL_OVERRIDE { return m_fileName; }
+  QUrl url() const                    Q_DECL_OVERRIDE { return m_url; }
+  void setEndDate(qint64 date)        Q_DECL_OVERRIDE { m_endDate = date; }
+  void setError(INetworkError *error) Q_DECL_OVERRIDE { if (m_error) delete m_error; m_error = error; }
+  void setStartDate(qint64 date)      Q_DECL_OVERRIDE { m_startDate = date; }
 
 protected:
   INetworkError *m_error;

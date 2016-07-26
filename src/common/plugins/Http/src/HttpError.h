@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ class HttpError : public INetworkError
 {
 public:
   HttpError(QNetworkReply *reply, int error = -1);
-  inline int error() const  Q_DECL_OVERRIDE { return m_error; }
-  inline int status() const Q_DECL_OVERRIDE { return m_status; }
+  int error() const  Q_DECL_OVERRIDE { return m_error; }
+  int status() const Q_DECL_OVERRIDE { return m_status; }
   static HttpError *create(QNetworkReply *reply);
 
 private:

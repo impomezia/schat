@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ class YouTubeFilter : public ITokenFilter
 public:
   YouTubeFilter();
   bool filter(QList<HtmlToken> &tokens, const ChatId &id) const Q_DECL_OVERRIDE;
-  inline int weight() const Q_DECL_OVERRIDE { return 950; }
+  int weight() const Q_DECL_OVERRIDE { return 950; }
 
 private:
   void make(QList<HtmlToken> &tokens, const QString &text) const;

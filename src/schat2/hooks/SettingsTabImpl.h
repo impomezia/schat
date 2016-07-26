@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2015 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -59,8 +59,8 @@ private:
 class ProfilePageCreator : public SettingsPageCreator
 {
 public:
-  inline ProfilePageCreator() : SettingsPageCreator(1000)        {}
-  inline SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new ProfilePage(parent); }
+  inline ProfilePageCreator() : SettingsPageCreator(1000) {}
+  SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new ProfilePage(parent); }
 };
 
 
@@ -85,8 +85,8 @@ private:
 class NetworkPageCreator : public SettingsPageCreator
 {
 public:
-  inline NetworkPageCreator() : SettingsPageCreator(2000)        {}
-  inline SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new NetworkPage(parent); }
+  inline NetworkPageCreator() : SettingsPageCreator(2000) {}
+  SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new NetworkPage(parent); }
 };
 
 
@@ -111,8 +111,8 @@ private:
 class AlertsPageCreator : public SettingsPageCreator
 {
 public:
-  inline AlertsPageCreator() : SettingsPageCreator(2100)         {}
-  inline SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new AlertsPage(parent); }
+  inline AlertsPageCreator() : SettingsPageCreator(2100)  {}
+  SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new AlertsPage(parent); }
 };
 
 
@@ -137,8 +137,8 @@ private:
 class LocalePageCreator : public SettingsPageCreator
 {
 public:
-  inline LocalePageCreator() : SettingsPageCreator(10000)        {}
-  inline SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new LocalePage(parent); }
+  inline LocalePageCreator() : SettingsPageCreator(10000) {}
+  SettingsPage* page(QWidget *parent = 0) Q_DECL_OVERRIDE { return new LocalePage(parent); }
 };
 
 #endif /* SETTINGSTABIMPL_H_ */

@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ class LinksFilter : public ITokenFilter
 public:
   LinksFilter();
   bool filter(QList<HtmlToken> &tokens, const ChatId &id) const Q_DECL_OVERRIDE;
-  inline int weight() const Q_DECL_OVERRIDE { return 200; }
+  int weight() const Q_DECL_OVERRIDE { return 200; }
 
 private:
   QString url(const QString &text, int index, int &last) const;

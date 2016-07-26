@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ class ProgressTabCreator : public TabCreator
 public:
   ProgressTabCreator() : TabCreator() {}
   AbstractTab *create(const QVariant &data, TabWidget *parent) const Q_DECL_OVERRIDE;
-  inline QByteArray name() const Q_DECL_OVERRIDE { return PROGRESS_TAB; }
+  QByteArray name() const Q_DECL_OVERRIDE { return PROGRESS_TAB; }
   void reload(AbstractTab *tab, const QVariant &data) const Q_DECL_OVERRIDE;
 };
 
