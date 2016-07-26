@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ public:
     QVariantMap out        = CoreApi::header();
     out[CORE_API_ID]       = "Messages";
     out[CORE_API_NAME]     = "Messages";
-    out[CORE_API_VERSION]  = "2.3.4";
+    out[CORE_API_VERSION]  = "2.4.0";
     out[CORE_API_TYPE]     = "server";
     out[CORE_API_SITE]     = "https://wiki.schat.me/Plugin/Messages";
     out[CORE_API_DESC]     = "Server Messages Support";

@@ -1,5 +1,5 @@
 /* Simple Chat
- * Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -78,15 +78,15 @@ void AddHostTask::run()
     query.bindValue(LS(":id"),      key);
   }
 
-  query.bindValue(LS(":name"),    m_host.name);
-  query.bindValue(LS(":address"), m_host.address);
-  query.bindValue(LS(":version"), Ver(m_host.version).toString());
-  query.bindValue(LS(":os"),      m_host.os);
-  query.bindValue(LS(":osName"),  m_host.osName);
-  query.bindValue(LS(":tz"),      m_host.tz);
-  query.bindValue(LS(":date"),    m_host.date);
-  query.bindValue(LS(":geo"),     JSON::generate(m_host.geo));
-  query.bindValue(LS(":data"),    JSON::generate(m_host.data));
+  query.bindValue(LS(":name"),     m_host.name);
+  query.bindValue(LS(":address"),  m_host.address);
+  query.bindValue(LS(":version"),  Ver(m_host.version).toString());
+  query.bindValue(LS(":os"),       m_host.os);
+  query.bindValue(LS(":osName"),   m_host.osName);
+  query.bindValue(LS(":tz"),       m_host.tz);
+  query.bindValue(LS(":date"),     m_host.date);
+  query.bindValue(LS(":geo"),      JSON::generate(m_host.geo));
+  query.bindValue(LS(":data"),     JSON::generate(m_host.data));
 
   query.exec();
 }
@@ -275,6 +275,8 @@ int DataBase::start()
     ");"
   ));
 
+  query.exec(LS("CREATE INDEX IF NOT EXISTS idx_hosts_channel ON hosts (channel);"));
+
   query.exec(LS(
     "CREATE TABLE IF NOT EXISTS profiles ( "
     "  id         INTEGER PRIMARY KEY,"
@@ -325,9 +327,10 @@ qint64 DataBase::addGroup(const QString &name, const QString &permissions)
  */
 ChatChannel DataBase::channel(const QByteArray &id, int type)
 {
-  qint64 key = channelKey(id, type);
-  if (key == -1)
+  const qint64 key = channelKey(id, type);
+  if (key == -1) {
     return ChatChannel();
+  }
 
   return channel(key);
 }
@@ -500,25 +503,26 @@ QMap<QByteArray, HostInfo> DataBase::hosts(qint64 channel)
   QMap<QByteArray, HostInfo> out;
 
   QSqlQuery query;
-  query.prepare(LS("SELECT hostId, name, address, version, os, osName, tz, date, geo, data FROM hosts WHERE channel = :channel;"));
+  query.prepare(LS("SELECT id, hostId, name, address, version, os, osName, tz, date, geo, data FROM hosts WHERE channel = :channel;"));
   query.bindValue(LS(":channel"), channel);
   query.exec();
 
   while (query.next()) {
     HostInfo host(new Host());
-    host->channel = channel;
-    host->hostId  = SimpleID::decode(query.value(0).toByteArray());
-    host->name    = query.value(1).toString();
-    host->address = query.value(2).toString();
-    host->version = Ver(query.value(3).toString()).toUInt();
-    host->os      = query.value(4).toInt();
-    host->osName  = query.value(5).toString();
-    host->tz      = query.value(6).toInt();
-    host->date    = query.value(7).toLongLong();
-    host->geo     = JSON::parse(query.value(8).toByteArray()).toMap();
-    host->data    = JSON::parse(query.value(9).toByteArray()).toMap();
+    host->id       = query.value(0).toLongLong();
+    host->channel  = channel;
+    host->hostId   = SimpleID::decode(query.value(1).toByteArray());
+    host->name     = query.value(2).toString();
+    host->address  = query.value(3).toString();
+    host->version  = Ver(query.value(4).toString()).toUInt();
+    host->os       = query.value(5).toInt();
+    host->osName   = query.value(6).toString();
+    host->tz       = query.value(7).toInt();
+    host->date     = query.value(8).toLongLong();
+    host->geo      = JSON::parse(query.value(9).toByteArray()).toMap();
+    host->data     = JSON::parse(query.value(10).toByteArray()).toMap();
 
-    out[host->hostId] = host;
+    out.insert(host->hostId, host);
   }
 
   return out;
@@ -571,8 +575,10 @@ User DataBase::user(qint64 channel)
   query.exec();
 
   User out;
-  if (!query.first())
+  if (!query.first()) {
+    out.saved = false;
     return out;
+  }
 
   out.channel  = channel;
   out.date     = query.value(0).toLongLong();
@@ -646,10 +652,13 @@ Account DataBase::account(qint64 key)
   query.bindValue(LS(":channel"), key);
   query.exec();
 
-  if (!query.first())
-    return Account();
-
   Account account;
+
+  if (!query.first()) {
+    account.saved = false;
+    return account;
+  }
+
   account.channel  = query.value(0).toLongLong();
   account.date     = query.value(1).toLongLong();
   account.cookie   = SimpleID::decode(query.value(2).toByteArray());
@@ -698,16 +707,18 @@ ChatChannel DataBase::channel(qint64 id)
  */
 qint64 DataBase::accountKey(const QByteArray &cookie)
 {
-  if (SimpleID::typeOf(cookie) != SimpleID::CookieId)
+  if (SimpleID::typeOf(cookie) != SimpleID::CookieId) {
     return -1;
+  }
 
   QSqlQuery query;
-  query.prepare(LS("SELECT id FROM accounts WHERE cookie = :cookie LIMIT 1;"));
+  query.prepare(LS("SELECT channel FROM accounts WHERE cookie = :cookie LIMIT 1;"));
   query.bindValue(LS(":cookie"), SimpleID::encode(cookie));
   query.exec();
 
-  if (!query.first())
+  if (!query.first()) {
     return -1;
+  }
 
   return query.value(0).toLongLong();
 }
@@ -726,22 +737,9 @@ qint64 DataBase::accountKey(const QByteArray &cookie)
  */
 qint64 DataBase::channelKey(const QByteArray &id, int type)
 {
-  int idType = SimpleID::typeOf(id);
-
+  const int idType = SimpleID::typeOf(id);
   if (idType == SimpleID::CookieId) {
-    qint64 key = accountKey(id);
-    if (key == -1)
-      return key;
-
-    QSqlQuery query;
-    query.prepare(LS("SELECT channel FROM accounts WHERE id = :id LIMIT 1;"));
-    query.bindValue(LS(":id"), key);
-    query.exec();
-
-    if (!query.first())
-      return -1;
-
-    return query.value(0).toLongLong();
+    return accountKey(id);
   }
 
   if (!Channel::isCompatibleId(id) && idType != SimpleID::NormalizedId)
@@ -906,6 +904,11 @@ void DataBase::update(ChatChannel channel)
     query.bindValue(LS(":groups"),     account->groups.toString());
     query.bindValue(LS(":channel"),    channel->key());
     query.exec();
+  }
+
+  User *user = channel->user();
+  if (user && !user->saved) {
+    add(user);
   }
 }
 
