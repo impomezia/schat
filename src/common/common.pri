@@ -1,5 +1,5 @@
 # Simple Chat
-# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+# Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ INCLUDEPATH += \
     ../common \
     ../3rdparty \
 
-!win32:VERSION = 2.3.4
+!win32:VERSION = 2.4.0
 
 CONFIG(debug, debug|release) { 
   RCC_DIR = ../../tmp/$${TEMPLATE}/$${TARGET}/debug/rcc

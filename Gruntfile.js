@@ -41,7 +41,6 @@ module.exports = function(grunt) {
     cssmin: {
       all: {
         files: {
-          'res/html/css/about.min.css': ['res/html/src/about.css'],
           'res/html/css/PluginsView.min.css': ['res/html/src/PluginsView.css'],
           'res/html/css/ChatView.min.css': ['res/html/src/ChatView.css'],
           'res/html/css/server.min.css': ['res/html/src/server.css'],

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Simple Chat
-# Copyright (c) 2008-2014 Alexander Sedov <imp@schat.me>
+# Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-VERSION="2.3.4"
+VERSION="2.4.0"
 TARGET="SimpleChat2"
 
 set -e

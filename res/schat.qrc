@@ -1,6 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
-  <file alias="css/about.css">html/css/about.min.css</file>
   <file alias="css/channel.css">html/css/channel.min.css</file>
   <file alias="css/input.css">html/css/input.css</file>
   <file alias="css/PluginsView.css">html/css/PluginsView.min.css</file>
@@ -81,6 +80,7 @@
   <file alias="js/jquery.timeago.en.js">html/js/jquery.timeago.en.min.js</file>
   <file alias="js/jquery.timeago.js">html/js/jquery.timeago.min.js</file>
   <file alias="js/jquery.timeago.ru.js">html/js/jquery.timeago.ru.min.js</file>
+  <file>css/about.css</file>
   <file>css/ChatView.css</file>
   <file>html/about.html</file>
   <file>html/Channel.html</file>
