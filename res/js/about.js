@@ -1,6 +1,5 @@
-/* $Id: about.js 3313 2012-12-09 22:03:33Z IMPOMEZIA $
- * IMPOMEZIA Simple Chat
- * Copyright (c) 2008-2012 IMPOMEZIA <schat@impomezia.com>
+/* Simple Chat
+ * Copyright (c) 2008-2016 Alexander Sedov <imp@schat.me>
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -38,8 +37,9 @@ var AboutUtils = {
       $(this).removeClass('toggle-expand');
       $(this).addClass('toggle');
 
-      if (body.attr('id') == 'other-body')
+      if (body.attr('id') == 'other-body') {
         AboutUtils.adjustWidth($('#other-body .field-row-label'));
+      }
     }
     else {
       body.hide();
@@ -50,8 +50,9 @@ var AboutUtils = {
 
   version: function(text) {
     var ver = About.version(text);
-    if (ver === null)
+    if (ver === null) {
       return '';
+    }
 
     return '<div class="field-row">' +
            '  <span class="field-row-label">' + text + '</span>' +
@@ -60,8 +61,9 @@ var AboutUtils = {
   },
 
   adjustWidth: function(obj) {
-    if (!obj.length || obj.width() < 1 || !obj.is(':visible'))
+    if (!obj.length || obj.width() < 1 || !obj.is(':visible')) {
       return;
+    }
 
     obj.css('width', '');
 
@@ -84,13 +86,15 @@ $(document).ready(function() {
   $('.header').click(AboutUtils.toggle);
 
   AboutUtils.retranslate();
-  $('#version').html('<a href="http://wiki.schat.me/Simple_Chat_' + About.version('app') + '">' + About.version('app') + '</a>');
+  $('#version').html('<a href="https://wiki.schat.me/Simple_Chat_' + About.version('app') + '">' + About.version('app') + '</a>');
   $('#preferences').html(About.path('preferences'));
 
   var third_parties = $('#other-body');
   third_parties.append(AboutUtils.version('Qt'));
   third_parties.append(AboutUtils.version('QtWebKit'));
   third_parties.append(AboutUtils.version('WebKit'));
+
+  AboutUtils.adjustWidth($('#other-body .field-row-label'));
 });
 
 if (typeof About === "undefined") {
